@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { PlayerContext } from "../players/PlayerProvider"
 
 export const GenerateLineup = () => {
-  const [lineupShowing, setLineUpShowing] = useState(false);
+    const [lineupShowing, setLineUpShowing] = useState(false);
+    
+    const { players, getPlayers } = useContext(PlayerContext)
 
   const matchingPlayers = [
     { name: "joeshmoe" },
@@ -15,6 +18,14 @@ export const GenerateLineup = () => {
       setLineUpShowing(true);
     }
   };
+    
+  useEffect(() => {
+    getPlayers();
+  }, []);
+
+  useEffect(() => {
+    console.log(players)
+  }, [players])  
 
   return (
     <>

@@ -18,17 +18,19 @@ export const PlayerProvider = (propsObj) => {
       .then(setPlayers);
   };
 
-  useEffect(() => {
-    getPlayers();
-  }, []);
+//   useEffect(() => {
+//     getPlayers();
+//   }, []);
 
-  useEffect(() => {
-    console.log(players)
-  }, [players])
+//   useEffect(() => {
+//     console.log(players)
+//   }, [players])
 
   return (
     <PlayerContext.Provider
-      value={{
+          value={{
+              players,
+              getPlayers
       }}
     >
       {propsObj.children}
