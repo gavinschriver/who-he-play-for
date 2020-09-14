@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 export const PlayerContext = React.createContext();
 
 export const PlayerProvider = (propsObj) => {
-  const [players, setPlayers] = useState([]);
+//   const [players, setPlayers] = useState([]);
 
-  const [realPlayers, setRealPlayers] = useState({});
+  const [players, setPlayers] = useState({});
 
-  const getPlayersForreal = () => {
+  const getPlayers = () => {
     return fetch(`https://api.mysportsfeeds.com/v2.1/pull/nba/players.json`, {
       headers: {
         Authorization:
@@ -15,16 +15,16 @@ export const PlayerProvider = (propsObj) => {
       }
     })
       .then((res) => res.json())
-      .then(setRealPlayers);
+      .then(setPlayers);
   };
 
   useEffect(() => {
-    getPlayersForreal();
+    getPlayers();
   }, []);
 
   useEffect(() => {
-    console.log(realPlayers)
-  }, [realPlayers])
+    console.log(players)
+  }, [players])
 
   return (
     <PlayerContext.Provider
