@@ -8,14 +8,10 @@ export const GenerateLineup = () => {
 
   const [playerData, setPlayerData] = useState({});
 
-  const [playersArray, setPlayersArray] = useState([]);
-
-  //   const matchingPlayers = [
-  //     { name: "joeshmoe" },
-  //     { name: "elon mustttypants" },
-  //     { name: "smelliott smitth" },
-  //     { name: "shananaa" },
-  //   ];
+    const [playersArray, setPlayersArray] = useState([]);
+    
+    const [playerIdsArray, setPlayeIdsArray] = useState([]) 
+    
 
   const handleGenerateLineup = () => {
     if (!lineupShowing) {
@@ -47,11 +43,17 @@ export const GenerateLineup = () => {
       </button>
       {lineupShowing ? (
         <section>
-          <h2>Today's Lineup:</h2>
-          {playersArray.map((p) => {
-              
-            return <div>OY</div>;
-          })}
+                  <h2>Today's Lineup:</h2>
+                  {
+                      playersArray.map(p => {
+                          return (
+                          <>
+                                  <div>Player Name: {p.player.firstName} {p.player.lastName}</div>
+                                  <div>Pic:<img src={p.player.officialImageSrc} /></div>
+                              </>
+                          )}
+                      )
+                  }
         </section>
       ) : (
         <div></div>
