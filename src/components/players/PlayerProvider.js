@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 export const PlayerContext = React.createContext();
 
 export const PlayerProvider = (propsObj) => {
-//   const [players, setPlayers] = useState([]);
 
   const [players, setPlayers] = useState({});
 
@@ -17,14 +16,6 @@ export const PlayerProvider = (propsObj) => {
       .then((res) => res.json())
       .then(setPlayers);
   };
-
-//   useEffect(() => {
-//     getPlayers();
-//   }, []);
-
-//   useEffect(() => {
-//     console.log(players)
-//   }, [players])
 
   return (
     <PlayerContext.Provider

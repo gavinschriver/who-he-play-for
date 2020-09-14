@@ -6,6 +6,8 @@ export const GenerateLineup = () => {
     
     const { players, getPlayers } = useContext(PlayerContext)
 
+    const [ playerData, setPlayerData ] = useState({})
+
   const matchingPlayers = [
     { name: "joeshmoe" },
     { name: "elon mustttypants" },
@@ -24,8 +26,9 @@ export const GenerateLineup = () => {
   }, []);
 
   useEffect(() => {
-    console.log(players)
+    setPlayerData(players)
   }, [players])  
+    
 
   return (
     <>
