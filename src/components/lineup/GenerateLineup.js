@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../players/PlayerProvider";
-import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider"
+import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 
 export const GenerateLineup = () => {
-    const { getPlayerData, playerObjArray } = useContext(PlayerContext);
-    const { addUserPlayer } = useContext(UserPlayerContext)
+  const { getPlayerData, playerObjArray } = useContext(PlayerContext);
+  const { usersPlayers, getUsersPlayers, addUserPlayer } = useContext(
+    UserPlayerContext
+  );
 
+  const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [lineupShowing, setLineUpShowing] = useState(false);
 
   const filteredPlayers = playerObjArray.filter(
@@ -13,7 +16,13 @@ export const GenerateLineup = () => {
       p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc
   );
 
-  const filteredPlayerIds = filteredPlayers.map((p) => p.player.id);
+    const filteredPlayerIds = filteredPlayers.map((p) => p.player.id);
+    
+    const matchingUPOS = usersPlayers.filter(upo => {
+        return upo.userId === parseInt(localStorage.getItem("whpf_user"))
+    })
+
+    console.log(matchingUPOS)
 
   const createUsersPlayers = () => {
     for (let i = 0; i < 5; i++) {
@@ -37,7 +46,7 @@ export const GenerateLineup = () => {
   };
 
   useEffect(() => {
-    getPlayerData();
+    getPlayerData().then(getUsersPlayers);
   }, []);
 
   return (
@@ -52,10 +61,16 @@ export const GenerateLineup = () => {
       </button>
       {lineupShowing ? (
         <section>
-          <h2>Today's Lineup:</h2>
-          {filteredPlayers.map((p) => {
-            return <div>{p.player.currentRosterStatus}</div>;
-          })}
+                  <h2>Today's Lineup:</h2>
+                  {
+                      matchingUPOS.map(mUPO => {
+                          const matchingPlayerObj =
+                              filteredPlayers.find(p => p.player.id === mUPO.playerId)
+                          return (
+                              <div>Player Name: {matchingPlayerObj.player.firstName}</div>
+                          )
+                      })
+                  }
         </section>
       ) : (
         <div></div>
