@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../players/PlayerProvider";
+import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider"
 
 export const GenerateLineup = () => {
-  const { getPlayerData, playerObjArray } = useContext(PlayerContext);
+    const { getPlayerData, playerObjArray } = useContext(PlayerContext);
+    const { addUserPlayer } = useContext(UserPlayerContext)
 
   const [lineupShowing, setLineUpShowing] = useState(false);
 
@@ -23,7 +25,7 @@ export const GenerateLineup = () => {
         userId: activeUserId,
         playerId: randomPlayerId,
       };
-      console.log(filteredPlayers.find(p => p.player.id === newUserPlayer.playerId));
+      addUserPlayer(newUserPlayer);
     }
   };
 

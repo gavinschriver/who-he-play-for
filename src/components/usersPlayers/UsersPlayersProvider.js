@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext } from "react";
 
 export const UserPlayerContext = React.createContext();
 
-export const CustomerProductProvider = (propsObj) => {
+export const UserPlayerProvider = (props) => {
   const [usersPlayers, setUsersPlayers] = useState([]);
 
   const getUsersPlayers = () => {
@@ -29,7 +29,7 @@ export const CustomerProductProvider = (propsObj) => {
     
     return (
         <UserPlayerContext.Provider value={{ usersPlayers, getUsersPlayers, addUserPlayer, removeUserPlayer }}>
-            {propsObj.children}
+            {props.children}
         </UserPlayerContext.Provider>
 )
 };
