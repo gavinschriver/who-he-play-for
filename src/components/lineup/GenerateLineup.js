@@ -6,18 +6,30 @@ export const GenerateLineup = () => {
 
   const [lineupShowing, setLineUpShowing] = useState(false);
 
-  const filteredPlayers =
-    playerObjArray.filter(
-      (p) =>
-        p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc
-      ) || [];
-    
-    const filteredPlayerIds = filteredPlayers.map(p => p.player.id)
+  const filteredPlayers = playerObjArray.filter(
+    (p) =>
+      p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc
+  );
 
-    console.log(filteredPlayerIds)
+  const filteredPlayerIds = filteredPlayers.map((p) => p.player.id);
+
+  const createUsersPlayers = () => {
+    for (let i = 0; i < 5; i++) {
+      const activeUserId = parseInt(localStorage.getItem("whpf_user"));
+      const randomPlayerId =
+        filteredPlayerIds[Math.floor(Math.random() * filteredPlayerIds.length)];
+
+      const newUserPlayer = {
+        userId: activeUserId,
+        playerId: randomPlayerId,
+      };
+      console.log(newUserPlayer);
+    }
+  };
 
   const handleGenerateLineup = () => {
     if (!lineupShowing) {
+      createUsersPlayers();
       setLineUpShowing(true);
     }
   };
