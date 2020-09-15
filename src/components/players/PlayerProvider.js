@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 export const PlayerContext = React.createContext();
 
 export const PlayerProvider = (propsObj) => {
+  const [playerObjArray, setPlayerObjArray] = useState([]);
+  const [playerData, setPlayerData] = useState({});
 
-  const [players, setPlayers] = useState({});
-
-  const getPlayers = () => {
+  const getPlayerData = () => {
     return fetch(`https://api.mysportsfeeds.com/v2.1/pull/nba/players.json`, {
       headers: {
         Authorization:
@@ -14,14 +14,17 @@ export const PlayerProvider = (propsObj) => {
       }
     })
       .then((res) => res.json())
-      .then(setPlayers);
+      .then(setPlayerData);
   };
+    
 
   return (
     <PlayerContext.Provider
           value={{
-              players,
-              getPlayers
+              getPlayerData,
+              playerData,
+              playerObjArray,
+              setPlayerObjArray
       }}
     >
       {propsObj.children}

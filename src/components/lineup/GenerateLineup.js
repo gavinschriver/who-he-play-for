@@ -2,16 +2,16 @@ import React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../players/PlayerProvider";
 
 export const GenerateLineup = () => {
-  const [lineupShowing, setLineUpShowing] = useState(false);
+  const {
+    getPlayerData,
+    playerData,
+    playerObjArray,
+    setPlayerObjArray,
+  } = useContext(PlayerContext);
 
-  const { players, getPlayers } = useContext(PlayerContext);
-
-  const [playerData, setPlayerData] = useState({});
-
-    const [playersArray, setPlayersArray] = useState([]);
+    const [lineupShowing, setLineUpShowing] = useState(false);
     
-    const [playerIdsArray, setPlayeIdsArray] = useState([]) 
-    
+    const filteredPlayers = playerObjArray.filter(p => p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc) || []
 
   const handleGenerateLineup = () => {
     if (!lineupShowing) {
@@ -20,15 +20,13 @@ export const GenerateLineup = () => {
   };
 
   useEffect(() => {
-    getPlayers();
+    getPlayerData();
   }, []);
 
-  useEffect(() => {
-    setPlayerData(players);
-  }, [players]);
-
-  useEffect(() => {
-    setPlayersArray(playerData.players);
+    useEffect(() => {
+        if (playerData.players) {
+            setPlayerObjArray(playerData.players)
+        };
   }, [playerData]);
 
   return (
@@ -45,14 +43,9 @@ export const GenerateLineup = () => {
         <section>
                   <h2>Today's Lineup:</h2>
                   {
-                      playersArray.map(p => {
-                          return (
-                          <>
-                                  <div>Player Name: {p.player.firstName} {p.player.lastName}</div>
-                                  <div>Pic:<img src={p.player.officialImageSrc} /></div>
-                              </>
-                          )}
-                      )
+                      filteredPlayers.map(p => {
+                          return <div>{p.player.currentRosterStatus}</div>
+                      })
                   }
         </section>
       ) : (
