@@ -10,7 +10,11 @@ export const GenerateLineup = () => {
     playerObjArray.filter(
       (p) =>
         p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc
-    ) || [];
+      ) || [];
+    
+    const filteredPlayerIds = filteredPlayers.map(p => p.player.id)
+
+    console.log(filteredPlayerIds)
 
   const handleGenerateLineup = () => {
     if (!lineupShowing) {
