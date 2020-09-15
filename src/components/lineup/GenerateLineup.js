@@ -83,12 +83,19 @@ export const GenerateLineup = () => {
       {lineupShowing ? (
         <section>
           <h2>Today's Lineup:</h2>
-          {matchingUsersPlayers.map((mUPO) => {
+          {
+            matchingUsersPlayers.map((mUPO) => {
+
             const matchingPlayerObj = filteredPlayers.find(
               (p) => p.player.id === mUPO.playerId
             );
-            return <div>Player Name: {matchingPlayerObj.player.firstName}</div>;
-          })}
+              
+            return <section>
+              <div>Player Name: {matchingPlayerObj.player.firstName}</div>
+              <div><img src={matchingPlayerObj.player.officialImageSrc} /></div>;
+              </section>
+            })
+          }
         </section>
       ) : (
         <div></div>

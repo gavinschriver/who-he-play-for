@@ -6,7 +6,7 @@ import { UserPlayerProvider } from "./usersPlayers/UsersPlayersProvider"
 export const ApplicationViews = (props) => {
   return (
     <>
-      <div>STUFF ON A PAGEEEEE YAH HERE</div>
+      <div>HEY. WHO HE PLAY FOR?</div>
       <PlayerProvider>
         <UserPlayerProvider>
           <GenerateLineup />
