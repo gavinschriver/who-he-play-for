@@ -4,9 +4,7 @@ import { PlayerContext } from "../players/PlayerProvider";
 export const GenerateLineup = () => {
   const {
     getPlayerData,
-    playerData,
     playerObjArray,
-    setPlayerObjArray,
   } = useContext(PlayerContext);
 
     const [lineupShowing, setLineUpShowing] = useState(false);
@@ -23,11 +21,11 @@ export const GenerateLineup = () => {
     getPlayerData();
   }, []);
 
-    useEffect(() => {
-        if (playerData.players) {
-            setPlayerObjArray(playerData.players)
-        };
-  }, [playerData]);
+//     useEffect(() => {
+//         if (playerData.players) {
+//             setPlayerObjArray(playerData.players)
+//         };
+//   }, [playerData]);
 
   return (
     <>
@@ -42,11 +40,11 @@ export const GenerateLineup = () => {
       {lineupShowing ? (
         <section>
                   <h2>Today's Lineup:</h2>
-                  {
+                  {/* {
                       filteredPlayers.map(p => {
                           return <div>{p.player.currentRosterStatus}</div>
                       })
-                  }
+                  } */}
         </section>
       ) : (
         <div></div>

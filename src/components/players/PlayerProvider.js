@@ -4,7 +4,7 @@ export const PlayerContext = React.createContext();
 
 export const PlayerProvider = (propsObj) => {
   const [playerObjArray, setPlayerObjArray] = useState([]);
-  const [playerData, setPlayerData] = useState({});
+//   const [playerData, setPlayerData] = useState({});
 
   const getPlayerData = () => {
     return fetch(`https://api.mysportsfeeds.com/v2.1/pull/nba/players.json`, {
@@ -14,7 +14,9 @@ export const PlayerProvider = (propsObj) => {
       }
     })
       .then((res) => res.json())
-      .then(setPlayerData);
+        .then(playerData => {
+            setPlayerObjArray(playerData.players)
+        });
   };
     
 
@@ -22,9 +24,7 @@ export const PlayerProvider = (propsObj) => {
     <PlayerContext.Provider
           value={{
               getPlayerData,
-              playerData,
               playerObjArray,
-              setPlayerObjArray
       }}
     >
       {propsObj.children}
