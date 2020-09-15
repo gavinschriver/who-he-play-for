@@ -45,7 +45,7 @@ export const GenerateLineup = () => {
 
   const handleGenerateLineup = () => {
     {
-      
+      deleteUsersPlayers();
       createUsersPlayers();
       setLineUpShowing(true);
     }
