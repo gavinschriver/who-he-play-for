@@ -1,12 +1,28 @@
-import React from "react"
+import React, { useContext, useEffect, useState } from "react";
+import { MessageContext } from "./MessageProvider";
 
-const MessagesList = () => {
+export const MessagesList = () => {
+  const { messages, getMessages } = useContext(MessageContext);
 
+  const [messagesArray, setMessagesArray] = useState([]);
 
-    return (
-        <section className="messagesList">
-            <h2>Gonna be some messages here</h2>
+  useEffect(() => {
+    getMessages();
+  }, []);
 
-        </section>
-    )
-}
+  useEffect(() => {
+    console.log(messages);
+    setMessagesArray(messagesArray);
+  }, [messages]);   
+
+  return (
+    <section className="messagesList">
+      <h2>Gonna be some messages here</h2>
+          {
+              messages.map((m) => {
+                  return <div>{m.messagetext}</div>;
+              })
+          }
+    </section>
+  );
+};

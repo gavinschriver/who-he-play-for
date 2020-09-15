@@ -4,6 +4,7 @@ import { PlayerProvider } from "./players/PlayerProvider";
 import { UserPlayerProvider } from "./usersPlayers/UsersPlayersProvider";
 import { MessageEntryForm } from "./messages/MessageEntryForm";
 import { MessageProvider } from "./messages/MessageProvider";
+import { MessagesList } from "./messages/MessagesList";
 
 export const ApplicationViews = (props) => {
   return (
@@ -15,6 +16,7 @@ export const ApplicationViews = (props) => {
           <UserPlayerProvider>
             <GenerateLineup />
             <MessageEntryForm />
+            <MessagesList />
           </UserPlayerProvider>
         </MessageProvider>
       </PlayerProvider>
