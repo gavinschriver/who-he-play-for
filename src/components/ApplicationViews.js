@@ -2,6 +2,7 @@ import React from "react";
 import { GenerateLineup } from "./lineup/GenerateLineup";
 import { PlayerProvider } from "./players/PlayerProvider";
 import { UserPlayerProvider } from "./usersPlayers/UsersPlayersProvider"
+import { MessageEntryForm } from "./messages/MessageEntryForm";
  
 export const ApplicationViews = (props) => {
   return (
@@ -11,6 +12,7 @@ export const ApplicationViews = (props) => {
       <PlayerProvider>
         <UserPlayerProvider>
           <GenerateLineup />
+          <MessageEntryForm />
         </UserPlayerProvider>
       </PlayerProvider>
     </>

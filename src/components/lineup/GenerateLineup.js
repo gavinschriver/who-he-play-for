@@ -81,7 +81,7 @@ export const GenerateLineup = () => {
         Delete Lineup
       </button>
       {lineupShowing ? (
-        <section>
+        <section className="lineup">
           <h2>Today's Lineup:</h2>
           {
             matchingUsersPlayers.map((mUPO) => {
@@ -90,10 +90,10 @@ export const GenerateLineup = () => {
               (p) => p.player.id === mUPO.playerId
             );
               
-            return <section>
+            return <article>
               <div>Player Name: {matchingPlayerObj.player.firstName}</div>
               <div><img src={matchingPlayerObj.player.officialImageSrc} /></div>;
-              </section>
+              </article>
             })
           }
         </section>
