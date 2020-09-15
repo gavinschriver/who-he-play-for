@@ -6,7 +6,8 @@ import { UserPlayerProvider } from "./usersPlayers/UsersPlayersProvider"
 export const ApplicationViews = (props) => {
   return (
     <>
-      <div>HEY. WHO HE PLAY FOR?</div>
+      <h1>HEY CHUCK, WHO HE PLAY FOR?</h1>
+      <h2>MUST BE USER {parseInt(localStorage.getItem("whpf_user"))}</h2>
       <PlayerProvider>
         <UserPlayerProvider>
           <GenerateLineup />
