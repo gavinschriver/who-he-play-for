@@ -4,9 +4,12 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 
 export const GenerateLineup = () => {
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
-  const { usersPlayers, getUsersPlayers, addUserPlayer } = useContext(
-    UserPlayerContext
-  );
+  const {
+    usersPlayers,
+    getUsersPlayers,
+    addUserPlayer,
+    removeUserPlayer,
+  } = useContext(UserPlayerContext);
 
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [lineupShowing, setLineUpShowing] = useState(false);
@@ -16,15 +19,10 @@ export const GenerateLineup = () => {
       p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc
   );
 
-    const filteredPlayerIds = filteredPlayers.map((p) => p.player.id);
-    
-    const matchingUPOS = usersPlayers.filter(upo => {
-        return upo.userId === parseInt(localStorage.getItem("whpf_user"))
-    })
-
-    console.log(matchingUPOS)
+  const filteredPlayerIds = filteredPlayers.map((p) => p.player.id);
 
   const createUsersPlayers = () => {
+    alert(parseInt(localStorage.getItem("whpf_user")))
     for (let i = 0; i < 5; i++) {
       const activeUserId = parseInt(localStorage.getItem("whpf_user"));
       const randomPlayerId =
@@ -39,7 +37,7 @@ export const GenerateLineup = () => {
   };
 
   const handleGenerateLineup = () => {
-    if (!lineupShowing) {
+    {
       createUsersPlayers();
       setLineUpShowing(true);
     }
@@ -48,6 +46,14 @@ export const GenerateLineup = () => {
   useEffect(() => {
     getPlayerData().then(getUsersPlayers);
   }, []);
+
+  useEffect(() => {
+    const arrayOfMatchingUPOS = usersPlayers.filter((upo) => {
+      return upo.userId === parseInt(localStorage.getItem("whpf_user"));
+    })
+    setMatchingUsersPlayers(arrayOfMatchingUPOS)
+    console.log(arrayOfMatchingUPOS)
+  }, [usersPlayers])
 
   return (
     <>
@@ -61,16 +67,13 @@ export const GenerateLineup = () => {
       </button>
       {lineupShowing ? (
         <section>
-                  <h2>Today's Lineup:</h2>
-                  {
-                      matchingUPOS.map(mUPO => {
-                          const matchingPlayerObj =
-                              filteredPlayers.find(p => p.player.id === mUPO.playerId)
-                          return (
-                              <div>Player Name: {matchingPlayerObj.player.firstName}</div>
-                          )
-                      })
-                  }
+          <h2>Today's Lineup:</h2>
+          {matchingUsersPlayers.map((mUPO) => {
+            const matchingPlayerObj = filteredPlayers.find(
+              (p) => p.player.id === mUPO.playerId
+            );
+            return <div>Player Name: {matchingPlayerObj.player.firstName}</div>;
+          })}
         </section>
       ) : (
         <div></div>
