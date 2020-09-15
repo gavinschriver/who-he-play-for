@@ -5,7 +5,6 @@ import "./messages.css";
 export const MessagesList = () => {
   const { messages, getMessages } = useContext(MessageContext);
 
-  const [currentMessageObj, setCurrentMessageObj] = useState({});
 
   useEffect(() => {
     getMessages();
@@ -17,13 +16,13 @@ export const MessagesList = () => {
       <h2>Gonna be some messages here</h2>
       <div id="messages">
         {messages.map((m) => {
-          const messageObj = m
           return (
-            <article>
+            <article className="message">
               <div className="entryText">
                 {m.user.name || ""}
                 <span>{m.messagetext}</span>
               </div>
+              <button>Show User's Lineup</button>
             </article>
           );
         })}

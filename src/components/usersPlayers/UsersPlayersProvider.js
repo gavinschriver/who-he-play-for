@@ -5,6 +5,8 @@ export const UserPlayerContext = React.createContext();
 export const UserPlayerProvider = (props) => {
   const [usersPlayers, setUsersPlayers] = useState([]);
 
+  const [lineupExists, setLineupExists] = useState(false);
+
   const getUsersPlayers = () => {
     return fetch(`http://localhost:8888/usersPlayers`)
       .then((res) => res.json())
