@@ -23,7 +23,7 @@ export const GenerateLineup = () => {
         userId: activeUserId,
         playerId: randomPlayerId,
       };
-      console.log(newUserPlayer);
+      console.log(filteredPlayers.find(p => p.player.id === newUserPlayer.playerId));
     }
   };
 
