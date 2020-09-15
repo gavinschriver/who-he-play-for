@@ -1,5 +1,6 @@
 import React, { useRef, useContext } from "react";
 import { MessageContext } from "./MessageProvider";
+import "./messages.css" 
 
 export const MessageEntryForm = () => {
   const { addMessage } = useContext(MessageContext);
