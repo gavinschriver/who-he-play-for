@@ -40,11 +40,11 @@ export const GenerateLineup = () => {
       {lineupShowing ? (
         <section>
                   <h2>Today's Lineup:</h2>
-                  {/* {
+                  {
                       filteredPlayers.map(p => {
                           return <div>{p.player.currentRosterStatus}</div>
                       })
-                  } */}
+                  }
         </section>
       ) : (
         <div></div>
