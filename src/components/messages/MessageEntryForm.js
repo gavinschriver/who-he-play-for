@@ -1,17 +1,20 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext } from "react";
+import { MessageContext } from "./MessageProvider";
 
 export const MessageEntryForm = () => {
+  const { addMessage } = useContext(MessageContext);
+
   const messagetextRef = useRef("");
   const urlRef = useRef("");
 
-    const handleSubmitButtonEvent = () => {
-        const newMessage = {
-            userId: parseInt(localStorage.getItem("whpf_user")),
-            messagetext: messagetextRef.current.value,
-            url: urlRef.current.value,
-            timestamp: Date.now()
-        }
-        console.log(newMessage)
+  const handleSubmitButtonEvent = () => {
+    const newMessage = {
+      userId: parseInt(localStorage.getItem("whpf_user")),
+      messagetext: messagetextRef.current.value,
+      url: urlRef.current.value,
+      timestamp: Date.now(),
+    };
+    addMessage(newMessage);
   };
   return (
     <section class="messageEntryForm">
