@@ -38,8 +38,10 @@ export const GenerateLineup = () => {
   };
   
   const deleteUsersPlayers = () => {
-    alert(matchingUsersPlayers.length)
-  }
+    matchingUsersPlayers.forEach(mUPO => {
+      removeUserPlayer(mUPO.id)
+    })
+    } 
 
   const handleGenerateLineup = () => {
     {
