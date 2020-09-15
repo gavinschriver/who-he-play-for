@@ -11,8 +11,9 @@ export const GenerateLineup = () => {
     removeUserPlayer,
   } = useContext(UserPlayerContext);
 
+//set component state variables for 1) holding and setting userPlayer objects for current user; 2) state of lineup display div
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
-  const [lineupShowing, setLineUpShowing] = useState(false);
+  const [lineupShowing, setLineUpShowing] = useState(true);
 
   const filteredPlayers = playerObjArray.filter(
     (p) =>
@@ -35,9 +36,14 @@ export const GenerateLineup = () => {
       addUserPlayer(newUserPlayer);
     }
   };
+  
+  const deleteUsersPlayers = () => {
+    alert(matchingUsersPlayers.length)
+  }
 
   const handleGenerateLineup = () => {
     {
+      
       createUsersPlayers();
       setLineUpShowing(true);
     }
@@ -52,7 +58,6 @@ export const GenerateLineup = () => {
       return upo.userId === parseInt(localStorage.getItem("whpf_user"));
     })
     setMatchingUsersPlayers(arrayOfMatchingUPOS)
-    console.log(arrayOfMatchingUPOS)
   }, [usersPlayers])
 
   return (
@@ -64,6 +69,14 @@ export const GenerateLineup = () => {
         }}
       >
         Generate A Lineup
+      </button>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          deleteUsersPlayers();
+        }}
+      >
+        Delete Lineup
       </button>
       {lineupShowing ? (
         <section>
