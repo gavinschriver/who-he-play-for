@@ -25,7 +25,7 @@ export const MessageEntryForm = () => {
   };
 
   const matchingUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId === parseInt(localStorage.getItem("whpf_user"));
+    return (upo.userId === parseInt(localStorage.getItem("whpf_user"))) && !upo.mentioned;
   });
 
   const matchingPlayersObjects = matchingUsersPlayers.map((mUPO) => {
