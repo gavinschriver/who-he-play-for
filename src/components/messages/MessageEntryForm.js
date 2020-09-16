@@ -6,7 +6,7 @@ import "./messages.css";
 
 export const MessageEntryForm = () => {
   const { addMessage } = useContext(MessageContext);
-  const { usersPlayers } = useContext(UserPlayerContext);
+  const { usersPlayers, updateUserPlayer } = useContext(UserPlayerContext);
   const { playerObjArray } = useContext(PlayerContext);
 
   const messagetextRef = useRef("");
@@ -29,7 +29,8 @@ export const MessageEntryForm = () => {
         mentioned: true,
       };
 
-      console.log(updatedUPO)  
+      updateUserPlayer(updatedUPO);
+
       const newMessage = {
         userId: parseInt(localStorage.getItem("whpf_user")),
         messagetext: messagetextRef.current.value,

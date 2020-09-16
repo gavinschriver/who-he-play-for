@@ -28,9 +28,20 @@ export const UserPlayerProvider = (props) => {
       method: "DELETE",
     }).then(getUsersPlayers);
   };
+
+  const updateUserPlayer = userPlayer => {
+    return fetch(`http://localhost:8888/usersPlayers/${userPlayer.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userPlayer)
+    })
+        .then(getUsersPlayers)
+}
     
     return (
-        <UserPlayerContext.Provider value={{ usersPlayers, getUsersPlayers, addUserPlayer, removeUserPlayer }}>
+        <UserPlayerContext.Provider value={{ usersPlayers, getUsersPlayers, addUserPlayer, removeUserPlayer, updateUserPlayer }}>
             {props.children}
         </UserPlayerContext.Provider>
 )
