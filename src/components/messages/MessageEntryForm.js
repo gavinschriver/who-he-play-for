@@ -6,7 +6,9 @@ import "./messages.css";
 
 export const MessageEntryForm = () => {
   const { addMessage } = useContext(MessageContext);
-  const { usersPlayers, updateUserPlayer } = useContext(UserPlayerContext);
+  const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
+    UserPlayerContext
+  );
   const { playerObjArray } = useContext(PlayerContext);
 
   const messagetextRef = useRef("");
@@ -40,6 +42,16 @@ export const MessageEntryForm = () => {
       addMessage(newMessage);
     } else alert("no go bro");
   };
+
+  useEffect(() => {
+    setMentionedCount(
+      usersPlayers.filter(
+        (upo) =>
+          upo.userId === parseInt(localStorage.getItem("whpf_user")) &&
+          upo.mentioned
+      ).length
+    );
+  }, [usersPlayers]);
 
   const filteredUsersPlayers = usersPlayers.filter((upo) => {
     return (

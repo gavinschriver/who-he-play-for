@@ -11,6 +11,8 @@ export const GenerateLineup = () => {
     removeUserPlayer,
   } = useContext(UserPlayerContext);
 
+  const { mentionedCount } = useContext(UserPlayerContext)
+
 //set component state variables for 1) holding and setting userPlayer objects for current user; 2) state of lineup display div
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [lineupShowing, setLineUpShowing] = useState(true);
@@ -61,6 +63,10 @@ export const GenerateLineup = () => {
     })
     setMatchingUsersPlayers(arrayOfMatchingUPOS)
   }, [usersPlayers])
+
+  useEffect(() => {
+    console.log(mentionedCount)
+  }, [mentionedCount])
 
   return (
     <>
