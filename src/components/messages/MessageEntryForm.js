@@ -13,13 +13,15 @@ export const MessageEntryForm = () => {
   const urlRef = useRef("");
 
   const handleSubmitButtonEvent = () => {
-    const newMessage = {
-      userId: parseInt(localStorage.getItem("whpf_user")),
-      messagetext: messagetextRef.current.value,
-      url: urlRef.current.value,
-      timestamp: Date.now(),
-    };
-    addMessage(newMessage);
+    if (matchingPlayersStrings.includes(messagetextRef.current.value)) {
+      const newMessage = {
+        userId: parseInt(localStorage.getItem("whpf_user")),
+        messagetext: messagetextRef.current.value,
+        url: urlRef.current.value,
+        timestamp: Date.now(),
+      };
+      addMessage(newMessage);
+    } else alert('no go bro')
   };
 
   const matchingUsersPlayers = usersPlayers.filter((upo) => {
