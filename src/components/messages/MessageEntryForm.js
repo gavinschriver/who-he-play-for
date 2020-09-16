@@ -58,8 +58,8 @@ export const MessageEntryForm = () => {
   });
 
   useEffect(() => {
-    console.log(matchingPlayersStrings);
-  }, [matchingPlayersStrings]);
+    console.log(filteredUsersPlayers);
+  }, [usersPlayers]);
 
   return (
     <section className="messageEntryForm">

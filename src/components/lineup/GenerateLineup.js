@@ -32,7 +32,6 @@ export const GenerateLineup = () => {
       const newUserPlayer = {
         userId: activeUserId,
         playerId: randomPlayerId,
-        timestamp: Date.now()
       };
       addUserPlayer(newUserPlayer);
     }
