@@ -1,9 +1,13 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { MessageContext } from "./MessageProvider";
-import "./messages.css" 
+import { PlayerContext } from "../players/PlayerProvider";
+import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
+import "./messages.css";
 
 export const MessageEntryForm = () => {
   const { addMessage } = useContext(MessageContext);
+  const { usersPlayers } = useContext(UserPlayerContext);
+  const { playerObjArray } = useContext(PlayerContext);
 
   const messagetextRef = useRef("");
   const urlRef = useRef("");
@@ -17,6 +21,25 @@ export const MessageEntryForm = () => {
     };
     addMessage(newMessage);
   };
+
+  const matchingUsersPlayers = usersPlayers.filter((upo) => {
+    return upo.userId === parseInt(localStorage.getItem("whpf_user"));
+  });
+
+  const matchingPlayersObjects = matchingUsersPlayers.map((mUPO) => {
+    return playerObjArray.find((p) => {
+      return p.player.id === mUPO.playerId;
+    });
+  });
+
+  const matchingPlayersStrings = matchingPlayersObjects.map((mPO) => {
+    return mPO.player.firstName;
+  });
+
+  useEffect(() => {
+    console.log(matchingPlayersStrings);
+  }, [matchingPlayersStrings]);
+
   return (
     <section className="messageEntryForm">
       <form>
