@@ -18,7 +18,7 @@ export const MessageEntryForm = () => {
     addMessage(newMessage);
   };
   return (
-    <section class="messageEntryForm">
+    <section className="messageEntryForm">
       <form>
         <fieldset>
           <input

@@ -5,6 +5,10 @@ import "./messages.css";
 export const MessagesList = () => {
   const { messages, getMessages } = useContext(MessageContext);
 
+  const handleLineupButtonClick = () => {
+    
+  }
+
 
   useEffect(() => {
     getMessages();
@@ -22,7 +26,11 @@ export const MessagesList = () => {
                 {m.user.name || ""}
                 <span>{m.messagetext}</span>
               </div>
-              <button>Show User's Lineup</button>
+              <button onClick={e => {
+                e.preventDefault()
+                handleLineupButtonClick()
+              }}
+              >Show User's Lineup</button>
             </article>
           );
         })}
