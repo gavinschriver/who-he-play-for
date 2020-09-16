@@ -3,32 +3,25 @@ import React, { useState, useEffect } from "react";
 export const PlayerContext = React.createContext();
 
 export const PlayerProvider = (propsObj) => {
-  const [players, setPlayers] = useState([]);
+  const [playerObjArray, setPlayerObjArray] = useState([]);
 
-  const [realPlayers, setRealPlayers] = useState({});
-
-  const getPlayersForreal = () => {
+  const getPlayerData = () => {
     return fetch(`https://api.mysportsfeeds.com/v2.1/pull/nba/players.json`, {
       headers: {
-        Authorization:
-          `Basic NjJiNTU0MDAtODZkOS00ZGQ1LTgyMzAtOWQ2N2U1Ok1ZU1BPUlRTRkVFRFMKCg==`
-      }
+        Authorization: `Basic NjJiNTU0MDAtODZkOS00ZGQ1LTgyMzAtOWQ2N2U1Ok1ZU1BPUlRTRkVFRFMKCg==`,
+      },
     })
       .then((res) => res.json())
-      .then(setRealPlayers);
+      .then((playerData) => {
+        setPlayerObjArray(playerData.players);
+      });
   };
-
-  useEffect(() => {
-    getPlayersForreal();
-  }, []);
-
-  useEffect(() => {
-    console.log(realPlayers)
-  }, [realPlayers])
 
   return (
     <PlayerContext.Provider
       value={{
+        getPlayerData,
+        playerObjArray,
       }}
     >
       {propsObj.children}
