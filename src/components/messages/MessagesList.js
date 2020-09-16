@@ -5,9 +5,14 @@ import "./messages.css";
 export const MessagesList = () => {
   const { messages, getMessages } = useContext(MessageContext);
   const [filteredMessages, setFilteredMessages] = useState([])
+  const [ lineupDisplayed, setLineupDisplayed ] = useState(false)
 
   const handleLineupButtonClick = () => {
-
+    if (!lineupDisplayed) {
+      setLineupDisplayed(true)
+    } else if (lineupDisplayed) {
+      setLineupDisplayed(false)
+      }
   }
 
   useEffect(() => {
@@ -21,6 +26,7 @@ export const MessagesList = () => {
   return (
     <section className="messagesList">
       <h2>Gonna be some messages here</h2>
+
       <div id="messages">
         {         
           filteredMessages.map((m) => {
@@ -35,11 +41,17 @@ export const MessagesList = () => {
                 handleLineupButtonClick()
               }}
               >Show User's Lineup</button>
+              {
+                lineupDisplayed
+                ? <div>HOORAH</div>
+                : <div></div>
+              }
             </article>
           );
           })
         }
       </div>
+
     </section>
   );
 };
