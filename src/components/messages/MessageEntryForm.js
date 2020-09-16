@@ -70,10 +70,6 @@ export const MessageEntryForm = () => {
     return mPO.player.firstName;
   });
 
-  useEffect(() => {
-    console.log(filteredUsersPlayers);
-  }, [usersPlayers]);
-
   return (
     <section className="messageEntryForm">
       <form>
