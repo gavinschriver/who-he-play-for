@@ -14,6 +14,22 @@ export const MessageEntryForm = () => {
 
   const handleSubmitButtonEvent = () => {
     if (matchingPlayersStrings.includes(messagetextRef.current.value)) {
+      const matchingPO = matchingPlayersObjects.find((mPO) => {
+        return mPO.player.firstName === messagetextRef.current.value;
+      });
+
+      const matchingUPO = filteredUsersPlayers.find((uPO) => {
+        return uPO.playerId === matchingPO.player.id;
+      });
+
+      const updatedUPO = {
+        id: matchingUPO.id,
+        userId: matchingUPO.userId,
+        playerId: matchingUPO.playerId,
+        mentioned: true,
+      };
+
+      console.log(updatedUPO)  
       const newMessage = {
         userId: parseInt(localStorage.getItem("whpf_user")),
         messagetext: messagetextRef.current.value,
@@ -21,16 +37,19 @@ export const MessageEntryForm = () => {
         timestamp: Date.now(),
       };
       addMessage(newMessage);
-    } else alert('no go bro')
+    } else alert("no go bro");
   };
 
-  const matchingUsersPlayers = usersPlayers.filter((upo) => {
-    return (upo.userId === parseInt(localStorage.getItem("whpf_user"))) && !upo.mentioned;
+  const filteredUsersPlayers = usersPlayers.filter((upo) => {
+    return (
+      upo.userId === parseInt(localStorage.getItem("whpf_user")) &&
+      !upo.mentioned
+    );
   });
 
-  const matchingPlayersObjects = matchingUsersPlayers.map((mUPO) => {
+  const matchingPlayersObjects = filteredUsersPlayers.map((fUPO) => {
     return playerObjArray.find((p) => {
-      return p.player.id === mUPO.playerId;
+      return p.player.id === fUPO.playerId;
     });
   });
 
