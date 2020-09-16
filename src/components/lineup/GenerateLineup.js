@@ -88,14 +88,14 @@ export const GenerateLineup = () => {
           <div></div>
         )}
 
-        <button
+        {/* <button
           onClick={(e) => {
             e.preventDefault();
             deleteUsersPlayers();
           }}
         >
           Delete Lineup
-        </button>
+        </button> */}
 
         <section className="lineup">
           <h2>Today's Lineup:</h2>
