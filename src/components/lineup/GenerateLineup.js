@@ -11,11 +11,11 @@ export const GenerateLineup = () => {
     removeUserPlayer,
   } = useContext(UserPlayerContext);
 
-  const { mentionedCount } = useContext(UserPlayerContext)
+  const { mentionedCount } = useContext(UserPlayerContext);
 
-//set component state variables for 1) holding and setting userPlayer objects for current user; 2) state of lineup display div
+  //set component state variables for 1) holding and setting userPlayer objects for current user; 2) state of lineup display div
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
-  const [lineupShowing, setLineUpShowing] = useState(true);
+  const [generateButtonShowing, setGenerateButtonShowing] = useState(false);
 
   const filteredPlayers = playerObjArray.filter(
     (p) =>
@@ -25,7 +25,7 @@ export const GenerateLineup = () => {
   const filteredPlayerIds = filteredPlayers.map((p) => p.player.id);
 
   const createUsersPlayers = () => {
-    alert(parseInt(localStorage.getItem("whpf_user")))
+    alert(parseInt(localStorage.getItem("whpf_user")));
     for (let i = 0; i < 5; i++) {
       const activeUserId = parseInt(localStorage.getItem("whpf_user"));
       const randomPlayerId =
@@ -38,18 +38,18 @@ export const GenerateLineup = () => {
       addUserPlayer(newUserPlayer);
     }
   };
-  
+
   const deleteUsersPlayers = () => {
-    matchingUsersPlayers.forEach(mUPO => {
-      removeUserPlayer(mUPO.id)
-    })
-    } 
+    matchingUsersPlayers.forEach((mUPO) => {
+      removeUserPlayer(mUPO.id);
+    });
+  };
 
   const handleGenerateLineup = () => {
     {
       deleteUsersPlayers();
       createUsersPlayers();
-      setLineUpShowing(true);
+      setGenerateButtonShowing(false);
     }
   };
 
@@ -60,52 +60,62 @@ export const GenerateLineup = () => {
   useEffect(() => {
     const arrayOfMatchingUPOS = usersPlayers.filter((upo) => {
       return upo.userId === parseInt(localStorage.getItem("whpf_user"));
-    })
-    setMatchingUsersPlayers(arrayOfMatchingUPOS)
-  }, [usersPlayers])
+    });
+    setMatchingUsersPlayers(arrayOfMatchingUPOS);
+  }, [usersPlayers]);
 
   useEffect(() => {
-    console.log(mentionedCount)
-  }, [mentionedCount])
+    console.log(mentionedCount);
+    if (mentionedCount === matchingUsersPlayers.length) {
+      setGenerateButtonShowing(true);
+    }
+  }, [mentionedCount]);
+
 
   return (
     <>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          handleGenerateLineup();
-        }}
-      >
-        Generate A Lineup
-      </button>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          deleteUsersPlayers();
-        }}
-      >
-        Delete Lineup
-      </button>
-      {lineupShowing ? (
+      <article className="lineup__container">
+        {mentionedCount === 0 && !matchingUsersPlayers || mentionedCount === 5 ? (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleGenerateLineup();
+            }}
+          >
+            Generate A Lineup
+          </button>
+        ) : (
+          <div></div>
+        )}
+
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            deleteUsersPlayers();
+          }}
+        >
+          Delete Lineup
+        </button>
+
         <section className="lineup">
           <h2>Today's Lineup:</h2>
-          {
-            matchingUsersPlayers.map((mUPO) => {
-
+          {matchingUsersPlayers.map((mUPO) => {
             const matchingPlayerObj = filteredPlayers.find(
               (p) => p.player.id === mUPO.playerId
             );
-              
-            return <article>
-              <div>Player Name: {matchingPlayerObj.player.firstName}</div>
-              <div><img src={matchingPlayerObj.player.officialImageSrc} /></div>;
+
+            return (
+              <article>
+                <div>Player Name: {matchingPlayerObj.player.firstName}</div>
+                <div>
+                  <img src={matchingPlayerObj.player.officialImageSrc} />
+                </div>
+                ;
               </article>
-            })
-          }
+            );
+          })}
         </section>
-      ) : (
-        <div></div>
-      )}
+      </article>
     </>
   );
 };

@@ -11,6 +11,7 @@ export const ApplicationViews = (props) => {
     <>
       <h1>HEY CHUCK, WHO HE PLAY FOR?</h1>
       <h2>MUST BE USER {parseInt(localStorage.getItem("whpf_user"))}</h2>
+      <main className="main">
       <PlayerProvider>
         <MessageProvider>
           <UserPlayerProvider>
@@ -19,7 +20,8 @@ export const ApplicationViews = (props) => {
             <MessagesList />
           </UserPlayerProvider>
         </MessageProvider>
-      </PlayerProvider>
+        </PlayerProvider>
+        </main>
     </>
   );
 };
