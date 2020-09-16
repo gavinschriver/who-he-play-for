@@ -75,7 +75,7 @@ export const GenerateLineup = () => {
   return (
     <>
       <article className="lineup__container">
-        {mentionedCount === 0 || mentionedCount === 5 ? (
+        {mentionedCount === 0 && !matchingUsersPlayers || mentionedCount === 5? (
           <button
             onClick={(e) => {
               e.preventDefault();
