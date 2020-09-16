@@ -4,22 +4,26 @@ import "./messages.css";
 
 export const MessagesList = () => {
   const { messages, getMessages } = useContext(MessageContext);
+  const [filteredMessages, setFilteredMessages] = useState([])
 
   const handleLineupButtonClick = () => {
-    
-  }
 
+  }
 
   useEffect(() => {
     getMessages();
   }, []);
     
+  useEffect(() => {
+    setFilteredMessages(messages.reverse())
+  }, [messages])
 
   return (
     <section className="messagesList">
       <h2>Gonna be some messages here</h2>
       <div id="messages">
-        {messages.map((m) => {
+        {         
+          filteredMessages.map((m) => {
           return (
             <article className="message">
               <div className="entryText">
@@ -33,7 +37,8 @@ export const MessagesList = () => {
               >Show User's Lineup</button>
             </article>
           );
-        })}
+          })
+        }
       </div>
     </section>
   );
