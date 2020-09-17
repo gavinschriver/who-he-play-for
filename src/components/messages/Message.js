@@ -39,7 +39,13 @@ export const Message = ({ MO }) => {
       >Show Playerz</button>
       {
         showHideMatchingPlayers ?
-          <div>AH SHIT ITS AN ARRAY</div> 
+          <div>
+            {
+              matchingPlayers.map(mPO => {
+                return <div>{mPO.player.id}</div>
+              })
+            }
+          </div> 
           : <div></div>
       }
     </article>
