@@ -5,7 +5,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import "./messages.css";
 
 export const MessageEntryForm = () => {
-  const { addMessage } = useContext(MessageContext);
+  const { addMessage, messages } = useContext(MessageContext);
   const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
     UserPlayerContext
   );
@@ -15,7 +15,7 @@ export const MessageEntryForm = () => {
   const urlRef = useRef("");
 
   const handleSubmitButtonEvent = () => {
-    //does the value of the input for the player's name match a string in the current users collection of player strings?
+    //does the value of the input for the player's name match a string in the current users collection of player strings and is there something in the URL field?
     if (matchingPlayersStrings.includes(messagetextRef.current.value)) {
       const matchingPO = matchingPlayersObjects.find((mPO) => {
         return mPO.player.firstName === messagetextRef.current.value;
@@ -43,16 +43,21 @@ export const MessageEntryForm = () => {
       };
       addMessage(newMessage);
       // if not, does the value of the input for the player's name match a string in the collection of strings of other user's players?
+
     } else {
       if (othersPlayersStrings.includes(messagetextRef.current.value)) {
-        const newMessage = {
-          userId: parseInt(localStorage.getItem("whpf_user")),
-          messagetext: messagetextRef.current.value,
-          url: urlRef.current.value,
-          timestamp: Date.now(),
-          trashtalk: true
-        };
-        addMessage(newMessage);
+        if (filteredUsersPlayers.length > 0) {
+          const newMessage = {
+            userId: parseInt(localStorage.getItem("whpf_user")),
+            messagetext: messagetextRef.current.value,
+            url: urlRef.current.value,
+            timestamp: Date.now(),
+            trashtalk: true
+          };
+          addMessage(newMessage);
+          console.log(filteredUsersPlayers)
+        } else {alert('nice trick')}
+
       } else {
         const newMessage = {
           userId: parseInt(localStorage.getItem("whpf_user")),
