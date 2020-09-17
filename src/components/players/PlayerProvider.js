@@ -6,11 +6,7 @@ export const PlayerProvider = (propsObj) => {
   const [playerObjArray, setPlayerObjArray] = useState([]);
 
   const getPlayerData = () => {
-    return fetch(`https://api.mysportsfeeds.com/v2.1/pull/nba/players.json`, {
-      headers: {
-        Authorization: `Basic NjJiNTU0MDAtODZkOS00ZGQ1LTgyMzAtOWQ2N2U1Ok1ZU1BPUlRTRkVFRFMKCg==`,
-      },
-    })
+    return fetch(`http://localhost:8889/db`)
       .then((res) => res.json())
       .then((playerData) => {
         setPlayerObjArray(playerData.players);
