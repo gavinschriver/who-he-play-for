@@ -22,7 +22,11 @@ export const Leaderboard = () => {
     };
 
     return userScoreObj;
-  }).reverse();
+  });
+    
+    const sortedScores = userScores.sort((a, b) => {
+        return b.score - a.score
+    })
 
   return (
     <table>
@@ -30,7 +34,7 @@ export const Leaderboard = () => {
         <th>User:</th>
         <th>Stans:</th>
       </tr>
-      {userScores.map((uSO) => {
+      {sortedScores.map((uSO) => {
         return (
           <tr>
             <td>{uSO.username}</td>
