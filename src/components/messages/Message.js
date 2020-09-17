@@ -17,6 +17,10 @@ export const Message = ({ MO }) => {
     }))
   })
 
+  const matchingPlayersFirstNames = matchingPlayers.map(mPO => {
+    return mPO.player.firstName
+  })
+
   const matchingPlayersToggle = () => {
     if (!showHideMatchingPlayers) {
       setShowHideMatchingPlayers(true);
@@ -30,7 +34,7 @@ export const Message = ({ MO }) => {
       <div className="entryText">
         {MO.user.name || ""} 
         {
-          (1+ 1 === 3)
+          (matchingPlayersFirstNames.includes(MO.messagetext))
             ? <span>Stans for:</span>
             : <span>SHWOOPS</span>
         }
