@@ -1,8 +1,21 @@
-import React, {useState} from "react";
-import { MessageContext } from "./MessageProvider";
+import React, {useState, useContext} from "react";
+import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
+import { PlayerContext } from "../players/PlayerProvider"
 
 export const Message = ({ MO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
+  const { usersPlayers } = useContext(UserPlayerContext)
+  const { playerObjArray } = useContext(PlayerContext)
+
+  const matchingUsersPlayers = usersPlayers.filter(upo => {
+    return upo.userId === MO.user.id
+  })
+
+  const matchingPlayers = matchingUsersPlayers.map(mUPO => {
+    return (playerObjArray.find(p => {
+      return mUPO.playerId === p.player.id
+    }))
+  })
 
   const matchingPlayersToggle = () => {
     if (!showHideMatchingPlayers) {
