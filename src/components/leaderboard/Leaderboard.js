@@ -9,10 +9,17 @@ export const Leaderboard = () => {
   }, []);
 
     const userScores = users.map(u => {
-        return u.messages.length
+        const userScoreObj = {
+            userId: u.id,
+            score: u.messages.length
+        }
+
+        return userScoreObj
     })
 
-    console.log(userScores)
-
-    return null
+    return (
+        <table>
+            <tr><th>User:</th><th>Score:</th></tr>
+        </table>
+    )
 };
