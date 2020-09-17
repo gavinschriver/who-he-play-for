@@ -28,21 +28,21 @@ export const Message = ({ MO }) => {
   return (
     <article className="message" id={MO.id}>
       <div className="entryText">
-        {MO.user.name || ""}
-        <span>{MO.messagetext}</span>
+        {MO.user.name || ""} Stans for: 
+        <span> {MO.messagetext}</span>
       </div>
       <button
         onClick={e => {
           e.preventDefault()
           matchingPlayersToggle()
         }}
-      >Show Playerz</button>
+      >Show Current Lineup:</button>
       {
         showHideMatchingPlayers ?
           <div>
             {
               matchingPlayers.map(mPO => {
-                return <div>{mPO.player.id}</div>
+                return <div>{mPO.player.firstName} {mPO.player.lastName}</div>
               })
             }
           </div> 

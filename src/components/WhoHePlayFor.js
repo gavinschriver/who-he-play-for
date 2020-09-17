@@ -12,7 +12,6 @@ export const WhoHePlayFor = () => (
             if (localStorage.getItem("whpf_user")) {
                 return (
                     <>
-                        <Route render={props => <NavBar {...props} />} />
                         <Route render={props => <ApplicationViews {...props} />} />
                     </>
                 )
