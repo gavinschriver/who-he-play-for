@@ -28,7 +28,12 @@ export const Message = ({ MO }) => {
   return (
     <article className="message" id={MO.id}>
       <div className="entryText">
-        {MO.user.name || ""} Stans for: 
+        {MO.user.name || ""} 
+        {
+          (1+ 1 === 3)
+            ? <span>Stans for:</span>
+            : <span>SHWOOPS</span>
+        }
         <span> {MO.messagetext}</span>
       </div>
       <button

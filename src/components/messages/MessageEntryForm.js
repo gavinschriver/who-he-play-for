@@ -15,6 +15,7 @@ export const MessageEntryForm = () => {
   const urlRef = useRef("");
 
   const handleSubmitButtonEvent = () => {
+    //does the value of the input for the player's name match a string in the current users collection of player strings?
     if (matchingPlayersStrings.includes(messagetextRef.current.value)) {
       const matchingPO = matchingPlayersObjects.find((mPO) => {
         return mPO.player.firstName === messagetextRef.current.value;
@@ -40,7 +41,19 @@ export const MessageEntryForm = () => {
         timestamp: Date.now(),
       };
       addMessage(newMessage);
-    } else alert("no go bro");
+      // if not, does the value of the input for the player's name match a string in the collection of strings of other user's players?
+    } else {
+      if (othersPlayersStrings.includes(messagetextRef.current.value)) {
+        const newMessage = {
+          userId: parseInt(localStorage.getItem("whpf_user")),
+          messagetext: messagetextRef.current.value,
+          url: urlRef.current.value,
+          timestamp: Date.now(),
+        };
+        addMessage(newMessage);
+      } else
+      alert("no go bro");
+    }
   };
 
   useEffect(() => {
@@ -70,17 +83,20 @@ export const MessageEntryForm = () => {
     return mPO.player.firstName;
   });
 
-
   // for other player's lineups...
   const othersUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId != parseInt(localStorage.getItem("whpf_user"));
   });
 
-  const othersPlayersObjs = othersUsersPlayers.map(oUPO => {
-    return playerObjArray.find(p => {
-      return p.player.id === oUPO.playerId
-    })
-  })
+  const othersPlayersObjs = othersUsersPlayers.map((oUPO) => {
+    return playerObjArray.find((p) => {
+      return p.player.id === oUPO.playerId;
+    });
+  });
+
+  const othersPlayersStrings = othersPlayersObjs.map((oPO) => {
+    return oPO.player.firstName;
+  });
 
   return (
     <section className="messageEntryForm">
