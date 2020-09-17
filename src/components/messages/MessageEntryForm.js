@@ -53,8 +53,16 @@ export const MessageEntryForm = () => {
           trashtalk: true
         };
         addMessage(newMessage);
-      } else
-      alert("no go bro");
+      } else {
+        const newMessage = {
+          userId: parseInt(localStorage.getItem("whpf_user")),
+          messagetext: messagetextRef.current.value,
+          url: urlRef.current.value,
+          timestamp: Date.now(),
+        };
+        addMessage(newMessage);
+      }
+      // alert("no go bro");
     }
   };
 
