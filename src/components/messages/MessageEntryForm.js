@@ -117,13 +117,28 @@ export const MessageEntryForm = () => {
     <section className="messageEntryForm">
       <form>
         <fieldset>
+        <button
+          onClick={(e) => {
+              e.preventDefault();
+              messagetextRef.current.value = 'I stan for '
+          }}
+        >
+          Stan by your man
+        </button>
+        <button
+          onClick={(e) => {
+              e.preventDefault();
+              messagetextRef.current.value = `You know who's garbage? `
+          }}
+        >
+          Talk that trash
+        </button>
           <input
             type="text"
             name="messagetext"
             id="messagetext"
             placeholder="TALK THAT TRASH"
             ref={messagetextRef}
-            required
           />
           <input
             type="url"
@@ -132,7 +147,6 @@ export const MessageEntryForm = () => {
             placeholder="better back it up"
             pattern="https://.*"
             size="30"
-            require
             ref={urlRef}
           ></input>
         </fieldset>
@@ -142,7 +156,7 @@ export const MessageEntryForm = () => {
             handleSubmitButtonEvent();
           }}
         >
-          STAN
+          Get in the mix
         </button>
       </form>
     </section>

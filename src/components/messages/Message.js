@@ -67,7 +67,7 @@ export const Message = ({ MO }) => {
       ) : (
         <div></div>
       )}
-      {MO.user.id === parseInt(localStorage.getItem("whpf_user")) && (MO.trashtalk) ? (
+      {MO.user.id === parseInt(localStorage.getItem("whpf_user")) && (!MO.stan) ? (
         <button
           onClick={(e) => {
             e.preventDefault();
