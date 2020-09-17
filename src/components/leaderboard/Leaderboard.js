@@ -3,30 +3,26 @@ import { UserContext } from "../users/UserProvider";
 import { MessageContext } from "../messages/MessageProvider";
 
 export const Leaderboard = () => {
-  const { getUsers, users } = useContext(UserContext);
-  const { messages, getMessages } = useContext(MessageContext);
-  const [userScores, setUserScores] = useState([]);
+    const { getUsers, users } = useContext(UserContext);
+    const { messages} = useContext(MessageContext)
 
   useEffect(() => {
-    getUsers().then(getMessages);
+    getUsers();
   }, []);
+    
+    useEffect(() => {
+        getUsers()
+    }, [messages])
 
-  useEffect(() => {
-    console.log("messages change!");
-    setUserScores(
-      users
-        .map((u) => {
-          const userScoreObj = {
-            username: u.name,
-            userId: u.id,
-            score: u.messages.length,
-          };
+  const userScores = users.map((u) => {
+    const userScoreObj = {
+      username: u.name,
+      userId: u.id,
+      score: u.messages.length,
+    };
 
-          return userScoreObj;
-        })
-        .reverse()
-    );
-  }, [messages]);
+    return userScoreObj;
+  }).reverse();
 
   return (
     <table>
