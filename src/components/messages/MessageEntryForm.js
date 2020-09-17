@@ -39,6 +39,7 @@ export const MessageEntryForm = () => {
         messagetext: messagetextRef.current.value,
         url: urlRef.current.value,
         timestamp: Date.now(),
+        stan: true
       };
       addMessage(newMessage);
       // if not, does the value of the input for the player's name match a string in the collection of strings of other user's players?

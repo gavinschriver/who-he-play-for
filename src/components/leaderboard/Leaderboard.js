@@ -3,30 +3,39 @@ import { UserContext } from "../users/UserProvider";
 import { MessageContext } from "../messages/MessageProvider";
 
 export const Leaderboard = () => {
-    const { getUsers, users } = useContext(UserContext);
-    const { messages} = useContext(MessageContext)
+  const { getUsers, users } = useContext(UserContext);
+  const { messages } = useContext(MessageContext);
 
   useEffect(() => {
     getUsers();
   }, []);
-    
-    useEffect(() => {
-        getUsers()
-    }, [messages])
+
+  useEffect(() => {
+    getUsers();
+  }, [messages]);
 
   const userScores = users.map((u) => {
+    let userscore = 0
+
+    const userMessages = u.messages;
+
+      userMessages.forEach(m => {
+          if (m.stan) {
+            userscore = userscore + 5
+        } else userscore++
+    });
     const userScoreObj = {
       username: u.name,
       userId: u.id,
-      score: u.messages.length,
+      score: userscore
     };
 
     return userScoreObj;
   });
-    
-    const sortedScores = userScores.sort((a, b) => {
-        return b.score - a.score
-    })
+
+  const sortedScores = userScores.sort((a, b) => {
+    return b.score - a.score;
+  });
 
   return (
     <table>
