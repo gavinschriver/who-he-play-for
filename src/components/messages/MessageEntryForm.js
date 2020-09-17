@@ -70,6 +70,18 @@ export const MessageEntryForm = () => {
     return mPO.player.firstName;
   });
 
+
+  // for other player's lineups...
+  const othersUsersPlayers = usersPlayers.filter((upo) => {
+    return upo.userId != parseInt(localStorage.getItem("whpf_user"));
+  });
+
+  const othersPlayersObjs = othersUsersPlayers.map(oUPO => {
+    return playerObjArray.find(p => {
+      return p.player.id === oUPO.playerId
+    })
+  })
+
   return (
     <section className="messageEntryForm">
       <form>
@@ -89,7 +101,7 @@ export const MessageEntryForm = () => {
             placeholder="better back it up"
             pattern="https://.*"
             size="30"
-            required
+            require
             ref={urlRef}
           ></input>
         </fieldset>
