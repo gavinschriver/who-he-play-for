@@ -1,7 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext, useEffect, useLayoutEffect} from "react";
 import { MessageContext } from "./MessageProvider";
+import { PlayerContext } from "../players/PlayerProvider";
+import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider"
 
 export const Message = ({ MO }) => {
+  const { playerObjArray, getPlayerData } = useContext(PlayerContext)
+  const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext)
+
+  const [currentMessage, setCurrentMessage] = useState({ user: {} } || {});
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
 
   const matchingPlayersToggle = () => {
@@ -11,6 +17,7 @@ export const Message = ({ MO }) => {
       setShowHideMatchingPlayers(false);
     }
   };
+
 
   return (
     <article className="message" id={MO.id}>
