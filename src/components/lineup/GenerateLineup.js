@@ -61,7 +61,7 @@ export const GenerateLineup = () => {
     const arrayOfMatchingUPOS = usersPlayers.filter((upo) => {
       return upo.userId === parseInt(localStorage.getItem("whpf_user"));
     });
-    setMatchingUsersPlayers(arrayOfMatchingUPOS);
+    setMatchingUsersPlayers(arrayOfMatchingUPOS.reverse());
   }, [usersPlayers]);
 
   useEffect(() => {
@@ -71,11 +71,11 @@ export const GenerateLineup = () => {
     }
   }, [mentionedCount]);
 
-
   return (
     <>
       <article className="lineup__container">
-        {mentionedCount === 0 && !matchingUsersPlayers || mentionedCount === matchingUsersPlayers.length ? (
+        {(mentionedCount === 0 && !matchingUsersPlayers) ||
+        mentionedCount === matchingUsersPlayers.length ? (
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -110,7 +110,6 @@ export const GenerateLineup = () => {
                 <div>
                   <img src={matchingPlayerObj.player.officialImageSrc} />
                 </div>
-                ;
               </article>
             );
           })}
