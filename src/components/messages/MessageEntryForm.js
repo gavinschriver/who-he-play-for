@@ -50,6 +50,7 @@ export const MessageEntryForm = () => {
           messagetext: messagetextRef.current.value,
           url: urlRef.current.value,
           timestamp: Date.now(),
+          trashtalk: true
         };
         addMessage(newMessage);
       } else

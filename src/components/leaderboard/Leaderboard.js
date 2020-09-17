@@ -22,7 +22,9 @@ export const Leaderboard = () => {
       userMessages.forEach(m => {
           if (m.stan) {
             userscore = userscore + 5
-        } else userscore++
+          } else if (m.trashtalk) {
+              userscore++
+        }
     });
     const userScoreObj = {
       username: u.name,
