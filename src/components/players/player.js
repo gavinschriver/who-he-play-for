@@ -1,11 +1,11 @@
 import React from "react"
 
-export const Player = ({ matchingPlayerObj }) => {
+export const Player = ({ PO }) => {
     return (
         <article>
-                <div>Player Name: {matchingPlayerObj.player.firstName}</div>
+                <div>Player Name: {PO.player.firstName}</div>
                 <div>
-                  <img src={matchingPlayerObj.player.officialImageSrc} />
+                  <img src={PO.player.officialImageSrc} />
                 </div>
               </article>
     )

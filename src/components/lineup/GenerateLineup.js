@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
+import { Player } from "../players/Player";
 
 export const GenerateLineup = () => {
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
@@ -99,22 +100,18 @@ export const GenerateLineup = () => {
 
         <article className="lineup">
           <h2>Today's Lineup:</h2>
-          {matchingUsersPlayers.map((mUPO) =>
-          
           {
+            matchingUsersPlayers.map((mUPO) => {
             const matchingPlayerObj = filteredPlayers.find(
               (p) => p.player.id === mUPO.playerId
             );
 
-            return (
-              <article>
-                <div>Player Name: {matchingPlayerObj.player.firstName}</div>
-                <div>
-                  <img src={matchingPlayerObj.player.officialImageSrc} />
-                </div>
-              </article>
-            );
-          })}
+              return <Player key={matchingPlayerObj.player.id} PO={matchingPlayerObj} />
+              
+              
+            })
+          
+          }
         </article>
       </div>
     </>
