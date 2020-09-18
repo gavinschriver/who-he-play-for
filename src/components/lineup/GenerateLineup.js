@@ -4,9 +4,8 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Player } from "../players/Player";
 import teamData from "../teams.json";
 
-
 export const GenerateLineup = () => {
-  const teams = teamData.teams
+  const teams = teamData.teams;
 
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
   const {
@@ -22,6 +21,7 @@ export const GenerateLineup = () => {
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [generateButtonShowing, setGenerateButtonShowing] = useState(false);
 
+  // making sure we only get players who match the conditions of being on an roster and having an image
   const filteredPlayers = playerObjArray.filter(
     (p) =>
       p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc
@@ -29,8 +29,8 @@ export const GenerateLineup = () => {
 
   const filteredPlayerIds = filteredPlayers.map((p) => p.player.id);
 
+  // posts 5 new userplayer objects
   const createUsersPlayers = () => {
-    alert(parseInt(localStorage.getItem("whpf_user")));
     for (let i = 0; i < 5; i++) {
       const activeUserId = parseInt(localStorage.getItem("whpf_user"));
       const randomPlayerId =
@@ -104,18 +104,23 @@ export const GenerateLineup = () => {
 
         <article className="lineup">
           <h2>Today's Lineup:</h2>
-          {
-            matchingUsersPlayers.map((mUPO) => {
+          {matchingUsersPlayers.map((mUPO) => {
             const matchingPlayerObj = filteredPlayers.find(
               (p) => p.player.id === mUPO.playerId
             );
 
-              return <Player key={matchingPlayerObj.player.id} PO={matchingPlayerObj} />
-              
-              
+            const matchingPlayerTeam = teams.find(t => {
+              return t.abbreviation === matchingPlayerObj.player.currentTeam.abbreviation
             })
-          
-          }
+
+            return (
+              <Player
+                key={matchingPlayerObj.player.id}
+                PO={matchingPlayerObj}
+                TO={matchingPlayerTeam}
+              />
+            );
+          })}
         </article>
       </div>
     </>

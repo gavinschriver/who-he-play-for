@@ -207,14 +207,14 @@ export const MessageEntryForm = () => {
             ref={urlRef}
           ></input>
         </fieldset>
-        <button
+        {/* <button
           onClick={(e) => {
             e.preventDefault();
             // handleSubmitButtonEvent();
           }}
         >
           Get in the mix
-        </button>
+        </button> */}
       </form>
     </section>
   );

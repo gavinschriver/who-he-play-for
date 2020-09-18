@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import "./Players.css";
-import teamData from "../teams.json";
 
-export const Player = ({ PO }) => {
-  const teams = teamData.teams;
+export const Player = ({ PO, TO }) => {
   const [showHideDetails, setShowHideDetails] = useState(false);
 
   const handleDetailButtonClick = () => {
@@ -14,6 +12,7 @@ export const Player = ({ PO }) => {
   };
 
   const currentPlayer = PO;
+  const currentPlayerTeam = TO;
     
   return (
     <article className="playerCard card">
