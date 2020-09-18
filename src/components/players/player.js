@@ -10,9 +10,9 @@ export const Player = ({ PO }) => {
     } else setShowHideDetails(false);
   };
 
-    const currentPlayer = PO;
-    
-    console.log(currentPlayer.player.currentTeam)
+  const currentPlayer = PO;
+
+  
 
   return (
     <article className="playerCard card">
@@ -23,7 +23,12 @@ export const Player = ({ PO }) => {
       <div className="playerCard__headshot img">
         <img src={currentPlayer.player.officialImageSrc} />
       </div>
-      <div>Team:</div>
+          <div>Team:</div>
+          {
+              currentPlayer.player.currentTeam
+                  ? <div><img src={(`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`).toLowerCase()} /></div>
+                  :<div>DOES NOT EXIST</div>
+          }
       <div className="playerCard__teamLogo img">LOL</div>
       <button
         className="playerCard__showDetailsButton btn btn--details"
