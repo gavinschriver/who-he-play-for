@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import {
-  TwitterTimelineEmbed,
-  TwitterShareButton,
-  TwitterFollowButton,
-  TwitterHashtagButton,
-  TwitterMentionButton,
-  TwitterTweetEmbed,
-  TwitterMomentShare,
-  TwitterDMButton,
-  TwitterVideoEmbed,
-  TwitterOnAirButton,
+  TwitterTimelineEmbed
 } from "react-twitter-embed";
 
 export const Player = ({ PO }) => {
