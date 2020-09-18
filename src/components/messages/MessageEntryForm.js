@@ -52,6 +52,27 @@ export const MessageEntryForm = () => {
     } else alert(`better check that input stanley`);
   };
 
+  const handleTrashtalkButtonPress = () => {
+    const trashtalkplayer = messagetextRef.current.value
+    const urlValue = urlRef.current.value;
+
+    if (othersPlayersStrings.includes(trashtalkplayer) && urlValue !== "") {
+      if (!messageUrls.includes(urlValue)) {
+
+          const newMessage = {
+            userId: parseInt(localStorage.getItem("whpf_user")),
+            messagetext: messagetextRef.current.value,
+            url: urlRef.current.value,
+            timestamp: Date.now(),
+            trashtalk: true,
+          };
+          addMessage(newMessage);
+        
+      } else alert(`someone already cited that proof`)
+    } else alert(`better check that input stanley`);
+    
+  };
+  
   //   const handleSubmitButtonEvent = () => {
   //     const stanplayer = messagetextRef.current.value
   //     //does the value of the input for the player's name match a string in the current users collection of player strings and is there something in the URL field?
@@ -96,8 +117,6 @@ export const MessageEntryForm = () => {
   const messageUrls = messages.map((m) => {
     return m.url;
   });
-
-  console.log(messageUrls);
 
   // this colleciton is current user's WHOLE lineup as UPOs
   const allMatchingUsersPlayers = usersPlayers.filter((upo) => {
@@ -166,6 +185,7 @@ export const MessageEntryForm = () => {
           <button
             onClick={(e) => {
               e.preventDefault();
+              handleTrashtalkButtonPress()
             }}
           >
             Talk that trash
