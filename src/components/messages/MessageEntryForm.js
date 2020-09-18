@@ -16,39 +16,40 @@ export const MessageEntryForm = () => {
 
   const handleStanButtonPress = () => {
     const stanplayer = messagetextRef.current.value;
-    const urlValue = urlRef.current.value
-    if (allMatchingPlayersStrings.includes(stanplayer) && urlValue !== '') {
-      if (filteredPlayersStrings.includes(stanplayer)) {
-        const matchingPO = filteredPlayersObjects.find((mPO) => {
-          return mPO.player.firstName === messagetextRef.current.value;
-        });
+    const urlValue = urlRef.current.value;
+    if (allMatchingPlayersStrings.includes(stanplayer) && urlValue !== "") {
+      if (!messageUrls.includes(urlValue)) {
+        if (filteredPlayersStrings.includes(stanplayer)) {
+          const matchingPO = filteredPlayersObjects.find((mPO) => {
+            return mPO.player.firstName === messagetextRef.current.value;
+          });
 
-        const matchingUPO = filteredUsersPlayers.find((uPO) => {
-          return uPO.playerId === matchingPO.player.id;
-        });
+          const matchingUPO = filteredUsersPlayers.find((uPO) => {
+            return uPO.playerId === matchingPO.player.id;
+          });
 
-        const updatedUPO = {
-          id: matchingUPO.id,
-          userId: matchingUPO.userId,
-          playerId: matchingUPO.playerId,
-          mentioned: true,
-        };
+          const updatedUPO = {
+            id: matchingUPO.id,
+            userId: matchingUPO.userId,
+            playerId: matchingUPO.playerId,
+            mentioned: true,
+          };
 
-        updateUserPlayer(updatedUPO);
+          updateUserPlayer(updatedUPO);
 
-        const newMessage = {
-          userId: parseInt(localStorage.getItem("whpf_user")),
-          messagetext: messagetextRef.current.value,
-          url: urlRef.current.value,
-          timestamp: Date.now(),
-          stan: true,
-        };
-        addMessage(newMessage);
-      } else if (allMatchingPlayersStrings.includes(stanplayer)) {
-        alert(`Woah slow down stanimal, you already repped this player`);
-      }
-    } else alert(`better check that input stanley`)
-    console.log(urlValue.length)
+          const newMessage = {
+            userId: parseInt(localStorage.getItem("whpf_user")),
+            messagetext: messagetextRef.current.value,
+            url: urlRef.current.value,
+            timestamp: Date.now(),
+            stan: true,
+          };
+          addMessage(newMessage);
+        } else if (allMatchingPlayersStrings.includes(stanplayer)) {
+          alert(`Woah slow down stanimal, you already repped this player`);
+        }
+      } else alert(`someone already cited that proof`)
+    } else alert(`better check that input stanley`);
   };
 
   //   const handleSubmitButtonEvent = () => {
@@ -90,6 +91,13 @@ export const MessageEntryForm = () => {
       ).length
     );
   }, [usersPlayers]);
+
+  // array of all URL values of all messages
+  const messageUrls = messages.map((m) => {
+    return m.url;
+  });
+
+  console.log(messageUrls);
 
   // this colleciton is current user's WHOLE lineup as UPOs
   const allMatchingUsersPlayers = usersPlayers.filter((upo) => {
