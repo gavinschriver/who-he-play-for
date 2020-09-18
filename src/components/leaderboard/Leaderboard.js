@@ -41,6 +41,7 @@ export const Leaderboard = () => {
 
   return (
     <table>
+      <tbody>
       <tr>
         <th>User:</th>
         <th>Stans:</th>
@@ -53,6 +54,7 @@ export const Leaderboard = () => {
           </tr>
         );
       })}
+        </tbody>
     </table>
   );
 };

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import {
-  TwitterTimelineEmbed
-} from "react-twitter-embed";
+import { TwitterTimelineEmbed } from "react-twitter-embed";
 
 export const Player = ({ PO }) => {
   const [showHideDetails, setShowHideDetails] = useState(false);
@@ -12,12 +10,21 @@ export const Player = ({ PO }) => {
     } else setShowHideDetails(false);
   };
 
+    const currentPlayer = PO;
+    
+    console.log(currentPlayer.player.currentTeam)
+
   return (
     <article className="playerCard card">
-      <div>Player Name: {PO.player.firstName}</div>
-      <div className="playerCard__headshot img">
-        <img src={PO.player.officialImageSrc} />
+      <div>
+        Player Name: {currentPlayer.player.firstName}{" "}
+        {currentPlayer.player.lastName}
       </div>
+      <div className="playerCard__headshot img">
+        <img src={currentPlayer.player.officialImageSrc} />
+      </div>
+      <div>Team:</div>
+      <div className="playerCard__teamLogo img">LOL</div>
       <button
         className="playerCard__showDetailsButton btn btn--details"
         onClick={(e) => {
@@ -25,50 +32,51 @@ export const Player = ({ PO }) => {
           handleDetailButtonClick();
         }}
       >
-        Get the juicy deets SUPER WERIDD:
+        Get the juicy deets:
       </button>
       {showHideDetails ? (
         <article className="playerCard__details">
           <div className="playerCard__details__heading heading">DEETS</div>
           <div className="playerCard__details__DOB">
             <span className="detailName">Date of Birth: </span>
-            <span className="detail">{PO.player.birthDate}</span>
+            <span className="detail">{currentPlayer.player.birthDate}</span>
           </div>
 
           <div className="playerCard__details__city">
             <span className="detailName">Hailing From: </span>
             <span className="detail">
-              {PO.player.birthCity}, {PO.player.birthCountry}
+              {currentPlayer.player.birthCity},{" "}
+              {currentPlayer.player.birthCountry}
             </span>
           </div>
 
           <div className="playerCard__details__weight">
             <span className="detailName">Weight (rude): </span>
-            <span className="detail">{PO.player.weight}</span>
+            <span className="detail">{currentPlayer.player.weight}</span>
           </div>
 
           <div className="playerCard__details__primaryPosition">
             <span className="detailName">Primary Position: </span>
             <span className="detail">
-              {PO.player.primaryPosition === "SG"
+              {currentPlayer.player.primaryPosition === "SG"
                 ? "Shooting Guard"
-                : PO.player.primaryPosition === "PG"
+                : currentPlayer.player.primaryPosition === "PG"
                 ? "Point Guard"
-                : PO.player.primaryPosition === "SF"
+                : currentPlayer.player.primaryPosition === "SF"
                 ? "Strong Forward"
-                : PO.player.primaryPosition === "C"
+                : currentPlayer.player.primaryPosition === "C"
                 ? "Center"
-                : PO.player.primaryPosition === "PF"
+                : currentPlayer.player.primaryPosition === "PF"
                 ? "Power Forward"
                 : "Unkown (Positionless BBall amirite?)"}
             </span>
             <div className="playerCard__details__height">
               <span className="detailName">Height: </span>
-              <span className="detail">{PO.player.height}</span>
-              {PO.player.socialMediaAccounts.length > 0 ? (
+              <span className="detail">{currentPlayer.player.height}</span>
+              {currentPlayer.player.socialMediaAccounts.length > 0 ? (
                 <TwitterTimelineEmbed
                   sourceType="profile"
-                  screenName={PO.player.socialMediaAccounts[0].value}
+                  screenName={currentPlayer.player.socialMediaAccounts[0].value}
                   options={{ height: 400 }}
                 />
               ) : (

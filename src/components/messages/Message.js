@@ -34,7 +34,7 @@ export const Message = ({ MO }) => {
   return (
     <article className="message" id={MO.id}>
       <div className="entryText">
-        <span class="message__username">{MO.user.name || ""}</span>
+        <span className="message__username">{MO.user.name || ""}</span>
         {matchingPlayersFirstNames.includes(MO.messagetext) ? (
           <span> stans for:</span>
         ) : MO.trashtalk ? (
@@ -79,7 +79,7 @@ export const Message = ({ MO }) => {
       ) : (
         <div></div>
         )}
-      <div class="message__url">{MO.url}</div>
+      <div className="message__url">{MO.url}</div>
     </article>
   );
 };
