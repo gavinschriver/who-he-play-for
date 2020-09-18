@@ -78,7 +78,8 @@ export const Message = ({ MO }) => {
         </button>
       ) : (
         <div></div>
-      )}
+        )}
+      <div class="message__url">{MO.url}</div>
     </article>
   );
 };
