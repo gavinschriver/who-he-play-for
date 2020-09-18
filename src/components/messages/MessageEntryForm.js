@@ -194,7 +194,7 @@ export const MessageEntryForm = () => {
             type="text"
             name="messagetext"
             id="messagetext"
-            placeholder="TALK THAT TRASH"
+            placeholder="Who ya got? (Player first name)"
             ref={messagetextRef}
           />
           <input

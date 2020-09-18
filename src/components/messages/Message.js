@@ -67,7 +67,7 @@ export const Message = ({ MO }) => {
         </div>
       ) : (
         <div></div>
-      )}
+        )}
       {MO.user.id === parseInt(localStorage.getItem("whpf_user")) && (!MO.stan) ? (
         <button
           onClick={(e) => {
@@ -80,7 +80,13 @@ export const Message = ({ MO }) => {
       ) : (
         <div></div>
         )}
-      <div className="message__url">{MO.url}</div>
+      {
+        MO.stan
+          ? <div className="message__url"><a href={MO.url}>HEAT CHECK</a></div>
+          : MO.trashtalk
+            ? < div className="message__url"><a href={MO.url}>I'll just leave this here...</a></div>
+            : <div></div>
+      }
     </article>
   );
 };
