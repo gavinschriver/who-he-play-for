@@ -17,20 +17,19 @@ export const Player = ({ PO }) => {
 
   return (
     <article className="playerCard card">
-      <div>
+      <div className="playerCard__name">
         Player Name: {currentPlayer.player.firstName}{" "}
         {currentPlayer.player.lastName}
       </div>
       <div className="playerCard__headshot img">
-        <img src={currentPlayer.player.officialImageSrc} />
+        <a href={`http://www.google.com/search?q=${currentPlayer.player.firstName}+${currentPlayer.player.lastName}+nba`} target="_blank"><img src={currentPlayer.player.officialImageSrc} /></a>
       </div>
           <div>Team:</div>
           {
               currentPlayer.player.currentTeam
                   ? <div className="playerCard__logo__img"><img src={(`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`).toLowerCase()} /></div>
-                  :<div>DOES NOT EXIST</div>
+                  :<div>Poor lil buddy needs a team :(</div>
           }
-      <div className="playerCard__teamLogo img">LOL</div>
       <button
         className="playerCard__showDetailsButton btn btn--details"
         onClick={(e) => {
