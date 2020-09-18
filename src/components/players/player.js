@@ -1,4 +1,16 @@
 import React, { useState } from "react";
+import {
+  TwitterTimelineEmbed,
+  TwitterShareButton,
+  TwitterFollowButton,
+  TwitterHashtagButton,
+  TwitterMentionButton,
+  TwitterTweetEmbed,
+  TwitterMomentShare,
+  TwitterDMButton,
+  TwitterVideoEmbed,
+  TwitterOnAirButton,
+} from "react-twitter-embed";
 
 export const Player = ({ PO }) => {
   const [showHideDetails, setShowHideDetails] = useState(false);
@@ -30,37 +42,48 @@ export const Player = ({ PO }) => {
           <div className="playerCard__details__DOB">
             <span className="detailName">Date of Birth: </span>
             <span className="detail">{PO.player.birthDate}</span>
-                  </div>
+          </div>
 
-                  <div className="playerCard__details__city">
+          <div className="playerCard__details__city">
             <span className="detailName">Hailing From: </span>
-                      <span className="detail">{PO.player.birthCity}, {PO.player.birthCountry}</span>
-                  </div>
+            <span className="detail">
+              {PO.player.birthCity}, {PO.player.birthCountry}
+            </span>
+          </div>
 
-                  <div className="playerCard__details__weight">
+          <div className="playerCard__details__weight">
             <span className="detailName">Weight (rude): </span>
             <span className="detail">{PO.player.weight}</span>
-                  </div>
-                  
+          </div>
+
           <div className="playerCard__details__primaryPosition">
             <span className="detailName">Primary Position: </span>
-                      <span className="detail">{
-                          PO.player.primaryPosition === "SG"
-                              ? 'Shooting Guard'
-                              : PO.player.primaryPosition === "PG"
-                                  ? 'Point Guard'
-                                  : PO.player.primaryPosition === "SF"
-                                      ? 'Strong Forward'
-                                      : PO.player.primaryPosition === "C"
-                                          ? 'Center'
-                                          : PO.player.primaryPosition === "PF"
-                                              ? 'Power Forward'
-                                              : 'Unkown (Positionless BBall amirite?)'
-                      }</span>
-                                <div className="playerCard__details__height">
-            <span className="detailName">Height: </span>
-            <span className="detail">{PO.player.height}</span>
-          </div>
+            <span className="detail">
+              {PO.player.primaryPosition === "SG"
+                ? "Shooting Guard"
+                : PO.player.primaryPosition === "PG"
+                ? "Point Guard"
+                : PO.player.primaryPosition === "SF"
+                ? "Strong Forward"
+                : PO.player.primaryPosition === "C"
+                ? "Center"
+                : PO.player.primaryPosition === "PF"
+                ? "Power Forward"
+                : "Unkown (Positionless BBall amirite?)"}
+            </span>
+            <div className="playerCard__details__height">
+              <span className="detailName">Height: </span>
+              <span className="detail">{PO.player.height}</span>
+              {PO.player.socialMediaAccounts.length > 0 ? (
+                <TwitterTimelineEmbed
+                  sourceType="profile"
+                  screenName={PO.player.socialMediaAccounts[0].value}
+                  options={{ height: 400 }}
+                />
+              ) : (
+                <div></div>
+              )}
+            </div>
           </div>
         </article>
       ) : (
