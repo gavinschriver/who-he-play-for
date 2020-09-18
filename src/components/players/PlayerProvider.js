@@ -17,7 +17,7 @@ export const PlayerProvider = (propsObj) => {
     <PlayerContext.Provider
       value={{
         getPlayerData,
-        playerObjArray,
+        playerObjArray
       }}
     >
       {propsObj.children}

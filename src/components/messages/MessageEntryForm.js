@@ -11,7 +11,7 @@ export const MessageEntryForm = () => {
   const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
     UserPlayerContext
   );
-  const { playerObjArray } = useContext(PlayerContext);
+  const { playerObjArray, setOtherUsersPlayers} = useContext(PlayerContext);
 
   const messagetextRef = useRef("");
   const urlRef = useRef("");
@@ -72,36 +72,6 @@ export const MessageEntryForm = () => {
     } else alert(`better check that input stanley`);
   };
 
-  //   const handleSubmitButtonEvent = () => {
-  //     const stanplayer = messagetextRef.current.value
-  //     //does the value of the input for the player's name match a string in the current users collection of player strings and is there something in the URL field?
-  //  else {
-  //       if (othersPlayersStrings.includes(messagetextRef.current.value)) {
-  //         if (filteredUsersPlayers.length > 0) {
-  //           const newMessage = {
-  //             userId: parseInt(localStorage.getItem("whpf_user")),
-  //             messagetext: messagetextRef.current.value,
-  //             url: urlRef.current.value,
-  //             timestamp: Date.now(),
-  //             trashtalk: true
-  //           };
-  //           addMessage(newMessage);
-  //           console.log(filteredUsersPlayers)
-  //         } else {alert('nice trick')}
-
-  //       } else {
-  //         const newMessage = {
-  //           userId: parseInt(localStorage.getItem("whpf_user")),
-  //           messagetext: messagetextRef.current.value,
-  //           url: urlRef.current.value,
-  //           timestamp: Date.now(),
-  //         };
-  //         addMessage(newMessage);
-  //       }
-  //       // alert("no go bro");
-  //     }
-  //   };
-
   useEffect(() => {
     setMentionedCount(
       usersPlayers.filter(
@@ -111,6 +81,7 @@ export const MessageEntryForm = () => {
       ).length
     );
   }, [usersPlayers]);
+
 
   // array of all URL values of all messages
   const messageUrls = messages.map((m) => {
@@ -129,6 +100,7 @@ export const MessageEntryForm = () => {
     });
   });
 
+  // this colleciton is current user's WHOLE lineup as FIRST names
   const allMatchingPlayersStrings = allMatchingPlayersObjects.map((mPO) => {
     return mPO.player.firstName;
   });

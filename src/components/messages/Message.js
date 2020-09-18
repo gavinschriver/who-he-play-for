@@ -82,9 +82,9 @@ export const Message = ({ MO }) => {
         )}
       {
         MO.stan
-          ? <div className="message__url"><a href={MO.url}>HEAT CHECK</a></div>
+          ? <div className="message__url"><a href={MO.url} target="_blank">HEAT CHECK</a></div>
           : MO.trashtalk
-            ? < div className="message__url"><a href={MO.url}>I'll just leave this here...</a></div>
+            ? < div className="message__url" target="_blank"><a href={MO.url}>I'll just leave this here...</a></div>
             : <div></div>
       }
     </article>

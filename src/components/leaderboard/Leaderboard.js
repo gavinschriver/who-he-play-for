@@ -1,10 +1,25 @@
 import React, { useEffect, useContext, useState } from "react";
 import { UserContext } from "../users/UserProvider";
 import { MessageContext } from "../messages/MessageProvider";
+import { PlayerContext } from "../players/PlayerProvider";
+import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 
 export const Leaderboard = () => {
   const { getUsers, users } = useContext(UserContext);
   const { messages } = useContext(MessageContext);
+  const { playerObjArray } = useContext(PlayerContext)
+  const { usersPlayers } = useContext(UserPlayerContext)
+
+  // only messages marked as trash talk
+  const trashtalkMessages = messages.filter(m => {
+    return m.trashtalk
+  })
+
+  const trashtalkStringNameInstances = trashtalkMessages.map(ttMO => {
+    return ttMO.messagetext
+  })
+
+  console.log(trashtalkStringNameInstances)
 
   useEffect(() => {
     getUsers();
@@ -34,6 +49,11 @@ export const Leaderboard = () => {
 
     return userScoreObj;
   });
+
+  
+
+
+
 
   const sortedScores = userScores.sort((a, b) => {
     return b.score - a.score;
