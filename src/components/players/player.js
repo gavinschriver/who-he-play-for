@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
+import "./Players.css"
 
 export const Player = ({ PO }) => {
   const [showHideDetails, setShowHideDetails] = useState(false);
@@ -26,7 +27,7 @@ export const Player = ({ PO }) => {
           <div>Team:</div>
           {
               currentPlayer.player.currentTeam
-                  ? <div><img src={(`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`).toLowerCase()} /></div>
+                  ? <div className="playerCard__logo__img"><img src={(`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`).toLowerCase()} /></div>
                   :<div>DOES NOT EXIST</div>
           }
       <div className="playerCard__teamLogo img">LOL</div>
