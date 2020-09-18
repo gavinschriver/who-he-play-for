@@ -2,8 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Player } from "../players/Player";
+import teamData from "../teams.json";
+
 
 export const GenerateLineup = () => {
+  const teams = teamData.teams
+
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
   const {
     usersPlayers,

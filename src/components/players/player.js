@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
-import "./Players.css"
+import "./Players.css";
+import teamData from "../teams.json";
 
 export const Player = ({ PO }) => {
+  const teams = teamData.teams;
   const [showHideDetails, setShowHideDetails] = useState(false);
 
   const handleDetailButtonClick = () => {
@@ -12,9 +14,7 @@ export const Player = ({ PO }) => {
   };
 
   const currentPlayer = PO;
-
-  
-
+    
   return (
     <article className="playerCard card">
       <div className="playerCard__name">
@@ -22,14 +22,22 @@ export const Player = ({ PO }) => {
         {currentPlayer.player.lastName}
       </div>
       <div className="playerCard__headshot img">
-        <a href={`http://www.google.com/search?q=${currentPlayer.player.firstName}+${currentPlayer.player.lastName}+nba`} target="_blank"><img src={currentPlayer.player.officialImageSrc} /></a>
+        <a
+          href={`http://www.google.com/search?q=${currentPlayer.player.firstName}+${currentPlayer.player.lastName}+nba`}
+          target="_blank"
+        >
+          <img src={currentPlayer.player.officialImageSrc} />
+        </a>
       </div>
-          <div>Team:</div>
-          {
-              currentPlayer.player.currentTeam
-                  ? <div className="playerCard__logo__img"><img src={(`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`).toLowerCase()} /></div>
-                  :<div>Poor lil buddy needs a team :(</div>
-          }
+      {currentPlayer.player.currentTeam ? (
+        <div className="playerCard__logo__img">
+          <img
+            src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`.toLowerCase()}
+          />
+        </div>
+      ) : (
+        <div>Poor lil buddy needs a team :(</div>
+      )}
       <button
         className="playerCard__showDetailsButton btn btn--details"
         onClick={(e) => {
