@@ -25,7 +25,7 @@ export const Player = ({ PO }) => {
           handleDetailButtonClick();
         }}
       >
-        Get the juicy deets:
+        Get the juicy deets SUPER WERIDD:
       </button>
       {showHideDetails ? (
         <article className="playerCard__details">
