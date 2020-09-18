@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import "./Players.css";
 
@@ -11,9 +11,13 @@ export const Player = ({ PO, TO }) => {
     } else setShowHideDetails(false);
   };
 
+  // Assign component variable names for Player Objects and Team Objects cause why not
   const currentPlayer = PO;
   const currentPlayerTeam = TO;
-    
+
+  const NBATeamId = currentPlayerTeam.teamId;
+  const NBAid = currentPlayer.player.externalMappings[0].id;
+
   return (
     <article className="playerCard card">
       <div className="playerCard__name">
