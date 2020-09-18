@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { MessageContext } from "./MessageProvider";
+import "./messages.css"
 
 export const Message = ({ MO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
@@ -32,7 +33,7 @@ export const Message = ({ MO }) => {
   };
 
   return (
-    <article className="message" id={MO.id}>
+    <article className="message card" id={MO.id}>
       <div className="entryText">
         <span className="message__username">{MO.user.name || ""}</span>
         {matchingPlayersFirstNames.includes(MO.messagetext) ? (
@@ -59,7 +60,7 @@ export const Message = ({ MO }) => {
           {matchingPlayers.map((mPO) => {
             return (
               <div>
-                {mPO.player.firstName} {mPO.player.lastName}
+                <a href={`http://www.google.com/search?q=${mPO.player.firstName}+${mPO.player.lastName}+nba`} target="_blank">{mPO.player.firstName} {mPO.player.lastName}</a>
               </div>
             );
           })}
