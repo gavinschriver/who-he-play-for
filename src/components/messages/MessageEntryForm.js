@@ -18,8 +18,6 @@ export const MessageEntryForm = () => {
   const handleStanButtonPress = () => {
     const stanplayer = messagetextRef.current.value;
     const urlValue = urlRef.current.value;
-    console.log(urlValue)
-    console.log(validator.isURL(urlValue))
 
     if (allMatchingPlayersStrings.includes(stanplayer) && validator.isURL(urlValue)) {
       if (!messageUrls.includes(urlValue)) {
