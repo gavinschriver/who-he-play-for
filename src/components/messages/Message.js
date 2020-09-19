@@ -42,7 +42,7 @@ export const Message = ({ MO }) => {
         ) : MO.trashtalk ? (
           <span> is talkin' trash on </span>
         ) : (
-          <div></div>
+          <span> stans for</span>
         )}
         <span> {MO.messagetext}</span>
       </div>
