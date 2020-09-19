@@ -10,37 +10,16 @@ export const Leaderboard = () => {
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
   const { getUsersPlayers, usersPlayers } = useContext(UserPlayerContext);
 
-  // only messages marked as trash talk
-  const trashtalkMessages = messages.filter((m) => {
-    return m.trashtalk;
-  });
-
-  const trashtalkStringNameInstances = trashtalkMessages.map((ttMO) => {
-    return ttMO.messagetext;
-  });
-
-  console.log(trashtalkStringNameInstances);
-
-  useEffect(() => {
-    getUsers()
-      .then(getUsersPlayers)
-      .then(getPlayerData);
-  }, []);
-
-  useEffect(() => {
-    getUsers();
-  }, [messages]);
 
   const userScores = users.map((u) => {
     let userscore = 0;
 
+    //array of user's messages
     const userMessages = u.messages;
 
     userMessages.forEach((m) => {
       if (m.stan) {
         userscore = userscore + 5;
-      } else if (m.trashtalk) {
-        userscore++;
       }
     });
     const userScoreObj = {
@@ -49,11 +28,19 @@ export const Leaderboard = () => {
       score: userscore,
     };
 
-    const What = usersPlayers
-
-
     return userScoreObj;
   });
+
+  // only messages marked as trashtalk
+  const trashtalkMessages = messages.filter((m) => {
+    return m.trashtalk;
+  });
+
+  // strings of all the instances of trash talkin' (aka each occurance of a players name)
+  const trashtalkStringNameInstances = trashtalkMessages.map((ttMO) => {
+    return ttMO.messagetext;
+  });
+
 
   const trashedUserScores = userScores.map((uSO) => {
     const matchingUserObject = users.find((u) => {
@@ -61,7 +48,7 @@ export const Leaderboard = () => {
     });
 
     const matchingUserPlayerObjects = usersPlayers.filter((uPO) => {
-      return uPO.userId === matchingUserObject.id || {};
+      return uPO.userId === matchingUserObject.id;
     });
 
     const matchingPlayerObjects = matchingUserPlayerObjects.map((mUPO) => {
@@ -83,18 +70,24 @@ export const Leaderboard = () => {
     return uSO;
   });
 
-  console.log(trashedUserScores)
-
-  const sortedScores = userScores.sort((a, b) => {
+  const sortedScores = trashedUserScores.sort((a, b) => {
     return b.score - a.score;
   });
+
+  useEffect(() => {
+    getUsers().then(getUsersPlayers).then(getPlayerData);
+  }, []);
+
+  useEffect(() => {
+    getUsers();
+  }, [messages]);
 
   return (
     <table>
       <tbody>
         <tr>
           <th>User:</th>
-          <th>Stans:</th>
+          <th>Points:</th>
         </tr>
         {sortedScores.map((uSO) => {
           return (
