@@ -14,16 +14,19 @@ export const MessageEntryForm = () => {
   const { playerObjArray, setOtherUsersPlayers} = useContext(PlayerContext);
 
   const messagetextRef = useRef("");
+  const stanBarRef = useRef("");
   const urlRef = useRef("");
+
   const handleStanButtonPress = () => {
     const stanplayer = messagetextRef.current.value;
     const urlValue = urlRef.current.value;
-
-    if (allMatchingPlayersStrings.includes(stanplayer) && validator.isURL(urlValue)) {
+    const stanBarPlayer = stanBarRef.current.value;
+    alert(stanBarPlayer)
+    if (/*allMatchingPlayersStrings.includes(stanplayer) &&*/validator.isURL(urlValue)) {
       if (!messageUrls.includes(urlValue)) {
         if (filteredPlayersStrings.includes(stanplayer)) {
           const matchingPO = filteredPlayersObjects.find((mPO) => {
-            return mPO.player.firstName === messagetextRef.current.value;
+            return mPO.player.firstName === messagetextRef.current.value || stanBarPlayer;
           });
 
           const matchingUPO = filteredUsersPlayers.find((uPO) => {
@@ -178,14 +181,23 @@ export const MessageEntryForm = () => {
             ref={urlRef}
           ></input>
         </fieldset>
-        {/* <button
+        <div>
+        <select ref={stanBarRef}>
+          {
+            filteredPlayersObjects.map(fpo => {
+            return <option value={fpo.player.firstName}>{fpo.player.firstName}</option>
+            })
+          }
+        </select>
+        <button
           onClick={(e) => {
             e.preventDefault();
-            // handleSubmitButtonEvent();
+            handleStanButtonPress()
           }}
         >
-          Get in the mix
-        </button> */}
+          Can't stan the heat
+        </button>
+          </div>
       </form>
     </section>
   );
