@@ -10,14 +10,15 @@ export const MessageEntryForm = () => {
   const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
     UserPlayerContext
   );
-  const { playerObjArray, setOtherUsersPlayers } = useContext(PlayerContext);
+  const { playerObjArray } = useContext(PlayerContext);
 
   const messagetextRef = useRef("");
   const stanBarRef = useRef("");
   const urlRef = useRef("");
 
+  const currentUser = parseInt(localStorage.getItem("whpf_user"))
+
   const handleStanButtonPress = () => {
-    // const stanplayer = messagetextRef.current.value;
     const urlValue = urlRef.current.value;
     const stanBarPlayer = stanBarRef.current.value;
     if (validator.isURL(urlValue)) {
@@ -26,8 +27,6 @@ export const MessageEntryForm = () => {
           const matchingPO = filteredPlayersObjects.find((mPO) => {
             return mPO.player.firstName === stanBarPlayer;
           });
-
-          console.log(matchingPO);
 
           const matchingUPO = filteredUsersPlayers.find((uPO) => {
             return uPO.playerId === matchingPO.player.id;
@@ -43,7 +42,7 @@ export const MessageEntryForm = () => {
           updateUserPlayer(updatedUPO);
 
           const newMessage = {
-            userId: parseInt(localStorage.getItem("whpf_user")),
+            userId: currentUser,
             messagetext: stanBarPlayer,
             url: urlRef.current.value,
             timestamp: Date.now(),
@@ -64,7 +63,7 @@ export const MessageEntryForm = () => {
     if (othersPlayersStrings.includes(trashtalkplayer) && urlValue !== "") {
       if (!messageUrls.includes(urlValue)) {
         const newMessage = {
-          userId: parseInt(localStorage.getItem("whpf_user")),
+          userId: currentUser,
           messagetext: trashtalkplayer,
           url: urlRef.current.value,
           timestamp: Date.now(),
@@ -79,7 +78,7 @@ export const MessageEntryForm = () => {
     setMentionedCount(
       usersPlayers.filter(
         (upo) =>
-          upo.userId === parseInt(localStorage.getItem("whpf_user")) &&
+          upo.userId === currentUser &&
           upo.mentioned
       ).length
     );
@@ -92,7 +91,7 @@ export const MessageEntryForm = () => {
 
   // this colleciton is current user's WHOLE lineup as UPOs
   const allMatchingUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId === parseInt(localStorage.getItem("whpf_user"));
+    return upo.userId === currentUser;
   });
 
   // this collection is current user's WHOLE linup as player objects
@@ -111,7 +110,7 @@ export const MessageEntryForm = () => {
   // this colleciton is ONLY UPOS for the current user that HAVE NOT been marked as mentioned
   const filteredUsersPlayers = usersPlayers.filter((upo) => {
     return (
-      upo.userId === parseInt(localStorage.getItem("whpf_user")) &&
+      upo.userId === currentUser &&
       !upo.mentioned
     );
   });
@@ -130,7 +129,7 @@ export const MessageEntryForm = () => {
 
   // FOR OTHER PLAYERS LINEUPS
   const othersUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId != parseInt(localStorage.getItem("whpf_user"));
+    return upo.userId != currentUser;
   });
 
   const othersPlayersObjs = othersUsersPlayers.map((oUPO) => {
@@ -186,7 +185,8 @@ export const MessageEntryForm = () => {
             </button>
           </div>
 
-          <div>
+          <div className="messageEntry__URL">
+            <h2>But you</h2>
             <input
               type="url"
               name="url"
