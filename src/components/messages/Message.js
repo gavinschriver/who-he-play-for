@@ -9,6 +9,7 @@ export const Message = ({ MO }) => {
   const { usersPlayers } = useContext(UserPlayerContext);
   const { playerObjArray } = useContext(PlayerContext);
   const { removeMessage } = useContext(MessageContext);
+  const currentUserId = parseInt(localStorage.getItem("whpf_user"))
 
   const matchingUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId === MO.user.id;

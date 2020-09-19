@@ -148,8 +148,9 @@ export const StanEntryForm = () => {
                   handleStanButtonPress();
                 }}
               >
-                Stan by your man yo
+                Stan by your man
               </button>
+              
               <select ref={stanBarRef}>
                 {filteredPlayersObjects.map((fpo) => {
                   return (

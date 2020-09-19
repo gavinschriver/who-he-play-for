@@ -142,27 +142,7 @@ export const TrashTalkEntryForm = () => {
         <section className="messageEntry">
           <form className="messageEntry--form">
             <article className="messageEntry--choiceContainer">
-              {/* <div className="messageEntry__stan">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleStanButtonPress();
-                  }}
-                >
-                  Stan by your man yo
-                </button>
-                <select ref={stanBarRef}>
-                  {filteredPlayersObjects.map((fpo) => {
-                    return (
-                      <option value={fpo.player.firstName}>
-                        {fpo.player.firstName}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-  
-              <h2>Or</h2> */}
+              <div className="messageEntry__trashtalk">
   
               <button
                 onClick={(e) => {
@@ -172,7 +152,7 @@ export const TrashTalkEntryForm = () => {
               >
                 Talk that trash on
               </button>
-              <div className="messageEntry__trashtalk">
+              
                 <input
                   type="text"
                   name="messagetext"
