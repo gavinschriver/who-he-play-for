@@ -8,7 +8,7 @@ import { MessageProvider } from "./messages/MessageProvider";
 import { MessagesList } from "./messages/MessagesList";
 import { Leaderboard } from "./leaderboard/Leaderboard";
 import { UserProvider } from "./users/UserProvider";
-import { StanEntryForm } from "./gameplay/StanEntryForm"
+import { StanEntryForm } from "./gameplay/StanEntryForm";
 import { TrashTalkEntryForm } from "./gameplay/TrashTalkEntryForm";
 import { GamePlay } from "./gameplay/GamePlay";
 
@@ -19,9 +19,13 @@ export const ApplicationViews = (props) => {
         <PlayerProvider>
           <MessageProvider>
             <UserPlayerProvider>
-              <GamePlay/>
-              <GenerateLineup />
-              <MessagesList />
+              <div class="gamePlayContainer">
+                <GamePlay />
+                </div>
+              <div className="gameContainer">
+                <GenerateLineup />
+                <MessagesList />
+              </div>
             </UserPlayerProvider>
           </MessageProvider>
         </PlayerProvider>

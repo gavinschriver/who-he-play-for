@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../users/UserProvider";
+import { UserGreeting } from "./UserGreeting";
 import "./AppHeader.css";
 
 export const AppHeader = () => {
@@ -20,7 +21,8 @@ export const AppHeader = () => {
 
   return (
     <section className="appHeader">
-          <h2>What's up,{user.name}</h2>
+          <h2>WHO HE PLAY FOR ANYWAY</h2>
+          <UserGreeting user={user} />
     </section>
   );
 };

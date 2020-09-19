@@ -4,6 +4,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Player } from "../players/Player";
 import teamData from "../teams.json";
 import { MessageEntryForm } from "../messages/MessageEntryForm";
+import "./Lineup.css"
 
 export const GenerateLineup = () => {
   const teams = teamData.teams;

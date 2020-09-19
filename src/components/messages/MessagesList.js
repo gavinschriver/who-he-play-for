@@ -22,7 +22,7 @@ export const MessagesList = () => {
 
       {/* <Leaderboard /> */}
 
-      <h2>Gonna be some messages here</h2>
+      <h2>Spin Zone</h2>
 
       <section id="messages">
         {         
