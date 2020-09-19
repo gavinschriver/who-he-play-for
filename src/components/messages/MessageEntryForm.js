@@ -24,10 +24,12 @@ export const MessageEntryForm = () => {
     alert(stanBarPlayer)
     if (/*allMatchingPlayersStrings.includes(stanplayer) &&*/validator.isURL(urlValue)) {
       if (!messageUrls.includes(urlValue)) {
-        if (filteredPlayersStrings.includes(stanplayer)) {
+        if (filteredPlayersStrings.includes(stanBarPlayer)) {
           const matchingPO = filteredPlayersObjects.find((mPO) => {
-            return mPO.player.firstName === messagetextRef.current.value || stanBarPlayer;
+            return mPO.player.firstName === stanBarPlayer;
           });
+
+          console.log(matchingPO)
 
           const matchingUPO = filteredUsersPlayers.find((uPO) => {
             return uPO.playerId === matchingPO.player.id;
