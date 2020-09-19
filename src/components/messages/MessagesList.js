@@ -20,7 +20,7 @@ export const MessagesList = () => {
   return (
     <article className="messagesList">
 
-      <Leaderboard />
+      {/* <Leaderboard /> */}
 
       <h2>Gonna be some messages here</h2>
 

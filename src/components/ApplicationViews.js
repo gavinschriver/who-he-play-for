@@ -22,10 +22,6 @@ export const ApplicationViews = (props) => {
               <GamePlay/>
               <GenerateLineup />
               <MessagesList />
-              <MessageEntryForm />
-              <Leaderboard />
-              <StanEntryForm />
-              <TrashTalkEntryForm />
             </UserPlayerProvider>
           </MessageProvider>
         </PlayerProvider>

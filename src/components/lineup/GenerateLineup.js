@@ -95,7 +95,7 @@ export const GenerateLineup = () => {
         )}
 
         <section className="lineup">
-          <h2>Today's Lineup:</h2>
+          <h2>Your Starting 5:</h2>
           {matchingUsersPlayers.map((mUPO) => {
             const matchingPlayerObj = filteredPlayers.find(
               (p) => p.player.id === mUPO.playerId
