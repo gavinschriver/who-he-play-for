@@ -2,16 +2,15 @@ import React, { useRef, useEffect, useContext } from "react";
 import { MessageContext } from "./MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
-import validator from 'validator';
+import validator from "validator";
 import "./messages.css";
 
 export const MessageEntryForm = () => {
-
   const { addMessage, messages } = useContext(MessageContext);
   const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
     UserPlayerContext
   );
-  const { playerObjArray, setOtherUsersPlayers} = useContext(PlayerContext);
+  const { playerObjArray, setOtherUsersPlayers } = useContext(PlayerContext);
 
   const messagetextRef = useRef("");
   const stanBarRef = useRef("");
@@ -21,15 +20,15 @@ export const MessageEntryForm = () => {
     const stanplayer = messagetextRef.current.value;
     const urlValue = urlRef.current.value;
     const stanBarPlayer = stanBarRef.current.value;
-    alert(stanBarPlayer)
-    if (/*allMatchingPlayersStrings.includes(stanplayer) &&*/validator.isURL(urlValue)) {
+    alert(stanBarPlayer);
+    if (validator.isURL(urlValue)) {
       if (!messageUrls.includes(urlValue)) {
         if (filteredPlayersStrings.includes(stanBarPlayer)) {
           const matchingPO = filteredPlayersObjects.find((mPO) => {
             return mPO.player.firstName === stanBarPlayer;
           });
 
-          console.log(matchingPO)
+          console.log(matchingPO);
 
           const matchingUPO = filteredUsersPlayers.find((uPO) => {
             return uPO.playerId === matchingPO.player.id;
@@ -86,7 +85,6 @@ export const MessageEntryForm = () => {
       ).length
     );
   }, [usersPlayers]);
-
 
   // array of all URL values of all messages
   const messageUrls = messages.map((m) => {
@@ -173,6 +171,28 @@ export const MessageEntryForm = () => {
             placeholder="Who ya got? (Player first name)"
             ref={messagetextRef}
           />
+        </fieldset>
+        <div className="stanInputContainer">
+          <select ref={stanBarRef}>
+            {filteredPlayersObjects.map((fpo) => {
+              return (
+                <option value={fpo.player.firstName}>
+                  {fpo.player.firstName}
+                </option>
+              );
+            })}
+          </select>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleStanButtonPress();
+            }}
+          >
+            Can't stan the heat
+          </button>
+      
+        </div>
+        <div className="urlInputContainer">
           <input
             type="url"
             name="url"
@@ -182,24 +202,7 @@ export const MessageEntryForm = () => {
             size="30"
             ref={urlRef}
           ></input>
-        </fieldset>
-        <div>
-        <select ref={stanBarRef}>
-          {
-            filteredPlayersObjects.map(fpo => {
-            return <option value={fpo.player.firstName}>{fpo.player.firstName}</option>
-            })
-          }
-        </select>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleStanButtonPress()
-          }}
-        >
-          Can't stan the heat
-        </button>
-          </div>
+        </div>
       </form>
     </section>
   );
