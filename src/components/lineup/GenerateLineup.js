@@ -95,7 +95,6 @@ export const GenerateLineup = () => {
         )}
 
         <section className="lineup">
-          <MessageEntryForm />
           <h2>Today's Lineup:</h2>
           {matchingUsersPlayers.map((mUPO) => {
             const matchingPlayerObj = filteredPlayers.find(

@@ -8,6 +8,7 @@ import { MessageProvider } from "./messages/MessageProvider";
 import { MessagesList } from "./messages/MessagesList";
 import { Leaderboard } from "./leaderboard/Leaderboard";
 import { UserProvider } from "./users/UserProvider";
+import { StanEntryForm } from "./gameplay/StanEntryForm"
 
 export const ApplicationViews = (props) => {
   return (
@@ -15,11 +16,12 @@ export const ApplicationViews = (props) => {
       <UserProvider>
         <PlayerProvider>
           <MessageProvider>
-            <UserPlayerProvider>    
-                    <GenerateLineup />
-                    <MessageEntryForm />
-                    <MessagesList />
-                    <Leaderboard />
+            <UserPlayerProvider>
+              <GenerateLineup />
+              <MessagesList />
+              <MessageEntryForm />
+              <Leaderboard />
+              <StanEntryForm />
             </UserPlayerProvider>
           </MessageProvider>
         </PlayerProvider>
