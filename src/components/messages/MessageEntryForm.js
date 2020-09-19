@@ -20,7 +20,6 @@ export const MessageEntryForm = () => {
     // const stanplayer = messagetextRef.current.value;
     const urlValue = urlRef.current.value;
     const stanBarPlayer = stanBarRef.current.value;
-    alert(stanBarPlayer);
     if (validator.isURL(urlValue)) {
       if (!messageUrls.includes(urlValue)) {
         if (filteredPlayersStrings.includes(stanBarPlayer)) {
@@ -86,7 +85,7 @@ export const MessageEntryForm = () => {
     );
   }, [usersPlayers]);
 
-  // array of all URL values of all messages
+  // array of all URL values of all messages for duplicate check
   const messageUrls = messages.map((m) => {
     return m.url;
   });
@@ -145,65 +144,61 @@ export const MessageEntryForm = () => {
   });
 
   return (
-    <section className="messageEntryForm">
-      <form>
-        <fieldset>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              handleStanButtonPress();
-            }}
-          >
-            Stan by your man
-          </button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              handleTrashtalkButtonPress();
-            }}
-          >
-            Talk that trash
-          </button>
-          <input
-            type="text"
-            name="messagetext"
-            id="messagetext"
-            placeholder="You know who's garbage?"
-            ref={messagetextRef}
-          />
-        </fieldset>
-        <div className="stanInputContainer">
-          <select ref={stanBarRef}>
-            {filteredPlayersObjects.map((fpo) => {
-              return (
-                <option value={fpo.player.firstName}>
-                  {fpo.player.firstName}
-                </option>
-              );
-            })}
-          </select>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              handleStanButtonPress();
-            }}
-          >
-            Can't stan the heat
-          </button>
-      
-        </div>
-        <div className="urlInputContainer">
-          <input
-            type="url"
-            name="url"
-            id="url"
-            placeholder="better back it up"
-            pattern="https://.*"
-            size="30"
-            ref={urlRef}
-          ></input>
-        </div>
-      </form>
-    </section>
+    <>
+      <section className="messageEntry">
+        <form className="messageEntry--form">
+          <div className="messageEntry__trashtalk">
+            <input
+              type="text"
+              name="messagetext"
+              id="messagetext"
+              placeholder="You know who's garbage?"
+              ref={messagetextRef}
+            />
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleTrashtalkButtonPress();
+              }}
+            >
+              Talk that trash
+            </button>
+          </div>
+
+          <div className="messageEntry__stan">
+            <select ref={stanBarRef}>
+              {filteredPlayersObjects.map((fpo) => {
+                return (
+                  <option value={fpo.player.firstName}>
+                    {fpo.player.firstName}
+                  </option>
+                );
+              })}
+            </select>
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleStanButtonPress();
+              }}
+            >
+              Can't stan the heat
+            </button>
+          </div>
+
+          <div>
+            <input
+              type="url"
+              name="url"
+              id="url"
+              placeholder="better back it up"
+              pattern="https://.*"
+              size="30"
+              ref={urlRef}
+            />
+          </div>
+        </form>
+      </section>
+    </>
   );
 };
