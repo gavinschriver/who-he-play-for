@@ -9,6 +9,8 @@ import { MessagesList } from "./messages/MessagesList";
 import { Leaderboard } from "./leaderboard/Leaderboard";
 import { UserProvider } from "./users/UserProvider";
 import { StanEntryForm } from "./gameplay/StanEntryForm"
+import { TrashTalkEntryForm } from "./gameplay/TrashTalkEntryForm";
+import { GamePlay } from "./gameplay/GamePlay";
 
 export const ApplicationViews = (props) => {
   return (
@@ -17,11 +19,13 @@ export const ApplicationViews = (props) => {
         <PlayerProvider>
           <MessageProvider>
             <UserPlayerProvider>
+              <GamePlay/>
               <GenerateLineup />
               <MessagesList />
               <MessageEntryForm />
               <Leaderboard />
               <StanEntryForm />
+              <TrashTalkEntryForm />
             </UserPlayerProvider>
           </MessageProvider>
         </PlayerProvider>
