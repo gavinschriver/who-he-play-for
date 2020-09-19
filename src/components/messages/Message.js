@@ -61,9 +61,9 @@ export const Message = ({ MO }) => {
           {matchingPlayers.map((mPO) => {
             return (
               <div>
-                <a href={`http://www.google.com/search?q=${mPO.player.firstName}+${mPO.player.lastName}+nba`} target="_blank">{mPO.player.firstName} {mPO.player.lastName}</a>
+                <a href={`http://www.google.com/search?q=${mPO.player.firstName}+${mPO.player.lastName}`} target="_blank">{mPO.player.firstName} {mPO.player.lastName}</a>
                 {
-                  MO.user.id !== parseInt(localStorage.getItem("whpf_user"))
+                  MO.user.id !== currentUserId
                     ? <span>TRASH</span>
                     :<span></span>
                 }
@@ -74,7 +74,7 @@ export const Message = ({ MO }) => {
       ) : (
         <div></div>
         )}
-      {MO.user.id === parseInt(localStorage.getItem("whpf_user")) && (!MO.stan) ? (
+      {MO.user.id === currentUserId && (!MO.stan) ? (
         <button
           onClick={(e) => {
             e.preventDefault();

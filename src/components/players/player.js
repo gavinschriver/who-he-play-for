@@ -26,7 +26,7 @@ export const Player = ({ PO, TO }) => {
       </div>
       <div className="playerCard__headshot img">
         <a
-          href={`http://www.google.com/search?q=${currentPlayer.player.firstName}+${currentPlayer.player.lastName}+nba`}
+          href={`http://www.google.com/search?q=${currentPlayer.player.firstName}+${currentPlayer.player.lastName}`}
           target="_blank"
         >
           <img src={currentPlayer.player.officialImageSrc} />
