@@ -1,4 +1,5 @@
 import React from "react";
+import { Route } from "react-router-dom"
 import { GenerateLineup } from "./lineup/GenerateLineup";
 import { PlayerProvider } from "./players/PlayerProvider";
 import { UserPlayerProvider } from "./usersPlayers/UsersPlayersProvider";
@@ -11,22 +12,22 @@ import { UserProvider } from "./users/UserProvider";
 export const ApplicationViews = (props) => {
   return (
     <>
-      <h1>HEY CHUCK, WHO HE PLAY FOR?</h1>
-      <h2>MUST BE USER {parseInt(localStorage.getItem("whpf_user"))}</h2>
-      <main className="main">
-        <UserProvider>
+
+      <UserProvider>
         <PlayerProvider>
           <MessageProvider>
             <UserPlayerProvider>
-              <GenerateLineup />
-              <MessageEntryForm />
-              <MessagesList />
-              <Leaderboard />
+              <Route render={props => (
+                <>
+                <GenerateLineup />
+                <MessageEntryForm />
+                <MessagesList />
+                </>
+              )}></Route>
             </UserPlayerProvider>
           </MessageProvider>
-          </PlayerProvider>
-          </UserProvider>
-      </main>
+        </PlayerProvider>
+      </UserProvider>
     </>
   );
 };

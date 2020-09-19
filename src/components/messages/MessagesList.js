@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MessageContext } from "./MessageProvider";
 import { Message } from "./Message"
+import { Leaderboard } from "../leaderboard/Leaderboard"
 
 import "./messages.css";
 
@@ -18,6 +19,9 @@ export const MessagesList = () => {
 
   return (
     <article className="messagesList">
+
+      <Leaderboard />
+
       <h2>Gonna be some messages here</h2>
 
       <section id="messages">

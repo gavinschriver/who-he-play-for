@@ -7,17 +7,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-main {
-  display: flex;
-}
-
-.lineup__container{
-  display: flex;
-  flex-direction: column;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
+#root {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0 3rem
+}

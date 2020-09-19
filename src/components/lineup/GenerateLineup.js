@@ -78,7 +78,7 @@ export const GenerateLineup = () => {
 
   return (
     <>
-      <div className="lineup__container">
+      <article className="lineup__container">
         {(mentionedCount === 0 && !matchingUsersPlayers) ||
         mentionedCount === matchingUsersPlayers.length ? (
           <button
@@ -93,7 +93,7 @@ export const GenerateLineup = () => {
           <div></div>
         )}
 
-        <article className="lineup">
+        <section className="lineup">
           <h2>Today's Lineup:</h2>
           {matchingUsersPlayers.map((mUPO) => {
             const matchingPlayerObj = filteredPlayers.find(
@@ -101,7 +101,7 @@ export const GenerateLineup = () => {
             );
 
             const matchingPlayerTeam = teams.find(t => {
-              return t.abbreviation === matchingPlayerObj.player.currentTeam.abbreviation || {}
+              return t.abbreviation === matchingPlayerObj.player.currentTeam.abbreviation
             })
 
             return (
@@ -112,8 +112,8 @@ export const GenerateLineup = () => {
               />
             );
           })}
-        </article>
-      </div>
+        </section>
+      </article>
     </>
   );
 };

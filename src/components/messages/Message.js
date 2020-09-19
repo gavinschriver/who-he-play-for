@@ -39,7 +39,7 @@ export const Message = ({ MO }) => {
         {matchingPlayersFirstNames.includes(MO.messagetext) ? (
           <span> stans for:</span>
         ) : MO.trashtalk ? (
-          <span> is talkin' trash on: </span>
+          <span> is talkin' trash on </span>
         ) : (
           <div></div>
         )}
@@ -61,6 +61,11 @@ export const Message = ({ MO }) => {
             return (
               <div>
                 <a href={`http://www.google.com/search?q=${mPO.player.firstName}+${mPO.player.lastName}+nba`} target="_blank">{mPO.player.firstName} {mPO.player.lastName}</a>
+                {
+                  MO.user.id !== parseInt(localStorage.getItem("whpf_user"))
+                    ? <span>TRASH</span>
+                    :<span></span>
+                }
               </div>
             );
           })}

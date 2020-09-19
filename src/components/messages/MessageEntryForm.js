@@ -16,7 +16,7 @@ export const MessageEntryForm = () => {
   const stanBarRef = useRef("");
   const urlRef = useRef("");
 
-  const currentUser = parseInt(localStorage.getItem("whpf_user"))
+  const currentUser = parseInt(localStorage.getItem("whpf_user"));
 
   const handleStanButtonPress = () => {
     const urlValue = urlRef.current.value;
@@ -76,11 +76,8 @@ export const MessageEntryForm = () => {
 
   useEffect(() => {
     setMentionedCount(
-      usersPlayers.filter(
-        (upo) =>
-          upo.userId === currentUser &&
-          upo.mentioned
-      ).length
+      usersPlayers.filter((upo) => upo.userId === currentUser && upo.mentioned)
+        .length
     );
   }, [usersPlayers]);
 
@@ -109,10 +106,7 @@ export const MessageEntryForm = () => {
   //FILTERED BASED ON BEING MENTIONED....
   // this colleciton is ONLY UPOS for the current user that HAVE NOT been marked as mentioned
   const filteredUsersPlayers = usersPlayers.filter((upo) => {
-    return (
-      upo.userId === currentUser &&
-      !upo.mentioned
-    );
+    return upo.userId === currentUser && !upo.mentioned;
   });
 
   //Player Objects that correspond to the above
@@ -146,57 +140,60 @@ export const MessageEntryForm = () => {
     <>
       <section className="messageEntry">
         <form className="messageEntry--form">
-          <div className="messageEntry__trashtalk">
-            <input
-              type="text"
-              name="messagetext"
-              id="messagetext"
-              placeholder="You know who's garbage?"
-              ref={messagetextRef}
-            />
+          <article className="messageEntry--choiceContainer">
+            <div className="messageEntry__stan">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleStanButtonPress();
+                }}
+              >
+                Stan by your man!
+              </button>
+              <select ref={stanBarRef}>
+                {filteredPlayersObjects.map((fpo) => {
+                  return (
+                    <option value={fpo.player.firstName}>
+                      {fpo.player.firstName}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+            <h2>Or</h2>
+
             <button
               onClick={(e) => {
                 e.preventDefault();
                 handleTrashtalkButtonPress();
               }}
             >
-              Talk that trash
+              Talk that trash on
             </button>
-          </div>
+            <div className="messageEntry__trashtalk">
+              <input
+                type="text"
+                name="messagetext"
+                id="messagetext"
+                placeholder="`You know who's garbage?`"
+                ref={messagetextRef}
+              />
+            </div>
 
-          <div className="messageEntry__stan">
-            <select ref={stanBarRef}>
-              {filteredPlayersObjects.map((fpo) => {
-                return (
-                  <option value={fpo.player.firstName}>
-                    {fpo.player.firstName}
-                  </option>
-                );
-              })}
-            </select>
-
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleStanButtonPress();
-              }}
-            >
-              Can't stan the heat
-            </button>
-          </div>
-
-          <div className="messageEntry__URL">
-            <h2>But you</h2>
-            <input
-              type="url"
-              name="url"
-              id="url"
-              placeholder="better back it up"
-              pattern="https://.*"
-              size="30"
-              ref={urlRef}
-            />
-          </div>
+            <div className="messageEntry__URL">
+              <h2>But you'd</h2>
+              <input
+                type="url"
+                name="url"
+                id="url"
+                placeholder="better back it up"
+                pattern="https://.*"
+                size="30"
+                ref={urlRef}
+              />
+            </div>
+          </article>
         </form>
       </section>
     </>
