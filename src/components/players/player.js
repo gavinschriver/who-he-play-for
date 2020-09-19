@@ -34,9 +34,15 @@ export const Player = ({ PO, TO }) => {
       </div>
       {currentPlayer.player.currentTeam ? (
         <div className="playerCard__logo__img">
-          <img
-            src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`.toLowerCase()}
-          />
+          {currentPlayer.player.currentTeam.abbreviation === "BRO" ? (
+            <img
+              src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png`}
+            />
+          ) : (
+            <img
+              src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`.toLowerCase()}
+            />
+          )}
         </div>
       ) : (
         <div>Poor lil buddy needs a team :(</div>
