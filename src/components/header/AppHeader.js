@@ -1,22 +1,26 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../users/UserProvider";
+import "./AppHeader.css";
 
 export const AppHeader = () => {
   const { users, getUsers } = useContext(UserContext);
-
-  const currentUser = users.find((u) => {
-    return u.id === parseInt(localStorage.getItem("whpf_user"));
-  });
-
-  console.log(currentUser);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     getUsers();
   }, []);
 
+  useEffect(() => {
+    const currentUser =
+      users.find((u) => {
+        return u.id === parseInt(localStorage.getItem("whpf_user"));
+      }) || {};
+    setUser(currentUser);
+  }, [users]);
+
   return (
     <section className="appHeader">
-      <h2>WHO HE PLAY FOR ANYWAY</h2>
+          <h2>What's up,{user.name}</h2>
     </section>
   );
 };
