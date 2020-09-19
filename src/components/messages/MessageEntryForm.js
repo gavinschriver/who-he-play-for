@@ -46,7 +46,7 @@ export const MessageEntryForm = () => {
 
           const newMessage = {
             userId: parseInt(localStorage.getItem("whpf_user")),
-            messagetext: messagetextRef.current.value,
+            messagetext: stanBarPlayer,
             url: urlRef.current.value,
             timestamp: Date.now(),
             stan: true,
