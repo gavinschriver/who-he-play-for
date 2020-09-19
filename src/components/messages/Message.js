@@ -38,7 +38,7 @@ export const Message = ({ MO }) => {
       <div className="entryText">
         <span className="message__username">{MO.user.name || ""}</span>
         {matchingPlayersFirstNames.includes(MO.messagetext) ? (
-          <span> stans for:</span>
+          <span> stans for</span>
         ) : MO.trashtalk ? (
           <span> is talkin' trash on </span>
         ) : (
