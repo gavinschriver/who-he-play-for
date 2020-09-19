@@ -17,7 +17,7 @@ export const MessageEntryForm = () => {
   const urlRef = useRef("");
 
   const handleStanButtonPress = () => {
-    const stanplayer = messagetextRef.current.value;
+    // const stanplayer = messagetextRef.current.value;
     const urlValue = urlRef.current.value;
     const stanBarPlayer = stanBarRef.current.value;
     alert(stanBarPlayer);
@@ -51,7 +51,7 @@ export const MessageEntryForm = () => {
             stan: true,
           };
           addMessage(newMessage);
-        } else if (allMatchingPlayersStrings.includes(stanplayer)) {
+        } else if (allMatchingPlayersStrings.includes(stanBarPlayer)) {
           alert(`Woah slow down stanimal, you already repped this player`);
         }
       } else alert(`someone already cited that proof`);
@@ -66,7 +66,7 @@ export const MessageEntryForm = () => {
       if (!messageUrls.includes(urlValue)) {
         const newMessage = {
           userId: parseInt(localStorage.getItem("whpf_user")),
-          messagetext: messagetextRef.current.value,
+          messagetext: trashtalkplayer,
           url: urlRef.current.value,
           timestamp: Date.now(),
           trashtalk: true,
@@ -168,7 +168,7 @@ export const MessageEntryForm = () => {
             type="text"
             name="messagetext"
             id="messagetext"
-            placeholder="Who ya got? (Player first name)"
+            placeholder="You know who's garbage?"
             ref={messagetextRef}
           />
         </fieldset>

@@ -66,7 +66,7 @@ export const GenerateLineup = () => {
     const arrayOfMatchingUPOS = usersPlayers.filter((upo) => {
       return upo.userId === parseInt(localStorage.getItem("whpf_user"));
     });
-    setMatchingUsersPlayers(arrayOfMatchingUPOS.reverse());
+    setMatchingUsersPlayers(arrayOfMatchingUPOS);
   }, [usersPlayers]);
 
   useEffect(() => {
@@ -92,15 +92,6 @@ export const GenerateLineup = () => {
         ) : (
           <div></div>
         )}
-
-        {/* <button
-          onClick={(e) => {
-            e.preventDefault();
-            deleteUsersPlayers();
-          }}
-        >
-          Delete Lineup
-        </button> */}
 
         <article className="lineup">
           <h2>Today's Lineup:</h2>
