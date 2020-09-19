@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom"
+import { Route } from "react-router-dom";
 import { GenerateLineup } from "./lineup/GenerateLineup";
 import { PlayerProvider } from "./players/PlayerProvider";
 import { UserPlayerProvider } from "./usersPlayers/UsersPlayersProvider";
@@ -12,18 +12,14 @@ import { UserProvider } from "./users/UserProvider";
 export const ApplicationViews = (props) => {
   return (
     <>
-
       <UserProvider>
         <PlayerProvider>
           <MessageProvider>
-            <UserPlayerProvider>
-              <Route render={props => (
-                <>
-                <GenerateLineup />
-                <MessageEntryForm />
-                <MessagesList />
-                </>
-              )}></Route>
+            <UserPlayerProvider>    
+                    <GenerateLineup />
+                    <MessageEntryForm />
+                    <MessagesList />
+                    <Leaderboard />
             </UserPlayerProvider>
           </MessageProvider>
         </PlayerProvider>

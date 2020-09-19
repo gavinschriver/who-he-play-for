@@ -3,6 +3,7 @@ import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Player } from "../players/Player";
 import teamData from "../teams.json";
+import { MessageEntryForm } from "../messages/MessageEntryForm";
 
 export const GenerateLineup = () => {
   const teams = teamData.teams;
@@ -94,6 +95,7 @@ export const GenerateLineup = () => {
         )}
 
         <section className="lineup">
+          <MessageEntryForm />
           <h2>Today's Lineup:</h2>
           {matchingUsersPlayers.map((mUPO) => {
             const matchingPlayerObj = filteredPlayers.find(
@@ -101,7 +103,7 @@ export const GenerateLineup = () => {
             );
 
             const matchingPlayerTeam = teams.find(t => {
-              return t.abbreviation === matchingPlayerObj.player.currentTeam.abbreviation
+              return t.abbreviation === matchingPlayerObj.player.currentTeam.abbreviation || {}
             })
 
             return (

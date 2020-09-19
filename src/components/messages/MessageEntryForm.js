@@ -148,7 +148,7 @@ export const MessageEntryForm = () => {
                   handleStanButtonPress();
                 }}
               >
-                Stan by your man!
+                Stan by your man yo
               </button>
               <select ref={stanBarRef}>
                 {filteredPlayersObjects.map((fpo) => {
