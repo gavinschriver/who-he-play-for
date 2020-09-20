@@ -61,20 +61,22 @@ export const TrashTalkEntryForm = () => {
     const trashtalkplayer = messagetextRef.current.value;
     const urlValue = urlRef.current.value;
 
-    if (!allMatchingPlayersStrings.includes(trashtalkplayer)) {
-      if (othersPlayersStrings.includes(trashtalkplayer) && urlValue !== "") {
-        if (!messageUrls.includes(urlValue)) {
-          const newMessage = {
-            userId: currentUser,
-            messagetext: trashtalkplayer,
-            url: urlRef.current.value,
-            timestamp: Date.now(),
-            trashtalk: true,
-          };
-          addMessage(newMessage);
-        } else alert(`someone already cited that proof`);
-      } else alert(`You tryin' to throw shade w/o backing it up?`);
-    } else alert(`You trying to trash your own player? Rough look my dude`)
+    if (validator.isURL(urlValue)) {
+      if (!allMatchingPlayersStrings.includes(trashtalkplayer)) {
+        if (othersPlayersStrings.includes(trashtalkplayer) && urlValue !== "") {
+          if (!messageUrls.includes(urlValue)) {
+            const newMessage = {
+              userId: currentUser,
+              messagetext: trashtalkplayer,
+              url: urlRef.current.value,
+              timestamp: Date.now(),
+              trashtalk: true,
+            };
+            addMessage(newMessage);
+          } else alert(`someone already cited that proof`);
+        } else alert(`You tryin' to throw shade w/o backing it up?`);
+      } else alert(`You trying to trash your own player? Rough look my dude`)
+    } else alert('better check that input')
   };
 
   useEffect(() => {
