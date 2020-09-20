@@ -63,11 +63,6 @@ export const Message = ({ MO }) => {
     }
   };
 
-  const handleTrashButtonPress = () => {
-    alert("garbagee");
-    setTrashtalkPlayer(MO.messagetext)
-  };
-
   return (
     <article className="message card" id={MO.id}>
       <div className="entryText">
@@ -114,7 +109,7 @@ export const Message = ({ MO }) => {
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      handleTrashButtonPress();
+                      setTrashtalkPlayer(mPO.player.firstName);
                     }}
                   >
                     TRASH

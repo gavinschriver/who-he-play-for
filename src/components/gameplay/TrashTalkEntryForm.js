@@ -84,8 +84,9 @@ export const TrashTalkEntryForm = () => {
     );
   }, [usersPlayers]);
 
+
   useEffect(() => {
-    console.log(trashtalkPlayer)
+    messagetextRef.current.value = trashtalkPlayer
   }, [trashtalkPlayer])
 
   // array of all URL values of all messages for duplicate check
