@@ -29,7 +29,7 @@ export const GenerateLineup = () => {
   // making sure we only get players who match the conditions of being on an roster and having an image
   const filteredPlayers = playerObjArray.filter(
     (p) =>
-      p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc && p.player.currentTeam
+      p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc
   );
 
   //Ids only of player objects who match the criteria set above
@@ -111,10 +111,14 @@ export const GenerateLineup = () => {
               (p) => p.player.id === mUPO.playerId
             );
 
-            const matchingPlayerTeam = teams.find(t => {
-              return t.abbreviation === matchingPlayerObj.player.currentTeam.abbreviation
-            }) || {}
+            let matchingPlayerTeam
 
+            if (matchingPlayerObj.player.currentTeam) {
+                matchingPlayerTeam = teams.find(t => {
+                return t.abbreviation === matchingPlayerObj.player.currentTeam.abbreviation
+              }) || {}
+            } else matchingPlayerTeam = {}
+              
             return (
               <Player
                 key={matchingPlayerObj.player.id}
