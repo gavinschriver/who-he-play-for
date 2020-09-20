@@ -19,7 +19,7 @@ export const Player = ({ PO, TO }) => {
   const currentPlayerTeam = TO;
 
   const NBATeamId = currentPlayerTeam.teamId;
-  const NBAid = currentPlayer.player.externalMappings[0].id;
+  const NBAid = currentPlayer.player.externalMappings[0].id || {};
 
   useEffect(() => {
     getUsersPlayers()
@@ -34,6 +34,7 @@ export const Player = ({ PO, TO }) => {
 
   return (
     <article className="playerCard card">
+      <a href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()} target="_blank">DAMN</a>
       {
         matchingUsersPlayer.mentioned
           ? <div>#STAN'D</div>
