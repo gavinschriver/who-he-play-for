@@ -16,16 +16,6 @@ export const Message = ({ MO }) => {
     return upo.userId === MO.user.id;
   });
 
-  //true false to see if any of the UPOs belong to current user...
-  const isCurrentUser = matchingUsersPlayers.find((mUPO) => {
-    return mUPO.userId === currentUserId;
-  });
-
-  //current users lineup as UserPlayerObjects
-  const currentUserLineup = usersPlayers.filter(uPO => {
-    return uPO.userId === currentUserId;
-  })
-
   const matchingPlayers = matchingUsersPlayers.map((mUPO) => {
     return playerObjArray.find((p) => {
       return mUPO.playerId === p.player.id;
@@ -35,6 +25,37 @@ export const Message = ({ MO }) => {
   const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
     return mPO.player.firstName;
   });
+
+
+  //DRILLING DOWN TO CURRENT USERS LINEUP WEEEE
+
+  //true false to see if any of the UPOs belong to current user. For some reason.
+  const isCurrentUser = matchingUsersPlayers.find((mUPO) => {
+    return mUPO.userId === currentUserId;
+  });
+
+  //current users lineup as UserPlayerObjects
+  const currentUserLineup = usersPlayers.filter((uPO) => {
+    return uPO.userId === currentUserId;
+  });
+
+  //array of current user's lineup player IDs
+  const currentUserPlayerIds = currentUserLineup.map((cULO) => {
+    return cULO.playerId;
+  });
+
+  //array of current user's lineup as PLAYA objects
+  const currentUsersPlayerObjects = currentUserPlayerIds.map(cUPID => {
+    return playerObjArray.find(pO => {
+      return pO.player.id === cUPID
+    })
+  })
+
+  //array of current users lineup as firstName STRINGS FINALLY JESUS
+  const currenUsersLineupAsStrings = currentUsersPlayerObjects.map(cUPO => {
+  return cUPO.player.firstName
+})
+
 
   const matchingPlayersToggle = () => {
     if (!showHideMatchingPlayers) {
@@ -51,7 +72,11 @@ export const Message = ({ MO }) => {
         {matchingPlayersFirstNames.includes(MO.messagetext) ? (
           <span> stans for</span>
         ) : MO.trashtalk ? (
-            <span> is talkin' trash on{isCurrentUser?<span>YABOY</span>:<span></span>}</span>
+          <span>
+            {" "}
+            is talkin' trash on
+            {isCurrentUser ? <span>YABOY</span> : <span></span>}
+          </span>
         ) : (
           <span> stans for</span>
         )}
