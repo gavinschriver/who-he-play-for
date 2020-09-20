@@ -69,8 +69,8 @@ export const Leaderboard = (props) => {
     });
 
     const matchingPlayerStrings = matchingPlayerObjects.map((mPO) => {
-      return mPO.player.firstName || {};
-    });
+      return mPO.player.firstName;
+    }) || {};
 
     trashtalkStringNameInstances.forEach((ttSNI) => {
       if (matchingPlayerStrings.includes(ttSNI)) {

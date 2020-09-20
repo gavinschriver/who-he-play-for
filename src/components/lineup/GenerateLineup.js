@@ -29,7 +29,7 @@ export const GenerateLineup = () => {
   // making sure we only get players who match the conditions of being on an roster and having an image
   const filteredPlayers = playerObjArray.filter(
     (p) =>
-      p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc
+      p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc && p.player.currentTeam
   );
 
   //Ids only of player objects who match the criteria set above
