@@ -29,6 +29,7 @@ export const GenerateLineup = () => {
       p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc
   );
 
+  //Ids only of player objects who match the criteria set above
   const filteredPlayerIds = filteredPlayers.map((p) => p.player.id);
 
   // posts 5 new userplayer objects

@@ -19,43 +19,43 @@ export const TrashTalkEntryForm = () => {
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
 
   //not used here duhh
-  const handleStanButtonPress = () => {
-    const urlValue = urlRef.current.value;
-    const stanBarPlayer = stanBarRef.current.value;
-    if (validator.isURL(urlValue)) {
-      if (!messageUrls.includes(urlValue)) {
-        if (filteredPlayersStrings.includes(stanBarPlayer)) {
-          const matchingPO = filteredPlayersObjects.find((mPO) => {
-            return mPO.player.firstName === stanBarPlayer;
-          });
+  // const handleStanButtonPress = () => {
+  //   const urlValue = urlRef.current.value;
+  //   const stanBarPlayer = stanBarRef.current.value;
+  //   if (validator.isURL(urlValue)) {
+  //     if (!messageUrls.includes(urlValue)) {
+  //       if (filteredPlayersStrings.includes(stanBarPlayer)) {
+  //         const matchingPO = filteredPlayersObjects.find((mPO) => {
+  //           return mPO.player.firstName === stanBarPlayer;
+  //         });
 
-          const matchingUPO = filteredUsersPlayers.find((uPO) => {
-            return uPO.playerId === matchingPO.player.id;
-          });
+  //         const matchingUPO = filteredUsersPlayers.find((uPO) => {
+  //           return uPO.playerId === matchingPO.player.id;
+  //         });
 
-          const updatedUPO = {
-            id: matchingUPO.id,
-            userId: matchingUPO.userId,
-            playerId: matchingUPO.playerId,
-            mentioned: true,
-          };
+  //         const updatedUPO = {
+  //           id: matchingUPO.id,
+  //           userId: matchingUPO.userId,
+  //           playerId: matchingUPO.playerId,
+  //           mentioned: true,
+  //         };
 
-          updateUserPlayer(updatedUPO);
+  //         updateUserPlayer(updatedUPO);
 
-          const newMessage = {
-            userId: currentUser,
-            messagetext: stanBarPlayer,
-            url: urlRef.current.value,
-            timestamp: Date.now(),
-            stan: true,
-          };
-          addMessage(newMessage);
-        } else if (allMatchingPlayersStrings.includes(stanBarPlayer)) {
-          alert(`Woah slow down stanimal, you already repped this player`);
-        }
-      } else alert(`someone already cited that proof`);
-    } else alert(`better check that input stanley`);
-  };
+  //         const newMessage = {
+  //           userId: currentUser,
+  //           messagetext: stanBarPlayer,
+  //           url: urlRef.current.value,
+  //           timestamp: Date.now(),
+  //           stan: true,
+  //         };
+  //         addMessage(newMessage);
+  //       } else if (allMatchingPlayersStrings.includes(stanBarPlayer)) {
+  //         alert(`Woah slow down stanimal, you already repped this player`);
+  //       }
+  //     } else alert(`someone already cited that proof`);
+  //   } else alert(`better check that input stanley`);
+  // };
 
   const handleTrashtalkButtonPress = () => {
     const trashtalkplayer = messagetextRef.current.value;
@@ -101,7 +101,7 @@ export const TrashTalkEntryForm = () => {
     });
   });
 
-  // this colleciton is current user's WHOLE lineup as FIRST names
+  // this colleciton is CURRENT user's WHOLE lineup as FIRST names
   const allMatchingPlayersStrings = allMatchingPlayersObjects.map((mPO) => {
     return mPO.player.firstName;
   });
@@ -123,12 +123,16 @@ export const TrashTalkEntryForm = () => {
   const filteredPlayersStrings = filteredPlayersObjects.map((mPO) => {
     return mPO.player.firstName;
   });
+   
+
 
   // FOR OTHER PLAYERS LINEUPS
+  // All other user's lineups as UserPlayer objects
   const othersUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId != currentUser;
   });
 
+  //
   const othersPlayersObjs = othersUsersPlayers.map((oUPO) => {
     return playerObjArray.find((p) => {
       return p.player.id === oUPO.playerId;

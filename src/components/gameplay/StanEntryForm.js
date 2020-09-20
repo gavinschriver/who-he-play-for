@@ -116,12 +116,18 @@ export const StanEntryForm = () => {
     });
   });
 
+  const filteredPlayersIDs = filteredUsersPlayers.map((fUPO) => {
+    return playerObjArray.find((p) => {
+      return p.player.id === fUPO.playerId
+    })
+  })
+
   //Strings of the Player first names for the above (aka only player first names in the user's lineup they haven't mentioned yet)
-  const filteredPlayersStrings = filteredPlayersObjects.map((mPO) => {
-    return mPO.player.firstName;
+  const filteredPlayersStrings = filteredPlayersObjects.map((fPO) => {
+    return fPO.player.firstName;
   });
 
-  // FOR OTHER PLAYERS LINEUPS
+  // FOR OTHER USERS PLAYER LINEUPS
   const othersUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId != currentUser;
   });
@@ -150,7 +156,7 @@ export const StanEntryForm = () => {
               >
                 Stan by your man
               </button>
-              
+
               <select ref={stanBarRef}>
                 {filteredPlayersObjects.map((fpo) => {
                   return (

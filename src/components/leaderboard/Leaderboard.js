@@ -36,7 +36,7 @@ export const Leaderboard = () => {
     return m.trashtalk;
   });
 
-  // strings of all the instances of trash talkin' (aka each occurance of a players name)
+  // strings of all the instances of trash talkin' (aka each occurance of a player's name)
   const trashtalkStringNameInstances = trashtalkMessages.map((ttMO) => {
     return ttMO.messagetext;
   });
