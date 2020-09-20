@@ -26,7 +26,6 @@ export const Message = ({ MO }) => {
     return mPO.player.firstName;
   });
 
-
   //DRILLING DOWN TO CURRENT USERS LINEUP WEEEE
 
   //true false to see if any of the UPOs belong to current user. For some reason.
@@ -45,17 +44,16 @@ export const Message = ({ MO }) => {
   });
 
   //array of current user's lineup as PLAYA objects
-  const currentUsersPlayerObjects = currentUserPlayerIds.map(cUPID => {
-    return playerObjArray.find(pO => {
-      return pO.player.id === cUPID
-    })
-  })
+  const currentUsersPlayerObjects = currentUserPlayerIds.map((cUPID) => {
+    return playerObjArray.find((pO) => {
+      return pO.player.id === cUPID;
+    });
+  });
 
   //array of current users lineup as firstName STRINGS FINALLY JESUS
-  const currenUsersLineupAsStrings = currentUsersPlayerObjects.map(cUPO => {
-  return cUPO.player.firstName
-})
-
+  const currenUsersLineupAsStrings = currentUsersPlayerObjects.map((cUPO) => {
+    return cUPO.player.firstName;
+  });
 
   const matchingPlayersToggle = () => {
     if (!showHideMatchingPlayers) {
@@ -63,6 +61,10 @@ export const Message = ({ MO }) => {
     } else if (showHideMatchingPlayers) {
       setShowHideMatchingPlayers(false);
     }
+  };
+
+  const handleTrashButtonPress = () => {
+    alert("garbagee");
   };
 
   return (
@@ -75,7 +77,11 @@ export const Message = ({ MO }) => {
           <span>
             {" "}
             is talkin' trash on
-            {currenUsersLineupAsStrings.includes(MO.messagetext) ? <span> your guy</span> : <span></span>}
+            {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
+              <span> your guy</span>
+            ) : (
+              <span></span>
+            )}
           </span>
         ) : (
           <span> stans for</span>
@@ -104,7 +110,14 @@ export const Message = ({ MO }) => {
                   {mPO.player.firstName} {mPO.player.lastName}
                 </a>
                 {MO.user.id !== currentUserId ? (
-                  <span>TRASH</span>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleTrashButtonPress();
+                    }}
+                  >
+                    TRASH
+                  </button>
                 ) : (
                   <span></span>
                 )}
