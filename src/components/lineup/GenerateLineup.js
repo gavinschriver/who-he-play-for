@@ -3,10 +3,10 @@ import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Player } from "../players/Player";
 import teamData from "../teams.json";
-import { MessageEntryForm } from "../messages/MessageEntryForm";
 import "./Lineup.css"
 
 export const GenerateLineup = () => {
+  //for looking up info about teams from NBA reference
   const teams = teamData.teams;
 
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);

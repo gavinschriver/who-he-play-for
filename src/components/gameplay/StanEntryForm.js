@@ -10,17 +10,24 @@ export const StanEntryForm = () => {
   const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
     UserPlayerContext
   );
-  const { playerObjArray, trashtalkplayer } = useContext(PlayerContext);
+  const { playerObjArray } = useContext(PlayerContext);
 
-  const messagetextRef = useRef("");
   const stanBarRef = useRef("");
   const urlRef = useRef("");
+  let stanPlayerFirstAndLastName = ""
 
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
 
   const handleStanButtonPress = () => {
     const urlValue = urlRef.current.value;
     const stanBarPlayer = stanBarRef.current.value;
+    // code to reattach a player's first name to their last name for search validaiton cause im an idiot
+    const stanBarPlayerObject = filteredPlayersObjects.find(fPO => {
+      return fPO.player.firstName === stanBarPlayer
+    })
+    const stanBarPlayerLastName = stanBarPlayerObject.player.lastName
+    stanPlayerFirstAndLastName = `${stanBarPlayer} ${stanBarPlayerLastName}`
+
     if (validator.isURL(urlValue)) {
       if (!messageUrls.includes(urlValue)) {
         if (filteredPlayersStrings.includes(stanBarPlayer)) {
@@ -49,6 +56,8 @@ export const StanEntryForm = () => {
             stan: true,
           };
           addMessage(newMessage);
+
+          alert(stanPlayerFirstAndLastName)
         } else if (allMatchingPlayersStrings.includes(stanBarPlayer)) {
           alert(`Woah slow down stanimal, you already repped this player`);
         }
@@ -56,23 +65,6 @@ export const StanEntryForm = () => {
     } else alert(`better check that input stanley`);
   };
 
-  const handleTrashtalkButtonPress = () => {
-    const trashtalkplayer = messagetextRef.current.value;
-    const urlValue = urlRef.current.value;
-
-    if (othersPlayersStrings.includes(trashtalkplayer) && urlValue !== "") {
-      if (!messageUrls.includes(urlValue)) {
-        const newMessage = {
-          userId: currentUser,
-          messagetext: trashtalkplayer,
-          url: urlRef.current.value,
-          timestamp: Date.now(),
-          trashtalk: true,
-        };
-        addMessage(newMessage);
-      } else alert(`someone already cited that proof`);
-    } else alert(`better check that input stanley`);
-  };
 
   useEffect(() => {
     setMentionedCount(
