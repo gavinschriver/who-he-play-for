@@ -89,6 +89,19 @@ export const Leaderboard = (props) => {
   const currentUserScore =
     trashedUserScores.find((tSO) => tSO.userId === currentUserId) || {};
 
+  const sortedByStans =
+    userScores.sort((a, b) => {
+      return b.stans - a.stans;
+    }) || {};
+
+  const stanimal = sortedByStans[0] || {};
+
+  const sortedByTrashtalks =
+  userScores.sort((a, b) => {
+    return b.trashtalks - a.trashtalks;
+  }) || {};
+
+const trashtalkchamp = sortedByTrashtalks[0] || {};
   useEffect(() => {
     getUsers().then(getUsersPlayers).then(getPlayerData);
   }, []);
@@ -101,6 +114,14 @@ export const Leaderboard = (props) => {
     <article className="scores">
       {props.location === "game" ? (
         <section className="scoreboard">
+          <div className="stanimal">
+            <div className="stanimal__heading">All time stanimal:</div>
+            <span>{stanimal.username}</span><span className="stanimal__stanCount"> with {stanimal.stans} stans</span>
+          </div>
+          <div className="trashtalkchamp">
+            <div className="trashtalkchamp__heading">Trash talk champion:</div>
+            <span>{trashtalkchamp.username}</span><span className="trashtalkchamp__trashtalkCount"> with {trashtalkchamp.trashtalks} trashes</span>
+          </div>
           <table>
             <tbody>
               <tr>
@@ -121,13 +142,17 @@ export const Leaderboard = (props) => {
       ) : props.location === "header" ? (
         <>
           <section className="userScores">
-              <div className="userScores__score">
+            <div className="userScores__score">
               <div className="userScores__trashtalks__heading">Your score:</div>
               <span>{currentUserScore.score}</span>
             </div>
-              <div className="userScores__trashtalks">
-                <div className="userScores__trashtalks__heading">Your trashtalk count:</div>
-              <span className="userScores__trashtalks__">{currentUserScore.trashtalks}</span>
+            <div className="userScores__trashtalks">
+              <div className="userScores__trashtalks__heading">
+                Your trashtalk count:
+              </div>
+              <span className="userScores__trashtalks__">
+                {currentUserScore.trashtalks}
+              </span>
             </div>
           </section>
         </>
