@@ -121,11 +121,13 @@ export const Leaderboard = (props) => {
       ) : props.location === "header" ? (
         <>
           <section className="userScores">
-            <div className="userScores__score">
-              <h2>{currentUserScore.score}</h2>
+              <div className="userScores__score">
+              <div className="userScores__trashtalks__heading">Your score:</div>
+              <span>{currentUserScore.score}</span>
             </div>
-            <div className="userScores__trashtalks">
-              <h2>{currentUserScore.trashtalks}</h2>
+              <div className="userScores__trashtalks">
+                <div className="userScores__trashtalks__heading">Your trashtalk count:</div>
+              <span className="userScores__trashtalks__">{currentUserScore.trashtalks}</span>
             </div>
           </section>
         </>

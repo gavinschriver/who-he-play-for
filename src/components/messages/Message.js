@@ -65,14 +65,16 @@ export const Message = ({ MO }) => {
     }
   };
 
+  const messageClassName = MO.stan ? "message card stanMessage" : "message card trashMessage"
+
   return (
-    <article className="message card" id={MO.id}>
+    <article className={messageClassName} id={MO.id}>
       <div className="entryText">
 
         {
           MO.user.id === currentUserId
             ? <span>YOU</span>
-            :<span className="message__username">{MO.user.name || ""}</span>
+            :<span >{MO.user.name || ""}</span>
         }
         
 
@@ -173,8 +175,8 @@ export const Message = ({ MO }) => {
           </a>
         </div>
       ) : MO.trashtalk ? (
-        <div className="message__url" target="_blank">
-          <a href={MO.url}>I'll just leave this here...</a>
+        <div className="message__url" >
+          <a href={MO.url} target="_blank">I'll just leave this here...</a>
         </div>
       ) : (
         <div></div>
