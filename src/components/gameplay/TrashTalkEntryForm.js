@@ -22,7 +22,7 @@ export const TrashTalkEntryForm = () => {
     const trashtalkplayer = messagetextRef.current.value;
     const urlValue = urlRef.current.value;
 
-    if (validator.isURL(urlValue)) {
+    if (validator.isURL(urlValue, {require_protocol: true})) {
       if (!allMatchingPlayersStrings.includes(trashtalkplayer)) {
         if (othersPlayersStrings.includes(trashtalkplayer) && urlValue !== "") {
           if (!messageUrls.includes(urlValue)) {

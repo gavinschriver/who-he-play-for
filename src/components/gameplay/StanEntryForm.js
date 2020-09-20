@@ -57,7 +57,7 @@ export const StanEntryForm = () => {
           };
           addMessage(newMessage);
 
-          alert(stanPlayerFirstAndLastName)
+          alert(validator.isURL(urlValue))
         } else if (allMatchingPlayersStrings.includes(stanBarPlayer)) {
           alert(`Woah slow down stanimal, you already repped this player`);
         }
