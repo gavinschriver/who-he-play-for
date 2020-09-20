@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../users/UserProvider";
 import { UserGreeting } from "./UserGreeting";
 import "./AppHeader.css";
+import { Leaderboard } from "../leaderboard/Leaderboard";
+import { UserScore } from "./UserScore"
 
 export const AppHeader = () => {
   const { users, getUsers } = useContext(UserContext);
@@ -22,7 +24,8 @@ export const AppHeader = () => {
   return (
     <section className="appHeader">
           <h2>WHO HE PLAY FOR ANYWAY</h2>
-          <UserGreeting user={user} />
+      <UserGreeting user={user} />
+      <UserScore/>
     </section>
   );
 };

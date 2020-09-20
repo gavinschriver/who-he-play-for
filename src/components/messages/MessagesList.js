@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MessageContext } from "./MessageProvider";
 import { Message } from "./Message"
-import { Leaderboard } from "../leaderboard/Leaderboard"
-
 import "./messages.css";
+import { UserContext } from "../users/UserProvider";
 
 export const MessagesList = () => {
   const { messages, getMessages } = useContext(MessageContext);
+  const { currentUserScore } = useContext(UserContext)
   const [filteredMessages, setFilteredMessages] = useState([])
+  const [userScore, setUserScore] = useState({})
 
   useEffect(() => {
     getMessages();
@@ -16,6 +17,11 @@ export const MessagesList = () => {
   useEffect(() => {
     setFilteredMessages(messages.reverse())
   }, [messages])
+
+  useEffect(() => {
+    console.log(userScore)
+    setUserScore(userScore)
+  }, [currentUserScore])
 
   return (
     <article className="messagesList">

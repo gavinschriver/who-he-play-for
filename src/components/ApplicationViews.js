@@ -11,6 +11,7 @@ import { UserProvider } from "./users/UserProvider";
 import { StanEntryForm } from "./gameplay/StanEntryForm";
 import { TrashTalkEntryForm } from "./gameplay/TrashTalkEntryForm";
 import { GamePlay } from "./gameplay/GamePlay";
+import { AppHeader } from "./header/AppHeader";
 
 export const ApplicationViews = (props) => {
   return (
@@ -19,6 +20,7 @@ export const ApplicationViews = (props) => {
         <PlayerProvider>
           <MessageProvider>
             <UserPlayerProvider>
+              <AppHeader />
               <div class="gamePlayContainer">
                 <GamePlay />
                 </div>

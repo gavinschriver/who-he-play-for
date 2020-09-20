@@ -4,7 +4,7 @@ import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 
-export const Leaderboard = () => {
+export const UserScore = () => {
   const { getUsers, users } = useContext(UserContext);
   const { messages } = useContext(MessageContext);
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
@@ -69,14 +69,9 @@ export const Leaderboard = () => {
     return uSO;
   });
 
-  const sortedScores = trashedUserScores.sort((a, b) => {
-    return b.score - a.score;
-  });
-
   const currentUserScore =
     trashedUserScores.find((tSO) => tSO.userId === currentUserId) || {};
 
-  console.log(currentUserScore);
 
   useEffect(() => {
     getUsers().then(getUsersPlayers).then(getPlayerData);
@@ -87,21 +82,6 @@ export const Leaderboard = () => {
   }, [messages]);
 
   return (
-    <table>
-      <tbody>
-        <tr>
-          <th>User:</th>
-          <th>Points:</th>
-        </tr>
-        {sortedScores.map((uSO) => {
-          return (
-            <tr>
-              <td>{uSO.username}</td>
-              <td>{uSO.score}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+      <h2>{currentUserScore.score}</h2>
   );
 };

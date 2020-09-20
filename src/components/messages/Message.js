@@ -97,7 +97,7 @@ export const Message = ({ MO }) => {
             )}
           </span>
         ) : (
-          <span> stans for </span>
+          <span> stan'd </span>
             )}
         
         {/* in case we wanna add just plain non-game-related message later... 

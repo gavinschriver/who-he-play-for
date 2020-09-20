@@ -16,7 +16,6 @@ export const WhoHePlayFor = () => (
           return (
             <>
               <UserProvider>
-                <Route render={(props) => <AppHeader {...props} />} />
                 <Route render={(props) => <ApplicationViews {...props} />} />
               </UserProvider>
             </>
