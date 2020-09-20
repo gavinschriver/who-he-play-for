@@ -22,9 +22,10 @@ export const TrashTalkEntryForm = () => {
     const trashtalkplayer = messagetextRef.current.value;
     const urlValue = urlRef.current.value;
 
-    if (validator.isURL(urlValue, {require_protocol: true})) {
+    console.log(othersPlayersStrings, urlValue, trashtalkplayer.toLowerCase())
+    if (validator.isURL(urlValue, {require_protocol: true}) && urlValue.includes(trashtalkplayer.toLowerCase())) {
       if (!allMatchingPlayersStrings.includes(trashtalkplayer)) {
-        if (othersPlayersStrings.includes(trashtalkplayer) && urlValue !== "") {
+        if (othersPlayersStrings.includes(trashtalkplayer)) {
           if (!messageUrls.includes(urlValue)) {
             const newMessage = {
               userId: currentUser,
@@ -47,7 +48,7 @@ export const TrashTalkEntryForm = () => {
     );
   }, [usersPlayers]);
 
-
+  //sets the value of the trash talk input bar in this component to the value of the TT player selected in message component
   useEffect(() => {
     messagetextRef.current.value = trashtalkPlayer
   }, [trashtalkPlayer])
