@@ -112,8 +112,8 @@ export const GenerateLineup = () => {
             );
 
             const matchingPlayerTeam = teams.find(t => {
-              return t.abbreviation === matchingPlayerObj.player.currentTeam.abbreviation || {}
-            })
+              return t.abbreviation === matchingPlayerObj.player.currentTeam.abbreviation
+            }) || {}
 
             return (
               <Player
