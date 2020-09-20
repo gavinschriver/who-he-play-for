@@ -83,7 +83,8 @@ export const UserScore = () => {
     getUsers();
   }, [messages]);
 
-  return (
+    return (
+
       <h2>{currentUserScore.score}</h2>
   );
 };

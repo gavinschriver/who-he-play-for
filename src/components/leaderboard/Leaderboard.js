@@ -4,6 +4,9 @@ import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 
+//this comp is a bit inaccurately named now. Should be Scores or something
+//to indicate it generates all scores and returns them conditionally rendered
+
 export const Leaderboard = (props) => {
   const { getUsers, users } = useContext(UserContext);
   const { messages } = useContext(MessageContext);
@@ -17,15 +20,24 @@ export const Leaderboard = (props) => {
     //array of a user's messages
     const userMessages = u.messages;
 
+    let stanCount = 0;
+
+    let trashCount = 0;
+
     userMessages.forEach((m) => {
       if (m.stan) {
-        userscore = userscore + 5;
+        userscore = userscore + 50;
+        stanCount++;
+      } else if (m.trashtalk) {
+        trashCount++;
       }
     });
     const userScoreObj = {
       username: u.name,
       userId: u.id,
       score: userscore,
+      stans: stanCount,
+      trashtalks: trashCount,
     };
 
     return userScoreObj;
@@ -62,7 +74,7 @@ export const Leaderboard = (props) => {
 
     trashtalkStringNameInstances.forEach((ttSNI) => {
       if (matchingPlayerStrings.includes(ttSNI)) {
-        uSO.score--;
+        uSO.score = uSO.score - 10;
       }
     });
 
@@ -73,6 +85,7 @@ export const Leaderboard = (props) => {
     return b.score - a.score;
   });
 
+  // and now, some fun stuff
   const currentUserScore =
     trashedUserScores.find((tSO) => tSO.userId === currentUserId) || {};
 
@@ -85,10 +98,9 @@ export const Leaderboard = (props) => {
   }, [messages]);
 
   return (
-    <section>
+    <article className="scores">
       {props.location === "game" ? (
-        <>
-          <h2>TRYING 2 PLAY??</h2>
+        <section className="scoreboard">
           <table>
             <tbody>
               <tr>
@@ -105,11 +117,21 @@ export const Leaderboard = (props) => {
               })}
             </tbody>
           </table>
-        </>
+        </section>
       ) : props.location === "header" ? (
-        <h2>{currentUserScore.score}</h2>
-        ) : <div></div>
-    }
-    </section>
+        <>
+          <section className="userScores">
+            <div className="userScores__score">
+              <h2>{currentUserScore.score}</h2>
+            </div>
+            <div className="userScores__trashtalks">
+              <h2>{currentUserScore.trashtalks}</h2>
+            </div>
+          </section>
+        </>
+      ) : (
+        <div></div>
+      )}
+    </article>
   );
 };

@@ -6,12 +6,10 @@ import { UserPlayerProvider } from "./usersPlayers/UsersPlayersProvider";
 import { MessageEntryForm } from "./messages/MessageEntryForm";
 import { MessageProvider } from "./messages/MessageProvider";
 import { MessagesList } from "./messages/MessagesList";
-import { Leaderboard } from "./leaderboard/Leaderboard";
 import { UserProvider } from "./users/UserProvider";
-import { StanEntryForm } from "./gameplay/StanEntryForm";
-import { TrashTalkEntryForm } from "./gameplay/TrashTalkEntryForm";
 import { GamePlay } from "./gameplay/GamePlay";
 import { AppHeader } from "./header/AppHeader";
+import { UserAccount } from "./users/UserAccount";
 
 export const ApplicationViews = (props) => {
   return (
@@ -20,6 +18,7 @@ export const ApplicationViews = (props) => {
         <PlayerProvider>
           <MessageProvider>
             <UserPlayerProvider>
+              <Route exact path="/">
               <AppHeader />
               <div class="gamePlayContainer">
                 <GamePlay />
@@ -28,10 +27,13 @@ export const ApplicationViews = (props) => {
                 <GenerateLineup />
                 <MessagesList />
               </div>
+              </Route>
             </UserPlayerProvider>
           </MessageProvider>
         </PlayerProvider>
       </UserProvider>
+
+      <Route exact path="/account" render={props => <UserAccount/>}></Route>
     </>
   );
 };
