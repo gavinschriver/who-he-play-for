@@ -17,6 +17,9 @@ export const GenerateLineup = () => {
     removeUserPlayer,
   } = useContext(UserPlayerContext);
 
+
+  // Binds to the app-state variableset in UsersPlayers provider 
+  //to track how many userPlayers have been stan'd by being marked as mentioned
   const { mentionedCount } = useContext(UserPlayerContext);
 
   //set component state variables for 1) holding and setting userPlayer objects for current user; 2) state of lineup display div
@@ -47,6 +50,7 @@ export const GenerateLineup = () => {
     }
   };
 
+  // Invoke a delete function for each UPO in the component-state collection "matchingUsersPlayers"
   const deleteUsersPlayers = () => {
     matchingUsersPlayers.forEach((mUPO) => {
       removeUserPlayer(mUPO.id);
@@ -61,10 +65,13 @@ export const GenerateLineup = () => {
     }
   };
 
+
+  // initializer call to bring in player data and usersPlayers
   useEffect(() => {
     getPlayerData().then(getUsersPlayers);
   }, []);
 
+  // listens for a change to usersPlayers API collection and resets component-level collection of only those matching the current user's id 
   useEffect(() => {
     const arrayOfMatchingUPOS = usersPlayers.filter((upo) => {
       return upo.userId === parseInt(localStorage.getItem("whpf_user"));
@@ -72,6 +79,7 @@ export const GenerateLineup = () => {
     setMatchingUsersPlayers(arrayOfMatchingUPOS);
   }, [usersPlayers]);
 
+//dont think this does anything really
   useEffect(() => {
     console.log(mentionedCount);
     if (mentionedCount === matchingUsersPlayers.length) {
