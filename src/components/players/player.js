@@ -1,8 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
+import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import "./Players.css";
 
 export const Player = ({ PO, TO }) => {
+  const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext)
+  const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({})
   const [showHideDetails, setShowHideDetails] = useState(false);
 
   const handleDetailButtonClick = () => {
@@ -18,8 +21,24 @@ export const Player = ({ PO, TO }) => {
   const NBATeamId = currentPlayerTeam.teamId;
   const NBAid = currentPlayer.player.externalMappings[0].id;
 
+  useEffect(() => {
+    getUsersPlayers()
+  }, [])
+  
+  useEffect(() => {
+    setMatchingUsersPlayer(usersPlayers.find(uPO => {
+      return uPO.playerId === PO.player.id
+    }) || {} )
+  }, [usersPlayers])
+
+
   return (
     <article className="playerCard card">
+      {
+        matchingUsersPlayer.mentioned
+          ? <div>#STAN'D</div>
+          : <div></div>
+      }
       <div className="playerCard__name">
         Player Name: {currentPlayer.player.firstName}{" "}
         {currentPlayer.player.lastName}
