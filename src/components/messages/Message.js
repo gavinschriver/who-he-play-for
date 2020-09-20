@@ -85,45 +85,52 @@ export const Message = ({ MO }) => {
         <span> {MO.messagetext}</span>
       </div>
 
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          matchingPlayersToggle();
-        }}
-      >
-        Show Current Lineup:
-      </button>
-
-      {showHideMatchingPlayers ? (
-        <div>
-          {matchingPlayers.map((mPO) => {
-            return (
-              <div>
-                <a
-                  href={`http://www.google.com/search?q=${mPO.player.firstName}+${mPO.player.lastName}`}
-                  target="_blank"
-                >
-                  {mPO.player.firstName} {mPO.player.lastName}
-                </a>
-                {MO.user.id !== currentUserId ? (
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setTrashtalkPlayer(mPO.player.firstName);
-                    }}
-                  >
-                    TRASH
-                  </button>
-                ) : (
-                  <span></span>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      ) : (
+      {MO.user.id === currentUserId ? (
         <div></div>
+      ) : (
+        <div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              matchingPlayersToggle();
+            }}
+          >
+            Show Current Lineup:
+          </button>
+
+          {showHideMatchingPlayers ? (
+            <div>
+              {matchingPlayers.map((mPO) => {
+                return (
+                  <div>
+                    <a
+                      href={`http://www.google.com/search?q=${mPO.player.firstName}+${mPO.player.lastName}`}
+                      target="_blank"
+                    >
+                      {mPO.player.firstName} {mPO.player.lastName}
+                    </a>
+                    {MO.user.id !== currentUserId ? (
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setTrashtalkPlayer(mPO.player.firstName);
+                        }}
+                      >
+                        TRASH
+                      </button>
+                    ) : (
+                      <span></span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
       )}
+
       {MO.user.id === currentUserId && !MO.stan ? (
         <button
           onClick={(e) => {
