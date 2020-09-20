@@ -11,17 +11,19 @@ export const Message = ({ MO }) => {
   const { removeMessage } = useContext(MessageContext);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
-  //From each message, use it's userId to look up the userID on matching upos (bring in that message user's whole lineup)
+  //For each message object, use it's userId to look up the userID on matching upos (bring in that message's user's whole lineup)
   const matchingUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId === MO.user.id;
   });
 
+  // turn the message object user's UPOS into Player Objects
   const matchingPlayers = matchingUsersPlayers.map((mUPO) => {
     return playerObjArray.find((p) => {
       return mUPO.playerId === p.player.id;
     });
   });
 
+  // array of strings of each of the current message object's user's Lineup 
   const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
     return mPO.player.firstName;
   });
@@ -66,13 +68,28 @@ export const Message = ({ MO }) => {
   return (
     <article className="message card" id={MO.id}>
       <div className="entryText">
-        <span className="message__username">{MO.user.name || ""}</span>
-        {matchingPlayersFirstNames.includes(MO.messagetext) ? (
-          <span> stans for</span>
+
+        {
+          MO.user.id === currentUserId
+            ? <span>YOU</span>
+            :<span className="message__username">{MO.user.name || ""}</span>
+        }
+        
+
+        { /* does the incoming message's messagetext field contain a player name 
+          that's in the collection of that message object's user's lineup? if so, it's a STAN */
+          matchingPlayersFirstNames.includes(MO.messagetext) ? (
+
+
+            
+
+            <span> stan{MO.user.id === currentUserId ? <span>'d</span> : <span>'d</span>}</span>
+            
+            
         ) : MO.trashtalk ? (
           <span>
             {" "}
-            is talkin' trash on
+            {MO.user.id === currentUserId ? <span>talked trash on</span> : <span>talked trash on</span>} 
             {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
               <span> your guy</span>
             ) : (
@@ -80,9 +97,15 @@ export const Message = ({ MO }) => {
             )}
           </span>
         ) : (
-          <span> stans for</span>
-        )}
+          <span> stans for </span>
+            )}
+        
+        {/* in case we wanna add just plain non-game-related message later... 
+        will probably have to change this field (property) to something else because
+        messagetext is now the first name of the player being shouted out */}
+
         <span> {MO.messagetext}</span>
+
       </div>
 
       {MO.user.id === currentUserId ? (
