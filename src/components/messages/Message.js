@@ -75,7 +75,7 @@ export const Message = ({ MO }) => {
           <span>
             {" "}
             is talkin' trash on
-            {isCurrentUser ? <span>YABOY</span> : <span></span>}
+            {currenUsersLineupAsStrings.includes(MO.messagetext) ? <span> your guy</span> : <span></span>}
           </span>
         ) : (
           <span> stans for</span>
