@@ -5,6 +5,9 @@ export const PlayerContext = React.createContext();
 export const PlayerProvider = (propsObj) => {
   const [playerObjArray, setPlayerObjArray] = useState([]);
 
+  // set an app-state variable for a player string name selected off dom
+  const [trashtalkPlayer, setTrashtalkPlayer] = useState("")
+
   const getPlayerData = () => {
     return fetch(`http://localhost:8889/db`)
       .then((res) => res.json())
@@ -17,7 +20,9 @@ export const PlayerProvider = (propsObj) => {
     <PlayerContext.Provider
       value={{
         getPlayerData,
-        playerObjArray
+        playerObjArray,
+        trashtalkPlayer,
+        setTrashtalkPlayer
       }}
     >
       {propsObj.children}

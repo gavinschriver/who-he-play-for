@@ -10,7 +10,7 @@ export const StanEntryForm = () => {
   const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
     UserPlayerContext
   );
-  const { playerObjArray } = useContext(PlayerContext);
+  const { playerObjArray, trashtalkplayer } = useContext(PlayerContext);
 
   const messagetextRef = useRef("");
   const stanBarRef = useRef("");
@@ -80,6 +80,7 @@ export const StanEntryForm = () => {
         .length
     );
   }, [usersPlayers]);
+
 
   // array of all URL values of all messages for duplicate check
   const messageUrls = messages.map((m) => {

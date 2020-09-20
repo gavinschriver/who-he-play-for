@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { MessageContext } from "./MessageProvider";
@@ -7,7 +7,7 @@ import "./messages.css";
 export const Message = ({ MO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const { usersPlayers } = useContext(UserPlayerContext);
-  const { playerObjArray } = useContext(PlayerContext);
+  const { playerObjArray, setTrashtalkPlayer } = useContext(PlayerContext);
   const { removeMessage } = useContext(MessageContext);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
@@ -65,6 +65,7 @@ export const Message = ({ MO }) => {
 
   const handleTrashButtonPress = () => {
     alert("garbagee");
+    setTrashtalkPlayer(MO.messagetext)
   };
 
   return (

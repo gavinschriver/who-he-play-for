@@ -10,7 +10,7 @@ export const TrashTalkEntryForm = () => {
   const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
     UserPlayerContext
   );
-  const { playerObjArray } = useContext(PlayerContext);
+  const { playerObjArray, trashtalkPlayer } = useContext(PlayerContext);
 
   const messagetextRef = useRef("");
   const stanBarRef = useRef("");
@@ -83,6 +83,10 @@ export const TrashTalkEntryForm = () => {
         .length
     );
   }, [usersPlayers]);
+
+  useEffect(() => {
+    console.log(trashtalkPlayer)
+  }, [trashtalkPlayer])
 
   // array of all URL values of all messages for duplicate check
   const messageUrls = messages.map((m) => {
