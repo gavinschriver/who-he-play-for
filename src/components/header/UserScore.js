@@ -4,6 +4,8 @@ import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 
+/// THIS IS OBSOLETE HAHAH WEEE 
+
 export const UserScore = () => {
   const { getUsers, users } = useContext(UserContext);
   const { messages } = useContext(MessageContext);

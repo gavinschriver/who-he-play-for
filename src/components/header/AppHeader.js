@@ -25,7 +25,7 @@ export const AppHeader = () => {
     <section className="appHeader">
           <h2>WHO HE PLAY FOR ANYWAY</h2>
       <UserGreeting user={user} />
-      <UserScore/>
+      <Leaderboard location="header" />
     </section>
   );
 };

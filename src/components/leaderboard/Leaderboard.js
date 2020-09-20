@@ -4,7 +4,7 @@ import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 
-export const Leaderboard = () => {
+export const Leaderboard = (props) => {
   const { getUsers, users } = useContext(UserContext);
   const { messages } = useContext(MessageContext);
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
@@ -57,7 +57,7 @@ export const Leaderboard = () => {
     });
 
     const matchingPlayerStrings = matchingPlayerObjects.map((mPO) => {
-      return mPO.player.firstName;
+      return mPO.player.firstName || {};
     });
 
     trashtalkStringNameInstances.forEach((ttSNI) => {
@@ -76,8 +76,6 @@ export const Leaderboard = () => {
   const currentUserScore =
     trashedUserScores.find((tSO) => tSO.userId === currentUserId) || {};
 
-  console.log(currentUserScore);
-
   useEffect(() => {
     getUsers().then(getUsersPlayers).then(getPlayerData);
   }, []);
@@ -87,21 +85,31 @@ export const Leaderboard = () => {
   }, [messages]);
 
   return (
-    <table>
-      <tbody>
-        <tr>
-          <th>User:</th>
-          <th>Points:</th>
-        </tr>
-        {sortedScores.map((uSO) => {
-          return (
-            <tr>
-              <td>{uSO.username}</td>
-              <td>{uSO.score}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <section>
+      {props.location === "game" ? (
+        <>
+          <h2>TRYING 2 PLAY??</h2>
+          <table>
+            <tbody>
+              <tr>
+                <th>User:</th>
+                <th>Points:</th>
+              </tr>
+              {sortedScores.map((uSO) => {
+                return (
+                  <tr>
+                    <td>{uSO.username}</td>
+                    <td>{uSO.score}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </>
+      ) : props.location === "header" ? (
+        <h2>{currentUserScore.score}</h2>
+        ) : <div></div>
+    }
+    </section>
   );
 };
