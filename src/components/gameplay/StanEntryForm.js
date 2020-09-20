@@ -65,7 +65,6 @@ export const StanEntryForm = () => {
     } else alert(`better check that input stanley`);
   };
 
-
   useEffect(() => {
     setMentionedCount(
       usersPlayers.filter((upo) => upo.userId === currentUser && upo.mentioned)
@@ -94,7 +93,7 @@ export const StanEntryForm = () => {
   // this colleciton is current user's WHOLE lineup as FIRST names
   const allMatchingPlayersStrings = allMatchingPlayersObjects.map((mPO) => {
     return mPO.player.firstName;
-  });
+  }) || {};
 
   //FILTERED BASED ON BEING MENTIONED....
   // this colleciton is ONLY UPOS for the current user that HAVE NOT been marked as mentioned
@@ -137,9 +136,8 @@ export const StanEntryForm = () => {
 
   return (
     <>
-      <section className="messageEntry">
+      <article className="messageEntry">
         <form className="messageEntry--form">
-          <article className="messageEntry--choiceContainer">
             <div className="messageEntry__stan">
               <button
                 onClick={(e) => {
@@ -173,9 +171,8 @@ export const StanEntryForm = () => {
                 ref={urlRef}
               />
             </div>
-          </article>
         </form>
-      </section>
+      </article>
     </>
   );
 };

@@ -114,7 +114,7 @@ export const TrashTalkEntryForm = () => {
 
   return (
     <>
-      <section className="messageEntry">
+      <article className="messageEntry">
         <form className="messageEntry--form">
           <article className="messageEntry--choiceContainer">
             <div className="messageEntry__trashtalk">
@@ -124,15 +124,16 @@ export const TrashTalkEntryForm = () => {
                   handleTrashtalkButtonPress();
                 }}
               >
-                Talk that trash on
+                Talk that trash
               </button>
 
               <input
                 type="text"
                 name="messagetext"
                 id="messagetext"
-                placeholder="`You know who's garbage?`"
+                placeholder="SELCET A PLAYER"
                 ref={messagetextRef}
+                readOnly="true"
               />
             </div>
 
@@ -150,7 +151,7 @@ export const TrashTalkEntryForm = () => {
             </div>
           </article>
         </form>
-      </section>
+      </article>
     </>
   );
 };
