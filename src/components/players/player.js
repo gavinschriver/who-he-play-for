@@ -4,8 +4,8 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import "./Players.css";
 
 export const Player = ({ PO, TO }) => {
-  const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext)
-  const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({})
+  const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
+  const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
   const [showHideDetails, setShowHideDetails] = useState(false);
 
   const handleDetailButtonClick = () => {
@@ -22,24 +22,26 @@ export const Player = ({ PO, TO }) => {
   const NBAid = currentPlayer.player.externalMappings[0].id || {};
 
   useEffect(() => {
-    getUsersPlayers()
-  }, [])
-  
-  useEffect(() => {
-    setMatchingUsersPlayer(usersPlayers.find(uPO => {
-      return uPO.playerId === PO.player.id
-    }) || {} )
-  }, [usersPlayers])
+    getUsersPlayers();
+  }, []);
 
+  useEffect(() => {
+    setMatchingUsersPlayer(
+      usersPlayers.find((uPO) => {
+        return uPO.playerId === PO.player.id;
+      }) || {}
+    );
+  }, [usersPlayers]);
 
   return (
     <article className="playerCard card">
-      <a href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()} target="_blank">NBA Stats</a>
-      {
-        matchingUsersPlayer.mentioned
-          ? <div>#STAN'D</div>
-          : <div></div>
-      }
+      <a
+        href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()}
+        target="_blank"
+      >
+        NBA Stats
+      </a>
+      {matchingUsersPlayer.mentioned ? <div>#STAN'D</div> : <div></div>}
       <div className="playerCard__name">
         Player Name: {currentPlayer.player.firstName}{" "}
         {currentPlayer.player.lastName}

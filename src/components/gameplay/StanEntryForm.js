@@ -24,7 +24,7 @@ export const StanEntryForm = () => {
   const handleStanButtonPress = () => {
     const urlValue = urlRef.current.value;
 
-    //stanBarPlayer is currently JUST a first name. 
+    //stanBarPlayer is currently JUST a first name.
     const stanBarPlayer = stanBarRef.current.value;
     // code to reattach a player's first name to their last name for search validaiton cause im an idiot
     const stanBarPlayerObject = filteredPlayersObjects.find((fPO) => {
@@ -35,7 +35,8 @@ export const StanEntryForm = () => {
 
     if (
       validator.isURL(urlValue) &&
-      urlValue.includes(stanBarPlayer.toLowerCase()) && urlValue.includes(`reddit`)
+      urlValue.includes(stanBarPlayer.toLowerCase()) &&
+      urlValue.includes(`reddit`)
     ) {
       if (!messageUrls.includes(urlValue)) {
         if (filteredPlayersStrings.includes(stanBarPlayer)) {
@@ -73,18 +74,6 @@ export const StanEntryForm = () => {
     } else alert(`better check that input stanley`);
   };
 
-  //init hook
-  useEffect(() => {
-    getPlayerData().then(getUsersPlayers).then(getMessages);
-  }, []);
-
-  useEffect(() => {
-    setMentionedCount(
-      usersPlayers.filter((upo) => upo.userId === currentUser && upo.mentioned)
-        .length
-    );
-  }, [usersPlayers]);
-
   // array of all URL values of all messages for duplicate check
   const messageUrls = messages.map((m) => {
     return m.url;
@@ -121,31 +110,22 @@ export const StanEntryForm = () => {
     });
   });
 
-  const filteredPlayersIDs = filteredUsersPlayers.map((fUPO) => {
-    return playerObjArray.find((p) => {
-      return p.player.id === fUPO.playerId;
-    });
-  });
-
   //Strings of the Player first names for the above (aka only player first names in the user's lineup they haven't mentioned yet)
   const filteredPlayersStrings = filteredPlayersObjects.map((fPO) => {
     return fPO.player.firstName;
   });
 
-  // FOR OTHER USERS PLAYER LINEUPS
-  const othersUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId != currentUser;
-  });
+  // Init Hook
+  useEffect(() => {
+    getPlayerData().then(getUsersPlayers).then(getMessages);
+  }, []);
 
-  const othersPlayersObjs = othersUsersPlayers.map((oUPO) => {
-    return playerObjArray.find((p) => {
-      return p.player.id === oUPO.playerId;
-    });
-  });
-
-  const othersPlayersStrings = othersPlayersObjs.map((oPO) => {
-    return oPO.player.firstName;
-  });
+  useEffect(() => {
+    setMentionedCount(
+      usersPlayers.filter((upo) => upo.userId === currentUser && upo.mentioned)
+        .length
+    );
+  }, [usersPlayers]);
 
   return (
     <>

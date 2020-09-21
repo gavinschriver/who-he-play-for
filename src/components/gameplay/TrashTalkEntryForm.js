@@ -6,11 +6,11 @@ import validator from "validator";
 import "../messages/messages.css";
 
 export const TrashTalkEntryForm = () => {
-  const { addMessage, messages } = useContext(MessageContext);
-  const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
+  const { addMessage, getMessages, messages } = useContext(MessageContext);
+  const { usersPlayers, getUsersPlayers, setMentionedCount } = useContext(
     UserPlayerContext
   );
-  const { playerObjArray, trashtalkPlayer } = useContext(PlayerContext);
+  const { getPlayerData, playerObjArray, trashtalkPlayer } = useContext(PlayerContext);
 
   const messagetextRef = useRef("");
   const stanBarRef = useRef("");
@@ -78,23 +78,6 @@ export const TrashTalkEntryForm = () => {
     return mPO.player.firstName;
   });
 
-  //FILTERED BASED ON BEING MENTIONED....
-  // this colleciton is ONLY UPOS for the current user that HAVE NOT been marked as mentioned
-  const filteredUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId === currentUser && !upo.mentioned;
-  });
-
-  //Player Objects that correspond to the above
-  const filteredPlayersObjects = filteredUsersPlayers.map((fUPO) => {
-    return playerObjArray.find((p) => {
-      return p.player.id === fUPO.playerId;
-    });
-  });
-
-  //Strings of the Player first names for the above (aka only player first names in the user's lineup they haven't mentioned yet)
-  const filteredPlayersStrings = filteredPlayersObjects.map((mPO) => {
-    return mPO.player.firstName;
-  });
 
   // FOR OTHER PLAYERS LINEUPS
   // All other user's lineups as UserPlayer objects
@@ -112,6 +95,10 @@ export const TrashTalkEntryForm = () => {
   const othersPlayersStrings = othersPlayersObjs.map((oPO) => {
     return oPO.player.firstName;
   });
+
+  useEffect(() => {
+    getPlayerData().then(getUsersPlayers).then(getMessages);
+  }, []);
 
   return (
     <>
