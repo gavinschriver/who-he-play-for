@@ -7,14 +7,16 @@ import "./messages.css";
 export const Message = ({ MO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
-  const { playerObjArray, getPlayerData, setTrashtalkPlayer } = useContext(PlayerContext);
-  const { removeMessage } = useContext(MessageContext);
+  const { playerObjArray, getPlayerData, setTrashtalkPlayer } = useContext(
+    PlayerContext
+  );
+  const { removeMessage, updateMessage } = useContext(MessageContext);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
-  const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([])
-  const [matchingPlayers, setMatchingPlayers] = useState([])
-  const [currentUsersPOs, setCurrentUsersPOs] = useState([])
-  const [currentPlayers, setCurrentPlayers] = useState([])
-
+  const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
+  const [matchingPlayers, setMatchingPlayers] = useState([]);
+  const [currentUsersPOs, setCurrentUsersPOs] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const editRef = useRef("")
   const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
     return mPO.player.firstName;
   });
@@ -27,16 +29,18 @@ export const Message = ({ MO }) => {
   });
 
   //array of current user's lineup as PLAYA objects
-  const currentUsersPlayerObjects = currentUserPlayerIds.map((cUPID) => {
-    return playerObjArray.find((pO) => {
-      return pO.player.id === cUPID;
-    });
-  }) || {};
+  const currentUsersPlayerObjects =
+    currentUserPlayerIds.map((cUPID) => {
+      return playerObjArray.find((pO) => {
+        return pO.player.id === cUPID;
+      });
+    }) || {};
 
-  //array of current users lineup as firstName 
-  const currenUsersLineupAsStrings = currentUsersPlayerObjects.map((cUPO) => {
-    return cUPO.player.firstName;
-  }) || {};
+  //array of current users lineup as firstName
+  const currenUsersLineupAsStrings =
+    currentUsersPlayerObjects.map((cUPO) => {
+      return cUPO.player.firstName;
+    }) || {};
 
   const matchingPlayersToggle = () => {
     if (!showHideMatchingPlayers) {
@@ -46,77 +50,102 @@ export const Message = ({ MO }) => {
     }
   };
 
-  const messageClassName = MO.stan ? "message card stanMessage" : "message card trashMessage"
+  const handleEditButtonPress = () => {
+    if (!editMode) {
+      setEditMode(true)
+    } else if (editMode) {
+      const newChatValue = editRef.current.value
+      const editMessage = {
+        id: MO.id,
+        chattext: newChatValue,
+        userId: MO.userId,
+        messagetext: MO.messagetext,
+        url: MO.url,
+        timestamp: MO.timestamp,
+        trashtalk: MO.trashtalk ? MO.trashtalk : false,
+        stan: MO.stan ? MO.stan : false
+      }
+      console.log(editMessage)
+      setEditMode(false)
+    }
+  };
+
+  const messageClassName = MO.stan
+    ? "message card stanMessage"
+    : "message card trashMessage";
 
   useEffect(() => {
-    getUsersPlayers()
-    .then(getPlayerData)
-  }, [])
+    getUsersPlayers().then(getPlayerData);
+  }, []);
 
   useEffect(() => {
-    const matchingUPs = usersPlayers.filter((upo) => {
-      return upo.userId === MO.user.id;
-    }) || {};
-    setMatchingUsersPlayers(matchingUPs)
-  }, [usersPlayers])
+    const matchingUPs =
+      usersPlayers.filter((upo) => {
+        return upo.userId === MO.user.id;
+      }) || {};
+    setMatchingUsersPlayers(matchingUPs);
+  }, [usersPlayers]);
 
   useEffect(() => {
-    const matchingPOs = matchingUsersPlayers.map((mUPO) => {
-      return playerObjArray.find((p) => {
-        return mUPO.playerId === p.player.id;
-      });
-    }) || {}
-    setMatchingPlayers(matchingPOs)
-  }, [playerObjArray])
+    const matchingPOs =
+      matchingUsersPlayers.map((mUPO) => {
+        return playerObjArray.find((p) => {
+          return mUPO.playerId === p.player.id;
+        });
+      }) || {};
+    setMatchingPlayers(matchingPOs);
+  }, [playerObjArray]);
 
   useEffect(() => {
-    const currentUserLineup = usersPlayers.filter((uPO) => {
-      return uPO.userId === currentUserId;
-    }) || {};
-    setCurrentUsersPOs(currentUserLineup)
-  }, [usersPlayers])
+    const currentUserLineup =
+      usersPlayers.filter((uPO) => {
+        return uPO.userId === currentUserId;
+      }) || {};
+    setCurrentUsersPOs(currentUserLineup);
+  }, [usersPlayers]);
 
   return (
     <article className={messageClassName} id={MO.id}>
       <div className="entryText">
+        {MO.user.id === currentUserId ? (
+          <span>YOU</span>
+        ) : (
+          <span>{MO.user.name || ""}</span>
+        )}
 
         {
-          MO.user.id === currentUserId
-            ? <span>YOU</span>
-            :<span >{MO.user.name || ""}</span>
-        }
-        
-
-        { /* does the incoming message's messagetext field contain a player name 
+          /* does the incoming message's messagetext field contain a player name 
           that's in the collection of that message object's user's lineup? if so, it's a STAN */
           matchingPlayersFirstNames.includes(MO.messagetext) ? (
+            <span>
+              {" "}
+              stan
+              {MO.user.id === currentUserId ? <span>'d</span> : <span>'d</span>}
+            </span>
+          ) : MO.trashtalk ? (
+            <span>
+              {" "}
+              {MO.user.id === currentUserId ? (
+                <span>talked trash on</span>
+              ) : (
+                <span>talked trash on</span>
+              )}
+              {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
+                <span> your guy</span>
+              ) : (
+                <span></span>
+              )}
+            </span>
+          ) : (
+            <span> stan'd </span>
+          )
+        }
 
-
-            
-
-            <span> stan{MO.user.id === currentUserId ? <span>'d</span> : <span>'d</span>}</span>
-            
-            
-        ) : MO.trashtalk ? (
-          <span>
-            {" "}
-            {MO.user.id === currentUserId ? <span>talked trash on</span> : <span>talked trash on</span>} 
-            {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
-              <span> your guy</span>
-            ) : (
-              <span></span>
-            )}
-          </span>
-        ) : (
-          <span> stan'd </span>
-            )}
-        
         {/* in case we wanna add just plain non-game-related message later... 
         will probably have to change this field (property) to something else because
         messagetext is now the first name of the player being shouted out */}
 
         <span> {MO.messagetext}</span>
-
       </div>
 
       {MO.user.id === currentUserId ? (
@@ -184,16 +213,41 @@ export const Message = ({ MO }) => {
           </a>
         </div>
       ) : MO.trashtalk ? (
-        <div className="message__url" >
-          <a href={MO.url} target="_blank">I'll just leave this here...</a>
+        <div className="message__url">
+          <a href={MO.url} target="_blank">
+            I'll just leave this here...
+          </a>
         </div>
       ) : (
         <div></div>
-          )}
-      <div>{MO.chattext}</div>
+      )}
+      <div>
+        { editMode
+          ? <div></div>
+          : <div>{MO.chattext}</div>
+        }
+      </div>
+      {MO.chattext ? (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            handleEditButtonPress();
+          }}
+        >
+          {
+            editMode
+              ? `Submit`
+              : 'Edit Chat'
+          }
+        </button>
+      ) : (
+        <div></div>
+        )}
       {
-        MO.chattext
-          ? <button>Edit Chat Text</button>
+        editMode
+          ? <textarea defaultValue={MO.chattext} ref={editRef}>
+            
+          </textarea>
           : <div></div>
       }
     </article>
