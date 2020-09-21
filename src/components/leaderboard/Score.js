@@ -5,7 +5,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 export const Score = ({ SO, UO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const { usersPlayers } = useContext(UserPlayerContext);
-  const { playerObjArray } = useContext(PlayerContext);
+  const { playerObjArray, setTrashtalkPlayer } = useContext(PlayerContext);
 
   const matchingPlayersToggle = () => {
     if (!showHideMatchingPlayers) {
@@ -15,16 +15,16 @@ export const Score = ({ SO, UO }) => {
     }
   };
 
-    const matchingUsersPlayer = usersPlayers.filter((uPO => {
-      return uPO.userId === SO.userId
-    }))  
-    
-    const matchingPlayers = matchingUsersPlayer.map((mUPO => {
-        return playerObjArray.find(p => {
-            return mUPO.playerId === p.player.id
-        })
-    }))
-    
+  const matchingUsersPlayer = usersPlayers.filter((uPO) => {
+    return uPO.userId === SO.userId;
+  });
+
+  const matchingPlayers = matchingUsersPlayer.map((mUPO) => {
+    return playerObjArray.find((p) => {
+      return mUPO.playerId === p.player.id;
+    });
+  });
+
   return (
     <div>
       <span>{SO.username}</span>
@@ -41,8 +41,22 @@ export const Score = ({ SO, UO }) => {
         <div>
           AH SHIT ITS AN ARRAY
           {matchingPlayers.map((mPO) => {
-              const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`
-              return <div><a href={redditSearch} target="_blank">{mPO.player.firstName} {mPO.player.lastName}</a></div>;
+            const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
+            return (
+              <div>
+                <a href={redditSearch} target="_blank">
+                  {mPO.player.firstName} {mPO.player.lastName}
+                </a>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setTrashtalkPlayer(mPO.player.firstName);
+                  }}
+                >
+                  TRASH
+                </button>
+              </div>
+            );
           })}
         </div>
       ) : (
