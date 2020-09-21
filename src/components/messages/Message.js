@@ -191,6 +191,11 @@ export const Message = ({ MO }) => {
         <div></div>
           )}
       <div>{MO.chattext}</div>
+      {
+        MO.chattext
+          ? <button>Edit Chat Text</button>
+          : <div></div>
+      }
     </article>
   );
 };
