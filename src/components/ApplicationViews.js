@@ -18,12 +18,18 @@ export const ApplicationViews = (props) => {
         <PlayerProvider>
           <MessageProvider>
             <UserPlayerProvider>
-              <Route exact path="/">
-                <AppHeader />
-                <GamePlay />
-                <GenerateLineup />
-                <MessagesList />
-              </Route>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <>
+                    <AppHeader {...props} />
+                    <GamePlay {...props} />
+                    <GenerateLineup {...props} />
+                    <MessagesList {...props} />
+                  </>
+                )}
+              ></Route>
             </UserPlayerProvider>
           </MessageProvider>
         </PlayerProvider>

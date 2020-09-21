@@ -23,6 +23,8 @@ export const StanEntryForm = () => {
 
   const handleStanButtonPress = () => {
     const urlValue = urlRef.current.value;
+
+    //stanBarPlayer is currently JUST a first name. 
     const stanBarPlayer = stanBarRef.current.value;
     // code to reattach a player's first name to their last name for search validaiton cause im an idiot
     const stanBarPlayerObject = filteredPlayersObjects.find((fPO) => {
@@ -33,7 +35,7 @@ export const StanEntryForm = () => {
 
     if (
       validator.isURL(urlValue) &&
-      urlValue.includes(stanBarPlayer.toLowerCase())
+      urlValue.includes(stanBarPlayer.toLowerCase()) && urlValue.includes(`reddit`)
     ) {
       if (!messageUrls.includes(urlValue)) {
         if (filteredPlayersStrings.includes(stanBarPlayer)) {

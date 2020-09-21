@@ -24,12 +24,6 @@ export const Score = ({ SO, UO }) => {
             return mUPO.playerId === p.player.id
         })
     }))
-
-    const matchingPlayerFirstNames = matchingPlayers.map(mPO => {
-        return mPO.player.firstName
-    })
-
-
     
   return (
     <div>
@@ -47,8 +41,8 @@ export const Score = ({ SO, UO }) => {
         <div>
           AH SHIT ITS AN ARRAY
           {matchingPlayers.map((mPO) => {
-
-            return <div>{mPO.player.firstName}</div>;
+              const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`
+              return <div><a href={redditSearch} target="_blank">{mPO.player.firstName} {mPO.player.lastName}</a></div>;
           })}
         </div>
       ) : (

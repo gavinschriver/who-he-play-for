@@ -25,7 +25,7 @@ export const TrashTalkEntryForm = () => {
     console.log(othersPlayersStrings, urlValue, trashtalkplayer.toLowerCase());
     if (
       validator.isURL(urlValue, { require_protocol: false }) &&
-      urlValue.includes(trashtalkplayer.toLowerCase())
+      urlValue.includes(trashtalkplayer.toLowerCase()) && urlValue.includes(`reddit`)
     ) {
       if (!allMatchingPlayersStrings.includes(trashtalkplayer)) {
         if (othersPlayersStrings.includes(trashtalkplayer)) {

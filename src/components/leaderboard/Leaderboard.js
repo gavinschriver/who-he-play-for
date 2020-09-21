@@ -113,6 +113,7 @@ export const Leaderboard = (props) => {
     }) || {};
 
   const trashtalkchamp = sortedByTrashtalks[0] || {};
+  
   useEffect(() => {
     getUsers().then(getUsersPlayers).then(getPlayerData);
   }, []);

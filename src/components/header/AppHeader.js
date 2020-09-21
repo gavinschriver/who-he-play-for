@@ -3,9 +3,10 @@ import { UserContext } from "../users/UserProvider";
 import { UserGreeting } from "./UserGreeting";
 import "./AppHeader.css";
 import { Leaderboard } from "../leaderboard/Leaderboard";
-import { UserScore } from "./UserScore"
+import { UserScore } from "./UserScore";
+import { LogoutButton } from "./LogoutButton";
 
-export const AppHeader = () => {
+export const AppHeader = (props) => {
   const { users, getUsers } = useContext(UserContext);
   const [user, setUser] = useState({});
 
@@ -22,10 +23,11 @@ export const AppHeader = () => {
   }, [users]);
 
   return (
-    <section className="appHeader">
-          <h2>WHO HE PLAY FOR ANYWAY</h2>
+    <article className="appHeader">
+      <h2>WHO HE PLAY FOR ANYWAY</h2>
       <UserGreeting user={user} />
       <Leaderboard location="header" />
-    </section>
+      <LogoutButton {...props} />
+    </article>
   );
 };
