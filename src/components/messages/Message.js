@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { MessageContext } from "./MessageProvider";
@@ -6,23 +6,27 @@ import "./messages.css";
 
 export const Message = ({ MO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
-  const { usersPlayers } = useContext(UserPlayerContext);
-  const { playerObjArray, setTrashtalkPlayer } = useContext(PlayerContext);
+  const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
+  const { playerObjArray, getPlayerData, setTrashtalkPlayer } = useContext(PlayerContext);
   const { removeMessage } = useContext(MessageContext);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
-  const [matchingUPS, setMatchingUPS] = useState([])
+  const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([])
+  const [matchingPlayers, setMatchingPlayers] = useState([])
 
+  //EFFECT HOOK TO SET
   //For each message object, use it's userId to look up the userID on matching upos (bring in that message's user's whole lineup)
-  const matchingUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId === MO.user.id;
-  });
+  // const matchingUPs = usersPlayers.filter((upo) => {
+  //   return upo.userId === MO.user.id;
+  // });
 
+
+  //EFFECT HOOK TO SET
   // turn the message object user's UPOS into Player Objects
-  const matchingPlayers = matchingUsersPlayers.map((mUPO) => {
-    return playerObjArray.find((p) => {
-      return mUPO.playerId === p.player.id;
-    });
-  });
+  // const matchingPlayers = matchingUsersPlayers.map((mUPO) => {
+  //   return playerObjArray.find((p) => {
+  //     return mUPO.playerId === p.player.id;
+  //   });
+  // });
 
   // array of strings of each of the current message object's user's Lineup 
   const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
@@ -67,6 +71,27 @@ export const Message = ({ MO }) => {
   };
 
   const messageClassName = MO.stan ? "message card stanMessage" : "message card trashMessage"
+
+  useEffect(() => {
+    getUsersPlayers()
+    .then(getPlayerData)
+  }, [])
+
+  useEffect(() => {
+    const matchingUPs = usersPlayers.filter((upo) => {
+      return upo.userId === MO.user.id;
+    }) || {};
+    setMatchingUsersPlayers(matchingUPs)
+  }, [usersPlayers])
+
+  useEffect(() => {
+    const matchingPOs = matchingUsersPlayers.map((mUPO) => {
+      return playerObjArray.find((p) => {
+        return mUPO.playerId === p.player.id;
+      });
+    }) || {}
+    setMatchingPlayers(matchingPOs)
+  }, [playerObjArray])
 
   return (
     <article className={messageClassName} id={MO.id}>
