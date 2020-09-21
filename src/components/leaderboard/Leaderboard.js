@@ -145,7 +145,7 @@ export const Leaderboard = (props) => {
           </div>
           <table>
 
-
+              <tr><th>User</th><th>Score</th></tr>
               {/* begin map (sending uSO to Score.js*/}
               {sortedScores.map((uSO) => {
                 const matchingUser =

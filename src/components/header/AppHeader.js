@@ -27,7 +27,6 @@ export const AppHeader = (props) => {
       <h2>WHO HE PLAY FOR ANYWAY</h2>
       <UserGreeting user={user} />
       <Leaderboard location="header" />
-      <LogoutButton {...props} />
     </article>
   );
 };

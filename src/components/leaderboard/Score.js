@@ -39,7 +39,7 @@ export const Score = ({ SO, UO }) => {
         Show Playerz
       </button></td>
       {showHideMatchingPlayers ? (
-        <div>
+        <div className="lineup otherUsers__lineup">
           {matchingPlayers.map((mPO) => {
             const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
             return (

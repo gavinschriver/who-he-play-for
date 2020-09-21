@@ -171,7 +171,7 @@ export const StanEntryForm = () => {
           </div>
 
           <div className="messageEntry__URL">
-            <h2>But you'd better back it up</h2>
+            <h2>Put some SAUCE on it</h2>
             <input
               type="url"
               name="url"
