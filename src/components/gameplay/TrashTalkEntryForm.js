@@ -19,7 +19,7 @@ export const TrashTalkEntryForm = () => {
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
 
   const handleTrashtalkButtonPress = () => {
-    const trashtalkplayer = messagetextRef.current.value;
+    const trashtalkplayer = messagetextRef.current.value.split(' ')[0];
     const urlValue = urlRef.current.value;
 
     console.log(othersPlayersStrings, urlValue, trashtalkplayer.toLowerCase());
