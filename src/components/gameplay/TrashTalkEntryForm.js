@@ -22,8 +22,11 @@ export const TrashTalkEntryForm = () => {
     const trashtalkplayer = messagetextRef.current.value;
     const urlValue = urlRef.current.value;
 
-    console.log(othersPlayersStrings, urlValue, trashtalkplayer.toLowerCase())
-    if (validator.isURL(urlValue, {require_protocol: true}) && urlValue.includes(trashtalkplayer.toLowerCase())) {
+    console.log(othersPlayersStrings, urlValue, trashtalkplayer.toLowerCase());
+    if (
+      validator.isURL(urlValue, { require_protocol: false }) &&
+      urlValue.includes(trashtalkplayer.toLowerCase())
+    ) {
       if (!allMatchingPlayersStrings.includes(trashtalkplayer)) {
         if (othersPlayersStrings.includes(trashtalkplayer)) {
           if (!messageUrls.includes(urlValue)) {
@@ -37,8 +40,8 @@ export const TrashTalkEntryForm = () => {
             addMessage(newMessage);
           } else alert(`someone already cited that proof`);
         } else alert(`You tryin' to throw shade w/o backing it up?`);
-      } else alert(`You trying to trash your own player? Rough look my dude`)
-    } else alert('better check that input')
+      } else alert(`You trying to trash your own player? Rough look my dude`);
+    } else alert("better check that input");
   };
 
   useEffect(() => {
@@ -50,8 +53,8 @@ export const TrashTalkEntryForm = () => {
 
   //sets the value of the trash talk input bar in this component to the value of the TT player selected in message component
   useEffect(() => {
-    messagetextRef.current.value = trashtalkPlayer
-  }, [trashtalkPlayer])
+    messagetextRef.current.value = trashtalkPlayer;
+  }, [trashtalkPlayer]);
 
   // array of all URL values of all messages for duplicate check
   const messageUrls = messages.map((m) => {
@@ -92,8 +95,6 @@ export const TrashTalkEntryForm = () => {
   const filteredPlayersStrings = filteredPlayersObjects.map((mPO) => {
     return mPO.player.firstName;
   });
-   
-
 
   // FOR OTHER PLAYERS LINEUPS
   // All other user's lineups as UserPlayer objects
@@ -116,40 +117,43 @@ export const TrashTalkEntryForm = () => {
     <>
       <article className="messageEntry">
         <form className="messageEntry--form">
-          <article className="messageEntry--choiceContainer">
-            <div className="messageEntry__trashtalk">
+          <div className="messageEntry__trashtalk">
+            <div className="messasgeEntry__trashtalk header">
+              <h2>Talk that trash</h2>
+              <div className="instructions">Choose a player to TRASH from another user's lineup in the Spin Zone</div>
+            </div>
+
+            <input
+              type="text"
+              name="messagetext"
+              id="messagetext"
+              placeholder="WHO YA GOT?"
+              ref={messagetextRef}
+              size="30"
+              readOnly="true"
+            />
+            <h2>But you'd better back it up</h2>
+            <input
+              type="url"
+              name="url"
+              id="url"
+              placeholder="Enter #relevancontent"
+              pattern="https://.*"
+              size="30"
+              ref={urlRef}
+            />
+
+            <div className="addMessageButton">
               <button
                 onClick={(e) => {
                   e.preventDefault();
                   handleTrashtalkButtonPress();
                 }}
               >
-                Talk that trash
+                Fire away
               </button>
-
-              <input
-                type="text"
-                name="messagetext"
-                id="messagetext"
-                placeholder="SELCET A PLAYER"
-                ref={messagetextRef}
-                readOnly="true"
-              />
             </div>
-
-            <div className="messageEntry__URL">
-              <h2>But you'd</h2>
-              <input
-                type="url"
-                name="url"
-                id="url"
-                placeholder="better back it up"
-                pattern="https://.*"
-                size="30"
-                ref={urlRef}
-              />
-            </div>
-          </article>
+          </div>
         </form>
       </article>
     </>

@@ -16,6 +16,8 @@ export const MessagesList = () => {
     setFilteredMessages(messages.reverse())
   }, [messages])
 
+  const recentMessages = filteredMessages.slice(0, 100) || {}
+
   return (
     <article className="messagesList">
 
@@ -25,7 +27,7 @@ export const MessagesList = () => {
 
       <section id="messages">
         {         
-          filteredMessages.map((m) => {
+          recentMessages.map((m) => {
           return <Message key={m.id} MO={m} />
           })
         }
