@@ -3,6 +3,7 @@ import { UserContext } from "../users/UserProvider";
 import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
+import { Score } from "./Score";
 
 //this comp is a bit inaccurately named now. Should be Scores or something
 //to indicate it generates all scores and returns them conditionally rendered
@@ -147,42 +148,19 @@ export const Leaderboard = (props) => {
                 <th>User:</th>
                 <th>Points:</th>
               </tr>
-              {sortedScores.map((uSO) => {
-                const matchingUserPlayers =
-                  usersPlayers.filter((uPO) => {
-                    return uPO.userId === uSO.userId;
-                  }) || {};
 
-                return (
-                  <tr>
-                    <td>{uSO.username}</td>
-                    <td>{uSO.score}</td>
-                    {uSO.userId !== currentUserId ? (
-                      <td>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            matchingPlayersToggle();
-                          }}
-                        >
-                          Show lineup
-                        </button>
-                        {showHideMatchingPlayers ? (
-                          <div>HELOOOO</div>
-                        ) : (
-                          <div>NOOO</div>
-                        )}
-                      </td>
-                    ) : (
-                      <div></div>
-                    )}
-                  </tr>
-                );
+              {/* begin map (sending uSO to Score.js*/}
+              {sortedScores.map((uSO) => {
+                // const matchingUserPlayers =
+                //   usersPlayers.filter((uPO) => {
+                //     return uPO.userId === uSO.userId;
+                //   }) || {};
+
+                return <Score key={uSO.id} SO={uSO} />
               })}
             </tbody>
           </table>
         </section>
-        
       ) : props.location === "header" ? (
         <>
           <section className="userScores">
