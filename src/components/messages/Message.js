@@ -10,6 +10,7 @@ export const Message = ({ MO }) => {
   const { playerObjArray, setTrashtalkPlayer } = useContext(PlayerContext);
   const { removeMessage } = useContext(MessageContext);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
+  const [matchingUPS, setMatchingUPS] = useState([])
 
   //For each message object, use it's userId to look up the userID on matching upos (bring in that message's user's whole lineup)
   const matchingUsersPlayers = usersPlayers.filter((upo) => {
