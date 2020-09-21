@@ -189,7 +189,8 @@ export const Message = ({ MO }) => {
         </div>
       ) : (
         <div></div>
-      )}
+          )}
+      <div>{MO.chattext}</div>
     </article>
   );
 };

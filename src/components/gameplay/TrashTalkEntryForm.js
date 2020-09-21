@@ -10,22 +10,27 @@ export const TrashTalkEntryForm = () => {
   const { usersPlayers, getUsersPlayers, setMentionedCount } = useContext(
     UserPlayerContext
   );
-  const { getPlayerData, playerObjArray, trashtalkPlayer } = useContext(PlayerContext);
+  const { getPlayerData, playerObjArray, trashtalkPlayer } = useContext(
+    PlayerContext
+  );
 
   const messagetextRef = useRef("");
   const stanBarRef = useRef("");
   const urlRef = useRef("");
+  const chatRef = useRef("")
 
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
 
   const handleTrashtalkButtonPress = () => {
-    const trashtalkplayer = messagetextRef.current.value.split(' ')[0];
+    const trashtalkplayer = messagetextRef.current.value.split(" ")[0];
     const urlValue = urlRef.current.value;
+    const chatValue = chatRef.current.value
 
     console.log(othersPlayersStrings, urlValue, trashtalkplayer.toLowerCase());
     if (
       validator.isURL(urlValue, { require_protocol: false }) &&
-      urlValue.includes(trashtalkplayer.toLowerCase()) && urlValue.includes(`reddit`)
+      urlValue.includes(trashtalkplayer.toLowerCase()) &&
+      urlValue.includes(`reddit`)
     ) {
       if (!allMatchingPlayersStrings.includes(trashtalkplayer)) {
         if (othersPlayersStrings.includes(trashtalkplayer)) {
@@ -36,6 +41,7 @@ export const TrashTalkEntryForm = () => {
               url: urlRef.current.value,
               timestamp: Date.now(),
               trashtalk: true,
+              chattext: chatValue
             };
             addMessage(newMessage);
           } else alert(`someone already cited that proof`);
@@ -78,7 +84,6 @@ export const TrashTalkEntryForm = () => {
     return mPO.player.firstName;
   });
 
-
   // FOR OTHER PLAYERS LINEUPS
   // All other user's lineups as UserPlayer objects
   const othersUsersPlayers = usersPlayers.filter((upo) => {
@@ -107,7 +112,9 @@ export const TrashTalkEntryForm = () => {
           <div className="messageEntry__trashtalk">
             <div className="messasgeEntry__trashtalk header">
               <h2>Talk that trash</h2>
-              <div className="instructions">Choose a player to TRASH from another user's lineup</div>
+              <div className="instructions">
+                Choose a player to TRASH from another user's lineup
+              </div>
             </div>
 
             <input
@@ -130,14 +137,23 @@ export const TrashTalkEntryForm = () => {
               ref={urlRef}
             />
 
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleTrashtalkButtonPress();
-                }}
-              >
-                Fire away
-              </button>
+            <textarea
+              type="text"
+              name="chat"
+              placeholder="Care to add anything else?"
+              size="30"
+              className="form-control"
+              ref={chatRef}
+            />
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleTrashtalkButtonPress();
+              }}
+            >
+              Fire away
+            </button>
           </div>
         </form>
       </article>

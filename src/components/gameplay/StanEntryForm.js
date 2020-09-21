@@ -17,6 +17,7 @@ export const StanEntryForm = () => {
 
   const stanBarRef = useRef("");
   const urlRef = useRef("");
+  const chatRef = useRef("")
   let stanPlayerFirstAndLastName = "";
 
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
@@ -26,6 +27,7 @@ export const StanEntryForm = () => {
 
     //stanBarPlayer is currently JUST a first name.
     const stanBarPlayer = stanBarRef.current.value;
+    const chatValue = chatRef.current.value
     // code to reattach a player's first name to their last name for search validaiton cause im an idiot
     const stanBarPlayerObject = filteredPlayersObjects.find((fPO) => {
       return fPO.player.firstName === stanBarPlayer;
@@ -63,6 +65,7 @@ export const StanEntryForm = () => {
             url: urlRef.current.value,
             timestamp: Date.now(),
             stan: true,
+            chattext: chatValue
           };
           addMessage(newMessage);
 
@@ -161,6 +164,17 @@ export const StanEntryForm = () => {
               size="30"
               ref={urlRef}
             />
+
+            <textarea
+              type="text"
+              name="chat"
+              placeholder="Care to add anything else?"
+              size="30"
+              className="form-control"
+              ref={chatRef}
+            />
+
+            
 
             <button
               className="addMessageButton"
