@@ -13,37 +13,16 @@ export const Message = ({ MO }) => {
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([])
   const [matchingPlayers, setMatchingPlayers] = useState([])
 
-  //EFFECT HOOK TO SET
-  //For each message object, use it's userId to look up the userID on matching upos (bring in that message's user's whole lineup)
-  // const matchingUPs = usersPlayers.filter((upo) => {
-  //   return upo.userId === MO.user.id;
-  // });
-
-
-  //EFFECT HOOK TO SET
-  // turn the message object user's UPOS into Player Objects
-  // const matchingPlayers = matchingUsersPlayers.map((mUPO) => {
-  //   return playerObjArray.find((p) => {
-  //     return mUPO.playerId === p.player.id;
-  //   });
-  // });
-
-  // array of strings of each of the current message object's user's Lineup 
   const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
     return mPO.player.firstName;
   });
 
   //DRILLING DOWN TO CURRENT USERS LINEUP WEEEE
 
-  //true false to see if any of the UPOs belong to current user. For some reason.
-  const isCurrentUser = matchingUsersPlayers.find((mUPO) => {
-    return mUPO.userId === currentUserId;
-  });
-
   //current users lineup as UserPlayerObjects
   const currentUserLineup = usersPlayers.filter((uPO) => {
     return uPO.userId === currentUserId;
-  });
+  }) || {};
 
   //array of current user's lineup player IDs
   const currentUserPlayerIds = currentUserLineup.map((cULO) => {
@@ -55,12 +34,12 @@ export const Message = ({ MO }) => {
     return playerObjArray.find((pO) => {
       return pO.player.id === cUPID;
     });
-  });
+  }) || {};
 
   //array of current users lineup as firstName STRINGS FINALLY JESUS
   const currenUsersLineupAsStrings = currentUsersPlayerObjects.map((cUPO) => {
     return cUPO.player.firstName;
-  });
+  }) || {};
 
   const matchingPlayersToggle = () => {
     if (!showHideMatchingPlayers) {

@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { MessageContext } from "./MessageProvider";
 import { Message } from "./Message"
 import "./messages.css";
-import { UserContext } from "../users/UserProvider";
-
 export const MessagesList = () => {
   const { messages, getMessages } = useContext(MessageContext);
   const [filteredMessages, setFilteredMessages] = useState([])
@@ -16,12 +14,10 @@ export const MessagesList = () => {
     setFilteredMessages(messages.reverse())
   }, [messages])
 
-  const recentMessages = filteredMessages.slice(0, 100) || {}
+  const recentMessages = filteredMessages.slice(0, 50) || {}
 
   return (
     <article className="messagesList">
-
-      {/* <Leaderboard /> */}
 
       <h2>Spin Zone</h2>
 

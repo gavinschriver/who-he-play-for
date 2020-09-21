@@ -9,14 +9,17 @@ import { Score } from "./Score";
 //to indicate it generates all scores and returns them conditionally rendered
 
 export const Leaderboard = (props) => {
-  const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const { getUsers, users } = useContext(UserContext);
   const { messages } = useContext(MessageContext);
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
   const { getUsersPlayers, usersPlayers } = useContext(UserPlayerContext);
+  const [usersArray, setUsersArray] = useState([]);
+  const [messagesArray, setMessagesArray] = useState([]);
+  const [playersArray, setPlayersArray] = useState([]);
+  const [usersPlayersArray, setUsersPlayersArray] = useState([]);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
-  const userScores = users.map((u) => {
+  const userScores = usersArray.map((u) => {
     let userscore = 0;
 
     //array of a user's messages
@@ -45,38 +48,34 @@ export const Leaderboard = (props) => {
     return userScoreObj;
   });
 
-  // only messages marked as trashtalk
+  // only messages marked as trashtalk //
   const trashtalkMessages = messages.filter((m) => {
     return m.trashtalk;
   });
-
-  const matchingPlayersToggle = () => {
-    if (!showHideMatchingPlayers) {
-      setShowHideMatchingPlayers(true);
-    } else if (showHideMatchingPlayers) {
-      setShowHideMatchingPlayers(false);
-    }
-  };
 
   // strings of all the instances of trash talkin' (aka each occurance of a player's **first name  (will change maybe??) )
   const trashtalkStringNameInstances = trashtalkMessages.map((ttMO) => {
     return ttMO.messagetext;
   });
 
+  // After initial user scores are calculated, then adjust for trashing
   const trashedUserScores = userScores.map((uSO) => {
-    const matchingUserObject = users.find((u) => {
-      return u.id === uSO.userId;
-    }) || {};
-
-    const matchingUserPlayerObjects = usersPlayers.filter((uPO) => {
-      return uPO.userId === matchingUserObject.id;
-    }) || {};
-
-    const matchingPlayerObjects = matchingUserPlayerObjects.map((mUPO) => {
-      return playerObjArray.find((pO) => {
-        return pO.player.id === mUPO.playerId;
+    const matchingUserObject =
+      usersArray.find((u) => {
+        return u.id === uSO.userId;
       });
-    });
+
+    const matchingUserPlayerObjects =
+      usersPlayersArray.filter((uPO) => {
+        return uPO.userId === matchingUserObject.id;
+      }) || {};
+
+    const matchingPlayerObjects =
+      matchingUserPlayerObjects.map((mUPO) => {
+        return playersArray.find((pO) => {
+          return pO.player.id === mUPO.playerId;
+        });
+      }) || {};
 
     const matchingPlayerStrings =
       matchingPlayerObjects.map((mPO) => {
@@ -113,10 +112,22 @@ export const Leaderboard = (props) => {
     }) || {};
 
   const trashtalkchamp = sortedByTrashtalks[0] || {};
-  
+
   useEffect(() => {
     getUsers().then(getUsersPlayers).then(getPlayerData);
   }, []);
+
+  useEffect(() => {
+    setUsersArray(users || {});
+  }, [users]);
+
+  useEffect(() => {
+    setUsersPlayersArray(usersPlayers || {});
+  }, [usersPlayers]);
+
+  useEffect(() => {
+    setPlayersArray(playerObjArray || {});
+  }, [playerObjArray]);
 
   useEffect(() => {
     getUsers();
@@ -144,17 +155,19 @@ export const Leaderboard = (props) => {
             </span>
           </div>
           <table>
+            <tr>
+              <th>User</th>
+              <th>Score</th>
+            </tr>
+            {/* begin map (sending uSO to Score.js*/}
+            {sortedScores.map((uSO) => {
+              const matchingUser =
+                users.find((u) => {
+                  return u.id === uSO.userId;
+                }) || {};
 
-              <tr><th>User</th><th>Score</th></tr>
-              {/* begin map (sending uSO to Score.js*/}
-              {sortedScores.map((uSO) => {
-                const matchingUser =
-                  users.find((u) => {
-                    return u.id === uSO.userId;
-                  }) || {};
-
-                return <Score key={uSO.id} SO={uSO} UO={matchingUser}/>
-              })}
+              return <Score key={uSO.id} SO={uSO} UO={matchingUser} />;
+            })}
           </table>
         </section>
       ) : props.location === "header" ? (
