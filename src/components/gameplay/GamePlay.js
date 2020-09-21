@@ -5,8 +5,8 @@ import { Leaderboard } from "../leaderboard/Leaderboard";
 
 export const GamePlay = () => (
   <>
-    <StanEntryForm />
     <Leaderboard location="game" />
+    <StanEntryForm />
     <TrashTalkEntryForm />
   </>
 );

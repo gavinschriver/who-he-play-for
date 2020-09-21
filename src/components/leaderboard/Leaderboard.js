@@ -8,6 +8,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 //to indicate it generates all scores and returns them conditionally rendered
 
 export const Leaderboard = (props) => {
+  const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const { getUsers, users } = useContext(UserContext);
   const { messages } = useContext(MessageContext);
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
@@ -48,6 +49,14 @@ export const Leaderboard = (props) => {
     return m.trashtalk;
   });
 
+  const matchingPlayersToggle = () => {
+    if (!showHideMatchingPlayers) {
+      setShowHideMatchingPlayers(true);
+    } else if (showHideMatchingPlayers) {
+      setShowHideMatchingPlayers(false);
+    }
+  };
+
   // strings of all the instances of trash talkin' (aka each occurance of a player's **first name  (will change maybe??) )
   const trashtalkStringNameInstances = trashtalkMessages.map((ttMO) => {
     return ttMO.messagetext;
@@ -68,9 +77,10 @@ export const Leaderboard = (props) => {
       });
     });
 
-    const matchingPlayerStrings = matchingPlayerObjects.map((mPO) => {
-      return mPO.player.firstName;
-    }) || {};
+    const matchingPlayerStrings =
+      matchingPlayerObjects.map((mPO) => {
+        return mPO.player.firstName;
+      }) || {};
 
     trashtalkStringNameInstances.forEach((ttSNI) => {
       if (matchingPlayerStrings.includes(ttSNI)) {
@@ -97,11 +107,11 @@ export const Leaderboard = (props) => {
   const stanimal = sortedByStans[0] || {};
 
   const sortedByTrashtalks =
-  userScores.sort((a, b) => {
-    return b.trashtalks - a.trashtalks;
-  }) || {};
+    userScores.sort((a, b) => {
+      return b.trashtalks - a.trashtalks;
+    }) || {};
 
-const trashtalkchamp = sortedByTrashtalks[0] || {};
+  const trashtalkchamp = sortedByTrashtalks[0] || {};
   useEffect(() => {
     getUsers().then(getUsersPlayers).then(getPlayerData);
   }, []);
@@ -112,15 +122,24 @@ const trashtalkchamp = sortedByTrashtalks[0] || {};
 
   return (
     <article className="scores">
+      {/* if we're rendering in the game form... */}
       {props.location === "game" ? (
         <section className="scoreboard">
           <div className="stanimal">
             <div className="stanimal__heading">All time stanimal:</div>
-            <span>{stanimal.username}</span><span className="stanimal__stanCount"> with {stanimal.stans} stans</span>
+            <span>{stanimal.username}</span>
+            <span className="stanimal__stanCount">
+              {" "}
+              with {stanimal.stans} stans
+            </span>
           </div>
           <div className="trashtalkchamp">
             <div className="trashtalkchamp__heading">Trash talk champion:</div>
-            <span>{trashtalkchamp.username}</span><span className="trashtalkchamp__trashtalkCount"> with {trashtalkchamp.trashtalks} trashes</span>
+            <span>{trashtalkchamp.username}</span>
+            <span className="trashtalkchamp__trashtalkCount">
+              {" "}
+              with {trashtalkchamp.trashtalks} trashes
+            </span>
           </div>
           <table>
             <tbody>
@@ -129,16 +148,41 @@ const trashtalkchamp = sortedByTrashtalks[0] || {};
                 <th>Points:</th>
               </tr>
               {sortedScores.map((uSO) => {
+                const matchingUserPlayers =
+                  usersPlayers.filter((uPO) => {
+                    return uPO.userId === uSO.userId;
+                  }) || {};
+
                 return (
                   <tr>
                     <td>{uSO.username}</td>
                     <td>{uSO.score}</td>
+                    {uSO.userId !== currentUserId ? (
+                      <td>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            matchingPlayersToggle();
+                          }}
+                        >
+                          Show lineup
+                        </button>
+                        {showHideMatchingPlayers ? (
+                          <div>HELOOOO</div>
+                        ) : (
+                          <div>NOOO</div>
+                        )}
+                      </td>
+                    ) : (
+                      <div></div>
+                    )}
                   </tr>
                 );
               })}
             </tbody>
           </table>
         </section>
+        
       ) : props.location === "header" ? (
         <>
           <section className="userScores">

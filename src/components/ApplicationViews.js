@@ -19,21 +19,17 @@ export const ApplicationViews = (props) => {
           <MessageProvider>
             <UserPlayerProvider>
               <Route exact path="/">
-              <AppHeader />
-              <div class="gamePlayContainer">
+                <AppHeader />
                 <GamePlay />
-                </div>
-              <div className="gameContainer">
                 <GenerateLineup />
                 <MessagesList />
-              </div>
               </Route>
             </UserPlayerProvider>
           </MessageProvider>
         </PlayerProvider>
       </UserProvider>
 
-      <Route exact path="/account" render={props => <UserAccount/>}></Route>
+      <Route exact path="/account" render={(props) => <UserAccount />}></Route>
     </>
   );
 };

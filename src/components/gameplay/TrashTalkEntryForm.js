@@ -120,7 +120,7 @@ export const TrashTalkEntryForm = () => {
           <div className="messageEntry__trashtalk">
             <div className="messasgeEntry__trashtalk header">
               <h2>Talk that trash</h2>
-              <div className="instructions">Choose a player to TRASH from another user's lineup in the Spin Zone</div>
+              <div className="instructions">Choose a player to TRASH from another user's lineup</div>
             </div>
 
             <input
