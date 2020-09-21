@@ -143,7 +143,6 @@ export const TrashTalkEntryForm = () => {
               ref={urlRef}
             />
 
-            <div className="addMessageButton">
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -152,7 +151,6 @@ export const TrashTalkEntryForm = () => {
               >
                 Fire away
               </button>
-            </div>
           </div>
         </form>
       </article>

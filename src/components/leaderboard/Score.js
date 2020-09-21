@@ -6,6 +6,7 @@ export const Score = ({ SO, UO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const { usersPlayers } = useContext(UserPlayerContext);
   const { playerObjArray, setTrashtalkPlayer } = useContext(PlayerContext);
+  const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
   const matchingPlayersToggle = () => {
     if (!showHideMatchingPlayers) {
@@ -26,20 +27,19 @@ export const Score = ({ SO, UO }) => {
   });
 
   return (
-    <div>
-      <span>{SO.username}</span>
-      <span>{SO.score}</span>
-      <button
+    <tbody>
+      <td>{SO.username}</td>
+      <td>{SO.score}</td>
+      <td><button
         onClick={(e) => {
           e.preventDefault();
           matchingPlayersToggle();
         }}
       >
         Show Playerz
-      </button>
+      </button></td>
       {showHideMatchingPlayers ? (
         <div>
-          AH SHIT ITS AN ARRAY
           {matchingPlayers.map((mPO) => {
             const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
             return (
@@ -50,7 +50,7 @@ export const Score = ({ SO, UO }) => {
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    setTrashtalkPlayer(mPO.player.firstName);
+                    setTrashtalkPlayer(`${mPO.player.firstName} ${mPO.player.lastName}`);
                   }}
                 >
                   TRASH
@@ -61,7 +61,7 @@ export const Score = ({ SO, UO }) => {
         </div>
       ) : (
         <div></div>
-      )}
-    </div>
+        )}
+      </tbody>
   );
 };

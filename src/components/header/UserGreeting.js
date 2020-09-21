@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { UserContext } from "../users/UserProvider";
 
 export const UserGreeting = ({ user }) => {
-  const { userScores } = useContext(UserContext);
 
   return (
     <>

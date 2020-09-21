@@ -163,7 +163,7 @@ export const StanEntryForm = () => {
               {filteredPlayersObjects.map((fpo) => {
                 return (
                   <option value={fpo.player.firstName}>
-                    {fpo.player.firstName}
+                    {fpo.player.firstName} {fpo.player.lastName}
                   </option>
                 );
               })}

@@ -144,11 +144,7 @@ export const Leaderboard = (props) => {
             </span>
           </div>
           <table>
-            <tbody>
-              <tr>
-                <th>User:</th>
-                <th>Points:</th>
-              </tr>
+
 
               {/* begin map (sending uSO to Score.js*/}
               {sortedScores.map((uSO) => {
@@ -159,7 +155,6 @@ export const Leaderboard = (props) => {
 
                 return <Score key={uSO.id} SO={uSO} UO={matchingUser}/>
               })}
-            </tbody>
           </table>
         </section>
       ) : props.location === "header" ? (
