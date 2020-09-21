@@ -66,11 +66,11 @@ export const Leaderboard = (props) => {
   const trashedUserScores = userScores.map((uSO) => {
     const matchingUserObject = users.find((u) => {
       return u.id === uSO.userId;
-    });
+    }) || {};
 
     const matchingUserPlayerObjects = usersPlayers.filter((uPO) => {
       return uPO.userId === matchingUserObject.id;
-    });
+    }) || {};
 
     const matchingPlayerObjects = matchingUserPlayerObjects.map((mUPO) => {
       return playerObjArray.find((pO) => {
@@ -151,12 +151,12 @@ export const Leaderboard = (props) => {
 
               {/* begin map (sending uSO to Score.js*/}
               {sortedScores.map((uSO) => {
-                // const matchingUserPlayers =
-                //   usersPlayers.filter((uPO) => {
-                //     return uPO.userId === uSO.userId;
-                //   }) || {};
+                const matchingUser =
+                  users.find((u) => {
+                    return u.id === uSO.userId;
+                  }) || {};
 
-                return <Score key={uSO.id} SO={uSO} />
+                return <Score key={uSO.id} SO={uSO} UO={matchingUser}/>
               })}
             </tbody>
           </table>
