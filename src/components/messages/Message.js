@@ -13,6 +13,7 @@ export const Message = ({ MO }) => {
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([])
   const [matchingPlayers, setMatchingPlayers] = useState([])
   const [currentUsersPOs, setCurrentUsersPOs] = useState([])
+  const [currentPlayers, setCurrentPlayers] = useState([])
 
   const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
     return mPO.player.firstName;
@@ -20,13 +21,8 @@ export const Message = ({ MO }) => {
 
   //DRILLING DOWN TO CURRENT USERS LINEUP WEEEE
 
-  //current users lineup as UserPlayerObjects
-  const currentUserLineup = usersPlayers.filter((uPO) => {
-    return uPO.userId === currentUserId;
-  }) || {};
-
   //array of current user's lineup player IDs
-  const currentUserPlayerIds = currentUserLineup.map((cULO) => {
+  const currentUserPlayerIds = currentUsersPOs.map((cULO) => {
     return cULO.playerId;
   });
 
@@ -37,7 +33,7 @@ export const Message = ({ MO }) => {
     });
   }) || {};
 
-  //array of current users lineup as firstName STRINGS FINALLY JESUS
+  //array of current users lineup as firstName 
   const currenUsersLineupAsStrings = currentUsersPlayerObjects.map((cUPO) => {
     return cUPO.player.firstName;
   }) || {};
@@ -72,6 +68,13 @@ export const Message = ({ MO }) => {
     }) || {}
     setMatchingPlayers(matchingPOs)
   }, [playerObjArray])
+
+  useEffect(() => {
+    const currentUserLineup = usersPlayers.filter((uPO) => {
+      return uPO.userId === currentUserId;
+    }) || {};
+    setCurrentUsersPOs(currentUserLineup)
+  }, [usersPlayers])
 
   return (
     <article className={messageClassName} id={MO.id}>
