@@ -12,6 +12,7 @@ export const Message = ({ MO }) => {
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([])
   const [matchingPlayers, setMatchingPlayers] = useState([])
+  const [currentUsersPOs, setCurrentUsersPOs] = useState([])
 
   const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
     return mPO.player.firstName;
@@ -134,7 +135,7 @@ export const Message = ({ MO }) => {
                 return (
                   <div>
                     <a
-                      href={`http://www.google.com/search?q=${mPO.player.firstName}+${mPO.player.lastName}`}
+                      href={`https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`}
                       target="_blank"
                     >
                       {mPO.player.firstName} {mPO.player.lastName}
