@@ -1,27 +1,42 @@
 import React, { useRef, useEffect, useContext } from "react";
-import { MessageContext } from "./MessageProvider";
+import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import validator from "validator";
-import "./messages.css";
+import "../messages/messages.css";
 
-export const MessageEntryForm = () => {
-  const { addMessage, messages } = useContext(MessageContext);
-  const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
-    UserPlayerContext
-  );
-  const { playerObjArray } = useContext(PlayerContext);
+export const StanEntryForm = () => {
+  const { addMessage, messages, getMessages } = useContext(MessageContext);
+  const {
+    usersPlayers,
+    getUsersPlayers,
+    updateUserPlayer,
+    setMentionedCount,
+  } = useContext(UserPlayerContext);
+  const { playerObjArray, getPlayerData } = useContext(PlayerContext);
 
-  const messagetextRef = useRef("");
   const stanBarRef = useRef("");
   const urlRef = useRef("");
+  let stanPlayerFirstAndLastName = "";
 
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
 
   const handleStanButtonPress = () => {
     const urlValue = urlRef.current.value;
+
+    //stanBarPlayer is currently JUST a first name. 
     const stanBarPlayer = stanBarRef.current.value;
-    if (validator.isURL(urlValue)) {
+    // code to reattach a player's first name to their last name for search validaiton cause im an idiot
+    const stanBarPlayerObject = filteredPlayersObjects.find((fPO) => {
+      return fPO.player.firstName === stanBarPlayer;
+    });
+    const stanBarPlayerLastName = stanBarPlayerObject.player.lastName;
+    stanPlayerFirstAndLastName = `${stanBarPlayer} ${stanBarPlayerLastName}`;
+
+    if (
+      validator.isURL(urlValue) &&
+      urlValue.includes(stanBarPlayer.toLowerCase()) && urlValue.includes(`reddit`)
+    ) {
       if (!messageUrls.includes(urlValue)) {
         if (filteredPlayersStrings.includes(stanBarPlayer)) {
           const matchingPO = filteredPlayersObjects.find((mPO) => {
@@ -49,6 +64,8 @@ export const MessageEntryForm = () => {
             stan: true,
           };
           addMessage(newMessage);
+
+          alert(validator.isURL(urlValue));
         } else if (allMatchingPlayersStrings.includes(stanBarPlayer)) {
           alert(`Woah slow down stanimal, you already repped this player`);
         }
@@ -56,23 +73,10 @@ export const MessageEntryForm = () => {
     } else alert(`better check that input stanley`);
   };
 
-  const handleTrashtalkButtonPress = () => {
-    const trashtalkplayer = messagetextRef.current.value;
-    const urlValue = urlRef.current.value;
-
-    if (othersPlayersStrings.includes(trashtalkplayer) && urlValue !== "") {
-      if (!messageUrls.includes(urlValue)) {
-        const newMessage = {
-          userId: currentUser,
-          messagetext: trashtalkplayer,
-          url: urlRef.current.value,
-          timestamp: Date.now(),
-          trashtalk: true,
-        };
-        addMessage(newMessage);
-      } else alert(`someone already cited that proof`);
-    } else alert(`better check that input stanley`);
-  };
+  //init hook
+  useEffect(() => {
+    getPlayerData().then(getUsersPlayers).then(getMessages);
+  }, []);
 
   useEffect(() => {
     setMentionedCount(
@@ -92,11 +96,12 @@ export const MessageEntryForm = () => {
   });
 
   // this collection is current user's WHOLE linup as player objects
-  const allMatchingPlayersObjects = allMatchingUsersPlayers.map((fUPO) => {
-    return playerObjArray.find((p) => {
-      return p.player.id === fUPO.playerId;
-    });
-  });
+  const allMatchingPlayersObjects =
+    allMatchingUsersPlayers.map((fUPO) => {
+      return playerObjArray.find((p) => {
+        return p.player.id === fUPO.playerId;
+      });
+    }) || {};
 
   // this colleciton is current user's WHOLE lineup as FIRST names
   const allMatchingPlayersStrings = allMatchingPlayersObjects.map((mPO) => {
@@ -116,12 +121,18 @@ export const MessageEntryForm = () => {
     });
   });
 
-  //Strings of the Player first names for the above (aka only player first names in the user's lineup they haven't mentioned yet)
-  const filteredPlayersStrings = filteredPlayersObjects.map((mPO) => {
-    return mPO.player.firstName;
+  const filteredPlayersIDs = filteredUsersPlayers.map((fUPO) => {
+    return playerObjArray.find((p) => {
+      return p.player.id === fUPO.playerId;
+    });
   });
 
-  // FOR OTHER PLAYERS LINEUPS
+  //Strings of the Player first names for the above (aka only player first names in the user's lineup they haven't mentioned yet)
+  const filteredPlayersStrings = filteredPlayersObjects.map((fPO) => {
+    return fPO.player.firstName;
+  });
+
+  // FOR OTHER USERS PLAYER LINEUPS
   const othersUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId != currentUser;
   });
@@ -138,64 +149,51 @@ export const MessageEntryForm = () => {
 
   return (
     <>
-      <section className="messageEntry">
+      <article className="messageEntry">
         <form className="messageEntry--form">
-          <article className="messageEntry--choiceContainer">
-            <div className="messageEntry__stan">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleStanButtonPress();
-                }}
-              >
-                Stan by your man yo
-              </button>
-              <select ref={stanBarRef}>
-                {filteredPlayersObjects.map((fpo) => {
-                  return (
-                    <option value={fpo.player.firstName}>
-                      {fpo.player.firstName}
-                    </option>
-                  );
-                })}
-              </select>
+          <div className="messageEntry__stan">
+            <div className="messasgeEntry__stand header">
+              <h2>Stan by your man</h2>
+              <div className="instructions">
+                Choose a player from your starting 5 to stan
+              </div>
             </div>
 
-            <h2>Or</h2>
+            <select ref={stanBarRef}>
+              {filteredPlayersObjects.map((fpo) => {
+                return (
+                  <option value={fpo.player.firstName}>
+                    {fpo.player.firstName} {fpo.player.lastName}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          <div className="messageEntry__URL">
+            <h2>Put some SAUCE on it</h2>
+            <input
+              type="url"
+              name="url"
+              id="url"
+              placeholder="Enter #relevancontent"
+              pattern="https://.*"
+              size="30"
+              ref={urlRef}
+            />
 
             <button
+              className="addMessageButton"
               onClick={(e) => {
                 e.preventDefault();
-                handleTrashtalkButtonPress();
+                handleStanButtonPress();
               }}
             >
-              Talk that trash on
+              Fire away
             </button>
-            <div className="messageEntry__trashtalk">
-              <input
-                type="text"
-                name="messagetext"
-                id="messagetext"
-                placeholder="`You know who's garbage?`"
-                ref={messagetextRef}
-              />
-            </div>
-
-            <div className="messageEntry__URL">
-              <h2>But you'd</h2>
-              <input
-                type="url"
-                name="url"
-                id="url"
-                placeholder="better back it up"
-                pattern="https://.*"
-                size="30"
-                ref={urlRef}
-              />
-            </div>
-          </article>
+          </div>
         </form>
-      </section>
+      </article>
     </>
   );
 };

@@ -5,7 +5,7 @@ export const UserPlayerContext = React.createContext();
 export const UserPlayerProvider = (props) => {
   const [usersPlayers, setUsersPlayers] = useState([]);
 
-  const [lineupExists, setLineupExists] = useState(false);
+  const [mentionedCount, setMentionedCount] = useState(0);
 
   const getUsersPlayers = () => {
     return fetch(`http://localhost:8888/usersPlayers`)
@@ -28,10 +28,30 @@ export const UserPlayerProvider = (props) => {
       method: "DELETE",
     }).then(getUsersPlayers);
   };
-    
-    return (
-        <UserPlayerContext.Provider value={{ usersPlayers, getUsersPlayers, addUserPlayer, removeUserPlayer }}>
-            {props.children}
-        </UserPlayerContext.Provider>
-)
+
+  const updateUserPlayer = (userPlayer) => {
+    return fetch(`http://localhost:8888/usersPlayers/${userPlayer.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userPlayer),
+    }).then(getUsersPlayers);
+  };
+
+  return (
+    <UserPlayerContext.Provider
+      value={{
+        usersPlayers,
+        getUsersPlayers,
+        addUserPlayer,
+        removeUserPlayer,
+        updateUserPlayer,
+        mentionedCount,
+        setMentionedCount
+      }}
+    >
+      {props.children}
+    </UserPlayerContext.Provider>
+  );
 };

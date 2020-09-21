@@ -1,25 +1,41 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import { GenerateLineup } from "./lineup/GenerateLineup";
 import { PlayerProvider } from "./players/PlayerProvider";
 import { UserPlayerProvider } from "./usersPlayers/UsersPlayersProvider";
 import { MessageEntryForm } from "./messages/MessageEntryForm";
 import { MessageProvider } from "./messages/MessageProvider";
 import { MessagesList } from "./messages/MessagesList";
+import { UserProvider } from "./users/UserProvider";
+import { GamePlay } from "./gameplay/GamePlay";
+import { AppHeader } from "./header/AppHeader";
+import { UserAccount } from "./users/UserAccount";
 
 export const ApplicationViews = (props) => {
   return (
     <>
-      <h1>HEY CHUCK, WHO HE PLAY FOR?</h1>
-      <h2>MUST BE USER {parseInt(localStorage.getItem("whpf_user"))}</h2>
-      <PlayerProvider>
-        <MessageProvider>
-          <UserPlayerProvider>
-            <GenerateLineup />
-            <MessageEntryForm />
-            <MessagesList />
-          </UserPlayerProvider>
-        </MessageProvider>
-      </PlayerProvider>
+      <UserProvider>
+        <PlayerProvider>
+          <MessageProvider>
+            <UserPlayerProvider>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <>
+                    <AppHeader {...props} />
+                    <GamePlay {...props} />
+                    <GenerateLineup {...props} />
+                    <MessagesList {...props} />
+                  </>
+                )}
+              ></Route>
+            </UserPlayerProvider>
+          </MessageProvider>
+        </PlayerProvider>
+      </UserProvider>
+
+      <Route exact path="/account" render={(props) => <UserAccount />}></Route>
     </>
   );
 };
