@@ -18,7 +18,7 @@ export const Message = ({ MO }) => {
   const [matchingPlayers, setMatchingPlayers] = useState([]);
   const [currentUsersPOs, setCurrentUsersPOs] = useState([]);
 
-  const [message, setMessage] = useState({})
+  const [message, setMessage] = useState({});
 
   const editRef = useRef("");
   // const chatTextRef = useRef("");
@@ -72,12 +72,10 @@ export const Message = ({ MO }) => {
   };
 
   const handleControlledInputChange = (event) => {
-
-    const newMessage = Object.assign({}, message)
-    newMessage[event.target.name] = event.target.value
-    setMessage(newMessage)
-}
-
+    const newMessage = Object.assign({}, message);
+    newMessage[event.target.name] = event.target.value;
+    setMessage(newMessage);
+  };
 
   const messageClassName = MO.stan
     ? "message card stanMessage"
@@ -114,8 +112,22 @@ export const Message = ({ MO }) => {
   }, [usersPlayers]);
 
   useEffect(() => {
-    console.log(message)
-  }, [message])
+    console.log(message);
+  }, [message]);
+
+  const constructNewMessage = () => {
+    const updatedMessage = {
+      id: message.id,
+      chattext: message.chattext,
+      stan: message.stan,
+      trashtalk: message.trashtalk,
+      url: message.url,
+      user: message.user,
+      userId: message.userId,
+    };
+    console.log(updatedMessage);
+    // updateMessage(updatedMessage);
+  };
 
   return (
     <article className={messageClassName} id={MO.id}>
@@ -245,7 +257,7 @@ export const Message = ({ MO }) => {
           const messageToEdit = messages.find((m) => {
             return m.id === messageId;
           });
-          setMessage(messageToEdit)
+          setMessage(messageToEdit);
         }}
       >
         Edit
@@ -253,12 +265,17 @@ export const Message = ({ MO }) => {
       <button
         onClick={(e) => {
           e.preventDefault();
+          constructNewMessage();
         }}
       >
         Submit
       </button>
 
-      <textarea name="chattext" onChange={handleControlledInputChange}></textarea>
+      <textarea
+        name="chattext"
+        onChange={handleControlledInputChange}
+        value={message.chattext}
+      ></textarea>
       <input type="hidden" />
       <input type="hidden" />
       <input type="hidden" />
