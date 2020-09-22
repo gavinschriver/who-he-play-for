@@ -33,7 +33,7 @@ export const MessageProvider = (props) => {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(messages)
+        body: JSON.stringify(message)
     })
         .then(getMessages)
 }

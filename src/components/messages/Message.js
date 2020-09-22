@@ -118,15 +118,15 @@ export const Message = ({ MO }) => {
   const constructNewMessage = () => {
     const updatedMessage = {
       id: message.id,
+      messagetext: message.messagetext,
       chattext: message.chattext,
       stan: message.stan,
       trashtalk: message.trashtalk,
       url: message.url,
-      user: message.user,
       userId: message.userId,
     };
     console.log(updatedMessage);
-    // updateMessage(updatedMessage);
+    updateMessage(updatedMessage);
   };
 
   return (
