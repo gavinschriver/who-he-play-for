@@ -28,7 +28,8 @@ export const UserAccount = () => {
             id: user.id,
             name: user.name,
             email: user.email,
-            password: user.password
+            password: user.password,
+            avatar: user.avatar
         };
         updateUser(updatedUser);
       };
