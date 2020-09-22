@@ -120,14 +120,17 @@ export const Message = ({ MO }) => {
   };
 
   return (
-    <article className="message" className={messageClassName} id={MO.id}>
-      <div className="entryText">
+    <article className={messageClassName} id={MO.id}>
+
+      <div className="message__description">
+        <span className="message__author">
         {MO.user.id === currentUserId ? (
           <span>YOU</span>
         ) : (
           <span>{MO.user.name || ""}</span>
         )}
-
+        </span>
+          
         {
           /* does the incoming message's messagetext field contain a player name 
           that's in the collection of that message object's user's lineup? if so, it's a STAN */
@@ -139,11 +142,7 @@ export const Message = ({ MO }) => {
           ) : MO.trashtalk ? (
             <span>
               {" "}
-              {MO.user.id === currentUserId ? (
                 <span>talked trash on</span>
-              ) : (
-                <span>talked trash on</span>
-              )}
               {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
                 <span> your guy</span>
               ) : (
@@ -154,19 +153,14 @@ export const Message = ({ MO }) => {
             <span> stan'd </span>
           )
         }
-
-        {/* in case we wanna add just plain non-game-related message later... 
-        will probably have to change this field (property) to something else because
-        messagetext is now the first name of the player being shouted out */}
-
-        <span> {MO.messagetext}</span>
+        <span className="message__playerName"> {MO.messagetext}</span>
       </div>
 
       {MO.user.id === currentUserId ? (
         <div></div>
       ) : (
         <div>
-          <button
+          <button className="button message__showLineup message--button"
             onClick={(e) => {
               e.preventDefault();
               matchingPlayersToggle();
@@ -209,14 +203,14 @@ export const Message = ({ MO }) => {
       )}
 
       {MO.stan ? (
-        <div className="message__url">
-          <a href={MO.url} target="_blank">
+        <div className="message__url message__url__heatcheck">
+          <a href={MO.url} target="_blank" className="link message--link">
             HEAT CHECK
           </a>
         </div>
       ) : MO.trashtalk ? (
-        <div className="message__url">
-          <a href={MO.url} target="_blank">
+        <div className="message__url message__url__trashtalk">
+          <a href={MO.url} target="_blank" className="link message--link">
             I'll just leave this here...
           </a>
         </div>
@@ -224,10 +218,12 @@ export const Message = ({ MO }) => {
         <div></div>
       )}
 
-      <div>{MO.chattext}</div>
+      <div className="message__chattext">{MO.chattext}</div>
+
       {MO.user.id === currentUserId ? (
-        <div>
+        <div className="message__edit">
           <button
+            className="message__edit__button button message--button"
             ref={editRef}
             value={`editButton--${MO.id}`}
             onClick={(e) => {
