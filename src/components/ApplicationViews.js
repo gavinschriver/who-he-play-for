@@ -12,7 +12,7 @@ import { UserAccount } from "./users/UserAccount";
 import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col"
+import Col from "react-bootstrap/Col";
 
 export const ApplicationViews = (props) => {
   return (
@@ -36,9 +36,11 @@ export const ApplicationViews = (props) => {
                         </Row>
                         <Row>
                           <Col>
-                          <GenerateLineup {...props} />
+                            <GenerateLineup {...props} />
+                          </Col>
+                          <Col>
                             <MessagesList {...props} />
-                            </Col>
+                          </Col>
                         </Row>
                       </Container>
                     </>
@@ -50,7 +52,13 @@ export const ApplicationViews = (props) => {
         </UserProvider>
       </Container>
 
-      <Route exact path="/account" render={(props) => <UserAccount />}></Route>
+      <UserProvider>
+        <Route
+          exact
+          path="/account"
+          render={(props) => <UserAccount />}
+        ></Route>
+      </UserProvider>
     </>
   );
 };
