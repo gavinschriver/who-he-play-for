@@ -86,7 +86,7 @@ export const StanEntryForm = () => {
   // find current user's lineup
   const allMatchingUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId === currentUser;
-  });
+  }) || {};
 
   const allMatchingPlayersObjects =
     allMatchingUsersPlayers.map((fUPO) => {
