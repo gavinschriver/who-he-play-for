@@ -131,7 +131,6 @@ export const StanEntryForm = () => {
   }, [usersPlayers]);
 
   useEffect(() => {
-    alert(stanPlayer)
     stanBarRef.current.value = stanPlayer;
   }, [stanPlayer]);
 
