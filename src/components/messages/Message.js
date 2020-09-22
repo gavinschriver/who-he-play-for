@@ -105,7 +105,6 @@ export const Message = ({ MO }) => {
     setCurrentUsersPOs(currentUserLineup);
   }, [usersPlayers]);
 
-
   const constructNewMessage = () => {
     const updatedMessage = {
       id: message.id,
@@ -121,7 +120,7 @@ export const Message = ({ MO }) => {
   };
 
   return (
-    <article className={messageClassName} id={MO.id}>
+    <article className="message" className={messageClassName} id={MO.id}>
       <div className="entryText">
         {MO.user.id === currentUserId ? (
           <span>YOU</span>
@@ -135,8 +134,7 @@ export const Message = ({ MO }) => {
           matchingPlayersFirstNames.includes(MO.messagetext) ? (
             <span>
               {" "}
-              stan
-              {MO.user.id === currentUserId ? <span>'d</span> : <span>'d</span>}
+              stan'd
             </span>
           ) : MO.trashtalk ? (
             <span>
@@ -210,19 +208,6 @@ export const Message = ({ MO }) => {
         </div>
       )}
 
-      {/* regret */}
-      {MO.user.id === currentUserId && !MO.stan ? (
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            removeMessage(MO.id);
-          }}
-        >
-          #regret
-        </button>
-      ) : (
-        <div></div>
-      )}
       {MO.stan ? (
         <div className="message__url">
           <a href={MO.url} target="_blank">
@@ -247,7 +232,7 @@ export const Message = ({ MO }) => {
             value={`editButton--${MO.id}`}
             onClick={(e) => {
               e.preventDefault();
-              toggleEditField()
+              toggleEditField();
               const messageId = parseInt(editRef.current.value.split("--")[1]);
               const messageToEdit = messages.find((m) => {
                 return m.id === messageId;
@@ -258,15 +243,19 @@ export const Message = ({ MO }) => {
             Edit
           </button>
 
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              toggleEditField()
-              constructNewMessage();
-            }}
-          >
-            Submit
-          </button>
+          {editFieldShowing ? (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                toggleEditField();
+                constructNewMessage();
+              }}
+            >
+              Submit
+            </button>
+          ) : (
+            <div></div>
+          )}
         </div>
       ) : (
         <div></div>
@@ -278,6 +267,20 @@ export const Message = ({ MO }) => {
           onChange={handleControlledInputChange}
           value={message.chattext}
         ></textarea>
+      ) : (
+        <div></div>
+      )}
+
+      {/* regret */}
+      {MO.user.id === currentUserId && !MO.stan ? (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            removeMessage(MO.id);
+          }}
+        >
+          #regret
+        </button>
       ) : (
         <div></div>
       )}

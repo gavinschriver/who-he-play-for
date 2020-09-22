@@ -15,7 +15,6 @@ export const TrashTalkEntryForm = () => {
   );
 
   const messagetextRef = useRef("");
-  const stanBarRef = useRef("");
   const urlRef = useRef("");
   const chatRef = useRef("")
 
@@ -26,7 +25,6 @@ export const TrashTalkEntryForm = () => {
     const urlValue = urlRef.current.value.toLowerCase();
     const chatValue = chatRef.current.value
 
-    console.log(othersPlayersStrings, urlValue, trashtalkplayer.toLowerCase());
     if (
       validator.isURL(urlValue) &&
       urlValue.includes(trashtalkplayer.toLowerCase())
@@ -44,7 +42,7 @@ export const TrashTalkEntryForm = () => {
               chattext: chatValue
             };
             addMessage(newMessage);
-          } else alert(`someone already cited that proof`);
+          } else alert(`that's old news captain`);
         } else alert(`You tryin' to throw shade w/o backing it up?`);
       } else alert(`You trying to trash your own player? Rough look my dude`);
     } else alert("better check that input");
