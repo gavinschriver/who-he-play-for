@@ -51,42 +51,50 @@ export const Score = ({ SO, UO }) => {
         </button>
       </td>
       {showHideMatchingPlayers ? (
-        <div className="lineup otherUsers__lineup">
-          {matchingPlayers.map((mPO) => {
-            const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
-            return (
-              <div>
-                <a href={redditSearch} target="_blank">
-                  {mPO.player.firstName} {mPO.player.lastName}
-                </a>
-                {SO.userId === currentUserId ? (
-                  filteredPlayerIds.includes(mPO.player.id) ? (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setStanPlayer(`${mPO.player.firstName}`);
-                      }}
-                    >
-                      STAN
-                    </button>
-                  ) : (
-                    <div></div>
-                  )
-                ) : (
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setTrashtalkPlayer(
-                        `${mPO.player.firstName} ${mPO.player.lastName}`
-                      );
-                    }}
-                  >
-                    TRASH
-                  </button>
-                )}
-              </div>
-            );
-          })}
+        <div className="lineup scoreBoard__lineup">
+          <table>
+            <tbody>
+              {matchingPlayers.map((mPO) => {
+                const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
+                return (
+                  <tr>
+                    <td>
+                      <a href={redditSearch} target="_blank">
+                        {mPO.player.firstName} {mPO.player.lastName}
+                      </a>
+                    </td>
+                    <td>
+                      {SO.userId === currentUserId ? (
+                        filteredPlayerIds.includes(mPO.player.id) ? (
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setStanPlayer(`${mPO.player.firstName}`);
+                            }}
+                          >
+                            STAN
+                          </button>
+                        ) : (
+                          <div></div>
+                        )
+                      ) : (
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setTrashtalkPlayer(
+                              `${mPO.player.firstName} ${mPO.player.lastName}`
+                            );
+                          }}
+                        >
+                          TRASH
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       ) : (
         <div></div>
