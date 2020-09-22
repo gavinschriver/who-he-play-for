@@ -7,6 +7,7 @@ export const PlayerProvider = (propsObj) => {
 
   // set an app-state variable for a player string name selected off dom
   const [trashtalkPlayer, setTrashtalkPlayer] = useState("")
+  const [stanPlayer, setStanPlayer] = useState("")
 
   const getPlayerData = () => {
     return fetch(`http://localhost:8889/db`)
@@ -22,7 +23,9 @@ export const PlayerProvider = (propsObj) => {
         getPlayerData,
         playerObjArray,
         trashtalkPlayer,
-        setTrashtalkPlayer
+        setTrashtalkPlayer,
+        stanPlayer,
+        setStanPlayer
       }}
     >
       {propsObj.children}

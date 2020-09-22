@@ -175,6 +175,14 @@ export const Leaderboard = (props) => {
             <div className="userScores__score">
               <div className="userScores__trashtalks__heading">Your score:</div>
               <span>{currentUserScore.score}</span>
+              </div>
+              <div className="userScores__stans">
+              <div className="userScores__stans__heading">
+                Your stan count:
+              </div>
+              <span className="userScores__stans__">
+                {currentUserScore.stans}
+              </span>
             </div>
             <div className="userScores__trashtalks">
               <div className="userScores__trashtalks__heading">

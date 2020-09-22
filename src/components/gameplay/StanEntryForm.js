@@ -13,7 +13,7 @@ export const StanEntryForm = () => {
     updateUserPlayer,
     setMentionedCount,
   } = useContext(UserPlayerContext);
-  const { playerObjArray, getPlayerData } = useContext(PlayerContext);
+  const { playerObjArray, getPlayerData, stanPlayer } = useContext(PlayerContext);
 
   const stanBarRef = useRef("");
   const urlRef = useRef("");
@@ -129,6 +129,12 @@ export const StanEntryForm = () => {
         .length
     );
   }, [usersPlayers]);
+
+  useEffect(() => {
+    alert(stanPlayer)
+    stanBarRef.current.value = stanPlayer;
+  }, [stanPlayer]);
+
 
   return (
     <>

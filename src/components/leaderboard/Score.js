@@ -5,7 +5,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 export const Score = ({ SO, UO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const { usersPlayers } = useContext(UserPlayerContext);
-  const { playerObjArray, setTrashtalkPlayer } = useContext(PlayerContext);
+  const { playerObjArray, setTrashtalkPlayer, setStanPlayer } = useContext(PlayerContext);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
   const matchingPlayersToggle = () => {
@@ -47,14 +47,26 @@ export const Score = ({ SO, UO }) => {
                 <a href={redditSearch} target="_blank">
                   {mPO.player.firstName} {mPO.player.lastName}
                 </a>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setTrashtalkPlayer(`${mPO.player.firstName} ${mPO.player.lastName}`);
-                  }}
-                >
-                  TRASH
+                {
+
+                SO.userId === currentUserId
+                ?  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setStanPlayer(`${mPO.player.firstName}`);
+                    }}
+                  >
+                    STAN
                 </button>
+                :  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setTrashtalkPlayer(`${mPO.player.firstName} ${mPO.player.lastName}`);
+                    }}
+                  >
+                    TRASH
+                </button>
+          }
               </div>
             );
           })}
