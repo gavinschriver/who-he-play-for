@@ -108,7 +108,7 @@ export const TrashTalkEntryForm = () => {
           <div className="messageEntry__trashtalk">
             <div className="messasgeEntry__trashtalk header">
               <h2>Talk that trash</h2>
-              <div className="instructions">
+              <div className="instructions trashtalk__instructions">
                 Choose a player to TRASH from another user's lineup
               </div>
             </div>
@@ -120,7 +120,6 @@ export const TrashTalkEntryForm = () => {
               placeholder="WHO YA GOT?"
               ref={messagetextRef}
               size="30"
-              readOnly="true"
             />
             <h2>But you'd better back it up</h2>
             <input
@@ -138,11 +137,11 @@ export const TrashTalkEntryForm = () => {
               name="chat"
               placeholder="Care to add anything else?"
               size="30"
-              className="form-control"
+              className="chattext form-control"
               ref={chatRef}
             />
 
-            <button
+            <button className="messageEntry__trash button addMessage--button"
               onClick={(e) => {
                 e.preventDefault();
                 handleTrashtalkButtonPress();

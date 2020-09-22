@@ -15,17 +15,17 @@ export const StanEntryForm = () => {
   } = useContext(UserPlayerContext);
   const { playerObjArray, getPlayerData, stanPlayer } = useContext(PlayerContext);
 
+  // references for input
   const stanBarRef = useRef("");
   const urlRef = useRef("");
   const chatRef = useRef("")
+  const currentUser = parseInt(localStorage.getItem("whpf_user"));
   let stanPlayerFirstAndLastName = "";
 
-  const currentUser = parseInt(localStorage.getItem("whpf_user"));
 
+  // stan button pressed
   const handleStanButtonPress = () => {
     const urlValue = urlRef.current.value.toLowerCase();
-
-    //stanBarPlayer is currently JUST a first name.
     const stanBarPlayer = stanBarRef.current.value;
     const chatValue = chatRef.current.value
     
@@ -83,12 +83,11 @@ export const StanEntryForm = () => {
     return m.url;
   });
 
-  // this colleciton is current user's WHOLE lineup as UPOs
+  // find current user's lineup
   const allMatchingUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId === currentUser;
   });
 
-  // this collection is current user's WHOLE linup as player objects
   const allMatchingPlayersObjects =
     allMatchingUsersPlayers.map((fUPO) => {
       return playerObjArray.find((p) => {
@@ -96,25 +95,21 @@ export const StanEntryForm = () => {
       });
     }) || {};
 
-  // this colleciton is current user's WHOLE lineup as FIRST names
   const allMatchingPlayersStrings = allMatchingPlayersObjects.map((mPO) => {
     return mPO.player.firstName;
   });
 
-  //FILTERED BASED ON BEING MENTIONED....
-  // this colleciton is ONLY UPOS for the current user that HAVE NOT been marked as mentioned
+  // find players in lineup that have not been mentioned; if the player in the bar equals one of these, a submission will pass that test
   const filteredUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId === currentUser && !upo.mentioned;
   });
 
-  //Player Objects that correspond to the above
   const filteredPlayersObjects = filteredUsersPlayers.map((fUPO) => {
     return playerObjArray.find((p) => {
       return p.player.id === fUPO.playerId;
     });
   });
 
-  //Strings of the Player first names for the above (aka only player first names in the user's lineup they haven't mentioned yet)
   const filteredPlayersStrings = filteredPlayersObjects.map((fPO) => {
     return fPO.player.firstName;
   });
@@ -141,9 +136,9 @@ export const StanEntryForm = () => {
       <article className="messageEntry">
         <form className="messageEntry--form">
           <div className="messageEntry__stan">
-            <div className="messasgeEntry__stand header">
+            <div className="messasgeEntry__stan header">
               <h2>Stan by your man</h2>
-              <div className="instructions">
+              <div className="instructions stan__instructions">
                 Choose a player from your starting 5 to stan
               </div>
             </div>
@@ -176,14 +171,14 @@ export const StanEntryForm = () => {
               name="chat"
               placeholder="Care to add anything else?"
               size="30"
-              className="form-control"
+              className="chattext form-control"
               ref={chatRef}
             />
 
             
 
             <button
-              className="addMessageButton"
+              className="messageEntry__stan button addMessage--button"
               onClick={(e) => {
                 e.preventDefault();
                 handleStanButtonPress();
