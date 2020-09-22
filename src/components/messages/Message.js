@@ -5,7 +5,6 @@ import { MessageContext } from "./MessageProvider";
 import "./messages.css";
 
 export const Message = ({ MO }) => {
-  const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const { playerObjArray, getPlayerData, setTrashtalkPlayer } = useContext(
     PlayerContext
@@ -13,40 +12,41 @@ export const Message = ({ MO }) => {
   const { messages, removeMessage, getMessages, updateMessage } = useContext(
     MessageContext
   );
-  const currentUserId = parseInt(localStorage.getItem("whpf_user"));
+
+  // component-state data collections
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [matchingPlayers, setMatchingPlayers] = useState([]);
   const [currentUsersPOs, setCurrentUsersPOs] = useState([]);
-
   const [message, setMessage] = useState({});
 
+  // component-state booleans, set current user and get a ref for message to edit
+  const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
+  const [editFieldShowing, setEditFieldShowing] = useState(false);
+  const currentUserId = parseInt(localStorage.getItem("whpf_user"));
   const editRef = useRef("");
 
   const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
     return mPO.player.firstName;
   });
 
-  //DRILLING DOWN TO CURRENT USERS LINEUP WEEEE
-
-  //array of current user's lineup player IDs
+  //find current user's lineup
   const currentUserPlayerIds = currentUsersPOs.map((cULO) => {
     return cULO.playerId;
   });
 
-  //array of current user's lineup as PLAYA objects
   const currentUsersPlayerObjects =
     currentUserPlayerIds.map((cUPID) => {
       return playerObjArray.find((pO) => {
         return pO.player.id === cUPID;
       });
     }) || {};
-
-  //array of current users lineup as firstName
+  
   const currenUsersLineupAsStrings =
     currentUsersPlayerObjects.map((cUPO) => {
       return cUPO.player.firstName;
     }) || {};
 
+  // linup toggle
   const matchingPlayersToggle = () => {
     if (!showHideMatchingPlayers) {
       setShowHideMatchingPlayers(true);
@@ -55,8 +55,7 @@ export const Message = ({ MO }) => {
     }
   };
 
-  const [editFieldShowing, setEditFieldShowing] = useState(false);
-
+  //edit
   const toggleEditField = () => {
     if (!editFieldShowing) {
       setEditFieldShowing(true);
@@ -71,9 +70,21 @@ export const Message = ({ MO }) => {
     setMessage(newMessage);
   };
 
-  const messageClassName = MO.stan
-    ? "message card stanMessage"
-    : "message card trashMessage";
+  const constructNewMessage = () => {
+    const updatedMessage = {
+      id: message.id,
+      messagetext: message.messagetext,
+      chattext: message.chattext,
+      stan: message.stan,
+      trashtalk: message.trashtalk,
+      url: message.url,
+      timestamp: message.timestamp,
+      userId: message.userId,
+    };
+    updateMessage(updatedMessage);
+  };
+
+  //effects time
 
   useEffect(() => {
     getUsersPlayers().then(getPlayerData).then(getMessages);
@@ -105,62 +116,49 @@ export const Message = ({ MO }) => {
     setCurrentUsersPOs(currentUserLineup);
   }, [usersPlayers]);
 
-  const constructNewMessage = () => {
-    const updatedMessage = {
-      id: message.id,
-      messagetext: message.messagetext,
-      chattext: message.chattext,
-      stan: message.stan,
-      trashtalk: message.trashtalk,
-      url: message.url,
-      timestamp: message.timestamp,
-      userId: message.userId,
-    };
-    updateMessage(updatedMessage);
-  };
+  const messageClassName = MO.stan
+    ? "message card stanMessage"
+    : "message card trashMessage";
 
   return (
     <article className={messageClassName} id={MO.id}>
+      {/* description */}
 
       <div className="message__description">
         <span className="message__author">
-        {MO.user.id === currentUserId ? (
-          <span>YOU</span>
-        ) : (
-          <span>{MO.user.name || ""}</span>
-        )}
-        </span>
-          
-        {
-          /* does the incoming message's messagetext field contain a player name 
-          that's in the collection of that message object's user's lineup? if so, it's a STAN */
-          matchingPlayersFirstNames.includes(MO.messagetext) ? (
-            <span>
-              {" "}
-              stan'd
-            </span>
-          ) : MO.trashtalk ? (
-            <span>
-              {" "}
-                <span>talked trash on</span>
-              {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
-                <span> your guy</span>
-              ) : (
-                <span></span>
-              )}
-            </span>
+          {MO.user.id === currentUserId ? (
+            <span>YOU</span>
           ) : (
-            <span> stan'd </span>
-          )
-        }
+            <span>{MO.user.name || ""}</span>
+          )}
+        </span>
+
+        {matchingPlayersFirstNames.includes(MO.messagetext) ? (
+          <span> stan'd</span>
+        ) : MO.trashtalk ? (
+          <span>
+            {" "}
+            <span>talked trash on</span>
+            {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
+              <span> your guy</span>
+            ) : (
+              <span></span>
+            )}
+          </span>
+        ) : (
+          <span> stan'd </span>
+        )}
         <span className="message__playerName"> {MO.messagetext}</span>
       </div>
+
+      {/* lineup */}
 
       {MO.user.id === currentUserId ? (
         <div></div>
       ) : (
         <div>
-          <button className="button message__showLineup message--button"
+          <button
+            className="button message__showLineup message--button lineup--button"
             onClick={(e) => {
               e.preventDefault();
               matchingPlayersToggle();
@@ -202,6 +200,8 @@ export const Message = ({ MO }) => {
         </div>
       )}
 
+      {/* URL */}
+
       {MO.stan ? (
         <div className="message__url message__url__heatcheck">
           <a href={MO.url} target="_blank" className="link message--link">
@@ -219,6 +219,8 @@ export const Message = ({ MO }) => {
       )}
 
       <div className="message__chattext">{MO.chattext}</div>
+
+      {/* edit/submit buttons */}
 
       {MO.user.id === currentUserId ? (
         <div className="message__edit">
@@ -241,6 +243,7 @@ export const Message = ({ MO }) => {
 
           {editFieldShowing ? (
             <button
+              className="message__submit__button button message--button"
               onClick={(e) => {
                 e.preventDefault();
                 toggleEditField();
@@ -257,8 +260,11 @@ export const Message = ({ MO }) => {
         <div></div>
       )}
 
+      {/* chat text edit field */}
+
       {editFieldShowing ? (
         <textarea
+          className="message__chattext__field input textarea--input"
           name="chattext"
           onChange={handleControlledInputChange}
           value={message.chattext}
@@ -267,7 +273,8 @@ export const Message = ({ MO }) => {
         <div></div>
       )}
 
-      {/* regret */}
+      {/* delete button */}
+
       {MO.user.id === currentUserId && !MO.stan ? (
         <button
           onClick={(e) => {
