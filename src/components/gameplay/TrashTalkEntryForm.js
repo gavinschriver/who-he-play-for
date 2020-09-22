@@ -39,8 +39,9 @@ export const TrashTalkEntryForm = () => {
               userId: currentUser,
               messagetext: trashtalkplayer,
               url: urlRef.current.value,
-              timestamp: Date.now(),
+              // timestamp: Date.now(),
               trashtalk: true,
+              stan: false,
               chattext: chatValue
             };
             addMessage(newMessage);

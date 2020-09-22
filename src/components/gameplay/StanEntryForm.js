@@ -63,8 +63,9 @@ export const StanEntryForm = () => {
             userId: currentUser,
             messagetext: stanBarPlayer,
             url: urlRef.current.value,
-            timestamp: Date.now(),
+            // timestamp: Date.now(),
             stan: true,
+            trashtalk: false,
             chattext: chatValue
           };
           addMessage(newMessage);

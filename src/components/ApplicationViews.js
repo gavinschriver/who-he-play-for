@@ -22,7 +22,7 @@ export const ApplicationViews = (props) => {
                 path="/"
                 render={(props) => (
                   <>
-                    <AppHeader {...props} />
+                    {/* <AppHeader {...props} /> */}
                     <GamePlay {...props} />
                     <GenerateLineup {...props} />
                     <MessagesList {...props} />

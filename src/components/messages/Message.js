@@ -10,13 +10,24 @@ export const Message = ({ MO }) => {
   const { playerObjArray, getPlayerData, setTrashtalkPlayer } = useContext(
     PlayerContext
   );
-  const { removeMessage, updateMessage } = useContext(MessageContext);
+  const { messages, removeMessage, getMessages, updateMessage } = useContext(
+    MessageContext
+  );
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [matchingPlayers, setMatchingPlayers] = useState([]);
   const [currentUsersPOs, setCurrentUsersPOs] = useState([]);
-  const [editMode, setEditMode] = useState(false);
-  const editRef = useRef("")
+
+  const [message, setMessage] = useState({})
+
+  const editRef = useRef("");
+  // const chatTextRef = useRef("");
+  // const userIdRef = useRef("");
+  // const messageTextRef = useRef("");
+  // const urlRef = useRef("");
+  // const stanRef = useRef(null);
+  // const trashRef = useRef(null);
+
   const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
     return mPO.player.firstName;
   });
@@ -50,32 +61,30 @@ export const Message = ({ MO }) => {
     }
   };
 
-  const handleEditButtonPress = () => {
-    if (!editMode) {
-      setEditMode(true)
-    } else if (editMode) {
-      const newChatValue = editRef.current.value
-      const editMessage = {
-        id: MO.id,
-        chattext: newChatValue,
-        userId: MO.userId,
-        messagetext: MO.messagetext,
-        url: MO.url,
-        timestamp: MO.timestamp,
-        trashtalk: MO.trashtalk ? MO.trashtalk : false,
-        stan: MO.stan ? MO.stan : false
-      }
-      console.log(editMessage)
-      setEditMode(false)
+  const [editFieldShowing, setEditFieldShowing] = useState(false);
+
+  const toggleEditField = () => {
+    if (!editFieldShowing) {
+      setEditFieldShowing(true);
+    } else if (editFieldShowing) {
+      setEditFieldShowing(false);
     }
   };
+
+  const handleControlledInputChange = (event) => {
+
+    const newMessage = Object.assign({}, message)
+    newMessage[event.target.name] = event.target.value
+    setMessage(newMessage)
+}
+
 
   const messageClassName = MO.stan
     ? "message card stanMessage"
     : "message card trashMessage";
 
   useEffect(() => {
-    getUsersPlayers().then(getPlayerData);
+    getUsersPlayers().then(getPlayerData).then(getMessages);
   }, []);
 
   useEffect(() => {
@@ -103,6 +112,10 @@ export const Message = ({ MO }) => {
       }) || {};
     setCurrentUsersPOs(currentUserLineup);
   }, [usersPlayers]);
+
+  useEffect(() => {
+    console.log(message)
+  }, [message])
 
   return (
     <article className={messageClassName} id={MO.id}>
@@ -221,35 +234,37 @@ export const Message = ({ MO }) => {
       ) : (
         <div></div>
       )}
-      <div>
-        { editMode
-          ? <div></div>
-          : <div>{MO.chattext}</div>
-        }
-      </div>
-      {MO.chattext ? (
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleEditButtonPress();
-          }}
-        >
-          {
-            editMode
-              ? `Submit`
-              : 'Edit Chat'
-          }
-        </button>
-      ) : (
-        <div></div>
-        )}
-      {
-        editMode
-          ? <textarea defaultValue={MO.chattext} ref={editRef}>
-            
-          </textarea>
-          : <div></div>
-      }
+      <div>{MO.chattext}</div>
+
+      <button
+        ref={editRef}
+        value={`editButton--${MO.id}`}
+        onClick={(e) => {
+          e.preventDefault();
+          const messageId = parseInt(editRef.current.value.split("--")[1]);
+          const messageToEdit = messages.find((m) => {
+            return m.id === messageId;
+          });
+          setMessage(messageToEdit)
+        }}
+      >
+        Edit
+      </button>
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+        }}
+      >
+        Submit
+      </button>
+
+      <textarea name="chattext" onChange={handleControlledInputChange}></textarea>
+      <input type="hidden" />
+      <input type="hidden" />
+      <input type="hidden" />
+      <input type="hidden" />
+      <input type="hidden" />
+      <input type="hidden" />
     </article>
   );
 };

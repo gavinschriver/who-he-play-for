@@ -28,7 +28,7 @@ export const MessageProvider = (props) => {
   };
 
   const updateMessage = message => {
-    return fetch(`http://localhost:8888/messagess/${message.id}`, {
+    return fetch(`http://localhost:8888/messages/${message.id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
