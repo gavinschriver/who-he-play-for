@@ -14,16 +14,17 @@ export const TrashTalkEntryForm = () => {
     PlayerContext
   );
 
+  //component-state variables
   const messagetextRef = useRef("");
   const urlRef = useRef("");
-  const chatRef = useRef("")
-
+  const chatRef = useRef("");
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
 
+  // trash talk button press
   const handleTrashtalkButtonPress = () => {
     const trashtalkplayer = messagetextRef.current.value.split(" ")[0];
     const urlValue = urlRef.current.value.toLowerCase();
-    const chatValue = chatRef.current.value
+    const chatValue = chatRef.current.value;
 
     if (
       validator.isURL(urlValue) &&
@@ -39,7 +40,7 @@ export const TrashTalkEntryForm = () => {
               timestamp: Date.now(),
               trashtalk: true,
               stan: false,
-              chattext: chatValue
+              chattext: chatValue,
             };
             addMessage(newMessage);
           } else alert(`that's old news captain`);
@@ -48,42 +49,27 @@ export const TrashTalkEntryForm = () => {
     } else alert("better check that input");
   };
 
-  useEffect(() => {
-    setMentionedCount(
-      usersPlayers.filter((upo) => upo.userId === currentUser && upo.mentioned)
-        .length
-    );
-  }, [usersPlayers]);
-
-  //sets the value of the trash talk input bar in this component to the value of the TT player selected in message component
-  useEffect(() => {
-    messagetextRef.current.value = trashtalkPlayer;
-  }, [trashtalkPlayer]);
-
   // array of all URL values of all messages for duplicate check
   const messageUrls = messages.map((m) => {
     return m.url;
   });
 
-  // this colleciton is current user's WHOLE lineup as UPOs
+  // find current user's lineup
   const allMatchingUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId === currentUser;
   });
 
-  // this collection is current user's WHOLE linup as player objects
   const allMatchingPlayersObjects = allMatchingUsersPlayers.map((fUPO) => {
     return playerObjArray.find((p) => {
       return p.player.id === fUPO.playerId;
     });
   });
 
-  // this colleciton is CURRENT user's WHOLE lineup as FIRST names
   const allMatchingPlayersStrings = allMatchingPlayersObjects.map((mPO) => {
     return mPO.player.firstName;
   });
 
-  // FOR OTHER PLAYERS LINEUPS
-  // All other user's lineups as UserPlayer objects
+  // find all players on other user's lineups 
   const othersUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId != currentUser;
   });
@@ -99,9 +85,21 @@ export const TrashTalkEntryForm = () => {
     return oPO.player.firstName;
   });
 
+  // effects
   useEffect(() => {
     getPlayerData().then(getUsersPlayers).then(getMessages);
   }, []);
+
+  useEffect(() => {
+    setMentionedCount(
+      usersPlayers.filter((upo) => upo.userId === currentUser && upo.mentioned)
+        .length
+    );
+  }, [usersPlayers]);
+
+  useEffect(() => {
+    messagetextRef.current.value = trashtalkPlayer;
+  }, [trashtalkPlayer]);
 
   return (
     <>

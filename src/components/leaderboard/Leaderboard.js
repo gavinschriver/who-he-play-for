@@ -13,16 +13,19 @@ export const Leaderboard = (props) => {
   const { messages } = useContext(MessageContext);
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
   const { getUsersPlayers, usersPlayers } = useContext(UserPlayerContext);
+
+  // component-state values for everything
   const [usersArray, setUsersArray] = useState([]);
   const [messagesArray, setMessagesArray] = useState([]);
   const [playersArray, setPlayersArray] = useState([]);
   const [usersPlayersArray, setUsersPlayersArray] = useState([]);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
+
+// create colleciton of pre-trashed user scores
   const userScores = usersArray.map((u) => {
     let userscore = 0;
 
-    //array of a user's messages
     const userMessages = u.messages;
 
     let stanCount = 0;
@@ -48,17 +51,16 @@ export const Leaderboard = (props) => {
     return userScoreObj;
   });
 
-  // only messages marked as trashtalk //
+
+  //trashtalk
   const trashtalkMessages = messages.filter((m) => {
     return m.trashtalk;
   });
 
-  // strings of all the instances of trash talkin' (aka each occurance of a player's **first name  (will change maybe??) )
   const trashtalkStringNameInstances = trashtalkMessages.map((ttMO) => {
     return ttMO.messagetext;
   });
 
-  // After initial user scores are calculated, then adjust for trashing
   const trashedUserScores = userScores.map((uSO) => {
     const matchingUserObject = usersArray.find((u) => {
       return u.id === uSO.userId;
@@ -90,12 +92,13 @@ export const Leaderboard = (props) => {
     return uSO;
   });
 
+//scores sorted after trashtalk calculation
   const sortedScores = trashedUserScores.sort((a, b) => {
     return b.score - a.score;
   });
 
-  // and now, some fun stuff
-  const currentUserScore =
+// unique values for current user and all-time leaders
+ const currentUserScore =
     trashedUserScores.find((tSO) => tSO.userId === currentUserId) || {};
 
   const sortedByStans =
@@ -111,6 +114,9 @@ export const Leaderboard = (props) => {
     }) || {};
 
   const trashtalkchamp = sortedByTrashtalks[0] || {};
+
+
+  //effects 
 
   useEffect(() => {
     getPlayerData().then(getUsers).then(getUsersPlayers);
@@ -169,6 +175,7 @@ export const Leaderboard = (props) => {
             })}
           </table>
         </section>
+        
       ) : props.location === "header" ? (
         <>
           <section className="userScores">

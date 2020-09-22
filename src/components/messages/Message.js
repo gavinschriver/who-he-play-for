@@ -158,7 +158,7 @@ export const Message = ({ MO }) => {
       ) : (
         <div>
           <button
-            className="button message__showLineup message--button lineup--button"
+            className="message__showLineup button message--button lineup--button"
             onClick={(e) => {
               e.preventDefault();
               matchingPlayersToggle();
@@ -225,7 +225,7 @@ export const Message = ({ MO }) => {
       {MO.user.id === currentUserId ? (
         <div className="message__edit">
           <button
-            className="message__edit__button button message--button"
+            className="message__edit button edit--button message--button"
             ref={editRef}
             value={`editButton--${MO.id}`}
             onClick={(e) => {
@@ -243,7 +243,7 @@ export const Message = ({ MO }) => {
 
           {editFieldShowing ? (
             <button
-              className="message__submit__button button message--button"
+              className="message__submit button submit--button message--button"
               onClick={(e) => {
                 e.preventDefault();
                 toggleEditField();
@@ -264,7 +264,7 @@ export const Message = ({ MO }) => {
 
       {editFieldShowing ? (
         <textarea
-          className="message__chattext__field input textarea--input"
+          className="message__textedit input textarea--input"
           name="chattext"
           onChange={handleControlledInputChange}
           value={message.chattext}
@@ -276,7 +276,7 @@ export const Message = ({ MO }) => {
       {/* delete button */}
 
       {MO.user.id === currentUserId && !MO.stan ? (
-        <button
+        <button className="message__delete button delete--button message--button"
           onClick={(e) => {
             e.preventDefault();
             removeMessage(MO.id);

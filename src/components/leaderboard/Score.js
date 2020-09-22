@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 
-export const Score = ({ SO, UO }) => {
+export const Score = ({ SO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const { usersPlayers } = useContext(UserPlayerContext);
   const { playerObjArray, setTrashtalkPlayer, setStanPlayer } = useContext(
@@ -18,11 +18,19 @@ export const Score = ({ SO, UO }) => {
     }
   };
 
-  const matchingUsersPlayer = usersPlayers.filter((uPO) => {
+  // find players for each score item 
+  const matchingUsersPlayers = usersPlayers.filter((uPO) => {
     return uPO.userId === SO.userId;
   });
 
-  const filteredUsersPlayers = matchingUsersPlayer.filter((mUPO) => {
+  const matchingPlayers = matchingUsersPlayers.map((mUPO) => {
+    return playerObjArray.find((p) => {
+      return mUPO.playerId === p.player.id;
+    });
+  });
+
+// filter out players that have already been mentioned so they don't appear on current user's lineup
+  const filteredUsersPlayers = matchingUsersPlayers.filter((mUPO) => {
     return !mUPO.mentioned;
   });
 
@@ -30,18 +38,13 @@ export const Score = ({ SO, UO }) => {
     return fUP.playerId;
   });
 
-  const matchingPlayers = matchingUsersPlayer.map((mUPO) => {
-    return playerObjArray.find((p) => {
-      return mUPO.playerId === p.player.id;
-    });
-  });
 
   return (
-    <tbody>
+    <tbody className="score">
       <td>{SO.username}</td>
       <td>{SO.score}</td>
       <td>
-        <button
+        <button className="score__showLineup button score--button lineup--button"
           onClick={(e) => {
             e.preventDefault();
             matchingPlayersToggle();
@@ -51,7 +54,7 @@ export const Score = ({ SO, UO }) => {
         </button>
       </td>
       {showHideMatchingPlayers ? (
-        <div className="lineup scoreBoard__lineup">
+        <div className="scoreboard__lineup lineup">
           <table>
             <tbody>
               {matchingPlayers.map((mPO) => {
@@ -59,14 +62,14 @@ export const Score = ({ SO, UO }) => {
                 return (
                   <tr>
                     <td>
-                      <a href={redditSearch} target="_blank">
+                      <a href={redditSearch} target="_blank" className="scoreboard__lineup__player link lineup--link scoreboard--link">
                         {mPO.player.firstName} {mPO.player.lastName}
                       </a>
                     </td>
                     <td>
                       {SO.userId === currentUserId ? (
                         filteredPlayerIds.includes(mPO.player.id) ? (
-                          <button
+                          <button className="scoreboard__lineup__stan button score--button lineup--button"
                             onClick={(e) => {
                               e.preventDefault();
                               setStanPlayer(`${mPO.player.firstName}`);
@@ -78,7 +81,7 @@ export const Score = ({ SO, UO }) => {
                           <div></div>
                         )
                       ) : (
-                        <button
+                        <button className="scoreboard__lineup__trashtalk button score--button lineup--button"
                           onClick={(e) => {
                             e.preventDefault();
                             setTrashtalkPlayer(
