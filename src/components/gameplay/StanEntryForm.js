@@ -23,11 +23,12 @@ export const StanEntryForm = () => {
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
 
   const handleStanButtonPress = () => {
-    const urlValue = urlRef.current.value;
+    const urlValue = urlRef.current.value.toLowerCase();
 
     //stanBarPlayer is currently JUST a first name.
     const stanBarPlayer = stanBarRef.current.value;
     const chatValue = chatRef.current.value
+    
     // code to reattach a player's first name to their last name for search validaiton cause im an idiot
     const stanBarPlayerObject = filteredPlayersObjects.find((fPO) => {
       return fPO.player.firstName === stanBarPlayer;

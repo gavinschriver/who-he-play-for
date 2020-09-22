@@ -23,7 +23,7 @@ export const TrashTalkEntryForm = () => {
 
   const handleTrashtalkButtonPress = () => {
     const trashtalkplayer = messagetextRef.current.value.split(" ")[0];
-    const urlValue = urlRef.current.value;
+    const urlValue = urlRef.current.value.toLowerCase();
     const chatValue = chatRef.current.value
 
     console.log(othersPlayersStrings, urlValue, trashtalkplayer.toLowerCase());
