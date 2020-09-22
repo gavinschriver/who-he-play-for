@@ -123,6 +123,7 @@ export const Message = ({ MO }) => {
       stan: message.stan,
       trashtalk: message.trashtalk,
       url: message.url,
+      timestamp: message.timestamp,
       userId: message.userId,
     };
     console.log(updatedMessage);
@@ -219,6 +220,8 @@ export const Message = ({ MO }) => {
         </div>
       )}
 
+      
+      {/* regret */}
       {MO.user.id === currentUserId && !MO.stan ? (
         <button
           onClick={(e) => {
@@ -246,42 +249,46 @@ export const Message = ({ MO }) => {
       ) : (
         <div></div>
       )}
+
       <div>{MO.chattext}</div>
+      {MO.user.id === currentUserId ? (
+        <div>
+          <button
+            ref={editRef}
+            value={`editButton--${MO.id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              const messageId = parseInt(editRef.current.value.split("--")[1]);
+              const messageToEdit = messages.find((m) => {
+                return m.id === messageId;
+              });
+              setMessage(messageToEdit);
+            }}
+          >
+            Edit
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              constructNewMessage();
+            }}
+          >
+            Submit
+          </button>
+        </div>
+      ) : (
+        <div></div>
+      )}
 
-      <button
-        ref={editRef}
-        value={`editButton--${MO.id}`}
-        onClick={(e) => {
-          e.preventDefault();
-          const messageId = parseInt(editRef.current.value.split("--")[1]);
-          const messageToEdit = messages.find((m) => {
-            return m.id === messageId;
-          });
-          setMessage(messageToEdit);
-        }}
-      >
-        Edit
-      </button>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          constructNewMessage();
-        }}
-      >
-        Submit
-      </button>
-
-      <textarea
-        name="chattext"
-        onChange={handleControlledInputChange}
-        value={message.chattext}
-      ></textarea>
-      <input type="hidden" />
-      <input type="hidden" />
-      <input type="hidden" />
-      <input type="hidden" />
-      <input type="hidden" />
-      <input type="hidden" />
+      {MO.user.id === currentUserId ? (
+        <textarea
+          name="chattext"
+          onChange={handleControlledInputChange}
+          value={message.chattext}
+        ></textarea>
+      ) : (
+        <div></div>
+      )}
     </article>
   );
 };

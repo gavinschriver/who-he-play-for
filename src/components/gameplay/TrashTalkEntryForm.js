@@ -28,9 +28,8 @@ export const TrashTalkEntryForm = () => {
 
     console.log(othersPlayersStrings, urlValue, trashtalkplayer.toLowerCase());
     if (
-      validator.isURL(urlValue, { require_protocol: false }) &&
-      urlValue.includes(trashtalkplayer.toLowerCase()) &&
-      urlValue.includes(`reddit`)
+      validator.isURL(urlValue) &&
+      urlValue.includes(trashtalkplayer.toLowerCase())
     ) {
       if (!allMatchingPlayersStrings.includes(trashtalkplayer)) {
         if (othersPlayersStrings.includes(trashtalkplayer)) {
@@ -39,7 +38,7 @@ export const TrashTalkEntryForm = () => {
               userId: currentUser,
               messagetext: trashtalkplayer,
               url: urlRef.current.value,
-              // timestamp: Date.now(),
+              timestamp: Date.now(),
               trashtalk: true,
               stan: false,
               chattext: chatValue
