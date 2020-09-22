@@ -105,9 +105,6 @@ export const Message = ({ MO }) => {
     setCurrentUsersPOs(currentUserLineup);
   }, [usersPlayers]);
 
-  useEffect(() => {
-    console.log(message);
-  }, [message]);
 
   const constructNewMessage = () => {
     const updatedMessage = {
@@ -120,7 +117,6 @@ export const Message = ({ MO }) => {
       timestamp: message.timestamp,
       userId: message.userId,
     };
-    console.log(updatedMessage);
     updateMessage(updatedMessage);
   };
 

@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../users/UserProvider";
 import { UserGreeting } from "./UserGreeting";
-import "./AppHeader.css";
 import { Leaderboard } from "../leaderboard/Leaderboard";
-import { UserScore } from "./UserScore";
-import { LogoutButton } from "./LogoutButton";
+import "./AppHeader.css";
+
 
 export const AppHeader = (props) => {
   const { users, getUsers } = useContext(UserContext);
