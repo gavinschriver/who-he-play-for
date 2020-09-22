@@ -21,12 +21,6 @@ export const Message = ({ MO }) => {
   const [message, setMessage] = useState({});
 
   const editRef = useRef("");
-  // const chatTextRef = useRef("");
-  // const userIdRef = useRef("");
-  // const messageTextRef = useRef("");
-  // const urlRef = useRef("");
-  // const stanRef = useRef(null);
-  // const trashRef = useRef(null);
 
   const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
     return mPO.player.firstName;
@@ -220,7 +214,6 @@ export const Message = ({ MO }) => {
         </div>
       )}
 
-      
       {/* regret */}
       {MO.user.id === currentUserId && !MO.stan ? (
         <button
@@ -258,6 +251,7 @@ export const Message = ({ MO }) => {
             value={`editButton--${MO.id}`}
             onClick={(e) => {
               e.preventDefault();
+              toggleEditField()
               const messageId = parseInt(editRef.current.value.split("--")[1]);
               const messageToEdit = messages.find((m) => {
                 return m.id === messageId;
@@ -267,9 +261,11 @@ export const Message = ({ MO }) => {
           >
             Edit
           </button>
+
           <button
             onClick={(e) => {
               e.preventDefault();
+              toggleEditField()
               constructNewMessage();
             }}
           >
@@ -280,7 +276,7 @@ export const Message = ({ MO }) => {
         <div></div>
       )}
 
-      {MO.user.id === currentUserId ? (
+      {editFieldShowing ? (
         <textarea
           name="chattext"
           onChange={handleControlledInputChange}

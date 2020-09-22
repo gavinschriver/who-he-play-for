@@ -60,10 +60,9 @@ export const Leaderboard = (props) => {
 
   // After initial user scores are calculated, then adjust for trashing
   const trashedUserScores = userScores.map((uSO) => {
-    const matchingUserObject =
-      usersArray.find((u) => {
-        return u.id === uSO.userId;
-      });
+    const matchingUserObject = usersArray.find((u) => {
+      return u.id === uSO.userId;
+    });
 
     const matchingUserPlayerObjects =
       usersPlayersArray.filter((uPO) => {
@@ -114,7 +113,7 @@ export const Leaderboard = (props) => {
   const trashtalkchamp = sortedByTrashtalks[0] || {};
 
   useEffect(() => {
-    getUsers().then(getUsersPlayers).then(getPlayerData);
+    getPlayerData().then(getUsers).then(getUsersPlayers);
   }, []);
 
   useEffect(() => {
