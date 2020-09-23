@@ -7,7 +7,7 @@ export const UserGreeting = ({ user }) => {
     <>
       <article className="userGreeting">
         <h2>Why howdy, {user.name}</h2>
-        <Avatar user={user} location="greeting" />
+        {user.avatar  ? <Avatar user={user} location="greeting" /> : <div></div>}
       </article>
     </>
   );

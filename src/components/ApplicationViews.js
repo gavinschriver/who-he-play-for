@@ -59,6 +59,15 @@ export const ApplicationViews = (props) => {
           render={(props) => <UserAccount />}
         ></Route>
       </UserProvider>
+
+
+      <Route
+        path="/logout"
+        render={(props) => {
+          localStorage.removeItem("whpf_user");
+          props.history.push("/login");
+        }}
+      ></Route>
     </>
   );
 };

@@ -8,6 +8,6 @@ export const Avatar = (props) => {
   if (location === "greeting") {
     return <Image width={300} height={300} src={avatarPath} roundedCircle />;
   } else if (location === "message") {
-    return <Image width={200} height={200} src={avatarPath} rounded />;
+    return <Image width={150} height={150} src={avatarPath} rounded />;
   }
 };

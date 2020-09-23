@@ -70,8 +70,8 @@ export const UserAccount = () => {
           value={user.avatar}
           onChange={handleRadioInputChange}
         >
-          <ToggleButton value={"/images/chuck-1.png"}>
-              <Image width={300} height={300} src="/images/chuck-1.png" roundedCircle />
+          <ToggleButton value={"/images/chuck-8.png"}>
+              <Image width={300} height={300} src="/images/chuck-8.png" style={{backgroundColor: `transparent`}}roundedCircle />
           </ToggleButton>
           <ToggleButton value={"/images/chuck-3.jpg"}>
             <Image width={300} height={300} src="/images/chuck-3.jpg" roundedCircle />
