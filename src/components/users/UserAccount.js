@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
+import Image from "react-bootstrap/Image";
 
 export const UserAccount = () => {
   const { users, getUsers, updateUser } = useContext(UserContext);
@@ -70,12 +71,14 @@ export const UserAccount = () => {
           onChange={handleRadioInputChange}
         >
           <ToggleButton value={"/images/chuck-1.png"}>
-          <img src="/images/chuck-1.png" />
+              <Image width={300} height={300} src="/images/chuck-1.png" roundedCircle />
           </ToggleButton>
-          <ToggleButton value={"/images/chuck-2.jpg"}>
-          <img src="/images/chuck-2.jpg" />
+          <ToggleButton value={"/images/chuck-3.jpg"}>
+            <Image width={300} height={300} src="/images/chuck-3.jpg" roundedCircle />
           </ToggleButton>
-          <ToggleButton value={3}>Option 3</ToggleButton>
+          <ToggleButton value={"/images/chuck-4.jpg"}>
+            <Image width={300} height={300} src="/images/chuck-4.jpg" roundedCircle />
+          </ToggleButton>
         </ToggleButtonGroup>
       </Form>
       <Button
