@@ -2,8 +2,9 @@ import React, { useState, useContext, useRef, useEffect } from "react";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { MessageContext } from "./MessageProvider";
+import { Avatar } from "../users/Avatar";
 import "./messages.css";
-// import "../../images/chuck-headshot.png"
+import { UserContext } from "../users/UserProvider";
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -13,12 +14,14 @@ export const Message = ({ MO }) => {
   const { messages, removeMessage, getMessages, updateMessage } = useContext(
     MessageContext
   );
+  const {users, getUsers } = useContext(UserContext)
 
   // component-state data collections
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [matchingPlayers, setMatchingPlayers] = useState([]);
   const [currentUsersPOs, setCurrentUsersPOs] = useState([]);
   const [message, setMessage] = useState({});
+  const [user, setUser] = useState({})
 
   // component-state booleans, set current user and get a ref for message to edit
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
@@ -88,7 +91,7 @@ export const Message = ({ MO }) => {
   //effects time
 
   useEffect(() => {
-    getUsersPlayers().then(getPlayerData).then(getMessages);
+    getUsersPlayers().then(getPlayerData).then(getMessages).then(getUsers);
   }, []);
 
   useEffect(() => {
@@ -116,6 +119,13 @@ export const Message = ({ MO }) => {
       }) || {};
     setCurrentUsersPOs(currentUserLineup);
   }, [usersPlayers]);
+
+  useEffect(() => {
+    const matchingUser = users.find(u => {
+      return u.id === MO.user.id
+    }) || {}
+    setUser(matchingUser)
+  })
 
   const messageClassName = MO.stan
     ? "message card stanMessage"
@@ -289,11 +299,8 @@ export const Message = ({ MO }) => {
       ) : (
         <div></div>
       )}
-      {MO.stan ? (
-        <img src={require("../../images/chuck-headshot.png")} />
-      ) : (
-        <div></div>
-      )}
+      {MO.stan ? <img /> : <div></div>}
+      <Avatar user={user} location="message" />
     </article>
   );
 };
