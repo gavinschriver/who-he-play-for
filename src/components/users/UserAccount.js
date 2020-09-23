@@ -69,10 +69,12 @@ export const UserAccount = () => {
           value={user.avatar}
           onChange={handleRadioInputChange}
         >
-          <ToggleButton value={"../../images/chuck-headshot.png"}>
-          <img src={require("../../images/chuck-headshot.png")} />
+          <ToggleButton value={"/images/chuck-1.png"}>
+          <img src="/images/chuck-1.png" />
           </ToggleButton>
-          <ToggleButton value={2}>Option 2</ToggleButton>
+          <ToggleButton value={"/images/chuck-2.jpg"}>
+          <img src="/images/chuck-2.jpg" />
+          </ToggleButton>
           <ToggleButton value={3}>Option 3</ToggleButton>
         </ToggleButtonGroup>
       </Form>
