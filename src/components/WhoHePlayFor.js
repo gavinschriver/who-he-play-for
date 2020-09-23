@@ -4,9 +4,9 @@ import { ApplicationViews } from "./ApplicationViews";
 import { NavBar } from "./nav/NavBar";
 import { Login } from "./auth/Login";
 import { Register } from "./auth/Register";
-import "./WhoHePlayFor.css";
 import { AppHeader } from "./header/AppHeader";
 import { UserProvider } from "./users/UserProvider";
+import "./WhoHePlayFor.css";
 
 export const WhoHePlayFor = () => (
   <>
