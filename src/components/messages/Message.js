@@ -300,7 +300,7 @@ export const Message = ({ MO }) => {
         <div></div>
       )}
       {MO.stan ? <img /> : <div></div>}
-      <Avatar user={user} location="message" />
+      {user.avatar ? <Avatar user={user} location="message" /> : <div></div>}
     </article>
   );
 };

@@ -56,7 +56,7 @@ export const ApplicationViews = (props) => {
         <Route
           exact
           path="/account"
-          render={(props) => <UserAccount />}
+          render={(props) => <UserAccount {...props}/>}
         ></Route>
       </UserProvider>
 

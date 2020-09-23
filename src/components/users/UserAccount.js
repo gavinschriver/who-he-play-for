@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { UserContext } from "./UserProvider";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -6,10 +6,13 @@ import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import Image from "react-bootstrap/Image";
 
-export const UserAccount = () => {
-  const { users, getUsers, updateUser } = useContext(UserContext);
+export const UserAccount = (props) => {
+  const { users, getUsers, updateUser, removeUser } = useContext(UserContext);
 
   const [user, setUser] = useState({});
+
+  const pwRef = useRef("")
+  const pwValidation = useRef("")
 
   useEffect(() => {
     getUsers();
@@ -58,10 +61,17 @@ export const UserAccount = () => {
             onChange={handleControlledInputChange}
           />
           <Form.Control
+            ref={pwRef}
             name="password"
             type="password"
-            value={user.password}
+            value=""
             onChange={handleControlledInputChange}
+          />
+          <Form.Control
+            ref={pwValidation}
+            name="passwordValidation"
+            type="password"
+            value=""
           />
         </Form.Group>
         <ToggleButtonGroup
@@ -71,13 +81,28 @@ export const UserAccount = () => {
           onChange={handleRadioInputChange}
         >
           <ToggleButton value={"/images/chuck-8.png"}>
-              <Image width={300} height={300} src="/images/chuck-8.png" style={{backgroundColor: `transparent`}}roundedCircle />
+            <Image
+              width={300}
+              height={300}
+              src="/images/chuck-8.png"
+              roundedCircle
+            />
           </ToggleButton>
           <ToggleButton value={"/images/chuck-3.jpg"}>
-            <Image width={300} height={300} src="/images/chuck-3.jpg" roundedCircle />
+            <Image
+              width={300}
+              height={300}
+              src="/images/chuck-3.jpg"
+              roundedCircle
+            />
           </ToggleButton>
           <ToggleButton value={"/images/chuck-4.jpg"}>
-            <Image width={300} height={300} src="/images/chuck-4.jpg" roundedCircle />
+            <Image
+              width={300}
+              height={300}
+              src="/images/chuck-4.jpg"
+              roundedCircle
+            />
           </ToggleButton>
         </ToggleButtonGroup>
       </Form>
@@ -87,7 +112,16 @@ export const UserAccount = () => {
           constructNewMessage();
         }}
       >
-        Clickmeeee
+        Update Account
+      </Button>
+      <Button
+        onClick={(e) => {
+          e.preventDefault();
+          removeUser(user.id);
+          props.history.push("/logout")
+        }}
+      >
+        DIP ON OUT
       </Button>
     </>
   );
