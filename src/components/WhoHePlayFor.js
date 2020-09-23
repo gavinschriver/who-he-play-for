@@ -16,7 +16,7 @@ export const WhoHePlayFor = () => (
           return (
             <>
               <UserProvider>
-                <Route path render={(props) => <NavBar {...props} />} />
+                <Route render={(props) => <NavBar {...props} />} />
                 <Route render={(props) => <ApplicationViews {...props} />} />
               </UserProvider>
             </>

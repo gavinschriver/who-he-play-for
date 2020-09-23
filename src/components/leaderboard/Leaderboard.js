@@ -21,8 +21,7 @@ export const Leaderboard = (props) => {
   const [usersPlayersArray, setUsersPlayersArray] = useState([]);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
-
-// create colleciton of pre-trashed user scores
+  // create colleciton of pre-trashed user scores
   const userScores = usersArray.map((u) => {
     let userscore = 0;
 
@@ -50,7 +49,6 @@ export const Leaderboard = (props) => {
 
     return userScoreObj;
   });
-
 
   //trashtalk
   const trashtalkMessages = messages.filter((m) => {
@@ -92,13 +90,13 @@ export const Leaderboard = (props) => {
     return uSO;
   });
 
-//scores sorted after trashtalk calculation
+  //scores sorted after trashtalk calculation
   const sortedScores = trashedUserScores.sort((a, b) => {
     return b.score - a.score;
   });
 
-// unique values for current user and all-time leaders
- const currentUserScore =
+  // unique values for current user and all-time leaders
+  const currentUserScore =
     trashedUserScores.find((tSO) => tSO.userId === currentUserId) || {};
 
   const sortedByStans =
@@ -115,8 +113,7 @@ export const Leaderboard = (props) => {
 
   const trashtalkchamp = sortedByTrashtalks[0] || {};
 
-
-  //effects 
+  //effects
 
   useEffect(() => {
     getPlayerData().then(getUsers).then(getUsersPlayers);
@@ -160,33 +157,32 @@ export const Leaderboard = (props) => {
             </span>
           </div>
           <table>
-            <tr>
-              <th>User</th>
-              <th>Score</th>
-            </tr>
-            {/* begin map (sending uSO to Score.js*/}
-            {sortedScores.map((uSO) => {
-              const matchingUser =
-                users.find((u) => {
-                  return u.id === uSO.userId;
-                }) || {};
+            <tbody>
+              <tr>
+                <th>User</th>
+                <th>Score</th>
+              </tr>
+              {/* begin map (sending uSO to Score.js*/}
+              {sortedScores.map((uSO) => {
+                const matchingUser =
+                  users.find((u) => {
+                    return u.id === uSO.userId;
+                  }) || {};
 
-              return <Score key={uSO.id} SO={uSO} UO={matchingUser} />;
-            })}
+                return <Score key={uSO.id} SO={uSO} UO={matchingUser} />;
+              })}
+            </tbody>
           </table>
         </section>
-        
       ) : props.location === "header" ? (
         <>
           <section className="userScores">
             <div className="userScores__score">
               <div className="userScores__trashtalks__heading">Your score:</div>
               <span>{currentUserScore.score}</span>
-              </div>
-              <div className="userScores__stans">
-              <div className="userScores__stans__heading">
-                Your stan count:
-              </div>
+            </div>
+            <div className="userScores__stans">
+              <div className="userScores__stans__heading">Your stan count:</div>
               <span className="userScores__stans__">
                 {currentUserScore.stans}
               </span>
