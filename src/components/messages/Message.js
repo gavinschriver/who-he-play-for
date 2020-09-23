@@ -3,6 +3,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { MessageContext } from "./MessageProvider";
 import "./messages.css";
+// import "../../images/chuck-headshot.png"
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -40,7 +41,7 @@ export const Message = ({ MO }) => {
         return pO.player.id === cUPID;
       });
     }) || {};
-  
+
   const currenUsersLineupAsStrings =
     currentUsersPlayerObjects.map((cUPO) => {
       return cUPO.player.firstName;
@@ -276,7 +277,8 @@ export const Message = ({ MO }) => {
       {/* delete button */}
 
       {MO.user.id === currentUserId && !MO.stan ? (
-        <button className="message__delete button delete--button message--button"
+        <button
+          className="message__delete button delete--button message--button"
           onClick={(e) => {
             e.preventDefault();
             removeMessage(MO.id);
@@ -284,6 +286,11 @@ export const Message = ({ MO }) => {
         >
           #regret
         </button>
+      ) : (
+        <div></div>
+      )}
+      {MO.stan ? (
+        <img src={require("../../images/chuck-headshot.png")} />
       ) : (
         <div></div>
       )}
