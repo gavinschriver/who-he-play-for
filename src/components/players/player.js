@@ -60,6 +60,10 @@ export const Player = ({ PO, TO }) => {
             <img
               src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png`}
             />
+          ) : currentPlayer.player.currentTeam.abbreviation === "OKL" ? (
+            <img
+              src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/okc.png`}
+            />
           ) : (
             <img
               src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`.toLowerCase()}
