@@ -31,7 +31,7 @@ export const TrashTalkEntryForm = () => {
       urlValue.includes(trashtalkplayer.toLowerCase())
     ) {
       if (!allMatchingPlayersStrings.includes(trashtalkplayer)) {
-        if (othersPlayersStrings.includes(trashtalkplayer)) {
+        if (othersPlayersStrings.includes(trashtalkplayer.toLowerCase())) {
           if (!messageUrls.includes(urlValue)) {
             const newMessage = {
               userId: currentUser,
@@ -45,7 +45,7 @@ export const TrashTalkEntryForm = () => {
             addMessage(newMessage);
           } else alert(`that's old news captain`);
         } else alert(`You tryin' to throw shade w/o backing it up?`);
-      } else alert(`You trying to trash your own player? Rough look my dude`);
+      } else alert(`You trying to trash your own player? Rough look my dude`); alert(trashtalkplayer); console.log(othersPlayersStrings)
     } else alert("better check that input");
   };
 
@@ -82,7 +82,7 @@ export const TrashTalkEntryForm = () => {
   });
 
   const othersPlayersStrings = othersPlayersObjs.map((oPO) => {
-    return oPO.player.firstName;
+    return oPO.player.firstName.toLowerCase();
   });
 
   // effects
