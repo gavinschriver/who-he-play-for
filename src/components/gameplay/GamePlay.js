@@ -9,18 +9,20 @@ import { Route } from "react-router-dom";
 
 export const GamePlay = () => (
   <>
-    <Container className="gameplay" id="gamecontainer" fluid>
-      <Row>
-        <Col>
-          <StanEntryForm />
-        </Col>
-        <Col>
-          <Leaderboard location="game" />
-        </Col>
-        <Col>
-          <TrashTalkEntryForm />
-        </Col>
-      </Row>
-    </Container>
+    <section id="gamecontainer">
+      <Container className="gameplay" fluid>
+        <Row>
+          <Col>
+            <StanEntryForm />
+          </Col>
+          <Col>
+            <Leaderboard location="game" />
+          </Col>
+          <Col>
+            <TrashTalkEntryForm />
+          </Col>
+        </Row>
+      </Container>
+    </section>
   </>
 );

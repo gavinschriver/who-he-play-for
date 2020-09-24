@@ -23,7 +23,6 @@ export const ApplicationViews = (props) => {
             <MessageProvider>
               <UserPlayerProvider>
                 <Route
-                  exact
                   path="/"
                   render={(props) => (
                     <>
@@ -31,9 +30,9 @@ export const ApplicationViews = (props) => {
                         <AppHeader {...props} />
                       </Jumbotron>
                       <Container fluid="md">
-                          <Row>
-                            <GamePlay {...props} />
-                          </Row>
+                        <Row>
+                          <GamePlay id="gamecontainer" {...props} />
+                        </Row>
                         <Row>
                           <Col>
                             <GenerateLineup {...props} />

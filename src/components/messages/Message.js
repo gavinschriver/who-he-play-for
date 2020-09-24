@@ -5,10 +5,9 @@ import { MessageContext } from "./MessageProvider";
 import { Avatar } from "../users/Avatar";
 import "./messages.css";
 import { UserContext } from "../users/UserProvider";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-
-export const Message = ({ MO }) => {
+export const Message = ({ MO, props }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const { playerObjArray, getPlayerData, setTrashtalkPlayer } = useContext(
     PlayerContext
@@ -16,14 +15,14 @@ export const Message = ({ MO }) => {
   const { messages, removeMessage, getMessages, updateMessage } = useContext(
     MessageContext
   );
-  const {users, getUsers } = useContext(UserContext)
+  const { users, getUsers } = useContext(UserContext);
 
   // component-state data collections
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [matchingPlayers, setMatchingPlayers] = useState([]);
   const [currentUsersPOs, setCurrentUsersPOs] = useState([]);
   const [message, setMessage] = useState({});
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
 
   // component-state booleans, set current user and get a ref for message to edit
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
@@ -123,11 +122,12 @@ export const Message = ({ MO }) => {
   }, [usersPlayers]);
 
   useEffect(() => {
-    const matchingUser = users.find(u => {
-      return u.id === MO.user.id
-    }) || {}
-    setUser(matchingUser)
-  })
+    const matchingUser =
+      users.find((u) => {
+        return u.id === MO.user.id;
+      }) || {};
+    setUser(matchingUser);
+  });
 
   const messageClassName = MO.stan
     ? "message card stanMessage"
@@ -135,8 +135,8 @@ export const Message = ({ MO }) => {
 
   return (
     <article className={messageClassName} id={MO.id}>
+      <a href="#gamecontainer">JUMP</a>
       {/* description */}
-
       <div className="message__description">
         <span className="message__author">
           {MO.user.id === currentUserId ? (
@@ -192,14 +192,15 @@ export const Message = ({ MO }) => {
                       {mPO.player.firstName} {mPO.player.lastName}
                     </a>
                     {MO.user.id !== currentUserId ? (
-                    <Link to="/gameplay"> <button
+                      <button
                         onClick={(e) => {
                           e.preventDefault();
                           setTrashtalkPlayer(mPO.player.firstName);
+                          window.location.href="#gamecontainer";
                         }}
                       >
-                        TRASH
-                      </button></Link>
+                       TRASH
+                      </button>
                     ) : (
                       <span></span>
                     )}
