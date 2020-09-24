@@ -192,7 +192,7 @@ export const Message = ({ MO }) => {
                       {mPO.player.firstName} {mPO.player.lastName}
                     </a>
                     {MO.user.id !== currentUserId ? (
-                    <Link to="#gamecontainer"> <button
+                    <Link to="/gameplay"> <button
                         onClick={(e) => {
                           e.preventDefault();
                           setTrashtalkPlayer(mPO.player.firstName);
