@@ -68,6 +68,8 @@ export const ApplicationViews = (props) => {
           props.history.push("/login");
         }}
       ></Route>
+
+
     </>
   );
 };
