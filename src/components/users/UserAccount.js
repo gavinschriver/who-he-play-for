@@ -7,14 +7,15 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import Image from "react-bootstrap/Image";
 import { LogoutButton } from "../header/LogoutButton";
 import Alert from "react-bootstrap/Alert"
+import { Redirect } from "react-router-dom";
 
 export const UserAccount = (props) => {
-  const { users, getUsers, updateUser, removeUser } = useContext(UserContext);
+  const { users, getUsers, updateUser } = useContext(UserContext);
 
   const [user, setUser] = useState({});
   const [showAlert, setShowAlert] = useState(false)
   const [initialPW, setInitialPW] = useState("")
-
+  const [updated, setUpdated] = useState(false)
 
   const pwRef = useRef("");
   const pwValidation = useRef("");
@@ -54,8 +55,13 @@ export const UserAccount = (props) => {
         avatar: user.avatar,
       };
       updateUser(updatedUser);
+      setUpdated(true)
     } else setShowAlert(true); 
   };
+
+  if (updated) {
+    return <Redirect to="/" push={true} />
+  }
 
   return (
     <>
