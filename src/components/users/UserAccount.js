@@ -5,6 +5,8 @@ import Form from "react-bootstrap/Form";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import Image from "react-bootstrap/Image";
+import { Redirect } from "react-router-dom";
+import { LogoutButton } from "../header/LogoutButton";
 
 export const UserAccount = (props) => {
   const { users, getUsers, updateUser, removeUser } = useContext(UserContext);
@@ -104,6 +106,14 @@ export const UserAccount = (props) => {
               roundedCircle
             />
           </ToggleButton>
+          <ToggleButton value={"/images/chuck-young.png"}>
+            <Image
+              width={300}
+              height={300}
+              src="/images/chuck-young.png"
+              roundedCircle
+            />
+          </ToggleButton>
         </ToggleButtonGroup>
       </Form>
       <Button
@@ -114,15 +124,17 @@ export const UserAccount = (props) => {
       >
         Update Account
       </Button>
-      <Button
+      <LogoutButton location="userAccount" user={user} />
+
+      {/* <Button
         onClick={(e) => {
           e.preventDefault();
           removeUser(user.id);
-          props.history.push("/logout")
+          return <Redirect to="/login" push={true} />
         }}
       >
         DIP ON OUT
-      </Button>
+      </Button> */}
     </>
   );
 };

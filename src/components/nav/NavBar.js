@@ -15,7 +15,7 @@ export const NavBar = (props) => {
             <li>
                 <Link className="navbar_item" to="/logout">Log Out</Link>
             </li>
-            <LogoutButton />
+            <LogoutButton location="navbar" />
 
         </ul>
     )
