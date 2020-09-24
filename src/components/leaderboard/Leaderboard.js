@@ -4,7 +4,9 @@ import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Score } from "./Score";
+import "./leaderboard.css"
 import Table from "react-bootstrap/Table"
+import Collapse from "react-bootstrap/Collapse"
 
 //this comp is a bit inaccurately named now. Should be Scores or something
 //to indicate it generates all scores and returns them conditionally rendered
@@ -153,7 +155,7 @@ export const Leaderboard = (props) => {
               <h3 className="trashtalkchamp__heading">
                 Trash talk champion:
               </h3>
-              <span className="trashtalkchamp__champ">{trashtalkchamp.username}</span>
+              <span className="trashtalkchamp__champ">{trashtalkchamp.username}{" "}</span>
               <span className="trashtalkchamp__trashtalkCount">
                 with {trashtalkchamp.trashtalks} trashes
               </span>

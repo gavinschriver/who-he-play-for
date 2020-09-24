@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
+import Collapse from "react-bootstrap/esm/Collapse";
 
 export const Score = ({ SO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
@@ -18,7 +19,7 @@ export const Score = ({ SO }) => {
     }
   };
 
-  // find players for each score item 
+  // find players for each score item
   const matchingUsersPlayers = usersPlayers.filter((uPO) => {
     return uPO.userId === SO.userId;
   });
@@ -29,7 +30,7 @@ export const Score = ({ SO }) => {
     });
   });
 
-// filter out players that have already been mentioned so they don't appear on current user's lineup
+  // filter out players that have already been mentioned so they don't appear on current user's lineup
   const filteredUsersPlayers = matchingUsersPlayers.filter((mUPO) => {
     return !mUPO.mentioned;
   });
@@ -38,13 +39,13 @@ export const Score = ({ SO }) => {
     return fUP.playerId;
   });
 
-
   return (
     <tr className="score">
       <td>{SO.username}</td>
       <td>{SO.score}</td>
       <td>
-        <button className="score__showLineup button score--button lineup--button"
+        <button
+          className="score__showLineup button score--button lineup--button"
           onClick={(e) => {
             e.preventDefault();
             matchingPlayersToggle();
@@ -53,55 +54,59 @@ export const Score = ({ SO }) => {
           Show Playerz
         </button>
       </td>
-      {showHideMatchingPlayers ? (
-        <div className="scoreboard__lineup lineup">
-          <table>
-            <tbody>
-              {matchingPlayers.map((mPO) => {
-                const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
-                return (
-                  <tr>
-                    <td>
-                      <a href={redditSearch} target="_blank" className="scoreboard__lineup__player link lineup--link scoreboard--link">
-                        {mPO.player.firstName} {mPO.player.lastName}
-                      </a>
-                    </td>
-                    <td>
-                      {SO.userId === currentUserId ? (
-                        filteredPlayerIds.includes(mPO.player.id) ? (
-                          <button className="scoreboard__lineup__stan button score--button lineup--button"
+        <Collapse in={showHideMatchingPlayers}>
+          <div className="scoreboard__lineup lineup">
+            <table>
+              <tbody>
+                {matchingPlayers.map((mPO) => {
+                  const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
+                  return (
+                    <tr>
+                      <td>
+                        <a
+                          href={redditSearch}
+                          target="_blank"
+                          className="scoreboard__lineup__player link lineup--link scoreboard--link"
+                        >
+                          {mPO.player.firstName} {mPO.player.lastName}
+                        </a>
+                      </td>
+                      <td>
+                        {SO.userId === currentUserId ? (
+                          filteredPlayerIds.includes(mPO.player.id) ? (
+                            <button
+                              className="scoreboard__lineup__stan button score--button lineup--button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setStanPlayer(`${mPO.player.firstName}`);
+                              }}
+                            >
+                              STAN
+                            </button>
+                          ) : (
+                            <div></div>
+                          )
+                        ) : (
+                          <button
+                            className="scoreboard__lineup__trashtalk button score--button lineup--button"
                             onClick={(e) => {
                               e.preventDefault();
-                              setStanPlayer(`${mPO.player.firstName}`);
+                              setTrashtalkPlayer(
+                                `${mPO.player.firstName} ${mPO.player.lastName}`
+                              );
                             }}
                           >
-                            STAN
+                            TRASH
                           </button>
-                        ) : (
-                          <div></div>
-                        )
-                      ) : (
-                        <button className="scoreboard__lineup__trashtalk button score--button lineup--button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTrashtalkPlayer(
-                              `${mPO.player.firstName} ${mPO.player.lastName}`
-                            );
-                          }}
-                        >
-                          TRASH
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <div></div>
-      )}
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </Collapse>
     </tr>
   );
 };
