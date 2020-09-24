@@ -13,6 +13,7 @@ export const UserAccount = (props) => {
 
   const [user, setUser] = useState({});
   const [showAlert, setShowAlert] = useState(false)
+  const [initialPW, setInitialPW] = useState("")
 
 
   const pwRef = useRef("");
@@ -26,8 +27,8 @@ export const UserAccount = (props) => {
     const foundUser =
       users.find((u) => u.id === parseInt(localStorage.getItem("whpf_user"))) ||
       {};
-    foundUser.avatar = "2";
     setUser(foundUser);
+    setInitialPW(foundUser.password)
   }, [users]);
 
   const handleControlledInputChange = (event) => {
@@ -95,7 +96,7 @@ export const UserAccount = (props) => {
             ref={pwValidation}
             name="passwordValidation"
             type="password"
-            defaultValue=""
+            defaultValue={initialPW}
           />
         </Form.Group>
 
@@ -150,7 +151,7 @@ export const UserAccount = (props) => {
         Update Account
       </Button>
       <LogoutButton location="userAccount" user={user} />
-      {showAlert ? <Alert dismissible onClose={() => {setShowAlert(false)}}>HELLL NAW</Alert> : <div></div>}
+      {showAlert ? <Alert variant="danger" dismissible onClose={() => {setShowAlert(false)}}>Passwords don't match :(</Alert> : <div></div>}
     </>
   );
 };
