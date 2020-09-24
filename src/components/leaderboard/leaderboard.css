@@ -13,5 +13,12 @@
 }
 
 .score__value {
-    font-weight: bold;
+  position: relative;
+  margin: 40px 0;
+  padding: 14px 16px;
+  font-size: 40px;
+  line-height: 40px;
+  font-weight: 600;
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
 }
