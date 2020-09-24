@@ -1,9 +1,12 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
+import { PlayerContext} from "./PlayerProvider"
+import Collapse from "react-bootstrap/Collapse"
 import "./Players.css";
 
 export const Player = ({ PO, TO }) => {
+  const { getPlayerData } = useContext(PlayerContext)
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
   const [showHideDetails, setShowHideDetails] = useState(false);
@@ -22,7 +25,7 @@ export const Player = ({ PO, TO }) => {
   const NBAid = currentPlayer.player.externalMappings[0].id || {};
 
   useEffect(() => {
-    getUsersPlayers();
+    getPlayerData().then(getUsersPlayers);
   }, []);
 
   useEffect(() => {
@@ -135,7 +138,8 @@ export const Player = ({ PO, TO }) => {
         </article>
       ) : (
         <div></div>
-      )}
+      )} 
     </article>
   );
 };
+

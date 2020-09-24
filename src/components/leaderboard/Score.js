@@ -40,7 +40,7 @@ export const Score = ({ SO }) => {
 
 
   return (
-    <tbody className="score">
+    <tr className="score">
       <td>{SO.username}</td>
       <td>{SO.score}</td>
       <td>
@@ -102,6 +102,6 @@ export const Score = ({ SO }) => {
       ) : (
         <div></div>
       )}
-    </tbody>
+    </tr>
   );
 };

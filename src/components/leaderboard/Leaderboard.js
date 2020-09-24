@@ -4,6 +4,7 @@ import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Score } from "./Score";
+import Table from "react-bootstrap/Table"
 
 //this comp is a bit inaccurately named now. Should be Scores or something
 //to indicate it generates all scores and returns them conditionally rendered
@@ -140,27 +141,30 @@ export const Leaderboard = (props) => {
       {/* if we're rendering in the game form... */}
       {props.location === "game" ? (
         <section className="scoreboard">
-          <div className="stanimal">
-            <div className="stanimal__heading">All time stanimal:</div>
-            <span>{stanimal.username}</span>
-            <span className="stanimal__stanCount">
-              {" "}
-              with {stanimal.stans} stans
-            </span>
+          <div className="scoreboard__allTime">
+            <div className="stanimal">
+              <h3 className="stanimal__heading">All time stanimal:</h3>
+              <span>{stanimal.username}</span>
+              <span className="stanimal__stanCount">
+                with {stanimal.stans} stans
+              </span>
+            </div>
+            <div className="trashtalkchamp">
+              <h3 className="trashtalkchamp__heading">
+                Trash talk champion:
+              </h3>
+              <span className="trashtalkchamp__champ">{trashtalkchamp.username}</span>
+              <span className="trashtalkchamp__trashtalkCount">
+                with {trashtalkchamp.trashtalks} trashes
+              </span>
+            </div>
           </div>
-          <div className="trashtalkchamp">
-            <div className="trashtalkchamp__heading">Trash talk champion:</div>
-            <span>{trashtalkchamp.username}</span>
-            <span className="trashtalkchamp__trashtalkCount">
-              {" "}
-              with {trashtalkchamp.trashtalks} trashes
-            </span>
-          </div>
-          <table>
+          <Table>
             <tbody>
               <tr>
                 <th>User</th>
                 <th>Score</th>
+                <th>Lineup</th>
               </tr>
               {/* begin map (sending uSO to Score.js*/}
               {sortedScores.map((uSO) => {
@@ -172,7 +176,7 @@ export const Leaderboard = (props) => {
                 return <Score key={uSO.id} SO={uSO} UO={matchingUser} />;
               })}
             </tbody>
-          </table>
+          </Table>
         </section>
       ) : props.location === "header" ? (
         <>

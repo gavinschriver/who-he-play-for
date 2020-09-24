@@ -4,15 +4,22 @@ import { TrashTalkEntryForm } from "./TrashTalkEntryForm";
 import { Leaderboard } from "../leaderboard/Leaderboard";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/Col";
 
 export const GamePlay = () => (
   <>
-    <Container>
+    <Container className="gameplay">
       <Row>
-        <StanEntryForm />
-      <Leaderboard location="game" />
-        <TrashTalkEntryForm />
-        </Row>
+        <Col>
+          <StanEntryForm />
+        </Col>
+        <Col>
+          <Leaderboard location="game" />
+        </Col>
+        <Col>
+          <TrashTalkEntryForm />
+        </Col>
+      </Row>
     </Container>
   </>
 );
