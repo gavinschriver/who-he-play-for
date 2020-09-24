@@ -5,16 +5,18 @@ import Form from "react-bootstrap/Form";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import Image from "react-bootstrap/Image";
-import { Redirect } from "react-router-dom";
 import { LogoutButton } from "../header/LogoutButton";
+import Alert from "react-bootstrap/Alert"
 
 export const UserAccount = (props) => {
   const { users, getUsers, updateUser, removeUser } = useContext(UserContext);
 
   const [user, setUser] = useState({});
+  const [showAlert, setShowAlert] = useState(false)
 
-  const pwRef = useRef("")
-  const pwValidation = useRef("")
+
+  const pwRef = useRef("");
+  const pwValidation = useRef("");
 
   useEffect(() => {
     getUsers();
@@ -40,81 +42,104 @@ export const UserAccount = (props) => {
     setUser(newUser);
   };
 
+
   const constructNewMessage = () => {
-    const updatedUser = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      avatar: user.avatar,
-    };
-    updateUser(updatedUser);
+    if (pwRef.current.value === pwValidation.current.value) {
+      const updatedUser = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        avatar: user.avatar,
+      };
+      updateUser(updatedUser);
+    } else setShowAlert(true); 
   };
 
   return (
     <>
-      <h2>HMM</h2>
       <Form>
         <Form.Group>
-          <Form.Label>UH WHAT</Form.Label>
+          <Form.Label>Username</Form.Label>
           <Form.Control
             name="name"
             value={user.name}
             onChange={handleControlledInputChange}
           />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>email</Form.Label>
+          <Form.Control
+            name="email"
+            type="email"
+            value={user.email}
+            onChange={handleControlledInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Password</Form.Label>
           <Form.Control
             ref={pwRef}
             name="password"
             type="password"
-            value=""
+            value={user.password}
             onChange={handleControlledInputChange}
           />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Verify Password</Form.Label>
           <Form.Control
             ref={pwValidation}
             name="passwordValidation"
             type="password"
-            value=""
+            defaultValue=""
           />
         </Form.Group>
-        <ToggleButtonGroup
-          type="radio"
-          name="avatar"
-          value={user.avatar}
-          onChange={handleRadioInputChange}
-        >
-          <ToggleButton value={"/images/chuck-8.png"}>
-            <Image
-              width={300}
-              height={300}
-              src="/images/chuck-8.png"
-              roundedCircle
-            />
-          </ToggleButton>
-          <ToggleButton value={"/images/chuck-3.jpg"}>
-            <Image
-              width={300}
-              height={300}
-              src="/images/chuck-3.jpg"
-              roundedCircle
-            />
-          </ToggleButton>
-          <ToggleButton value={"/images/chuck-4.jpg"}>
-            <Image
-              width={300}
-              height={300}
-              src="/images/chuck-4.jpg"
-              roundedCircle
-            />
-          </ToggleButton>
-          <ToggleButton value={"/images/chuck-young.png"}>
-            <Image
-              width={300}
-              height={300}
-              src="/images/chuck-young.png"
-              roundedCircle
-            />
-          </ToggleButton>
-        </ToggleButtonGroup>
+
+        <Form.Group>
+          <ToggleButtonGroup
+            type="radio"
+            name="avatar"
+            value={user.avatar}
+            onChange={handleRadioInputChange}
+          >
+            <ToggleButton value={"/images/chuck-8.png"}>
+              <Image
+                width={300}
+                height={300}
+                src="/images/chuck-8.png"
+                roundedCircle
+              />
+            </ToggleButton>
+            <ToggleButton value={"/images/chuck-3.jpg"}>
+              <Image
+                width={300}
+                height={300}
+                src="/images/chuck-3.jpg"
+                roundedCircle
+              />
+            </ToggleButton>
+            <ToggleButton value={"/images/chuck-4.jpg"}>
+              <Image
+                width={300}
+                height={300}
+                src="/images/chuck-4.jpg"
+                roundedCircle
+              />
+            </ToggleButton>
+            <ToggleButton value={"/images/chuck-young.png"}>
+              <Image
+                width={300}
+                height={300}
+                src="/images/chuck-young.png"
+                roundedCircle
+              />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Form.Group>
       </Form>
       <Button
         onClick={(e) => {
@@ -125,16 +150,7 @@ export const UserAccount = (props) => {
         Update Account
       </Button>
       <LogoutButton location="userAccount" user={user} />
-
-      {/* <Button
-        onClick={(e) => {
-          e.preventDefault();
-          removeUser(user.id);
-          return <Redirect to="/login" push={true} />
-        }}
-      >
-        DIP ON OUT
-      </Button> */}
+      {showAlert ? <Alert dismissible onClose={() => {setShowAlert(false)}}>HELLL NAW</Alert> : <div></div>}
     </>
   );
 };
