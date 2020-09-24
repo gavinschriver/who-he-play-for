@@ -42,7 +42,7 @@ export const Score = ({ SO }) => {
   return (
     <tr className="score">
       <td>{SO.username}</td>
-      <td>{SO.score}</td>
+      <td class="score__value">{SO.score}</td>
       <td>
         <button
           className="score__showLineup button score--button lineup--button"

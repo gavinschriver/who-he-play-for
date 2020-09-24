@@ -144,18 +144,18 @@ export const Leaderboard = (props) => {
       {props.location === "game" ? (
         <section className="scoreboard">
           <div className="scoreboard__allTime">
-            <div className="stanimal">
-              <h3 className="stanimal__heading">All time stanimal:</h3>
-              <span>{stanimal.username}</span>
+            <div className="scoreboard__allTime__type stanimal">
+              <h3 className="stanimal__heading heading scoreboard--heading">All time stanimal:</h3>
+              <span>{stanimal.username} </span>
               <span className="stanimal__stanCount">
                 with {stanimal.stans} stans
               </span>
             </div>
-            <div className="trashtalkchamp">
-              <h3 className="trashtalkchamp__heading">
+            <div className="scoreboard__allTime__type trashtalkchamp">
+              <h3 className="trashtalkchamp__heading heading scoreboard--heading">
                 Trash talk champion:
               </h3>
-              <span className="trashtalkchamp__champ">{trashtalkchamp.username}{" "}</span>
+              <span className="trashtalkchamp__champ">{trashtalkchamp.username} </span>
               <span className="trashtalkchamp__trashtalkCount">
                 with {trashtalkchamp.trashtalks} trashes
               </span>

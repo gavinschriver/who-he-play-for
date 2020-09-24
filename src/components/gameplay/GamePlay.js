@@ -8,7 +8,7 @@ import Col from "react-bootstrap/Col";
 
 export const GamePlay = () => (
   <>
-    <Container className="gameplay">
+    <Container className="gameplay" fluid>
       <Row>
         <Col>
           <StanEntryForm />

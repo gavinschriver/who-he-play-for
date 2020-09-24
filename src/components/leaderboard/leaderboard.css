@@ -2,3 +2,16 @@
     display: flex;
     flex-direction: column;
 }
+
+.scoreboard__allTime {
+    display: flex;
+    margin: 0 0 2rem;
+}
+
+.scoreboard__allTime__type {
+    padding: 0 2rem;
+}
+
+.score__value {
+    font-weight: bold;
+}
