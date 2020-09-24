@@ -146,7 +146,7 @@ export const Leaderboard = (props) => {
           <div className="scoreboard__allTime">
             <div className="scoreboard__allTime__type stanimal">
               <h3 className="stanimal__heading heading scoreboard--heading">All time stanimal:</h3>
-              <span>{stanimal.username} </span>
+              <span className="stanimal__stanner name user--name">{stanimal.username} </span>
               <span className="stanimal__stanCount">
                 with {stanimal.stans} stans
               </span>
@@ -155,7 +155,7 @@ export const Leaderboard = (props) => {
               <h3 className="trashtalkchamp__heading heading scoreboard--heading">
                 Trash talk champion:
               </h3>
-              <span className="trashtalkchamp__champ">{trashtalkchamp.username} </span>
+              <span className="trashtalkchamp__champ name user--name">{trashtalkchamp.username} </span>
               <span className="trashtalkchamp__trashtalkCount">
                 with {trashtalkchamp.trashtalks} trashes
               </span>

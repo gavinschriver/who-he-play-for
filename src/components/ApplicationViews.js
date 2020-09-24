@@ -31,9 +31,9 @@ export const ApplicationViews = (props) => {
                         <AppHeader {...props} />
                       </Jumbotron>
                       <Container fluid="md">
-                        <Row>
-                          <GamePlay {...props} />
-                        </Row>
+                          <Row>
+                            <GamePlay {...props} />
+                          </Row>
                         <Row>
                           <Col>
                             <GenerateLineup {...props} />
@@ -56,10 +56,9 @@ export const ApplicationViews = (props) => {
         <Route
           exact
           path="/account"
-          render={(props) => <UserAccount {...props}/>}
+          render={(props) => <UserAccount {...props} />}
         ></Route>
       </UserProvider>
-
 
       <Route
         path="/logout"
@@ -68,8 +67,6 @@ export const ApplicationViews = (props) => {
           props.history.push("/login");
         }}
       ></Route>
-
-
     </>
   );
 };

@@ -5,6 +5,8 @@ import { MessageContext } from "./MessageProvider";
 import { Avatar } from "../users/Avatar";
 import "./messages.css";
 import { UserContext } from "../users/UserProvider";
+import { Link } from "react-router-dom"
+
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -190,14 +192,14 @@ export const Message = ({ MO }) => {
                       {mPO.player.firstName} {mPO.player.lastName}
                     </a>
                     {MO.user.id !== currentUserId ? (
-                      <button
+                    <Link to="#gamecontainer"> <button
                         onClick={(e) => {
                           e.preventDefault();
                           setTrashtalkPlayer(mPO.player.firstName);
                         }}
                       >
                         TRASH
-                      </button>
+                      </button></Link>
                     ) : (
                       <span></span>
                     )}

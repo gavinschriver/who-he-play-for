@@ -5,10 +5,11 @@ import { Leaderboard } from "../leaderboard/Leaderboard";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/Col";
+import { Route } from "react-router-dom";
 
 export const GamePlay = () => (
   <>
-    <Container className="gameplay" fluid>
+    <Container className="gameplay" id="gamecontainer" fluid>
       <Row>
         <Col>
           <StanEntryForm />
