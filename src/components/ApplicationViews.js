@@ -23,6 +23,7 @@ export const ApplicationViews = (props) => {
             <MessageProvider>
               <UserPlayerProvider>
                 <Route
+                  exact
                   path="/"
                   render={(props) => (
                     <>
