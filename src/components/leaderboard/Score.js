@@ -26,7 +26,7 @@ export const Score = ({ SO }) => {
   const [scoreValue, setScoreValue] = useState(0)
 
   useEffect(() => {
-    const initialScoreValue = SO.score || {};
+    const initialScoreValue = SO.score;
     setScoreValue(initialScoreValue)
   })
 
@@ -78,7 +78,7 @@ export const Score = ({ SO }) => {
   return (
     <tr className="score">
       <td>{SO.username}</td>
-      <td class="score__value">{scoreValue}</td>
+      <td class="score__value">{SO.score}</td>
       <td>
         <button
           className="score__showLineup button score--button lineup--button"

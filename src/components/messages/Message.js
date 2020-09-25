@@ -13,6 +13,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form"
+import Badge from "react-bootstrap/Badge"
 
 export const Message = ({ MO, props }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -148,16 +149,16 @@ export const Message = ({ MO, props }) => {
           {MO.user.id === currentUserId ? (
             <span>YOU</span>
           ) : (
-            <span>{MO.user.name || ""}</span>
+            <span>{MO.user.name || ""} </span>
           )}
         </span>
 
         {matchingPlayersFirstNames.includes(MO.messagetext) ? (
-          <span> stan'd</span>
+          <span class="messageType standTrue"> stan'd</span>
         ) : MO.trashtalk ? (
           <span>
             {" "}
-            <span>talked trash on</span>
+            <span className="messageType trashtalkTrue"><Badge variant="danger">talked trash on</Badge></span>
             {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
               <span> your guy</span>
             ) : (
