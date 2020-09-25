@@ -1,7 +1,8 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
-import { PlayerContext} from "./PlayerProvider"
+import { PlayerContext } from "./PlayerProvider"
+import Card from "react-bootstrap/Card"
 import Collapse from "react-bootstrap/Collapse"
 import "./Players.css";
 
@@ -36,19 +37,21 @@ export const Player = ({ PO, TO }) => {
     );
   }, [usersPlayers]);
 
+  const cardClass = matchingUsersPlayer.mentioned ? "playerCard playerCard--stanned" : "playerCard"
+
+  const cardBG = matchingUsersPlayer.mentioned ? 'primary' : 'light'
+
   return (
-    <article className="playerCard card">
+    <Card className={cardClass} bg={cardBG}>
+      <Card.Body>
       <a
         href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()}
         target="_blank"
       >
         NBA Stats
       </a>
-      {matchingUsersPlayer.mentioned ? <div>#STAN'D</div> : <div></div>}
-      <div className="playerCard__name">
-        Player Name: {currentPlayer.player.firstName}{" "}
-        {currentPlayer.player.lastName}
-      </div>
+        {matchingUsersPlayer.mentioned ? <div>#STAN'D</div> : <div></div>}
+        <Card.Title className="playerCard__name">Player: {currentPlayer.player.firstName}{" "}{currentPlayer.player.lastName}</Card.Title>
       <div className="playerCard__headshot img">
         <a
           href={`https://www.reddit.com/search?q=${currentPlayer.player.firstName}%20${currentPlayer.player.lastName}`}
@@ -138,8 +141,9 @@ export const Player = ({ PO, TO }) => {
         </article>
       ) : (
         <div></div>
-      )} 
-    </article>
+          )} 
+        </Card.Body>
+    </Card>
   );
 };
 
