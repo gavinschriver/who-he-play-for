@@ -3,6 +3,7 @@ import { TwitterTimelineEmbed } from "react-twitter-embed";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "./PlayerProvider"
 import Card from "react-bootstrap/Card"
+import Button from "react-bootstrap/Button"
 import Collapse from "react-bootstrap/Collapse"
 import "./Players.css";
 
@@ -44,7 +45,7 @@ export const Player = ({ PO, TO }) => {
   return (
     <Card className={cardClass} bg={cardBG}>
       <Card.Header as="h5">Player</Card.Header>
-      <Card.Body>
+      <Card.Body className="playerCard--body">
       <a
         href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()}
         target="_blank"
@@ -58,21 +59,21 @@ export const Player = ({ PO, TO }) => {
           href={`https://www.reddit.com/search?q=${currentPlayer.player.firstName}%20${currentPlayer.player.lastName}`}
           target="_blank"
         >
-          <img src={currentPlayer.player.officialImageSrc} />
+          <Card.Img src={currentPlayer.player.officialImageSrc} />
         </a>
       </div>
       {currentPlayer.player.currentTeam ? (
         <div className="playerCard__logo__img">
           {currentPlayer.player.currentTeam.abbreviation === "BRO" ? (
-            <img
+            <Card.Img
               src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png`}
             />
           ) : currentPlayer.player.currentTeam.abbreviation === "OKL" ? (
-            <img
+            <Card.Img
               src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/okc.png`}
             />
           ) : (
-            <img
+            <Card.Img
               src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`.toLowerCase()}
             />
           )}

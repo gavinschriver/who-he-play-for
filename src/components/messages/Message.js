@@ -8,6 +8,7 @@ import { UserContext } from "../users/UserProvider";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { Table, Collapse } from "react-bootstrap";
+import Card from "react-bootstrap/Card"
 
 export const Message = ({ MO, props }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -136,7 +137,7 @@ export const Message = ({ MO, props }) => {
     : "message card trashMessage";
 
   return (
-    <article className={messageClassName} id={MO.id}>
+    <Card className={messageClassName} id={MO.id}>
       {/* description */}
       <div className="message__description">
         <span className="message__author">
@@ -316,6 +317,6 @@ export const Message = ({ MO, props }) => {
       )}
       {MO.stan ? <img /> : <div></div>}
       {user.avatar ? <Avatar user={user} location="message" /> : <div></div>}
-    </article>
+    </Card>
   );
 };

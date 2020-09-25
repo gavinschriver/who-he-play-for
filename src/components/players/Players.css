@@ -1,3 +1,9 @@
 .playerCard img {
     max-width: 200px;
+    background: whitesmoke;
+    border-radius: 20px;
+    margin-bottom: 1em
+}
+
+.playerCard--body {
 }
