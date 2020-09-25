@@ -46,12 +46,12 @@ export const Player = ({ PO, TO }) => {
     <Card className={cardClass} bg={cardBG}>
       <Card.Header as="h5">Player</Card.Header>
       <Card.Body className="playerCard--body">
-      <a
+      <Card.Link
         href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()}
         target="_blank"
       >
         NBA Stats
-      </a>
+      </Card.Link>
         {matchingUsersPlayer.mentioned ? <div>#STAN'D</div> : <div></div>}
         <Card.Title className="playerCard__name">Player: {currentPlayer.player.firstName}{" "}{currentPlayer.player.lastName}</Card.Title>
       <div className="playerCard__headshot img">
@@ -81,7 +81,7 @@ export const Player = ({ PO, TO }) => {
       ) : (
         <div>Poor lil buddy needs a team :(</div>
       )}
-      <button
+      <Button
         className="playerCard__showDetailsButton btn btn--details"
         onClick={(e) => {
           e.preventDefault();
@@ -89,7 +89,7 @@ export const Player = ({ PO, TO }) => {
         }}
       >
         Get the juicy deets:
-      </button>
+      </Button>
       {showHideDetails ? (
         <article className="playerCard__details">
           <div className="playerCard__details__heading heading">DEETS</div>
