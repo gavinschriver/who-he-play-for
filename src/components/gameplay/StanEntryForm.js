@@ -139,12 +139,12 @@ export const StanEntryForm = () => {
         <Form className="messageEntry--form">
           <div className="messageEntry__stan">
             <Form.Group>
-              <div className="messasgeEntry__stan header">
-                <Form.Label className="header messageEntry--header">Stan by your man</Form.Label>
-                <div className="instructions stan__instructions">
-                  Choose a player from your starting 5 to stan
-                </div>
-              </div>
+              <h2 className="messasgeEntry__stan header messageEntry--header">
+                Stan by your man
+              </h2>
+              <h4 className="instructions stan--instructions">
+                Choose a player from your starting 5 to stan
+              </h4>
               <Form.Control as="select" ref={stanBarRef}>
                 <option value="empty" defaultValue="">
                   Choose a player
@@ -158,40 +158,41 @@ export const StanEntryForm = () => {
                 })}
               </Form.Control>
             </Form.Group>
-          </div>
 
-          <div className="messageEntry__URL">
-            <h2>Put some SAUCE on it</h2>
-            <input
-              type="url"
-              name="url"
-              id="url"
-              placeholder="Enter #relevancontent"
-              pattern="https://.*"
-              size="30"
-              ref={urlRef}
-            />
+            <div className="messageEntry__URL">
+              <h4 className="instructions stan--instructions">Put some SAUCE on it</h4>
+              <Form.Control
+                className="stan__content entryForm--url"
+                type="url"
+                name="url"
+                id="url"
+                placeholder="Enter #relevancontent"
+                pattern="https://.*"
+                size="30"
+                ref={urlRef}
+              />
 
-            <textarea
-              type="text"
-              name="chat"
-              placeholder="Care to add anything else?"
-              size="30"
-              className="chattext form-control"
-              ref={chatRef}
-            />
+              <textarea
+                type="text"
+                name="chat"
+                placeholder="Care to add anything else?"
+                size="30"
+                className="chattext form-control"
+                ref={chatRef}
+              />
 
-            <button
-              className="messageEntry__stan button addMessage--button"
-              onClick={(e) => {
-                e.preventDefault();
-                if (stanBarRef.current.value !== "empty") {
-                  handleStanButtonPress();
-                }
-              }}
-            >
-              Fire away
-            </button>
+              <button
+                className="messageEntry__stan button addMessage--button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (stanBarRef.current.value !== "empty") {
+                    handleStanButtonPress();
+                  }
+                }}
+              >
+                Fire away
+              </button>
+            </div>
           </div>
         </Form>
       </article>

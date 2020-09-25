@@ -109,15 +109,14 @@ export const TrashTalkEntryForm = () => {
       <article className="messageEntry">
         <Form className="messageEntry--form">
           <div className="messageEntry__trashtalk">
-            <Form.Group>
-              <div className="messasgeEntry__trashtalk header">
-                <Form.Label className="header messageEntry--header">Talk that trash</Form.Label>
-                <div className="instructions trashtalk__instructions">
-                  Choose a player to TRASH from another user's lineup
-                </div>
-              </div>
 
-              <input
+            <Form.Group>
+                <h2 className="messasgeEntry__trashtalk header messageEntry--header">Talk that trash</h2>
+                <h4 className="instructions trashtalk--instructions">
+                  Choose a player to TRASH from another user's lineup
+                </h4>
+
+              <Form.Control
                 type="text"
                 name="messagetext"
                 id="messagetext"
@@ -127,8 +126,9 @@ export const TrashTalkEntryForm = () => {
               />
             </Form.Group>
 
-            <h2>But you'd better back it up</h2>
-            <input
+            <h4 className="instructions trashtalk--instructions">But you'd better back it up</h4>
+            <Form.Control
+              className="trashtalk__content entryForm--url"
               type="url"
               name="url"
               id="url"
