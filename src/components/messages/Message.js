@@ -301,7 +301,7 @@ export const Message = ({ MO, props }) => {
 
       {/* delete button */}
 
-      {MO.user.id === currentUserId && !MO.stan ? (
+      {MO.user.id === currentUserId  ? (
         <button
           className="message__delete button delete--button message--button"
           onClick={(e) => {
