@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./NavBar.css";
 import { LogoutButton } from "../header/LogoutButton";
 import {
@@ -9,7 +9,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
 } from "reactstrap";
 
 export const NavBar = () => {

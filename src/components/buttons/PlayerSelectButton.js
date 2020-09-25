@@ -1,0 +1,41 @@
+import React, { useContext } from "react";
+import { Button } from "react-bootstrap";
+import { PlayerContext } from "../players/PlayerProvider";
+
+export const PlayerSelectButton = (props) => {
+  const { setStanPlayer, setTrashtalkPlayer } = useContext(PlayerContext);
+
+  const typeClass =
+    props.type === "stan"
+      ? "stan--button"
+      : props.type === "trash"
+      ? "trash--button"
+      : "";
+
+  const locationClass = `${props.location}--button`;
+
+  const buttonText =
+    props.type === "stan" ? "STAN" : props.type === "trash" ? "TRASH" : "";
+
+  const functionType =
+    props.type === "stan" ? "Stan" : props.type === "trash" ? "Trashtalk" : "";
+
+  const clickFunction =
+    props.type === "stan"
+      ? (e) => {
+          e.preventDefault();
+          setStanPlayer(`${props.player}`);
+          window.location.href = "#gamecontainer";
+        }
+      : (e) => {
+          e.preventDefault();
+          setTrashtalkPlayer(`${props.player}`);
+          window.location.href = "#gamecontainer";
+        };
+
+  return (
+    <Button className={`${typeClass} ${locationClass}`} onClick={clickFunction}>
+      {buttonText}
+    </Button>
+  );
+};

@@ -14,6 +14,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form"
 import Badge from "react-bootstrap/Badge"
+import { PlayerSelectButton } from "../buttons/PlayerSelectButton"
 
 export const Message = ({ MO, props }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -208,18 +209,15 @@ export const Message = ({ MO, props }) => {
                           </td>
                           {MO.user.id !== currentUserId ? (
                             <td>
-                              <Button
-                                className="message__trash button messsage--button lineup--button trash---button"
-                                onClick={(e) => {
+                              <PlayerSelectButton type="trash" action={
+                                (e) => {
                                   e.preventDefault();
                                   setTrashtalkPlayer(
                                     `${mPO.player.firstName} ${mPO.player.lastName}`
                                   );
                                   window.location.href = "#gamecontainer";
-                                }}
-                              >
-                                TRASH
-                              </Button>
+                                }} />
+                              
                             </td>
                           ) : (
                             <span></span>

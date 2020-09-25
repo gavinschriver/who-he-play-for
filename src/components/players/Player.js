@@ -6,9 +6,10 @@ import Card from "react-bootstrap/Card"
 import Button from "react-bootstrap/Button"
 import Collapse from "react-bootstrap/Collapse"
 import "./Players.css";
+import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
 
 export const Player = ({ PO, TO }) => {
-  const { getPlayerData } = useContext(PlayerContext)
+  const { getPlayerData, setStanPlayer } = useContext(PlayerContext)
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
   const [showHideDetails, setShowHideDetails] = useState(false);
@@ -54,6 +55,7 @@ export const Player = ({ PO, TO }) => {
       </Card.Link>
         {matchingUsersPlayer.mentioned ? <div>#STAN'D</div> : <div></div>}
         <Card.Title className="playerCard__name">Player: {currentPlayer.player.firstName}{" "}{currentPlayer.player.lastName}</Card.Title>
+        <PlayerSelectButton type="stan" location="lineup" player={currentPlayer.player.firstName} />
       <div className="playerCard__headshot img">
         <a
           href={`https://www.reddit.com/search?q=${currentPlayer.player.firstName}%20${currentPlayer.player.lastName}`}
