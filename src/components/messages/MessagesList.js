@@ -19,15 +19,14 @@ export const MessagesList = (props) => {
 
   return (
     <>
-      <CardGroup>
+      <article>
         <section className="messagesList">
           <h2>Spin Zone</h2>
-
           {recentMessages.map((m) => {
             return <Message key={m.id} MO={m} props={props} />;
           })}
         </section>
-      </CardGroup>
+      </article>
     </>
   );
 };

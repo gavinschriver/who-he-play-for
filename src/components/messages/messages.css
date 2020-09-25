@@ -1,0 +1,4 @@
+.messageCard {
+    display: flex;
+    flex-direction: row;
+}
