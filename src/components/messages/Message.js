@@ -12,13 +12,13 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form"
-import Badge from "react-bootstrap/Badge"
-import { PlayerSelectButton } from "../buttons/PlayerSelectButton"
+import Form from "react-bootstrap/Form";
+import Badge from "react-bootstrap/Badge";
+import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
 
-export const Message = ({ MO, props }) => {
+export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
-  const { playerObjArray, getPlayerData, setTrashtalkPlayer } = useContext(
+  const { playerObjArray, getPlayerData } = useContext(
     PlayerContext
   );
   const { messages, removeMessage, getMessages, updateMessage } = useContext(
@@ -62,20 +62,12 @@ export const Message = ({ MO, props }) => {
 
   // linup toggle
   const matchingPlayersToggle = () => {
-    if (!showHideMatchingPlayers) {
-      setShowHideMatchingPlayers(true);
-    } else if (showHideMatchingPlayers) {
-      setShowHideMatchingPlayers(false);
-    }
+    setShowHideMatchingPlayers(!showHideMatchingPlayers)
   };
 
   //edit
   const toggleEditField = () => {
-    if (!editFieldShowing) {
-      setEditFieldShowing(true);
-    } else if (editFieldShowing) {
-      setEditFieldShowing(false);
-    }
+    setEditFieldShowing(!editFieldShowing)
   };
 
   const handleControlledInputChange = (event) => {
@@ -159,7 +151,9 @@ export const Message = ({ MO, props }) => {
         ) : MO.trashtalk ? (
           <span>
             {" "}
-            <span className="messageType trashtalkTrue"><Badge variant="danger">talked trash on</Badge></span>
+            <span className="messageType trashtalkTrue">
+              <Badge variant="danger">talked trash on</Badge>
+            </span>
             {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
               <span> your guy</span>
             ) : (
@@ -196,28 +190,21 @@ export const Message = ({ MO, props }) => {
                     <tr>
                       <th>Player</th>TRASH 'EM?
                     </tr>
-                    {matchingPlayers.map((mPO) => {
+                      {matchingPlayers.map((mPO) => {
+                      const player = mPO.player
                       return (
                         <tr>
                           <td>
                             <a
-                              href={`https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`}
+                              href={`https://www.reddit.com/search?q=${player.firstName}%20${player.lastName}`}
                               target="_blank"
                             >
-                              {mPO.player.firstName} {mPO.player.lastName}
+                              {player.firstName} {player.lastName}
                             </a>
                           </td>
                           {MO.user.id !== currentUserId ? (
                             <td>
-                              <PlayerSelectButton type="trash" action={
-                                (e) => {
-                                  e.preventDefault();
-                                  setTrashtalkPlayer(
-                                    `${mPO.player.firstName} ${mPO.player.lastName}`
-                                  );
-                                  window.location.href = "#gamecontainer";
-                                }} />
-                              
+                              <PlayerSelectButton type="trash" location="message" player={`${player.firstName} ${player.lastName}`} />
                             </td>
                           ) : (
                             <span></span>
@@ -299,7 +286,8 @@ export const Message = ({ MO, props }) => {
         {/* chat text edit field */}
 
         {editFieldShowing ? (
-          <Form.Control as="textarea"
+          <Form.Control
+            as="textarea"
             className="message__textedit input textarea--input"
             name="chattext"
             onChange={handleControlledInputChange}
