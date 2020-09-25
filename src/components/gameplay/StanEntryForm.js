@@ -135,10 +135,10 @@ export const StanEntryForm = () => {
 
   return (
     <>
-      <article className="messageEntry">
+      <article className="messageEntry messageEntry--stan">
         <Form className="messageEntry--form">
           <div className="messageEntry__stan">
-            <Form.Group>
+            <Form.Group className="stanSelect formgroup stan--formgroup">
               <h2 className="messasgeEntry__stan header messageEntry--header">
                 Stan by your man
               </h2>
@@ -159,40 +159,44 @@ export const StanEntryForm = () => {
               </Form.Control>
             </Form.Group>
 
-            <div className="messageEntry__URL">
-              <h4 className="instructions stan--instructions">Put some SAUCE on it</h4>
+            <Form.Group>
+              <h4 className="instructions stan--instructions">
+                Put some SAUCE on it
+              </h4>
               <Form.Control
-                className="stan__content entryForm--url"
+                className="stan__content entryForm--url--control form--control"
                 type="url"
                 name="url"
                 id="url"
-                placeholder="Enter #relevancontent"
+                placeholder="URL must contain reference to player"
                 pattern="https://.*"
                 size="30"
                 ref={urlRef}
               />
+            </Form.Group>
 
-              <textarea
-                type="text"
+            <Form.Group>
+              <Form.Control as="textarea"
+                type="textarea"
                 name="chat"
                 placeholder="Care to add anything else?"
                 size="30"
-                className="chattext form-control"
+                className="chattext form--control"
                 ref={chatRef}
               />
+            </Form.Group>
 
-              <button
-                className="messageEntry__stan button addMessage--button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (stanBarRef.current.value !== "empty") {
-                    handleStanButtonPress();
-                  }
-                }}
-              >
-                Fire away
-              </button>
-            </div>
+            <button
+              className="messageEntry__stan button addMessage--button"
+              onClick={(e) => {
+                e.preventDefault();
+                if (stanBarRef.current.value !== "empty") {
+                  handleStanButtonPress();
+                }
+              }}
+            >
+              Fire away
+            </button>
           </div>
         </Form>
       </article>

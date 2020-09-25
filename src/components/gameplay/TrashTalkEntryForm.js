@@ -106,15 +106,16 @@ export const TrashTalkEntryForm = () => {
 
   return (
     <>
-      <article className="messageEntry">
+      <article className="messageEntry messageEntry--trashtalk">
         <Form className="messageEntry--form">
           <div className="messageEntry__trashtalk">
-
-            <Form.Group>
-                <h2 className="messasgeEntry__trashtalk header messageEntry--header">Talk that trash</h2>
-                <h4 className="instructions trashtalk--instructions">
-                  Choose a player to TRASH from another user's lineup
-                </h4>
+            <Form.Group className="trashSelect formgroup trash--formgroup">
+              <h2 className="messasgeEntry__trashtalk header messageEntry--header">
+                Talk that trash
+              </h2>
+              <h4 className="instructions trashtalk--instructions">
+                Choose a player to TRASH from another user's lineup
+              </h4>
 
               <Form.Control
                 type="text"
@@ -126,26 +127,32 @@ export const TrashTalkEntryForm = () => {
               />
             </Form.Group>
 
-            <h4 className="instructions trashtalk--instructions">But you'd better back it up</h4>
-            <Form.Control
-              className="trashtalk__content entryForm--url"
-              type="url"
-              name="url"
-              id="url"
-              placeholder="Enter #relevancontent"
-              pattern="https://.*"
-              size="30"
-              ref={urlRef}
-            />
+            <Form.Group>
+              <h4 className="instructions trashtalk--instructions">
+                But you'd better back it up
+              </h4>
+              <Form.Control
+                className="trashtalk__content entryForm--url--control form--control"
+                type="url"
+                name="url"
+                id="url"
+                placeholder="URL must contain reference to player"
+                pattern="https://.*"
+                size="30"
+                ref={urlRef}
+              />
+            </Form.Group>
 
-            <textarea
-              type="text"
-              name="chat"
-              placeholder="Care to add anything else?"
-              size="30"
-              className="chattext form-control"
-              ref={chatRef}
-            />
+            <Form.Group>
+              <Form.Control as="textarea"
+                type="textarea"
+                name="chat"
+                placeholder="Care to add anything else?"
+                size="30"
+                className="chattext form--control"
+                ref={chatRef}
+              />
+            </Form.Group>
 
             <button
               className="messageEntry__trash button addMessage--button"
