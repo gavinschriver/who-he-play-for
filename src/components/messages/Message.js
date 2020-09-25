@@ -5,7 +5,9 @@ import { MessageContext } from "./MessageProvider";
 import { Avatar } from "../users/Avatar";
 import "./messages.css";
 import { UserContext } from "../users/UserProvider";
+import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { Table, Collapse } from "react-bootstrap";
 
 export const Message = ({ MO, props }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -135,7 +137,6 @@ export const Message = ({ MO, props }) => {
 
   return (
     <article className={messageClassName} id={MO.id}>
-      <a href="#gamecontainer">JUMP</a>
       {/* description */}
       <div className="message__description">
         <span className="message__author">
@@ -171,7 +172,7 @@ export const Message = ({ MO, props }) => {
       ) : (
         <div>
           <button
-            className="message__showLineup button message--button lineup--button"
+            className="message__showLineup button message--button lineup--button showLineup--button"
             onClick={(e) => {
               e.preventDefault();
               matchingPlayersToggle();
@@ -179,38 +180,49 @@ export const Message = ({ MO, props }) => {
           >
             Show Current Lineup:
           </button>
-
-          {showHideMatchingPlayers ? (
+          <Collapse in={showHideMatchingPlayers}>
             <div>
-              {matchingPlayers.map((mPO) => {
-                return (
-                  <div>
-                    <a
-                      href={`https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`}
-                      target="_blank"
-                    >
-                      {mPO.player.firstName} {mPO.player.lastName}
-                    </a>
-                    {MO.user.id !== currentUserId ? (
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setTrashtalkPlayer(mPO.player.firstName);
-                          window.location.href="#gamecontainer";
-                        }}
-                      >
-                       TRASH
-                      </button>
-                    ) : (
-                      <span></span>
-                    )}
-                  </div>
-                );
-              })}
+              <Table className="message__lineup table lineup--table trash--table">
+                <tbody>
+                  <tr>
+                    <th>Player</th>TRASH 'EM?
+                  </tr>
+                  {matchingPlayers.map((mPO) => {
+                    return (
+                      <tr>
+                        <td>
+                          <a
+                            href={`https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`}
+                            target="_blank"
+                          >
+                            {mPO.player.firstName} {mPO.player.lastName}
+                          </a>
+                        </td>
+                        {MO.user.id !== currentUserId ? (
+                          <td>
+                            <Button
+                              className="message__trash button messsage--button lineup--button trash---button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setTrashtalkPlayer(mPO.player.firstName);
+                                window.location.href = "#gamecontainer";
+                              }}
+                            >
+                              TRASH
+                            </Button>
+                          </td>
+                        ) : (
+                          <span></span>
+                        )}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
             </div>
-          ) : (
-            <div></div>
-          )}
+          </Collapse>
+          {/* ) : (
+            <div></div> */}
         </div>
       )}
 
