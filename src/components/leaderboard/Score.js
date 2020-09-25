@@ -128,7 +128,7 @@ export const Score = ({ SO }) => {
           </table>
         </div>
       </Collapse>
-      <LineupButton />
+      <LineupButton userType={SO.userId === currentUserId ? "current" : "other"} userId={SO.userId} />
     </tr>
   );
 };
