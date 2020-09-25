@@ -44,7 +44,7 @@ export const TrashTalkEntryForm = () => {
             };
             addMessage(newMessage);
           } else alert(`that's old news captain`);
-        } else alert(`You tryin' to throw shade w/o backing it up?`);
+        } else alert(`Sorry, who you tryin' to trash exactly?`);
       } else alert(`You trying to trash your own player? Rough look my dude`); alert(trashtalkplayer); console.log(othersPlayersStrings)
     } else alert("better check that input");
   };

@@ -6,16 +6,16 @@ import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import Image from "react-bootstrap/Image";
 import { LogoutButton } from "../header/LogoutButton";
-import Alert from "react-bootstrap/Alert"
+import Alert from "react-bootstrap/Alert";
 import { Redirect } from "react-router-dom";
 
 export const UserAccount = (props) => {
   const { users, getUsers, updateUser } = useContext(UserContext);
 
   const [user, setUser] = useState({});
-  const [showAlert, setShowAlert] = useState(false)
-  const [initialPW, setInitialPW] = useState("")
-  const [updated, setUpdated] = useState(false)
+  const [showAlert, setShowAlert] = useState(false);
+  const [initialPW, setInitialPW] = useState("");
+  const [updated, setUpdated] = useState(false);
 
   const pwRef = useRef("");
   const pwValidation = useRef("");
@@ -29,7 +29,7 @@ export const UserAccount = (props) => {
       users.find((u) => u.id === parseInt(localStorage.getItem("whpf_user"))) ||
       {};
     setUser(foundUser);
-    setInitialPW(foundUser.password)
+    setInitialPW(foundUser.password);
   }, [users]);
 
   const handleControlledInputChange = (event) => {
@@ -44,7 +44,6 @@ export const UserAccount = (props) => {
     setUser(newUser);
   };
 
-
   const constructNewMessage = () => {
     if (pwRef.current.value === pwValidation.current.value) {
       const updatedUser = {
@@ -55,12 +54,12 @@ export const UserAccount = (props) => {
         avatar: user.avatar,
       };
       updateUser(updatedUser);
-      setUpdated(true)
-    } else setShowAlert(true); 
+      setUpdated(true);
+    } else setShowAlert(true);
   };
 
   if (updated) {
-    return <Redirect to="/" push={true} />
+    return <Redirect to="/" push={true} />;
   }
 
   return (
@@ -106,6 +105,7 @@ export const UserAccount = (props) => {
           />
         </Form.Group>
 
+        <Form.Label>Select your Chuck</Form.Label>
         <Form.Group>
           <ToggleButtonGroup
             type="radio"
@@ -157,7 +157,19 @@ export const UserAccount = (props) => {
         Update Account
       </Button>
       <LogoutButton location="userAccount" user={user} />
-      {showAlert ? <Alert variant="danger" dismissible onClose={() => {setShowAlert(false)}}>Passwords don't match :(</Alert> : <div></div>}
+      {showAlert ? (
+        <Alert
+          variant="danger"
+          dismissible
+          onClose={() => {
+            setShowAlert(false);
+          }}
+        >
+          Passwords don't match :(
+        </Alert>
+      ) : (
+        <div></div>
+      )}
     </>
   );
 };

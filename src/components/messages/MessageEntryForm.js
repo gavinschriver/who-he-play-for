@@ -5,6 +5,8 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import validator from "validator";
 import "./messages.css";
 
+//not in use; see gameplay for stan and TT entry forms 
+
 export const MessageEntryForm = () => {
   const { addMessage, messages } = useContext(MessageContext);
   const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(

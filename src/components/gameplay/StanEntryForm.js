@@ -70,7 +70,7 @@ export const StanEntryForm = () => {
           };
           addMessage(newMessage);
 
-          alert(validator.isURL(urlValue));
+          // alert(validator.isURL(urlValue));
         } else if (allMatchingPlayersStrings.includes(stanBarPlayer)) {
           alert(`Woah slow down stanimal, you already repped this player`);
         }
@@ -144,6 +144,7 @@ export const StanEntryForm = () => {
             </div>
 
             <select ref={stanBarRef}>
+              <option value="empty" defaultValue="">Choose a player</option>
               {filteredPlayersObjects.map((fpo) => {
                 return (
                   <option value={fpo.player.firstName}>
@@ -181,7 +182,9 @@ export const StanEntryForm = () => {
               className="messageEntry__stan button addMessage--button"
               onClick={(e) => {
                 e.preventDefault();
-                handleStanButtonPress();
+                if (stanBarRef.current.value !== "empty") {
+                  handleStanButtonPress();
+                }
               }}
             >
               Fire away

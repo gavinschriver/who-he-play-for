@@ -204,7 +204,7 @@ export const Message = ({ MO, props }) => {
                               className="message__trash button messsage--button lineup--button trash---button"
                               onClick={(e) => {
                                 e.preventDefault();
-                                setTrashtalkPlayer(mPO.player.firstName);
+                                setTrashtalkPlayer(`${ mPO.player.firstName } ${mPO.player.lastName}`);
                                 window.location.href = "#gamecontainer";
                               }}
                             >
