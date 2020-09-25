@@ -4,31 +4,35 @@ import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import validator from "validator";
 import "../messages/messages.css";
+import { Form } from "react-bootstrap";
 
 export const TrashTalkEntryForm = () => {
-  const { addMessage, messages } = useContext(MessageContext);
-  const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
+  const { addMessage, getMessages, messages } = useContext(MessageContext);
+  const { usersPlayers, getUsersPlayers, setMentionedCount } = useContext(
     UserPlayerContext
   );
-  const { playerObjArray, trashtalkPlayer } = useContext(PlayerContext);
+  const { getPlayerData, playerObjArray, trashtalkPlayer } = useContext(
+    PlayerContext
+  );
 
+  //component-state variables
   const messagetextRef = useRef("");
-  const stanBarRef = useRef("");
   const urlRef = useRef("");
-
+  const chatRef = useRef("");
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
 
+  // trash talk button press
   const handleTrashtalkButtonPress = () => {
-    const trashtalkplayer = messagetextRef.current.value.split(' ')[0];
-    const urlValue = urlRef.current.value;
+    const trashtalkplayer = messagetextRef.current.value.split(" ")[0];
+    const urlValue = urlRef.current.value.toLowerCase();
+    const chatValue = chatRef.current.value;
 
-    console.log(othersPlayersStrings, urlValue, trashtalkplayer.toLowerCase());
     if (
-      validator.isURL(urlValue, { require_protocol: false }) &&
-      urlValue.includes(trashtalkplayer.toLowerCase()) && urlValue.includes(`reddit`)
+      validator.isURL(urlValue) &&
+      urlValue.includes(trashtalkplayer.toLowerCase())
     ) {
       if (!allMatchingPlayersStrings.includes(trashtalkplayer)) {
-        if (othersPlayersStrings.includes(trashtalkplayer)) {
+        if (othersPlayersStrings.includes(trashtalkplayer.toLowerCase())) {
           if (!messageUrls.includes(urlValue)) {
             const newMessage = {
               userId: currentUser,
@@ -36,68 +40,39 @@ export const TrashTalkEntryForm = () => {
               url: urlRef.current.value,
               timestamp: Date.now(),
               trashtalk: true,
+              stan: false,
+              chattext: chatValue,
             };
             addMessage(newMessage);
-          } else alert(`someone already cited that proof`);
-        } else alert(`You tryin' to throw shade w/o backing it up?`);
+          } else alert(`that's old news captain`);
+        } else alert(`Sorry, who you tryin' to trash exactly?`);
       } else alert(`You trying to trash your own player? Rough look my dude`);
+      alert(trashtalkplayer);
+      console.log(othersPlayersStrings);
     } else alert("better check that input");
   };
-
-  useEffect(() => {
-    setMentionedCount(
-      usersPlayers.filter((upo) => upo.userId === currentUser && upo.mentioned)
-        .length
-    );
-  }, [usersPlayers]);
-
-  //sets the value of the trash talk input bar in this component to the value of the TT player selected in message component
-  useEffect(() => {
-    messagetextRef.current.value = trashtalkPlayer;
-  }, [trashtalkPlayer]);
 
   // array of all URL values of all messages for duplicate check
   const messageUrls = messages.map((m) => {
     return m.url;
   });
 
-  // this colleciton is current user's WHOLE lineup as UPOs
+  // find current user's lineup
   const allMatchingUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId === currentUser;
   });
 
-  // this collection is current user's WHOLE linup as player objects
   const allMatchingPlayersObjects = allMatchingUsersPlayers.map((fUPO) => {
     return playerObjArray.find((p) => {
       return p.player.id === fUPO.playerId;
     });
   });
 
-  // this colleciton is CURRENT user's WHOLE lineup as FIRST names
   const allMatchingPlayersStrings = allMatchingPlayersObjects.map((mPO) => {
     return mPO.player.firstName;
   });
 
-  //FILTERED BASED ON BEING MENTIONED....
-  // this colleciton is ONLY UPOS for the current user that HAVE NOT been marked as mentioned
-  const filteredUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId === currentUser && !upo.mentioned;
-  });
-
-  //Player Objects that correspond to the above
-  const filteredPlayersObjects = filteredUsersPlayers.map((fUPO) => {
-    return playerObjArray.find((p) => {
-      return p.player.id === fUPO.playerId;
-    });
-  });
-
-  //Strings of the Player first names for the above (aka only player first names in the user's lineup they haven't mentioned yet)
-  const filteredPlayersStrings = filteredPlayersObjects.map((mPO) => {
-    return mPO.player.firstName;
-  });
-
-  // FOR OTHER PLAYERS LINEUPS
-  // All other user's lineups as UserPlayer objects
+  // find all players on other user's lineups
   const othersUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId != currentUser;
   });
@@ -110,49 +85,89 @@ export const TrashTalkEntryForm = () => {
   });
 
   const othersPlayersStrings = othersPlayersObjs.map((oPO) => {
-    return oPO.player.firstName;
+    return oPO.player.firstName.toLowerCase();
   });
+
+  // effects
+  useEffect(() => {
+    getPlayerData().then(getUsersPlayers).then(getMessages);
+  }, []);
+
+  useEffect(() => {
+    setMentionedCount(
+      usersPlayers.filter((upo) => upo.userId === currentUser && upo.mentioned)
+        .length
+    );
+  }, [usersPlayers]);
+
+  useEffect(() => {
+    messagetextRef.current.value = trashtalkPlayer;
+  }, [trashtalkPlayer]);
 
   return (
     <>
-      <article className="messageEntry">
-        <form className="messageEntry--form">
+      <article className="messageEntry messageEntry--trashtalk">
+        <Form className="messageEntry--form">
           <div className="messageEntry__trashtalk">
-            <div className="messasgeEntry__trashtalk header">
-              <h2>Talk that trash</h2>
-              <div className="instructions">Choose a player to TRASH from another user's lineup</div>
-            </div>
+            <Form.Group className="trashSelect formgroup trash--formgroup">
+              <h2 className="messasgeEntry__trashtalk header messageEntry--header">
+                Talk that trash
+              </h2>
+              <h4 className="instructions trashtalk--instructions">
+                Choose a player to TRASH from another user's lineup
+              </h4>
 
-            <input
-              type="text"
-              name="messagetext"
-              id="messagetext"
-              placeholder="WHO YA GOT?"
-              ref={messagetextRef}
-              size="30"
-              readOnly="true"
-            />
-            <h2>But you'd better back it up</h2>
-            <input
-              type="url"
-              name="url"
-              id="url"
-              placeholder="Enter #relevancontent"
-              pattern="https://.*"
-              size="30"
-              ref={urlRef}
-            />
+              <Form.Control
+                type="text"
+                name="messagetext"
+                id="messagetext"
+                placeholder="WHO YA GOT?"
+                ref={messagetextRef}
+                size="30"
+              />
+            </Form.Group>
 
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleTrashtalkButtonPress();
-                }}
-              >
-                Fire away
-              </button>
+            <Form.Group className="trashContent formgroup trash--formgroup">
+              <h4 className="instructions trashtalk--instructions">
+                But you'd better back it up
+              </h4>
+              <Form.Control
+                className="trashtalk__content entryForm--url--control form--control"
+                type="url"
+                name="url"
+                id="url"
+                placeholder="URL must contain reference to player"
+                pattern="https://.*"
+                size="30"
+                ref={urlRef}
+              />
+            </Form.Group>
+
+            <Form.Group>
+            <h4 className="instructions trashtalk--instructions">
+                Garbage time
+              </h4>
+              <Form.Control as="textarea"
+                type="textarea"
+                name="chat"
+                placeholder="Care to add #anythingelse?"
+                size="30"
+                className="chattext form--control"
+                ref={chatRef}
+              />
+            </Form.Group>
+
+            <button
+              className="messageEntry__trash button addMessage--button"
+              onClick={(e) => {
+                e.preventDefault();
+                handleTrashtalkButtonPress();
+              }}
+            >
+              Shots fired
+            </button>
           </div>
-        </form>
+        </Form>
       </article>
     </>
   );

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../users/UserProvider";
 import { UserGreeting } from "./UserGreeting";
-import "./AppHeader.css";
 import { Leaderboard } from "../leaderboard/Leaderboard";
-import { UserScore } from "./UserScore";
-import { LogoutButton } from "./LogoutButton";
+import { Container, Row, Col } from "react-bootstrap";
+import SiteTitle from "./SiteTitle";
+import "./AppHeader.css";
 
 export const AppHeader = (props) => {
   const { users, getUsers } = useContext(UserContext);
@@ -24,9 +24,17 @@ export const AppHeader = (props) => {
 
   return (
     <article className="appHeader">
-      <h2>WHO HE PLAY FOR ANYWAY</h2>
-      <UserGreeting user={user} />
-      <Leaderboard location="header" />
+      <Container>
+        <Row>
+          <Col>
+            <SiteTitle />
+            <UserGreeting user={user} />
+          </Col>
+          <Col>
+            <Leaderboard location="header" />
+          </Col>
+        </Row>
+      </Container>
     </article>
   );
 };

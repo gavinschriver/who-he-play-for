@@ -1,9 +1,22 @@
-.gameContainer {
-    display: flex;
-    justify-content: center;
+.name {
 }
 
-.gamePlayContainer {
-    display: flex;
-    justify-content: center;
+.user--name {
+    font-weight: bold;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 4px;
 }
+
+.player--name {
+
+}
+
+.user--player {
+    color: red
+}
+
+textarea {
+    resize: none;
+}
+

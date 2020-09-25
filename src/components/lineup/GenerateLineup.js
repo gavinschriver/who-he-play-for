@@ -3,6 +3,8 @@ import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Player } from "../players/Player";
 import teamData from "../teams.json";
+import Card from "react-bootstrap/Card"
+import CardGroup from "react-bootstrap/CardGroup"
 import "./Lineup.css"
 
 export const GenerateLineup = () => {
@@ -16,23 +18,17 @@ export const GenerateLineup = () => {
     addUserPlayer,
     removeUserPlayer,
   } = useContext(UserPlayerContext);
-
-
-  // Binds to the app-state variableset in UsersPlayers provider 
-  //to track how many userPlayers have been stan'd by being marked as mentioned
   const { mentionedCount } = useContext(UserPlayerContext);
 
-  //set component state variables for 1) holding and setting userPlayer objects for current user; 2) state of lineup display div
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [generateButtonShowing, setGenerateButtonShowing] = useState(false);
 
-  // making sure we only get players who match the conditions of being on an roster and having an image
+  // find valid players
   const filteredPlayers = playerObjArray.filter(
     (p) =>
       p.player.currentRosterStatus === "ROSTER" && p.player.officialImageSrc
   );
 
-  //Ids only of player objects who match the criteria set above
   const filteredPlayerIds = filteredPlayers.map((p) => p.player.id);
 
   // posts 5 new userplayer objects
@@ -66,7 +62,7 @@ export const GenerateLineup = () => {
   };
 
 
-  // initializer call to bring in player data and usersPlayers
+  // effects
   useEffect(() => {
     getPlayerData().then(getUsersPlayers);
   }, []);
@@ -79,9 +75,7 @@ export const GenerateLineup = () => {
     setMatchingUsersPlayers(arrayOfMatchingUPOS);
   }, [usersPlayers]);
 
-//dont think this does anything really
   useEffect(() => {
-    console.log(mentionedCount);
     if (mentionedCount === matchingUsersPlayers.length) {
       setGenerateButtonShowing(true);
     }
@@ -89,7 +83,7 @@ export const GenerateLineup = () => {
 
   return (
     <>
-      <article className="lineup__container">
+      <CardGroup className="lineup__container">
         {(mentionedCount === 0 && !matchingUsersPlayers) ||
         mentionedCount === matchingUsersPlayers.length ? (
           <button
@@ -128,7 +122,7 @@ export const GenerateLineup = () => {
             );
           })}
         </section>
-      </article>
+      </CardGroup>
     </>
   );
 };

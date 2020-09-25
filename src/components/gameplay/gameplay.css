@@ -1,0 +1,30 @@
+.gameplay--container {
+    display: flex;
+}
+
+.playerCard--stanned {
+    color: white
+}
+
+.messageEntry {
+    background-color: white
+}
+
+
+.messageEntry--header {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.scoreboard {
+    border: 2px solid black;
+    border-radius: 20px;
+    background: #fd7e14
+}
+
+.userScores {
+    background: white;
+    border: 2px solid;
+    border-radius: 20px;
+    padding: 2rem
+}

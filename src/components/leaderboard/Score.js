@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
+import Collapse from "react-bootstrap/esm/Collapse";
+import $ from "jquery";
 
-export const Score = ({ SO, UO }) => {
+export const Score = ({ SO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const { usersPlayers } = useContext(UserPlayerContext);
-  const { playerObjArray, setTrashtalkPlayer } = useContext(PlayerContext);
+  const { playerObjArray, setTrashtalkPlayer, setStanPlayer } = useContext(
+    PlayerContext
+  );
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
   const matchingPlayersToggle = () => {
@@ -16,52 +20,129 @@ export const Score = ({ SO, UO }) => {
     }
   };
 
-  const matchingUsersPlayer = usersPlayers.filter((uPO) => {
+
+// score animation attempts
+  
+  const [scoreValue, setScoreValue] = useState(0)
+
+  useEffect(() => {
+    const initialScoreValue = SO.score || {};
+    setScoreValue(initialScoreValue)
+  })
+
+  // useEffect(() => {
+  //   countUp(scoreValue)
+  // }, [scoreValue])
+  
+
+  // function countUp(scoreval) {
+  //   var div_by = 100,
+  //     speed = Math.round(scoreval / div_by),
+  //     $display = $(".score__value"),
+  //     run_score = 1,
+  //     int_speed = 24;
+
+  //   var int = setInterval(function () {
+  //     if (run_score < div_by) {
+  //       $display.text(speed * run_score);
+  //       run_score++;
+  //     } else if (parseInt($display.text()) < scoreval) {
+  //       var curr_score = parseInt($display.text()) + 1;
+  //       $display.text(curr_score);
+  //     } else {
+  //       clearInterval(int);
+  //     }
+  //   }, int_speed);
+  // }
+
+  // find players for each score item
+  const matchingUsersPlayers = usersPlayers.filter((uPO) => {
     return uPO.userId === SO.userId;
   });
 
-  const matchingPlayers = matchingUsersPlayer.map((mUPO) => {
+  const matchingPlayers = matchingUsersPlayers.map((mUPO) => {
     return playerObjArray.find((p) => {
       return mUPO.playerId === p.player.id;
     });
   });
 
+  // filter out players that have already been mentioned so they don't appear on current user's lineup
+  const filteredUsersPlayers = matchingUsersPlayers.filter((mUPO) => {
+    return !mUPO.mentioned;
+  });
+
+  const filteredPlayerIds = filteredUsersPlayers.map((fUP) => {
+    return fUP.playerId;
+  });
+
   return (
-    <tbody>
+    <tr className="score">
       <td>{SO.username}</td>
-      <td>{SO.score}</td>
-      <td><button
-        onClick={(e) => {
-          e.preventDefault();
-          matchingPlayersToggle();
-        }}
-      >
-        Show Playerz
-      </button></td>
-      {showHideMatchingPlayers ? (
-        <div className="lineup otherUsers__lineup">
-          {matchingPlayers.map((mPO) => {
-            const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
-            return (
-              <div>
-                <a href={redditSearch} target="_blank">
-                  {mPO.player.firstName} {mPO.player.lastName}
-                </a>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setTrashtalkPlayer(`${mPO.player.firstName} ${mPO.player.lastName}`);
-                  }}
-                >
-                  TRASH
-                </button>
-              </div>
-            );
-          })}
+      <td class="score__value">{scoreValue}</td>
+      <td>
+        <button
+          className="score__showLineup button score--button lineup--button"
+          onClick={(e) => {
+            e.preventDefault();
+            matchingPlayersToggle();
+          }}
+        >
+          Show Playerz
+        </button>
+      </td>
+      <Collapse in={showHideMatchingPlayers}>
+        <div className="scoreboard__lineup lineup">
+          <table>
+            <tbody>
+              {matchingPlayers.map((mPO) => {
+                const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
+                return (
+                  <tr>
+                    <td>
+                      <a
+                        href={redditSearch}
+                        target="_blank"
+                        className="scoreboard__lineup__player link lineup--link scoreboard--link"
+                      >
+                        {mPO.player.firstName} {mPO.player.lastName}
+                      </a>
+                    </td>
+                    <td>
+                      {SO.userId === currentUserId ? (
+                        filteredPlayerIds.includes(mPO.player.id) ? (
+                          <button
+                            className="scoreboard__lineup__stan button score--button lineup--button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setStanPlayer(`${mPO.player.firstName}`);
+                            }}
+                          >
+                            STAN
+                          </button>
+                        ) : (
+                          <div></div>
+                        )
+                      ) : (
+                        <button
+                          className="scoreboard__lineup__trashtalk button score--button lineup--button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setTrashtalkPlayer(
+                              `${mPO.player.firstName} ${mPO.player.lastName}`
+                            );
+                          }}
+                        >
+                          TRASH
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-      ) : (
-        <div></div>
-        )}
-      </tbody>
+      </Collapse>
+    </tr>
   );
 };

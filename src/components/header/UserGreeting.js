@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { UserContext } from "../users/UserProvider";
+import { Avatar } from "../users/Avatar"
 
 export const UserGreeting = ({ user }) => {
 
@@ -7,6 +7,7 @@ export const UserGreeting = ({ user }) => {
     <>
       <article className="userGreeting">
         <h2>Why howdy, {user.name}</h2>
+        {user.avatar  ? <Avatar user={user} location="greeting" /> : <div></div>}
       </article>
     </>
   );

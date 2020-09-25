@@ -1,0 +1,28 @@
+.scoreboard {
+    display: flex;
+    flex-direction: column;
+}
+
+.scoreboard--heading {
+    color: white
+}
+
+.scoreboard__allTime {
+    display: flex;
+    margin: 0 0 2rem;
+}
+
+.scoreboard__allTime__type {
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column
+}
+
+.score__value {
+  position: relative;
+  font-size: 40px;
+  line-height: 40px;
+  font-weight: 600;
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+}

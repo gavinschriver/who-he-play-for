@@ -1,11 +1,16 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
+import { PlayerContext } from "./PlayerProvider"
+import Card from "react-bootstrap/Card"
+import Button from "react-bootstrap/Button"
+import Collapse from "react-bootstrap/Collapse"
 import "./Players.css";
 
 export const Player = ({ PO, TO }) => {
-  const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext)
-  const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({})
+  const { getPlayerData } = useContext(PlayerContext)
+  const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
+  const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
   const [showHideDetails, setShowHideDetails] = useState(false);
 
   const handleDetailButtonClick = () => {
@@ -22,44 +27,53 @@ export const Player = ({ PO, TO }) => {
   const NBAid = currentPlayer.player.externalMappings[0].id || {};
 
   useEffect(() => {
-    getUsersPlayers()
-  }, [])
-  
-  useEffect(() => {
-    setMatchingUsersPlayer(usersPlayers.find(uPO => {
-      return uPO.playerId === PO.player.id
-    }) || {} )
-  }, [usersPlayers])
+    getPlayerData().then(getUsersPlayers);
+  }, []);
 
+  useEffect(() => {
+    setMatchingUsersPlayer(
+      usersPlayers.find((uPO) => {
+        return uPO.playerId === PO.player.id;
+      }) || {}
+    );
+  }, [usersPlayers]);
+
+  const cardClass = matchingUsersPlayer.mentioned ? "playerCard playerCard--stanned" : "playerCard"
+
+  const cardBG = matchingUsersPlayer.mentioned ? 'primary' : 'light'
 
   return (
-    <article className="playerCard card">
-      <a href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()} target="_blank">NBA Stats</a>
-      {
-        matchingUsersPlayer.mentioned
-          ? <div>#STAN'D</div>
-          : <div></div>
-      }
-      <div className="playerCard__name">
-        Player Name: {currentPlayer.player.firstName}{" "}
-        {currentPlayer.player.lastName}
-      </div>
+    <Card className={cardClass} bg={cardBG}>
+      <Card.Header as="h5">Player</Card.Header>
+      <Card.Body className="playerCard--body">
+      <Card.Link
+        href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()}
+        target="_blank"
+      >
+        NBA Stats
+      </Card.Link>
+        {matchingUsersPlayer.mentioned ? <div>#STAN'D</div> : <div></div>}
+        <Card.Title className="playerCard__name">Player: {currentPlayer.player.firstName}{" "}{currentPlayer.player.lastName}</Card.Title>
       <div className="playerCard__headshot img">
         <a
           href={`https://www.reddit.com/search?q=${currentPlayer.player.firstName}%20${currentPlayer.player.lastName}`}
           target="_blank"
         >
-          <img src={currentPlayer.player.officialImageSrc} />
+          <Card.Img src={currentPlayer.player.officialImageSrc} />
         </a>
       </div>
       {currentPlayer.player.currentTeam ? (
         <div className="playerCard__logo__img">
           {currentPlayer.player.currentTeam.abbreviation === "BRO" ? (
-            <img
+            <Card.Img
               src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png`}
             />
+          ) : currentPlayer.player.currentTeam.abbreviation === "OKL" ? (
+            <Card.Img
+              src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/okc.png`}
+            />
           ) : (
-            <img
+            <Card.Img
               src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`.toLowerCase()}
             />
           )}
@@ -67,7 +81,7 @@ export const Player = ({ PO, TO }) => {
       ) : (
         <div>Poor lil buddy needs a team :(</div>
       )}
-      <button
+      <Button
         className="playerCard__showDetailsButton btn btn--details"
         onClick={(e) => {
           e.preventDefault();
@@ -75,7 +89,7 @@ export const Player = ({ PO, TO }) => {
         }}
       >
         Get the juicy deets:
-      </button>
+      </Button>
       {showHideDetails ? (
         <article className="playerCard__details">
           <div className="playerCard__details__heading heading">DEETS</div>
@@ -129,7 +143,9 @@ export const Player = ({ PO, TO }) => {
         </article>
       ) : (
         <div></div>
-      )}
-    </article>
+          )} 
+        </Card.Body>
+    </Card>
   );
 };
+
