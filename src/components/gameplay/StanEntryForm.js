@@ -159,7 +159,7 @@ export const StanEntryForm = () => {
               </Form.Control>
             </Form.Group>
 
-            <Form.Group>
+            <Form.Group className="stanContent formgroup stan--formgroup">
               <h4 className="instructions stan--instructions">
                 Put some SAUCE on it
               </h4>
@@ -176,10 +176,13 @@ export const StanEntryForm = () => {
             </Form.Group>
 
             <Form.Group>
+            <h4 className="instructions stan--instructions">
+               Quick hits
+              </h4>
               <Form.Control as="textarea"
                 type="textarea"
                 name="chat"
-                placeholder="Care to add anything else?"
+                placeholder="Care to add #anythingelse?"
                 size="30"
                 className="chattext form--control"
                 ref={chatRef}
@@ -195,7 +198,7 @@ export const StanEntryForm = () => {
                 }
               }}
             >
-              Fire away
+              BANG!
             </button>
           </div>
         </Form>

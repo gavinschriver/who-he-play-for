@@ -127,7 +127,7 @@ export const TrashTalkEntryForm = () => {
               />
             </Form.Group>
 
-            <Form.Group>
+            <Form.Group className="trashContent formgroup trash--formgroup">
               <h4 className="instructions trashtalk--instructions">
                 But you'd better back it up
               </h4>
@@ -144,10 +144,13 @@ export const TrashTalkEntryForm = () => {
             </Form.Group>
 
             <Form.Group>
+            <h4 className="instructions trashtalk--instructions">
+                Garbage time
+              </h4>
               <Form.Control as="textarea"
                 type="textarea"
                 name="chat"
-                placeholder="Care to add anything else?"
+                placeholder="Care to add #anythingelse?"
                 size="30"
                 className="chattext form--control"
                 ref={chatRef}
@@ -161,7 +164,7 @@ export const TrashTalkEntryForm = () => {
                 handleTrashtalkButtonPress();
               }}
             >
-              Fire away
+              Shots fired
             </button>
           </div>
         </Form>
