@@ -30,7 +30,7 @@ export const ApplicationViews = (props) => {
                       <Jumbotron>
                         <AppHeader {...props} />
                       </Jumbotron>
-                      <Container fluid="md">
+                      <Container className="maincontent" fluid="md">
                         <Row>
                           <GamePlay id="gamecontainer" {...props} />
                         </Row>

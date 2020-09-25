@@ -4,6 +4,7 @@ import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import validator from "validator";
 import "../messages/messages.css";
+import { Form } from "react-bootstrap";
 
 export const TrashTalkEntryForm = () => {
   const { addMessage, getMessages, messages } = useContext(MessageContext);
@@ -45,7 +46,9 @@ export const TrashTalkEntryForm = () => {
             addMessage(newMessage);
           } else alert(`that's old news captain`);
         } else alert(`Sorry, who you tryin' to trash exactly?`);
-      } else alert(`You trying to trash your own player? Rough look my dude`); alert(trashtalkplayer); console.log(othersPlayersStrings)
+      } else alert(`You trying to trash your own player? Rough look my dude`);
+      alert(trashtalkplayer);
+      console.log(othersPlayersStrings);
     } else alert("better check that input");
   };
 
@@ -69,7 +72,7 @@ export const TrashTalkEntryForm = () => {
     return mPO.player.firstName;
   });
 
-  // find all players on other user's lineups 
+  // find all players on other user's lineups
   const othersUsersPlayers = usersPlayers.filter((upo) => {
     return upo.userId != currentUser;
   });
@@ -104,23 +107,26 @@ export const TrashTalkEntryForm = () => {
   return (
     <>
       <article className="messageEntry">
-        <form className="messageEntry--form">
+        <Form className="messageEntry--form">
           <div className="messageEntry__trashtalk">
-            <div className="messasgeEntry__trashtalk header">
-              <h2 className="header messageEntry--header">Talk that trash</h2>
-              <div className="instructions trashtalk__instructions">
-                Choose a player to TRASH from another user's lineup
+            <Form.Group>
+              <div className="messasgeEntry__trashtalk header">
+                <Form.Label className="header messageEntry--header">Talk that trash</Form.Label>
+                <div className="instructions trashtalk__instructions">
+                  Choose a player to TRASH from another user's lineup
+                </div>
               </div>
-            </div>
 
-            <input
-              type="text"
-              name="messagetext"
-              id="messagetext"
-              placeholder="WHO YA GOT?"
-              ref={messagetextRef}
-              size="30"
-            />
+              <input
+                type="text"
+                name="messagetext"
+                id="messagetext"
+                placeholder="WHO YA GOT?"
+                ref={messagetextRef}
+                size="30"
+              />
+            </Form.Group>
+
             <h2>But you'd better back it up</h2>
             <input
               type="url"
@@ -141,7 +147,8 @@ export const TrashTalkEntryForm = () => {
               ref={chatRef}
             />
 
-            <button className="messageEntry__trash button addMessage--button"
+            <button
+              className="messageEntry__trash button addMessage--button"
               onClick={(e) => {
                 e.preventDefault();
                 handleTrashtalkButtonPress();
@@ -150,7 +157,7 @@ export const TrashTalkEntryForm = () => {
               Fire away
             </button>
           </div>
-        </form>
+        </Form>
       </article>
     </>
   );

@@ -3,7 +3,7 @@ import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import validator from "validator";
-import Form from "react-bootstrap/Form"
+import Form from "react-bootstrap/Form";
 import "../messages/messages.css";
 
 export const StanEntryForm = () => {
@@ -14,22 +14,23 @@ export const StanEntryForm = () => {
     updateUserPlayer,
     setMentionedCount,
   } = useContext(UserPlayerContext);
-  const { playerObjArray, getPlayerData, stanPlayer } = useContext(PlayerContext);
+  const { playerObjArray, getPlayerData, stanPlayer } = useContext(
+    PlayerContext
+  );
 
   // references for input
   const stanBarRef = useRef("");
   const urlRef = useRef("");
-  const chatRef = useRef("")
+  const chatRef = useRef("");
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
   let stanPlayerFirstAndLastName = "";
-
 
   // stan button pressed
   const handleStanButtonPress = () => {
     const urlValue = urlRef.current.value.toLowerCase();
     const stanBarPlayer = stanBarRef.current.value;
-    const chatValue = chatRef.current.value
-    
+    const chatValue = chatRef.current.value;
+
     // code to reattach a player's first name to their last name for search validaiton cause im an idiot
     const stanBarPlayerObject = filteredPlayersObjects.find((fPO) => {
       return fPO.player.firstName === stanBarPlayer;
@@ -67,7 +68,7 @@ export const StanEntryForm = () => {
             timestamp: Date.now(),
             stan: true,
             trashtalk: false,
-            chattext: chatValue
+            chattext: chatValue,
           };
           addMessage(newMessage);
 
@@ -85,9 +86,10 @@ export const StanEntryForm = () => {
   });
 
   // find current user's lineup
-  const allMatchingUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId === currentUser;
-  }) || {};
+  const allMatchingUsersPlayers =
+    usersPlayers.filter((upo) => {
+      return upo.userId === currentUser;
+    }) || {};
 
   const allMatchingPlayersObjects =
     allMatchingUsersPlayers.map((fUPO) => {
@@ -131,30 +133,31 @@ export const StanEntryForm = () => {
     stanBarRef.current.value = stanPlayer;
   }, [stanPlayer]);
 
-
   return (
     <>
       <article className="messageEntry">
-        <form className="messageEntry--form">
+        <Form className="messageEntry--form">
           <div className="messageEntry__stan">
-            <div className="messasgeEntry__stan header">
-              <h2>Stan by your man</h2>
-              <div className="instructions stan__instructions">
-                Choose a player from your starting 5 to stan
+            <Form.Group>
+              <div className="messasgeEntry__stan header">
+                <Form.Label className="header messageEntry--header">Stan by your man</Form.Label>
+                <div className="instructions stan__instructions">
+                  Choose a player from your starting 5 to stan
+                </div>
               </div>
-            </div>
-
-            {/* <Form.Control as="select"></Form.Control> */}
-            <Form.Control as="select" ref={stanBarRef}>
-              <option value="empty" defaultValue="">Choose a player</option>
-              {filteredPlayersObjects.map((fpo) => {
-                return (
-                  <option value={fpo.player.firstName}>
-                    {fpo.player.firstName} {fpo.player.lastName}
-                  </option>
-                );
-              })}
-            </Form.Control>
+              <Form.Control as="select" ref={stanBarRef}>
+                <option value="empty" defaultValue="">
+                  Choose a player
+                </option>
+                {filteredPlayersObjects.map((fpo) => {
+                  return (
+                    <option value={fpo.player.firstName}>
+                      {fpo.player.firstName} {fpo.player.lastName}
+                    </option>
+                  );
+                })}
+              </Form.Control>
+            </Form.Group>
           </div>
 
           <div className="messageEntry__URL">
@@ -178,8 +181,6 @@ export const StanEntryForm = () => {
               ref={chatRef}
             />
 
-            
-
             <button
               className="messageEntry__stan button addMessage--button"
               onClick={(e) => {
@@ -192,7 +193,7 @@ export const StanEntryForm = () => {
               Fire away
             </button>
           </div>
-        </form>
+        </Form>
       </article>
     </>
   );
