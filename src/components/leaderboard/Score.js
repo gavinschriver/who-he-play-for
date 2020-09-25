@@ -3,6 +3,7 @@ import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import Collapse from "react-bootstrap/esm/Collapse";
 import $ from "jquery";
+import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
 
 export const Score = ({ SO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
@@ -110,30 +111,12 @@ export const Score = ({ SO }) => {
                     <td>
                       {SO.userId === currentUserId ? (
                         filteredPlayerIds.includes(mPO.player.id) ? (
-                          <button
-                            className="scoreboard__lineup__stan button score--button lineup--button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setStanPlayer(`${mPO.player.firstName}`);
-                            }}
-                          >
-                            STAN
-                          </button>
+                          <PlayerSelectButton type="stan" location="scoreboard" player={mPO.player.firstName}/>
                         ) : (
                           <div></div>
                         )
                       ) : (
-                        <button
-                          className="scoreboard__lineup__trashtalk button score--button lineup--button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setTrashtalkPlayer(
-                              `${mPO.player.firstName} ${mPO.player.lastName}`
-                            );
-                          }}
-                        >
-                          TRASH
-                        </button>
+                        <PlayerSelectButton type="trash" location="scoreboard" player={mPO.player.firstName}/>
                       )}
                     </td>
                   </tr>
