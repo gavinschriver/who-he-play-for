@@ -15,23 +15,14 @@ export const PlayerSelectButton = (props) => {
   const locationClass = `${props.location}--button`;
 
   const buttonText =
-    props.type === "stan" ? "STAN" : props.type === "trash" ? "TRASH" : "";
+      props.type === "stan" ? "STAN" : props.type === "trash" ? "TRASH" : "";
+    
 
-  const functionType =
-    props.type === "stan" ? "Stan" : props.type === "trash" ? "Trashtalk" : "";
-
-  const clickFunction =
-    props.type === "stan"
-      ? (e) => {
-          e.preventDefault();
-          setStanPlayer(`${props.player}`);
-          window.location.href = "#gamecontainer";
-        }
-      : (e) => {
-          e.preventDefault();
-          setTrashtalkPlayer(`${props.player}`);
-          window.location.href = "#gamecontainer";
-        };
+    const clickFunction = ((e) => {
+        e.preventDefault();
+        props.type === "stan" ? setStanPlayer(props.player) : setTrashtalkPlayer(props.player)
+        window.location.href = "#gamecontainer"
+    })
 
   return (
     <Button className={`${typeClass} ${locationClass}`} onClick={clickFunction}>
