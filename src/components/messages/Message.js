@@ -12,6 +12,7 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form"
 
 export const Message = ({ MO, props }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -140,194 +141,192 @@ export const Message = ({ MO, props }) => {
     : "messageCard";
 
   return (
-          <Card className={messageClassName} id={MO.id}>
-            {/* description */}
-            <div className="message__description">
-              <span className="message__author">
-                {MO.user.id === currentUserId ? (
-                  <span>YOU</span>
-                ) : (
-                  <span>{MO.user.name || ""}</span>
-                )}
-              </span>
+    <Card className={messageClassName} id={MO.id}>
+      {/* description */}
+      <Card.Header className="message__description">
+        <span className="message__author user--name">
+          {MO.user.id === currentUserId ? (
+            <span>YOU</span>
+          ) : (
+            <span>{MO.user.name || ""}</span>
+          )}
+        </span>
 
-              {matchingPlayersFirstNames.includes(MO.messagetext) ? (
-                <span> stan'd</span>
-              ) : MO.trashtalk ? (
-                <span>
-                  {" "}
-                  <span>talked trash on</span>
-                  {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
-                    <span> your guy</span>
-                  ) : (
-                    <span></span>
-                  )}
-                </span>
-              ) : (
-                <span> stan'd </span>
-              )}
-              <span className="message__playerName"> {MO.messagetext}</span>
-            </div>
-
-            {/* lineup */}
-
-            {MO.user.id === currentUserId ? (
-              <div></div>
+        {matchingPlayersFirstNames.includes(MO.messagetext) ? (
+          <span> stan'd</span>
+        ) : MO.trashtalk ? (
+          <span>
+            {" "}
+            <span>talked trash on</span>
+            {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
+              <span> your guy</span>
             ) : (
+              <span></span>
+            )}
+          </span>
+        ) : (
+          <span> stan'd </span>
+        )}
+        <span className="message__playerName"> {MO.messagetext}</span>
+      </Card.Header>
+      {user.avatar ? <Avatar user={user} location="message" /> : <div></div>}
+
+      <Card.Body className="playerCard--body">
+        {/* lineup */}
+
+        {MO.user.id === currentUserId ? (
+          <div></div>
+        ) : (
+          <div>
+            <Button
+              className="message__showLineup button message--button lineup--button showLineup--button"
+              onClick={(e) => {
+                e.preventDefault();
+                matchingPlayersToggle();
+              }}
+            >
+              Show Current Lineup:
+            </Button>
+            <Collapse in={showHideMatchingPlayers}>
               <div>
-                <button
-                  className="message__showLineup button message--button lineup--button showLineup--button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    matchingPlayersToggle();
-                  }}
-                >
-                  Show Current Lineup:
-                </button>
-                <Collapse in={showHideMatchingPlayers}>
-                  <div>
-                    <Table className="message__lineup table lineup--table trash--table">
-                      <tbody>
+                <Table className="message__lineup table lineup--table trash--table">
+                  <tbody>
+                    <tr>
+                      <th>Player</th>TRASH 'EM?
+                    </tr>
+                    {matchingPlayers.map((mPO) => {
+                      return (
                         <tr>
-                          <th>Player</th>TRASH 'EM?
+                          <td>
+                            <a
+                              href={`https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`}
+                              target="_blank"
+                            >
+                              {mPO.player.firstName} {mPO.player.lastName}
+                            </a>
+                          </td>
+                          {MO.user.id !== currentUserId ? (
+                            <td>
+                              <Button
+                                className="message__trash button messsage--button lineup--button trash---button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setTrashtalkPlayer(
+                                    `${mPO.player.firstName} ${mPO.player.lastName}`
+                                  );
+                                  window.location.href = "#gamecontainer";
+                                }}
+                              >
+                                TRASH
+                              </Button>
+                            </td>
+                          ) : (
+                            <span></span>
+                          )}
                         </tr>
-                        {matchingPlayers.map((mPO) => {
-                          return (
-                            <tr>
-                              <td>
-                                <a
-                                  href={`https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`}
-                                  target="_blank"
-                                >
-                                  {mPO.player.firstName} {mPO.player.lastName}
-                                </a>
-                              </td>
-                              {MO.user.id !== currentUserId ? (
-                                <td>
-                                  <Button
-                                    className="message__trash button messsage--button lineup--button trash---button"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      setTrashtalkPlayer(
-                                        `${mPO.player.firstName} ${mPO.player.lastName}`
-                                      );
-                                      window.location.href = "#gamecontainer";
-                                    }}
-                                  >
-                                    TRASH
-                                  </Button>
-                                </td>
-                              ) : (
-                                <span></span>
-                              )}
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </Table>
-                  </div>
-                </Collapse>
-                {/* ) : (
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              </div>
+            </Collapse>
+            {/* ) : (
             <div></div> */}
-              </div>
-            )}
+          </div>
+        )}
 
-            {/* URL */}
+        {/* URL */}
 
-            {MO.stan ? (
-              <div className="message__url message__url__heatcheck">
-                <a href={MO.url} target="_blank" className="link message--link">
-                  HEAT CHECK
-                </a>
-              </div>
-            ) : MO.trashtalk ? (
-              <div className="message__url message__url__trashtalk">
-                <a href={MO.url} target="_blank" className="link message--link">
-                  I'll just leave this here...
-                </a>
-              </div>
-            ) : (
-              <div></div>
-            )}
+        {MO.stan ? (
+          <div className="message__url message__url__heatcheck">
+            <a href={MO.url} target="_blank" className="link message--link">
+              HEAT CHECK
+            </a>
+          </div>
+        ) : MO.trashtalk ? (
+          <div className="message__url message__url__trashtalk">
+            <a href={MO.url} target="_blank" className="link message--link">
+              I'll just leave this here...
+            </a>
+          </div>
+        ) : (
+          <div></div>
+        )}
 
-            <div className="message__chattext">{MO.chattext}</div>
+        <div className="message__chattext">{MO.chattext}</div>
 
-            {/* edit/submit buttons */}
+        {/* edit/submit buttons */}
 
-            {MO.user.id === currentUserId ? (
-              <div className="message__edit">
-                <button
-                  className="message__edit button edit--button message--button"
-                  ref={editRef}
-                  value={`editButton--${MO.id}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    toggleEditField();
-                    const messageId = parseInt(
-                      editRef.current.value.split("--")[1]
-                    );
-                    const messageToEdit = messages.find((m) => {
-                      return m.id === messageId;
-                    });
-                    setMessage(messageToEdit);
-                  }}
-                >
-                  Edit
-                </button>
-
-                {editFieldShowing ? (
-                  <button
-                    className="message__submit button submit--button message--button"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toggleEditField();
-                      constructNewMessage();
-                    }}
-                  >
-                    Submit
-                  </button>
-                ) : (
-                  <div></div>
-                )}
-              </div>
-            ) : (
-              <div></div>
-            )}
-
-            {/* chat text edit field */}
+        {MO.user.id === currentUserId ? (
+          <div className="message__edit">
+            <Button
+              className="message__edit button edit--button message--button"
+              ref={editRef}
+              value={`editButton--${MO.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                toggleEditField();
+                const messageId = parseInt(
+                  editRef.current.value.split("--")[1]
+                );
+                const messageToEdit = messages.find((m) => {
+                  return m.id === messageId;
+                });
+                setMessage(messageToEdit);
+              }}
+            >
+              Edit
+            </Button>
 
             {editFieldShowing ? (
-              <textarea
-                className="message__textedit input textarea--input"
-                name="chattext"
-                onChange={handleControlledInputChange}
-                value={message.chattext}
-              ></textarea>
-            ) : (
-              <div></div>
-            )}
-
-            {/* delete button */}
-
-            {MO.user.id === currentUserId ? (
-              <button
-                className="message__delete button delete--button message--button"
+              <Button
+                className="message__submit button submit--button message--button"
                 onClick={(e) => {
                   e.preventDefault();
-                  removeMessage(MO.id);
+                  toggleEditField();
+                  constructNewMessage();
                 }}
               >
-                #regret
-              </button>
+                Submit
+              </Button>
             ) : (
               <div></div>
             )}
-            {MO.stan ? <img /> : <div></div>}
-            {user.avatar ? (
-              <Avatar user={user} location="message" />
-            ) : (
-              <div></div>
-            )}
-          </Card>
+          </div>
+        ) : (
+          <div></div>
+        )}
+
+        {/* chat text edit field */}
+
+        {editFieldShowing ? (
+          <Form.Control as="textarea"
+            className="message__textedit input textarea--input"
+            name="chattext"
+            onChange={handleControlledInputChange}
+            value={message.chattext}
+          ></Form.Control>
+        ) : (
+          <div></div>
+        )}
+
+        {/* delete button */}
+
+        {MO.user.id === currentUserId ? (
+          <Button
+            className="message__delete button delete--button message--button"
+            onClick={(e) => {
+              e.preventDefault();
+              removeMessage(MO.id);
+            }}
+          >
+            #regret
+          </Button>
+        ) : (
+          <div></div>
+        )}
+        {MO.stan ? <img /> : <div></div>}
+      </Card.Body>
+    </Card>
   );
 };

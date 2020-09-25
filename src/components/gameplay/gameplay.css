@@ -21,3 +21,10 @@
     border-radius: 20px;
     background: #fd7e14
 }
+
+.userScores {
+    background: white;
+    border: 2px solid;
+    border-radius: 20px;
+    padding: 2rem
+}

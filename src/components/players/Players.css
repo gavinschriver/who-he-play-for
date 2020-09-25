@@ -5,5 +5,10 @@
     margin-bottom: 1em
 }
 
+.playerCard--stanned a {
+    color: whitesmoke
+}
+
 .playerCard--body {
 }
+

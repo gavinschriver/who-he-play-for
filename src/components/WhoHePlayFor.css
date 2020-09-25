@@ -1,3 +1,6 @@
+.name {
+}
+
 .user--name {
     font-weight: bold;
     border: 2px solid black;
@@ -5,6 +8,15 @@
     padding: 4px;
 }
 
+.player--name {
+
+}
+
+.user--player {
+    color: red
+}
+
 textarea {
     resize: none;
 }
+
