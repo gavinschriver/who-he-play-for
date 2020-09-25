@@ -2,6 +2,10 @@
     display: flex;
 }
 
+.playerCard--stanned {
+    color: white
+}
+
 .messageEntry {
     background-color: white
 }

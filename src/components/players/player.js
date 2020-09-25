@@ -43,6 +43,7 @@ export const Player = ({ PO, TO }) => {
 
   return (
     <Card className={cardClass} bg={cardBG}>
+      <Card.Header as="h5">Player</Card.Header>
       <Card.Body>
       <a
         href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()}

@@ -145,6 +145,14 @@ export const UserAccount = (props) => {
                 roundedCircle
               />
             </ToggleButton>
+            <ToggleButton value={"/images/mj.jpg"}>
+              <Image
+                width={300}
+                height={300}
+                src="/images/mj.jpg"
+                roundedCircle
+              />
+            </ToggleButton>
           </ToggleButtonGroup>
         </Form.Group>
       </Form>
