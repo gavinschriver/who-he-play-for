@@ -3,9 +3,9 @@ import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Player } from "../players/Player";
 import teamData from "../teams.json";
-import Card from "react-bootstrap/Card"
-import CardGroup from "react-bootstrap/CardGroup"
-import "./Lineup.css"
+import Card from "react-bootstrap/Card";
+import CardGroup from "react-bootstrap/CardGroup";
+import "./Lineup.css";
 
 export const GenerateLineup = () => {
   //for looking up info about teams from NBA reference
@@ -61,13 +61,12 @@ export const GenerateLineup = () => {
     }
   };
 
-
   // effects
   useEffect(() => {
     getPlayerData().then(getUsersPlayers);
   }, []);
 
-  // listens for a change to usersPlayers API collection and resets component-level collection of only those matching the current user's id 
+  // listens for a change to usersPlayers API collection and resets component-level collection of only those matching the current user's id
   useEffect(() => {
     const arrayOfMatchingUPOS = usersPlayers.filter((upo) => {
       return upo.userId === parseInt(localStorage.getItem("whpf_user"));
@@ -83,21 +82,20 @@ export const GenerateLineup = () => {
 
   return (
     <>
+      {(mentionedCount === 0 && !matchingUsersPlayers) ||
+      mentionedCount === matchingUsersPlayers.length ? (
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            handleGenerateLineup();
+          }}
+        >
+          Generate A Lineup
+        </button>
+      ) : (
+        <div></div>
+      )}
       <CardGroup className="lineup__container">
-        {(mentionedCount === 0 && !matchingUsersPlayers) ||
-        mentionedCount === matchingUsersPlayers.length ? (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              handleGenerateLineup();
-            }}
-          >
-            Generate A Lineup
-          </button>
-        ) : (
-          <div></div>
-        )}
-
         <section className="lineup">
           <h2>Your Starting 5:</h2>
           {matchingUsersPlayers.map((mUPO) => {
@@ -105,14 +103,18 @@ export const GenerateLineup = () => {
               (p) => p.player.id === mUPO.playerId
             );
 
-            let matchingPlayerTeam
+            let matchingPlayerTeam;
 
             if (matchingPlayerObj.player.currentTeam) {
-                matchingPlayerTeam = teams.find(t => {
-                return t.abbreviation === matchingPlayerObj.player.currentTeam.abbreviation
-              }) || {}
-            } else matchingPlayerTeam = {}
-              
+              matchingPlayerTeam =
+                teams.find((t) => {
+                  return (
+                    t.abbreviation ===
+                    matchingPlayerObj.player.currentTeam.abbreviation
+                  );
+                }) || {};
+            } else matchingPlayerTeam = {};
+
             return (
               <Player
                 key={matchingPlayerObj.player.id}
