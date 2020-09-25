@@ -3,6 +3,7 @@ import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import validator from "validator";
+import Form from "react-bootstrap/Form"
 import "../messages/messages.css";
 
 export const StanEntryForm = () => {
@@ -143,7 +144,8 @@ export const StanEntryForm = () => {
               </div>
             </div>
 
-            <select ref={stanBarRef}>
+            {/* <Form.Control as="select"></Form.Control> */}
+            <Form.Control as="select" ref={stanBarRef}>
               <option value="empty" defaultValue="">Choose a player</option>
               {filteredPlayersObjects.map((fpo) => {
                 return (
@@ -152,7 +154,7 @@ export const StanEntryForm = () => {
                   </option>
                 );
               })}
-            </select>
+            </Form.Control>
           </div>
 
           <div className="messageEntry__URL">

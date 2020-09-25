@@ -5,14 +5,15 @@ import { Leaderboard } from "../leaderboard/Leaderboard";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/Col";
+import "./gameplay.css"
 import { Route } from "react-router-dom";
 
 export const GamePlay = () => (
   <>
-    <section id="gamecontainer">
-      <Container className="gameplay" fluid>
+    <section id="gamecontainer" className="gameplay--container">
+      <Container className="container gameplay--container" fluid>
         <Row>
-          <Col>
+          <Col className="container entryForm--container">
             <StanEntryForm />
           </Col>
           <Col>

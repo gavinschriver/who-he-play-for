@@ -1,0 +1,17 @@
+.gameplay--container {
+    display: flex;
+}
+
+.messageEntry {
+    background-color: white
+}
+
+
+.messageEntry--header {
+
+}
+
+.scoreboard {
+    border: 2px solid black;
+    border-radius: 20px;
+}

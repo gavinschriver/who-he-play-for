@@ -107,7 +107,7 @@ export const TrashTalkEntryForm = () => {
         <form className="messageEntry--form">
           <div className="messageEntry__trashtalk">
             <div className="messasgeEntry__trashtalk header">
-              <h2>Talk that trash</h2>
+              <h2 className="header messageEntry--header">Talk that trash</h2>
               <div className="instructions trashtalk__instructions">
                 Choose a player to TRASH from another user's lineup
               </div>
