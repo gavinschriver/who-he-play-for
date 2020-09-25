@@ -36,7 +36,7 @@ export const ApplicationViews = (props) => {
                         </Row>
                         <Row>
                           <Col>
-                            <GenerateLineup {...props} />
+                            {/* <GenerateLineup {...props} /> */}
                           </Col>
                           <Col>
                             <MessagesList {...props} />

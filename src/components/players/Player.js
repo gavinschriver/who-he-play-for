@@ -9,7 +9,7 @@ import "./Players.css";
 import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
 
 export const Player = ({ PO, TO }) => {
-  const { getPlayerData, setStanPlayer } = useContext(PlayerContext)
+  const { getPlayerData } = useContext(PlayerContext)
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
   const [showHideDetails, setShowHideDetails] = useState(false);

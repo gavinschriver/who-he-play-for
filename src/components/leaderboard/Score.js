@@ -4,6 +4,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import Collapse from "react-bootstrap/esm/Collapse";
 import $ from "jquery";
 import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
+import { LineupButton} from "../buttons/LineupButton"
 
 export const Score = ({ SO }) => {
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
@@ -92,6 +93,7 @@ export const Score = ({ SO }) => {
         </button>
       </td>
       <Collapse in={showHideMatchingPlayers}>
+
         <div className="scoreboard__lineup lineup">
           <table>
             <tbody>
@@ -126,6 +128,7 @@ export const Score = ({ SO }) => {
           </table>
         </div>
       </Collapse>
+      <LineupButton />
     </tr>
   );
 };
