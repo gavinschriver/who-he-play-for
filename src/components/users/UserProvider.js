@@ -4,6 +4,7 @@ export const UserContext = React.createContext();
 
 export const UserProvider = (props) => {
   const [users, setUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
 
   const getUsers = () => {
     return fetch(`http://localhost:8888/users?_embed=messages`)
@@ -37,6 +38,13 @@ export const UserProvider = (props) => {
     }).then(getUsers);
   };
 
+  useEffect(() => {
+    console.log(currentUser)
+    const foundUser = users.find(
+      (u) => u.id === parseInt(localStorage.getItem("whpf_user"))
+    );
+    setCurrentUser(foundUser);
+  }, [users]);
 
   return (
     <UserContext.Provider
@@ -46,6 +54,7 @@ export const UserProvider = (props) => {
         addUser,
         removeUser,
         updateUser,
+        currentUser,
       }}
     >
       {props.children}

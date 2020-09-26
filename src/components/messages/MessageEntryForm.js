@@ -1,5 +1,6 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
+import PlayerSelect from "../selectors/PlayerSelect";
 
 export default (props) => {
   const playerInput =
@@ -11,13 +12,17 @@ export default (props) => {
       <Form.Control type="text"></Form.Control>
     ) : (
       <div></div>
-    );
+        );
+  
+  
+  
   return (
     <Form>
       <Form.Group>
         {/* choose player control/labels here */}
         {playerInput}
       </Form.Group>
+      <PlayerSelect type="stan" />
     </Form>
   );
 };

@@ -18,8 +18,8 @@ export const WhoHePlayFor = () => (
             <>
               <UserProvider>
                 <Route render={() => <NavBar />} />
+                <Route render={(props) => <ApplicationViews {...props} />} />
               </UserProvider>
-              <Route render={(props) => <ApplicationViews {...props} />} />
             </>
           );
         } else {
