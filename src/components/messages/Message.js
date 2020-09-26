@@ -11,12 +11,12 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
 import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
+import { LineupButton } from "../buttons/LineupButton";
+import { DeleteMessageButton } from "../buttons/DeleteMessageButton";
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
-  const { playerObjArray, getPlayerData } = useContext(
-    PlayerContext
-  );
+  const { playerObjArray, getPlayerData } = useContext(PlayerContext);
   const { messages, removeMessage, getMessages, updateMessage } = useContext(
     MessageContext
   );
@@ -58,12 +58,12 @@ export const Message = ({ MO }) => {
 
   // linup toggle
   const matchingPlayersToggle = () => {
-    setShowHideMatchingPlayers(!showHideMatchingPlayers)
+    setShowHideMatchingPlayers(!showHideMatchingPlayers);
   };
 
   //edit
   const toggleEditField = () => {
-    setEditFieldShowing(!editFieldShowing)
+    setEditFieldShowing(!editFieldShowing);
   };
 
   const handleControlledInputChange = (event) => {
@@ -170,50 +170,10 @@ export const Message = ({ MO }) => {
           <div></div>
         ) : (
           <div>
-            <Button
-              className="message__showLineup button message--button lineup--button showLineup--button"
-              onClick={(e) => {
-                e.preventDefault();
-                matchingPlayersToggle();
-              }}
-            >
-              Show Current Lineup:
-            </Button>
-            <Collapse in={showHideMatchingPlayers}>
-              <div>
-                <Table className="message__lineup table lineup--table trash--table">
-                  <tbody>
-                    <tr>
-                      <th>Player</th>TRASH 'EM?
-                    </tr>
-                      {matchingPlayers.map((mPO) => {
-                      const player = mPO.player
-                      return (
-                        <tr>
-                          <td>
-                            <a
-                              href={`https://www.reddit.com/search?q=${player.firstName}%20${player.lastName}`}
-                              target="_blank"
-                            >
-                              {player.firstName} {player.lastName}
-                            </a>
-                          </td>
-                          {MO.user.id !== currentUserId ? (
-                            <td>
-                              <PlayerSelectButton type="trash" location="message" player={`${player.firstName} ${player.lastName}`} />
-                            </td>
-                          ) : (
-                            <span></span>
-                          )}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </Table>
-              </div>
-            </Collapse>
-            {/* ) : (
-            <div></div> */}
+            <LineupButton
+              userType={MO.user.id === currentUserId ? "current" : "other"}
+              userId={MO.userId}
+            />
           </div>
         )}
 
@@ -296,15 +256,7 @@ export const Message = ({ MO }) => {
         {/* delete button */}
 
         {MO.user.id === currentUserId ? (
-          <Button
-            className="message__delete button delete--button message--button"
-            onClick={(e) => {
-              e.preventDefault();
-              removeMessage(MO.id);
-            }}
-          >
-            #regret
-          </Button>
+          <DeleteMessageButton location="message" id={MO.id}/>
         ) : (
           <div></div>
         )}
