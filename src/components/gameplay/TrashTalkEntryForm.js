@@ -5,6 +5,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import validator from "validator";
 import "../messages/messages.css";
 import { Form } from "react-bootstrap";
+import { MessageEntryButton } from "../buttons/MessageEntryButton";
 
 export const TrashTalkEntryForm = () => {
   const { addMessage, getMessages, messages } = useContext(MessageContext);
@@ -164,6 +165,7 @@ export const TrashTalkEntryForm = () => {
             >
               Shots fired
             </button>
+            <MessageEntryButton type="trash" action={handleTrashtalkButtonPress} />
           </div>
         </Form>
       </article>

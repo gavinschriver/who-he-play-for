@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 
 export const MessageEntryButton = (props) => {
   const type = props.type;
-  const typeText = props.type === "stan" ? "BANG!" : "";
+  const typeText = props.type === "stan" ? "BANG!" : "Shots Fired";
   const newMessage = props.message;
 
   const handleSubmitMessageClick = props.action

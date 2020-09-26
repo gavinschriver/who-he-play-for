@@ -190,17 +190,6 @@ export const StanEntryForm = () => {
               />
             </Form.Group>
 
-            <button
-              className="messageEntry__stan button addMessage--button"
-              onClick={(e) => {
-                e.preventDefault();
-                if (stanBarRef.current.value !== "empty") {
-                  handleStanButtonPress();
-                }
-              }}
-            >
-              BANG!
-            </button>
             <MessageEntryButton type="stan" action={handleStanButtonPress} />
           </div>
         </Form>
