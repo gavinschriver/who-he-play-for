@@ -131,14 +131,14 @@ export const Player = ({ PO, TO }) => {
             <div className="playerCard__details__height">
               <span className="detailName">Height: </span>
               <span className="detail">{currentPlayer.player.height}</span>
-              {currentPlayer.player.socialMediaAccounts.length > 0 ? (
+              {/* {currentPlayer.player.socialMediaAccounts.length > 0 ? (
                 <TwitterTimelineEmbed
                   sourceType="profile"
                   screenName={currentPlayer.player.socialMediaAccounts[0].value}
                   options={{ height: 400 }}
                 />
               ) : (
-                <div></div>
+                <div></div> */}
               )}
             </div>
           </div>

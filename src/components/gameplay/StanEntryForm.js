@@ -5,6 +5,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import validator from "validator";
 import Form from "react-bootstrap/Form";
 import "../messages/messages.css";
+import { MessageEntryButton } from "../buttons/MessageEntryButton";
 
 export const StanEntryForm = () => {
   const { addMessage, messages, getMessages } = useContext(MessageContext);
@@ -200,6 +201,7 @@ export const StanEntryForm = () => {
             >
               BANG!
             </button>
+            <MessageEntryButton type="stan" action={handleStanButtonPress} />
           </div>
         </Form>
       </article>
