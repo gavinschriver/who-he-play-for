@@ -155,16 +155,6 @@ export const TrashTalkEntryForm = () => {
                 ref={chatRef}
               />
             </Form.Group>
-
-            <button
-              className="messageEntry__trash button addMessage--button"
-              onClick={(e) => {
-                e.preventDefault();
-                handleTrashtalkButtonPress();
-              }}
-            >
-              Shots fired
-            </button>
             <MessageEntryButton type="trash" action={handleTrashtalkButtonPress} />
           </div>
         </Form>

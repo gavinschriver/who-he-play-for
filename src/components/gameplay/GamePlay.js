@@ -7,6 +7,7 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/Col";
 import "./gameplay.css"
 import { Route } from "react-router-dom";
+import MessageEntryForm from "../messages/MessageEntryForm";
 
 export const GamePlay = () => (
   <>
@@ -21,6 +22,9 @@ export const GamePlay = () => (
           </Col>
           <Col>
             <TrashTalkEntryForm />
+          </Col>
+          <Col>
+            <MessageEntryForm type="trash" />
           </Col>
         </Row>
       </Container>
