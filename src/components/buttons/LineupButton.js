@@ -3,7 +3,6 @@ import Collapse from "react-bootstrap/Collapse";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { PlayerSelectButton } from "./PlayerSelectButton";
-import { Link } from "react-router-dom";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 
