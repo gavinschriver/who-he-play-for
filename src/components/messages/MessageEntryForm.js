@@ -5,11 +5,9 @@ import PlayerSelect from "../selectors/PlayerSelect";
 export default (props) => {
   const playerInput =
     props.type === "stan" ? (
-      <Form.Control as="select">
-        <option>CHOOSEY PICKY</option>
-      </Form.Control>
+      <PlayerSelect type="stan" />
     ) : props.type === "trash" ? (
-      <Form.Control type="text"></Form.Control>
+      <PlayerSelect type="trash" />
     ) : (
       <div></div>
         );
@@ -18,7 +16,7 @@ export default (props) => {
   
   return (
     <Form>
-      <PlayerSelect type="stan" />
+      {playerInput}
     </Form>
   );
 };

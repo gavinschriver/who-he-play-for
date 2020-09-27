@@ -38,7 +38,7 @@ export default (props) => {
 
   useEffect(() => {
     const allOtherUsersPlayers =
-    filteredOtherUsersPlayers.map((up) => {
+      filteredOtherUsersPlayers.map((up) => {
         return playerObjArray.find((p) => {
           return p.player.id === up.playerId;
         });
@@ -59,10 +59,19 @@ export default (props) => {
       .then(getUsersPlayers);
   }, []);
 
+  const collection =
+    props.type === "stan"
+      ? currentUsersPlayers
+      : props.type === "trash"
+      ? otherUsersPlayers
+      : [];
+
   return (
     <FormControl as="select">
-      {otherUsersPlayers.map((p) => (
-        <option>{p.player.firstName}</option>
+      {collection.map((p) => (
+        <option>
+          {p.player.firstName} {p.player.lastName}
+        </option>
       ))}
     </FormControl>
   );
