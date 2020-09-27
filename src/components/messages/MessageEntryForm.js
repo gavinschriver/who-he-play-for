@@ -6,7 +6,7 @@ export default (props) => {
   const playerInput =
     props.type === "stan" ? (
       <Form.Control as="select">
-        <optio>CHOOSEY PICKY</optio>
+        <option>CHOOSEY PICKY</option>
       </Form.Control>
     ) : props.type === "trash" ? (
       <Form.Control type="text"></Form.Control>
@@ -18,10 +18,6 @@ export default (props) => {
   
   return (
     <Form>
-      <Form.Group>
-        {/* choose player control/labels here */}
-        {playerInput}
-      </Form.Group>
       <PlayerSelect type="stan" />
     </Form>
   );

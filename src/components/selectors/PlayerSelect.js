@@ -10,34 +10,34 @@ export default (props) => {
   );
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
+
   const [currentUser, setCurrentUser] = useState({
     usersPlayers: [],
     messages: [],
   });
+    const [currentUsersPlayers, setCurrentUsersPlayers] = useState([])
+    
 
-  const currentUsersLineup = currentUser.usersPlayers.map((cUPO) => {
-    return playerObjArray.find((p) => {
-      return p.player.id === cUPO.playerId;
-    });
-  });
-
-  const type = props.type;
-
-  const options =
-    type === "stan" ? (
-      currentUsersLineup.map((cPO) => {
-          return <option>{cPO.player.firstName}</option>;
-      })
-    ) : (
-      <option></option>
-    );
 
   useEffect(() => {
-    getUsers().then(getPlayerData).then(getUsersPlayers);
+    getUserById(currentUserId).then(setCurrentUser).then(getPlayerData);
   }, []);
+    
+    useEffect(() => {
+        const matchingPlayers = currentUser.usersPlayers.map(up => {
+            return playerObjArray.find(p => {
+                return p.player.id === up.playerId
+            })
+        }
+        ) || {}
+        setCurrentUsersPlayers(matchingPlayers)
+    }, [playerObjArray])
 
-  useEffect(() => {
-    getUserById(currentUserId).then(setCurrentUser);
-  }, []);
-  return <FormControl as="select">{options}</FormControl>;
+  return (
+    <FormControl as="select">
+      {currentUsersPlayers.map((p) => (
+        <option>{p.player.firstName}</option>
+      ))}
+    </FormControl>
+  );
 };
