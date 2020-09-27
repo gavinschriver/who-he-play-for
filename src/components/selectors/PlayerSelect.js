@@ -9,29 +9,36 @@ export default (props) => {
     UserContext
   );
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
-  const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
+  const { usersPlayers } = useContext(UserPlayerContext);
 
   const [currentUser, setCurrentUser] = useState({
     usersPlayers: [],
     messages: [],
   });
-    const [currentUsersPlayers, setCurrentUsersPlayers] = useState([])
-    
+  const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
 
+  const filteredUsersPlayers = currentUser.usersPlayers.filter(
+    (up) => !up.mentioned
+  );
 
   useEffect(() => {
     getUserById(currentUserId).then(setCurrentUser).then(getPlayerData);
   }, []);
-    
-    useEffect(() => {
-        const matchingPlayers = currentUser.usersPlayers.map(up => {
-            return playerObjArray.find(p => {
-                return p.player.id === up.playerId
-            })
-        }
-        ) || {}
-        setCurrentUsersPlayers(matchingPlayers)
-    }, [playerObjArray])
+
+  useEffect(() => {
+    const matchingPlayers =
+      filteredUsersPlayers.map((up) => {
+        return playerObjArray.find((p) => {
+          return p.player.id === up.playerId;
+        });
+      }) || {};
+    setCurrentUsersPlayers(matchingPlayers);
+  }, [playerObjArray]);
+
+  //need this to control for whenever a player is marked as mentioned
+  useEffect(() => {
+    getUserById(currentUserId).then(setCurrentUser);
+  }, [usersPlayers]);
 
   return (
     <FormControl as="select">
