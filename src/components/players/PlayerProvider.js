@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
+import { UserContext } from "../users/UserProvider";
 
 export const PlayerContext = React.createContext();
 
@@ -16,6 +18,7 @@ export const PlayerProvider = (propsObj) => {
         setPlayerObjArray(playerData.players);
       });
   };
+
 
   return (
     <PlayerContext.Provider
