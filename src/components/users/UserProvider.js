@@ -39,7 +39,6 @@ export const UserProvider = (props) => {
   };
 
   useEffect(() => {
-    console.log(currentUser)
     const foundUser = users.find(
       (u) => u.id === parseInt(localStorage.getItem("whpf_user"))
     );

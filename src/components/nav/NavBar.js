@@ -44,18 +44,3 @@ export const NavBar = () => {
     </div>
   );
 };
-
-// return (
-
-//             <NavLink href="/home">profile page</NavLink>
-//           </NavItem>
-//           <NavItem>
-//             <NavLink href="/responsibilities">responsibilities</NavLink>
-//           </NavItem>
-//           <NavItem>
-//             <NavLink href="/archive">archive</NavLink>
-//           </NavItem>
-//           <NavItem>
-//             <NavLink href="/logout">logout</NavLink>
-//           </NavItem>
-// );

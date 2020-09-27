@@ -1,10 +1,12 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../users/UserProvider"
 
 export const UserPlayerContext = React.createContext();
 
 export const UserPlayerProvider = (props) => {
+  const { currentUser } = useContext(UserContext)
   const [usersPlayers, setUsersPlayers] = useState([]);
-
+  const [currentUsersPlayers, setCurrentUsersPlayers] = useState([])
   const [mentionedCount, setMentionedCount] = useState(0);
 
   const getUsersPlayers = () => {
@@ -38,6 +40,12 @@ export const UserPlayerProvider = (props) => {
       body: JSON.stringify(userPlayer),
     }).then(getUsersPlayers);
   };
+
+  useEffect(() => {
+    console.log(currentUsersPlayers)
+    const foundCurrentUsersPlayers = usersPlayers.filter(uPO => uPO.userId === currentUser.id) 
+    setCurrentUsersPlayers(foundCurrentUsersPlayers)
+  }, [usersPlayers])
 
   return (
     <UserPlayerContext.Provider
