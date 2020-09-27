@@ -59,20 +59,27 @@ export default (props) => {
       .then(getUsersPlayers);
   }, []);
 
-  const collection =
-    props.type === "stan"
-      ? currentUsersPlayers
-      : props.type === "trash"
-      ? otherUsersPlayers
-      : [];
+  if (props.type === "stan") {
+    return (
+      <FormControl as="select">
+        {currentUsersPlayers.map((p) => (
+          <option>
+            {p.player.firstName} {p.player.lastName}
+          </option>
+        ))}
+      </FormControl>
+    );
+  }
 
-  return (
-    <FormControl as="select">
-      {collection.map((p) => (
-        <option>
-          {p.player.firstName} {p.player.lastName}
-        </option>
-      ))}
-    </FormControl>
-  );
+  if (props.type === "trash") {
+    return (
+      <FormControl as="select">
+        {otherUsersPlayers.map((p) => (
+          <option>
+            {p.player.firstName} {p.player.lastName}
+          </option>
+        ))}
+      </FormControl>
+    );
+  }
 };
