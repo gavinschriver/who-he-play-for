@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
-import { UserContext } from "../users/UserProvider";
+import React, { useState, createContext } from "react";
+
 
 export const PlayerContext = React.createContext();
 

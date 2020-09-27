@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "../users/UserProvider";
+import React, { useState, createContext } from "react";
 
 export const UserPlayerContext = React.createContext();
 
 export const UserPlayerProvider = (props) => {
-  const { getUsers, currentUser } = useContext(UserContext);
   const [usersPlayers, setUsersPlayers] = useState([]);
-  const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
-  const [activeUser, setActiveUser] = useState({})
+
   const [mentionedCount, setMentionedCount] = useState(0);
 
   const getUsersPlayers = () => {
@@ -42,20 +39,6 @@ export const UserPlayerProvider = (props) => {
     }).then(getUsersPlayers);
   };
 
-  useEffect(() => {
-    getUsers()
-  }, [])
-  
-  useEffect(() => {
-    const foundActiveuser = currentUser || {}
-    setActiveUser(foundActiveuser)
-  })
-
-  useEffect(() => {
-    const foundCurrentUsersPlayers =
-      usersPlayers.filter((uPO) => uPO.userId === activeUser.id) || {};
-    setCurrentUsersPlayers(foundCurrentUsersPlayers);
-  }, [usersPlayers]);
 
   return (
     <UserPlayerContext.Provider
@@ -67,7 +50,6 @@ export const UserPlayerProvider = (props) => {
         updateUserPlayer,
         mentionedCount,
         setMentionedCount,
-        currentUsersPlayers,
       }}
     >
       {props.children}

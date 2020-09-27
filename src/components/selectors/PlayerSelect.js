@@ -5,18 +5,16 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 
 export default (props) => {
-  const { getUsers, currentUser } = useContext(UserContext);
+  const { getUsers,  } = useContext(UserContext);
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
-  const { getUsersPlayers, usersPlayers, currentUsersPlayers } = useContext(
+  const { getUsersPlayers, usersPlayers } = useContext(
     UserPlayerContext
   );
-  const currentUsersLineup = currentUsersPlayers.map((cUP) => {
-    return playerObjArray.find((p) => p.player.id === cUP.playerId);
-  });
+    
   const type = props.type;
   const options =
     type === "stan" ? (
-      currentUsersLineup.map((player) => <option>{player.player.firstName}</option>)
+      playerObjArray.map((player) => <option>{player.player.firstName}</option>) || {}
     ) : (
       <option></option>
     );
