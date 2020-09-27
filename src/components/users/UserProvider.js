@@ -37,6 +37,14 @@ export const UserProvider = (props) => {
     }).then(getUsers);
   };
 
+  const currentUserId = parseInt(localStorage.getItem("whpf_user"));
+
+  const getUserById = (id) => {
+    return fetch(
+      `http://localhost:8888/users/${id}?_embed=messages&_embed=usersPlayers`
+    )
+      .then((res) => res.json())
+  };
 
   return (
     <UserContext.Provider
@@ -46,6 +54,8 @@ export const UserProvider = (props) => {
         addUser,
         removeUser,
         updateUser,
+        currentUserId,
+        getUserById
       }}
     >
       {props.children}

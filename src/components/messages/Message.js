@@ -56,11 +56,6 @@ export const Message = ({ MO }) => {
       return cUPO.player.firstName;
     }) || {};
 
-  // linup toggle
-  const matchingPlayersToggle = () => {
-    setShowHideMatchingPlayers(!showHideMatchingPlayers);
-  };
-
   //edit
   const toggleEditField = () => {
     setEditFieldShowing(!editFieldShowing);
