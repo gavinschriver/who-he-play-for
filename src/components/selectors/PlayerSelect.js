@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import FormControl from "react-bootstrap/FormControl";
 import { UserContext } from "../users/UserProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 
 export default (props) => {
-  const { users, getUsers, getUserById, currentUserId } = useContext(
-    UserContext
-  );
+  const { getUserById, currentUserId } = useContext(UserContext);
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
 
@@ -17,11 +15,11 @@ export default (props) => {
   });
   const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
   const [otherUsersPlayers, setOtherUsersPlayers] = useState([]);
+  const playerSelectRef = useRef("");
 
   const filteredCurrentUsersPlayers = currentUser.usersPlayers.filter(
     (up) => !up.mentioned
   );
-
   const filteredOtherUsersPlayers = usersPlayers.filter((up) => {
     return up.userId !== currentUserId;
   });
@@ -61,9 +59,9 @@ export default (props) => {
 
   if (props.type === "stan") {
     return (
-      <FormControl as="select">
+      <FormControl as="select" ref={playerSelectRef}>
         {currentUsersPlayers.map((p) => (
-          <option>
+          <option value={p.player.firstName}>
             {p.player.firstName} {p.player.lastName}
           </option>
         ))}
@@ -73,9 +71,9 @@ export default (props) => {
 
   if (props.type === "trash") {
     return (
-      <FormControl as="select">
+      <FormControl as="select" ref={playerSelectRef}>
         {otherUsersPlayers.map((p) => (
-          <option>
+          <option value={p.player.firstName}>
             {p.player.firstName} {p.player.lastName}
           </option>
         ))}

@@ -23,7 +23,7 @@ export const GamePlay = () => (
             <TrashTalkEntryForm />
           </Col>
           <Col>
-            <MessageEntryForm type="trash" />
+            <MessageEntryForm type="stan" />
           </Col>
         </Row>
       </Container>
