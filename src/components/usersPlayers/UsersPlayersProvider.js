@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "../users/UserProvider"
+import { UserContext } from "../users/UserProvider";
 
 export const UserPlayerContext = React.createContext();
 
 export const UserPlayerProvider = (props) => {
-  const { currentUser } = useContext(UserContext)
+  const { currentUser } = useContext(UserContext);
   const [usersPlayers, setUsersPlayers] = useState([]);
-  const [currentUsersPlayers, setCurrentUsersPlayers] = useState([])
+  const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
   const [mentionedCount, setMentionedCount] = useState(0);
 
   const getUsersPlayers = () => {
@@ -42,10 +42,10 @@ export const UserPlayerProvider = (props) => {
   };
 
   useEffect(() => {
-    console.log(currentUsersPlayers)
-    const foundCurrentUsersPlayers = usersPlayers.filter(uPO => uPO.userId === currentUser.id) 
-    setCurrentUsersPlayers(foundCurrentUsersPlayers)
-  }, [usersPlayers])
+    const foundCurrentUsersPlayers =
+      usersPlayers.filter((uPO) => uPO.userId === currentUser.id);
+    setCurrentUsersPlayers(foundCurrentUsersPlayers);
+  }, [usersPlayers]);
 
   return (
     <UserPlayerContext.Provider
@@ -56,7 +56,8 @@ export const UserPlayerProvider = (props) => {
         removeUserPlayer,
         updateUserPlayer,
         mentionedCount,
-        setMentionedCount
+        setMentionedCount,
+        currentUsersPlayers,
       }}
     >
       {props.children}
