@@ -6,7 +6,6 @@ import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/Col";
 import "./gameplay.css"
-import { Route } from "react-router-dom";
 import MessageEntryForm from "../messages/MessageEntryForm";
 
 export const GamePlay = () => (

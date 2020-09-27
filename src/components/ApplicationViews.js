@@ -18,7 +18,6 @@ export const ApplicationViews = (props) => {
   return (
     <>
       <Container fluid>
-        <UserProvider>
           <PlayerProvider>
             <MessageProvider>
               <UserPlayerProvider>
@@ -49,7 +48,6 @@ export const ApplicationViews = (props) => {
               </UserPlayerProvider>
             </MessageProvider>
           </PlayerProvider>
-        </UserProvider>
       </Container>
 
       <UserProvider>
