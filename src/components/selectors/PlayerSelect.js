@@ -18,28 +18,33 @@ export default (props) => {
   const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
   const [otherUsersPlayers, setOtherUsersPlayers] = useState([]);
 
-  const filteredUsersPlayers = currentUser.usersPlayers.filter(
+  const filteredCurrentUsersPlayers = currentUser.usersPlayers.filter(
     (up) => !up.mentioned
   );
 
+  const filteredOtherUsersPlayers = usersPlayers.filter((up) => {
+    return up.userId !== currentUserId;
+  });
+
   useEffect(() => {
     const matchingPlayers =
-      filteredUsersPlayers.map((up) => {
+      filteredCurrentUsersPlayers.map((up) => {
         return playerObjArray.find((p) => {
           return p.player.id === up.playerId;
         });
       }) || {};
     setCurrentUsersPlayers(matchingPlayers);
   }, [playerObjArray]);
-    
-    useEffect(() => {
-        const allOtherUsersPlayers = usersPlayers.map((up) => {
-            return playerObjArray.find(p => {
-                return p.player.id === up.playerId
-            })
-        }) || {}
-        setOtherUsersPlayers(allOtherUsersPlayers)
-    }, [playerObjArray])
+
+  useEffect(() => {
+    const allOtherUsersPlayers =
+    filteredOtherUsersPlayers.map((up) => {
+        return playerObjArray.find((p) => {
+          return p.player.id === up.playerId;
+        });
+      }) || {};
+    setOtherUsersPlayers(allOtherUsersPlayers);
+  }, [playerObjArray]);
 
   //need this to control for whenever a current user's player is marked as mentioned
   useEffect(() => {
@@ -56,9 +61,9 @@ export default (props) => {
 
   return (
     <FormControl as="select">
-          {otherUsersPlayers.map((p) => (
-              <option>{p.player.firstName}</option>
-          ))}
+      {otherUsersPlayers.map((p) => (
+        <option>{p.player.firstName}</option>
+      ))}
     </FormControl>
   );
 };
