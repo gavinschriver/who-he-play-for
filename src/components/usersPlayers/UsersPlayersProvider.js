@@ -4,9 +4,10 @@ import { UserContext } from "../users/UserProvider";
 export const UserPlayerContext = React.createContext();
 
 export const UserPlayerProvider = (props) => {
-  const { currentUser } = useContext(UserContext);
+  const { getUsers, currentUser } = useContext(UserContext);
   const [usersPlayers, setUsersPlayers] = useState([]);
   const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
+  const [activeUser, setActiveUser] = useState({})
   const [mentionedCount, setMentionedCount] = useState(0);
 
   const getUsersPlayers = () => {
@@ -42,8 +43,17 @@ export const UserPlayerProvider = (props) => {
   };
 
   useEffect(() => {
+    getUsers()
+  }, [])
+  
+  useEffect(() => {
+    const foundActiveuser = currentUser || {}
+    setActiveUser(foundActiveuser)
+  })
+
+  useEffect(() => {
     const foundCurrentUsersPlayers =
-      usersPlayers.filter((uPO) => uPO.userId === currentUser.id);
+      usersPlayers.filter((uPO) => uPO.userId === activeUser.id) || {};
     setCurrentUsersPlayers(foundCurrentUsersPlayers);
   }, [usersPlayers]);
 

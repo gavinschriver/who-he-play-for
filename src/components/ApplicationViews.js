@@ -18,36 +18,36 @@ export const ApplicationViews = (props) => {
   return (
     <>
       <Container fluid>
-          <PlayerProvider>
+        <PlayerProvider>
+          <UserPlayerProvider>
             <MessageProvider>
-              <UserPlayerProvider>
-                <Route
-                  exact
-                  path="/"
-                  render={(props) => (
-                    <>
-                      <Jumbotron>
-                        <AppHeader {...props} />
-                      </Jumbotron>
-                      <Container className="maincontent" fluid="md">
-                        <Row>
-                          <GamePlay id="gamecontainer" {...props} />
-                        </Row>
-                        <Row>
-                          <Col>
-                            <GenerateLineup {...props} />
-                          </Col>
-                          <Col>
-                            <MessagesList {...props} />
-                          </Col>
-                        </Row>
-                      </Container>
-                    </>
-                  )}
-                ></Route>
-              </UserPlayerProvider>
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <>
+                    <Jumbotron>
+                      <AppHeader {...props} />
+                    </Jumbotron>
+                    <Container className="maincontent" fluid="md">
+                      <Row>
+                        <GamePlay id="gamecontainer" {...props} />
+                      </Row>
+                      <Row>
+                        <Col>
+                          <GenerateLineup {...props} />
+                        </Col>
+                        <Col>
+                          <MessagesList {...props} />
+                        </Col>
+                      </Row>
+                    </Container>
+                  </>
+                )}
+              ></Route>
             </MessageProvider>
-          </PlayerProvider>
+          </UserPlayerProvider>
+        </PlayerProvider>
       </Container>
 
       <UserProvider>

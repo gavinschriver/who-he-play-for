@@ -14,7 +14,7 @@ export default (props) => {
   const type = props.type;
   const options =
     type === "stan" ? (
-      currentUsersPlayers.map((up) => <option>{currentUser.name}</option>)
+      currentUsersPlayers.map((up) => <option>{up.playerId}</option>)
     ) : (
       <option></option>
     );

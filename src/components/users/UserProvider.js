@@ -40,7 +40,7 @@ export const UserProvider = (props) => {
 
   useEffect(() => {
     const foundUser = users.find(
-      (u) => u.id === parseInt(localStorage.getItem("whpf_user"))
+      (u) => u.id === parseInt(localStorage.getItem("whpf_user")) || {}
     );
     setCurrentUser(foundUser);
   }, [users]);
