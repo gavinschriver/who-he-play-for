@@ -62,7 +62,7 @@ export const Player = ({ PO, TO }) => {
             <PlayerSelectButton
               type="stan"
               location="lineup"
-              player={currentPlayer.player.firstName}
+                player={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`}
             />
           </div>
         )}

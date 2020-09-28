@@ -14,8 +14,6 @@ export default (props) => {
   const { messages, getMessages, addMessage } = useContext(MessageContext);
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
   const {
-    usersPlayers,
-    getUsersPlayers,
     updateUserPlayer,
     setMentionedCount,
   } = useContext(UserPlayerContext);
@@ -39,11 +37,15 @@ export default (props) => {
     const URL = URLref.current.value;
     const text = textRef.current.value;
 
-    const matchingPlayerObject = currentUsersPlayers.find(PO => {
+    const matchingStanPlayerObject = currentUsersPlayers.find(PO => {
       return `${PO.player.firstName} ${PO.player.lastName}` === player
     })
 
-    console.log(matchingPlayerObject)
+    const matchingStanUserPlayer = filteredCurrentUsersPlayers.find(UP => {
+      return matchingStanPlayerObject.player.id === UP.playerId
+    })
+
+    console.log(matchingStanUserPlayer)
 
   };
 
@@ -63,14 +65,12 @@ export default (props) => {
 
   if (props.type === "stan") {
     useEffect(() => {
-      console.log(stanPlayer);
       playerRef.current.value = stanPlayer;
     }, [stanPlayer]);
   }
 
   if (props.type === "trash") {
     useEffect(() => {
-      console.log(trashtalkPlayer);
       playerRef.current.value = trashtalkPlayer;
     }, [trashtalkPlayer]);
   }
@@ -89,7 +89,6 @@ export default (props) => {
     getUserById(currentUserId)
       .then(setCurrentUser)
       .then(getPlayerData)
-      .then(getUsersPlayers)
       .then(getMessages);
   }, []);
 
