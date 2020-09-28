@@ -10,7 +10,6 @@ export default (props) => {
   const { getUserById, currentUserId } = useContext(UserContext);
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
-  const { setPlayerSelectValue } = useContext(MessageContext)
 
   const [currentUser, setCurrentUser] = useState({
     usersPlayers: [],
@@ -60,16 +59,10 @@ export default (props) => {
       .then(getUsersPlayers);
   }, []);
 
-  useEffect(() => {
-    setPlayerSelectValue(playerSelectRef.current.value)
-  }, [])
-
   if (props.type === "stan") {
     return (
       <>
-        <FormControl as="select" ref={playerSelectRef} onChange={(changeEvent) => {
-          setPlayerSelectValue(changeEvent.target.value)
-        }}>
+        <FormControl as="select" >
           {currentUsersPlayers.map((p) => (
             <option value={p.player.firstName}>
               {p.player.firstName} {p.player.lastName}

@@ -4,7 +4,6 @@ export const MessageContext = React.createContext();
 
 export const MessageProvider = (props) => {
   const [messages, setMessages] = useState([]);
-  const [playerSelectValue, setPlayerSelectValue] = useState("")
 
   const getMessages = () => {
     return fetch(`http://localhost:8888/messages?_expand=user`)
@@ -28,20 +27,27 @@ export const MessageProvider = (props) => {
     }).then(getMessages);
   };
 
-  const updateMessage = message => {
+  const updateMessage = (message) => {
     return fetch(`http://localhost:8888/messages/${message.id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(message)
-    })
-        .then(getMessages)
-}
-    
-    return (
-        <MessageContext.Provider value={{ messages, getMessages, addMessage, removeMessage, updateMessage, playerSelectValue, setPlayerSelectValue }}>
-            {props.children}
-        </MessageContext.Provider>
-)
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    }).then(getMessages);
+  };
+
+  return (
+    <MessageContext.Provider
+      value={{
+        messages,
+        getMessages,
+        addMessage,
+        removeMessage,
+        updateMessage,
+      }}
+    >
+      {props.children}
+    </MessageContext.Provider>
+  );
 };

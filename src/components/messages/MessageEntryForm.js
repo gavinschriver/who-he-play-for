@@ -8,16 +8,11 @@ import { Button } from "react-bootstrap";
 import { MessageContext } from "./MessageProvider";
 
 export default (props) => {
-  const { playerSelectValue } = useContext(MessageContext);
-
-  const newMessage = {
-    player: playerSelectValue,
-  }
 
   const playerInput = <PlayerSelect type={props.type} />;
   const url = <MessageURLInput type={props.type} />;
   const text = <MessageEntryText type={props.type} />;
-  const submit = <MessageEntryButton type={props.type} message={newMessage} />;
+  const submit = <MessageEntryButton type={props.type}/>;
   const title =
     props.type === "stan"
       ? "Stan by your Man"
