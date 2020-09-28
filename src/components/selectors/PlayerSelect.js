@@ -74,7 +74,7 @@ export const PlayerSelect = React.forwardRef((props, ref) => {
     return (
       <FormControl as="select" ref={ref}>
         {otherUsersPlayers.map((p) => (
-          <option value={p.player.firstName}>
+          <option value={`${p.player.firstName} ${p.player.lastName}`}>
             {p.player.firstName} {p.player.lastName}
           </option>
         ))}

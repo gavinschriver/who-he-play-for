@@ -18,10 +18,8 @@ export const MessageEntryButton = (props) => {
   return (
     <Button
       onClick={(e) => {
-        if (playerExists) {
           e.preventDefault();
           handleSubmitMessageClick();
-        }
       }}
     >
       {typeText}

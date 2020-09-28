@@ -40,7 +40,7 @@ export default (props) => {
   if (props.type === "trash") {
     useEffect(() => {
       console.log(trashtalkPlayer)
-      playerRef.current.value = "poopy?"
+      playerRef.current.value = trashtalkPlayer
     }, [trashtalkPlayer])
   }
 
