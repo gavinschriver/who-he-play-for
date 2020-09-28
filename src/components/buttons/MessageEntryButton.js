@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
+import { PlayerContext } from "../players/PlayerProvider";
 
 export const MessageEntryButton = (props) => {
+  const { stanPlayer, trashtalkPlayer } = useContext(PlayerContext);
+  const playerExists =
+    props.type === "stan"
+      ? stanPlayer
+      : props.type === "trash"
+      ? trashtalkPlayer
+      : "";
   const type = props.type;
   const typeText = props.type === "stan" ? "BANG!" : "Shots Fired";
-  const newMessage = props.message;
 
-  const handleSubmitMessageClick = props.action
+  const handleSubmitMessageClick = props.action;
 
   return (
     <Button
       onClick={(e) => {
-        e.preventDefault();
-        handleSubmitMessageClick();
+        if (playerExists) {
+          e.preventDefault();
+          handleSubmitMessageClick();
+        }
       }}
     >
       {typeText}

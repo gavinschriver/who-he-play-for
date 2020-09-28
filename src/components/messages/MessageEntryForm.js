@@ -8,7 +8,7 @@ import { PlayerContext } from "../players/PlayerProvider";
 
 export default (props) => {
 
-  const {stanPlayer, trashTalkPlayer} = useContext(PlayerContext)
+  const {stanPlayer, trashtalkPlayer} = useContext(PlayerContext)
   const playerRef = React.createRef();
   const URLref = React.createRef();
   const textRef = React.createRef();
@@ -32,8 +32,16 @@ export default (props) => {
 
   if (props.type === "stan") {
     useEffect(() => {
+      console.log(stanPlayer)
       playerRef.current.value = stanPlayer
     }, [stanPlayer])
+  }
+
+  if (props.type === "trash") {
+    useEffect(() => {
+      console.log(trashtalkPlayer)
+      playerRef.current.value = "poopy?"
+    }, [trashtalkPlayer])
   }
 
   return (
