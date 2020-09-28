@@ -53,7 +53,7 @@ export const Message = ({ MO }) => {
 
   const currenUsersLineupAsStrings =
     currentUsersPlayerObjects.map((cUPO) => {
-      return cUPO.player.firstName;
+      return `${cUPO.player.firstName} ${cUPO.player.lastName}`;
     }) || {};
 
   //edit
