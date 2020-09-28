@@ -82,7 +82,17 @@ export default (props) => {
           }
 
           if (props.type === "trash") {
-            console.log("issatraashhh");
+            const newTrashtalkMessage = {
+              userId: currentUserId,
+              messagetext: playerString,
+              url: URL,
+              timestamp: Date.now(),
+              stan: false,
+              trashtalk: true,
+              chattext: text,
+            };
+
+            addMessage(newTrashtalkMessage);
           }
         } else alert("that's old news cap'n");
       } else alert("check that input yo");
