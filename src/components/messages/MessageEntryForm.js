@@ -1,14 +1,23 @@
-import React, { useRef } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import PlayerSelect from "../selectors/PlayerSelect";
 import MessageURLInput from "./MessageURLInput";
 import MessageEntryText from "./MessageEntryText";
-import { propTypes } from "react-bootstrap/esm/Image";
+import { MessageEntryButton } from "../buttons/MessageEntryButton";
+import { Button } from "react-bootstrap";
+import { MessageContext } from "./MessageProvider";
 
 export default (props) => {
+  const { playerSelectValue } = useContext(MessageContext);
+
+  const newMessage = {
+    player: playerSelectValue,
+  }
+
   const playerInput = <PlayerSelect type={props.type} />;
   const url = <MessageURLInput type={props.type} />;
   const text = <MessageEntryText type={props.type} />;
+  const submit = <MessageEntryButton type={props.type} message={newMessage} />;
   const title =
     props.type === "stan"
       ? "Stan by your Man"
@@ -23,6 +32,7 @@ export default (props) => {
         <Form.Group>{playerInput}</Form.Group>
         <Form.Group>{url}</Form.Group>
         <Form.Group>{text}</Form.Group>
+        {submit}
       </Form>
     </>
   );

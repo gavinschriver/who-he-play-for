@@ -12,6 +12,7 @@ export const MessageEntryButton = (props) => {
     <Button
       onClick={(e) => {
         e.preventDefault();
+        alert(newMessage.player)
         handleSubmitMessageClick();
       }}
     >
