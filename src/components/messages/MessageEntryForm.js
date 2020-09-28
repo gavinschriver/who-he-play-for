@@ -47,54 +47,55 @@ export default (props) => {
 
     if (props.type === "stan" || props.type === "trash") {
       if (URL !== "" && player !== "0") {
-        // const playerString = player.split(" ")[0];
-        if (!messageUrls.includes(URL)) {
-          if (props.type === "stan") {
-            const matchingStanPlayerObject = currentUsersPlayers.find((PO) => {
-              return `${PO.player.firstName} ${PO.player.lastName}` === player;
-            });
+        if ( URL.includes( player.split(" ")[0].toLowerCase() )  ) {
+          if (!messageUrls.includes(URL)) {
+            if (props.type === "stan") {
+              const matchingStanPlayerObject = currentUsersPlayers.find((PO) => {
+                return `${PO.player.firstName} ${PO.player.lastName}` === player;
+              });
 
-            const matchingStanUserPlayer = filteredCurrentUsersPlayers.find(
-              (UP) => {
-                return matchingStanPlayerObject.player.id === UP.playerId;
-              }
-            );
+              const matchingStanUserPlayer = filteredCurrentUsersPlayers.find(
+                (UP) => {
+                  return matchingStanPlayerObject.player.id === UP.playerId;
+                }
+              );
 
-            const updatedUPO = {
-              id: matchingStanUserPlayer.id,
-              userId: matchingStanUserPlayer.userId,
-              playerId: matchingStanUserPlayer.playerId,
-              mentioned: true,
-            };
-            updateUserPlayer(updatedUPO);
+              const updatedUPO = {
+                id: matchingStanUserPlayer.id,
+                userId: matchingStanUserPlayer.userId,
+                playerId: matchingStanUserPlayer.playerId,
+                mentioned: true,
+              };
+              updateUserPlayer(updatedUPO);
 
-            const newStanMessage = {
-              userId: currentUserId,
-              messagetext: player,
-              url: URL,
-              timestamp: Date.now(),
-              stan: true,
-              trashtalk: false,
-              chattext: text,
-            };
+              const newStanMessage = {
+                userId: currentUserId,
+                messagetext: player,
+                url: URL,
+                timestamp: Date.now(),
+                stan: true,
+                trashtalk: false,
+                chattext: text,
+              };
 
-            addMessage(newStanMessage);
-          }
+              addMessage(newStanMessage);
+            }
 
-          if (props.type === "trash") {
-            const newTrashtalkMessage = {
-              userId: currentUserId,
-              messagetext: player,
-              url: URL,
-              timestamp: Date.now(),
-              stan: false,
-              trashtalk: true,
-              chattext: text,
-            };
+            if (props.type === "trash") {
+              const newTrashtalkMessage = {
+                userId: currentUserId,
+                messagetext: player,
+                url: URL,
+                timestamp: Date.now(),
+                stan: false,
+                trashtalk: true,
+                chattext: text,
+              };
 
-            addMessage(newTrashtalkMessage);
-          }
-        } else alert("that's old news cap'n");
+              addMessage(newTrashtalkMessage);
+            }
+          } else alert("that's old news cap'n");
+        } else alert ("Where the EVIDENCE???")
       } else alert("check that input yo");
     } // end Stan/Trash as type
   };
