@@ -27,9 +27,14 @@ export default (props) => {
   const URLref = React.createRef();
   const textRef = React.createRef();
 
+  // filtering and extracting things ya know
   const filteredCurrentUsersPlayers = currentUser.usersPlayers.filter(
     (up) => !up.mentioned
   );
+
+  const messageUrls = messages.map((m) => {
+    return m.url;
+  });
 
   // submit function
   const handleSubmitButtonPress = () => {
@@ -37,17 +42,35 @@ export default (props) => {
     const URL = URLref.current.value;
     const text = textRef.current.value;
 
-    const matchingStanPlayerObject = currentUsersPlayers.find(PO => {
-      return `${PO.player.firstName} ${PO.player.lastName}` === player
-    })
+    if (props.type === "stan" || props.type === "trash") {
+      if (URL !== "" && player !== "") {
+        if (!messageUrls.includes(URL)) {
+          if (props.type === "stan") {
+            console.log("issastan")
+          }
 
-    const matchingStanUserPlayer = filteredCurrentUsersPlayers.find(UP => {
-      return matchingStanPlayerObject.player.id === UP.playerId
-    })
+          if (props.type === "trash") {
+            console.log("issatraashhh")
+          }
+        } else alert("that's old news cap'n")
+      } else alert("check that input yo")
+      
 
-    console.log(matchingStanUserPlayer)
+    } // end Stan/Trash as type 
+
+    
 
   };
+
+  // const matchingStanPlayerObject = currentUsersPlayers.find(PO => {
+  //   return `${PO.player.firstName} ${PO.player.lastName}` === player
+  // })
+
+  // const matchingStanUserPlayer = filteredCurrentUsersPlayers.find(UP => {
+  //   return matchingStanPlayerObject.player.id === UP.playerId
+  // })
+
+  // const updatedUPO = {}
 
   // selections for rendering
   const playerInput = <PlayerSelect type={props.type} ref={playerRef} />;
