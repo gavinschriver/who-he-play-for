@@ -13,12 +13,18 @@ export default (props) => {
   const { stanPlayer, trashtalkPlayer } = useContext(PlayerContext);
   const { messages, getMessages, addMessage } = useContext(MessageContext);
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
-  const { usersPlayers, getUsersPlayers, updateUserPlayer, setMentionedCount } = useContext(UserPlayerContext)
-  const { getUserById, currentUserId} = useContext(UserContext)
+  const {
+    usersPlayers,
+    getUsersPlayers,
+    updateUserPlayer,
+    setMentionedCount,
+  } = useContext(UserPlayerContext);
+  const { getUserById, currentUserId } = useContext(UserContext);
   const [currentUser, setCurrentUser] = useState({
     usersPlayers: [],
     messages: [],
   });
+  const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
   const playerRef = React.createRef();
   const URLref = React.createRef();
   const textRef = React.createRef();
@@ -33,9 +39,13 @@ export default (props) => {
     const URL = URLref.current.value;
     const text = textRef.current.value;
 
-    console.log(filteredCurrentUsersPlayers)
-  };
+    const matchingPlayerObject = currentUsersPlayers.find(PO => {
+      return `${PO.player.firstName} ${PO.player.lastName}` === player
+    })
 
+    console.log(matchingPlayerObject)
+
+  };
 
   // selections for rendering
   const playerInput = <PlayerSelect type={props.type} ref={playerRef} />;
@@ -66,8 +76,22 @@ export default (props) => {
   }
 
   useEffect(() => {
-    getUserById(currentUserId).then(setCurrentUser).then(getPlayerData).then(getUsersPlayers).then(getMessages);
-  }, [])
+    const matchingPlayers =
+      filteredCurrentUsersPlayers.map((up) => {
+        return playerObjArray.find((p) => {
+          return p.player.id === up.playerId;
+        });
+      }) || {};
+    setCurrentUsersPlayers(matchingPlayers);
+  }, [playerObjArray]);
+
+  useEffect(() => {
+    getUserById(currentUserId)
+      .then(setCurrentUser)
+      .then(getPlayerData)
+      .then(getUsersPlayers)
+      .then(getMessages);
+  }, []);
 
   return (
     <>
