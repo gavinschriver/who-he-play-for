@@ -31,6 +31,10 @@ export default (props) => {
     (up) => !up.mentioned
   );
 
+  const mentionedUsersPlayers = currentUser.usersPlayers.filter(
+    (up) => up.mentioned
+  );
+
   const messageUrls = messages.map((m) => {
     return m.url;
   });
@@ -43,7 +47,7 @@ export default (props) => {
 
     if (props.type === "stan" || props.type === "trash") {
       if (URL !== "" && player !== "0") {
-        const playerString = player.split(' ')[0]
+        const playerString = player.split(" ")[0];
         if (!messageUrls.includes(URL)) {
           if (props.type === "stan") {
             const matchingStanPlayerObject = currentUsersPlayers.find((PO) => {
@@ -62,11 +66,11 @@ export default (props) => {
               playerId: matchingStanUserPlayer.playerId,
               mentioned: true,
             };
-            console.log(updatedUPO);
+            updateUserPlayer(updatedUPO);
 
             const newStanMessage = {
               userId: currentUserId,
-              messagetext: player,
+              messagetext: playerString,
               url: URL,
               timestamp: Date.now(),
               stan: true,
@@ -74,8 +78,7 @@ export default (props) => {
               chattext: text,
             };
 
-            console.log(newStanMessage);
-
+            addMessage(newStanMessage);
           }
 
           if (props.type === "trash") {
@@ -132,7 +135,7 @@ export default (props) => {
   useEffect(() => {
     getUserById(currentUserId)
       .then(setCurrentUser)
-      .then(setMentionedCount(filteredCurrentUsersPlayers));
+      .then(setMentionedCount(mentionedUsersPlayers.length));
   }, [usersPlayers]);
 
   return (
