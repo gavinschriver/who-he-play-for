@@ -1,8 +1,7 @@
-import React, { useRef, forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { FormControl } from "react-bootstrap";
 
 export const MessageURLInput = forwardRef((props, ref) => {
-  const urlRef = useRef("");
   const heading =
     props.type === "stan" ? (
       <h4>Put some SAUCE on it</h4>

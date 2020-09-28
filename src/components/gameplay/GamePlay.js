@@ -5,7 +5,7 @@ import { Leaderboard } from "../leaderboard/Leaderboard";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/Col";
-import "./gameplay.css"
+import "./gameplay.css";
 import MessageEntryForm from "../messages/MessageEntryForm";
 
 export const GamePlay = () => (
@@ -24,6 +24,9 @@ export const GamePlay = () => (
           </Col>
           <Col>
             <MessageEntryForm type="stan" />
+          </Col>
+          <Col>
+            <MessageEntryForm type="trash" />
           </Col>
         </Row>
       </Container>
