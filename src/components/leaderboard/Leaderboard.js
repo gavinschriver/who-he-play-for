@@ -80,9 +80,10 @@ export const Leaderboard = (props) => {
         });
       }) || {};
 
+    // HERES the line that would have to change to match; this is the collection of player name string references from a user's current lineup
     const matchingPlayerStrings =
       matchingPlayerObjects.map((mPO) => {
-        return mPO.player.firstName;
+        return `${mPO.player.firstName} ${mPO.player.lastName}`;
       }) || {};
 
     trashtalkStringNameInstances.forEach((ttSNI) => {

@@ -47,7 +47,7 @@ export default (props) => {
 
     if (props.type === "stan" || props.type === "trash") {
       if (URL !== "" && player !== "0") {
-        const playerString = player.split(" ")[0];
+        // const playerString = player.split(" ")[0];
         if (!messageUrls.includes(URL)) {
           if (props.type === "stan") {
             const matchingStanPlayerObject = currentUsersPlayers.find((PO) => {
@@ -70,7 +70,7 @@ export default (props) => {
 
             const newStanMessage = {
               userId: currentUserId,
-              messagetext: playerString,
+              messagetext: player,
               url: URL,
               timestamp: Date.now(),
               stan: true,
@@ -84,7 +84,7 @@ export default (props) => {
           if (props.type === "trash") {
             const newTrashtalkMessage = {
               userId: currentUserId,
-              messagetext: playerString,
+              messagetext: player,
               url: URL,
               timestamp: Date.now(),
               stan: false,
