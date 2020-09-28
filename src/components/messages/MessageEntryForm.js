@@ -13,10 +13,9 @@ export default (props) => {
   const { stanPlayer, trashtalkPlayer } = useContext(PlayerContext);
   const { messages, getMessages, addMessage } = useContext(MessageContext);
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
-  const {
-    updateUserPlayer,
-    setMentionedCount,
-  } = useContext(UserPlayerContext);
+  const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
+    UserPlayerContext
+  );
   const { getUserById, currentUserId } = useContext(UserContext);
   const [currentUser, setCurrentUser] = useState({
     usersPlayers: [],
@@ -43,34 +42,49 @@ export default (props) => {
     const text = textRef.current.value;
 
     if (props.type === "stan" || props.type === "trash") {
-      if (URL !== "" && player !== "") {
+      if (URL !== "" && player !== "0") {
+        const playerString = player.split(' ')[0]
         if (!messageUrls.includes(URL)) {
           if (props.type === "stan") {
-            console.log("issastan")
+            const matchingStanPlayerObject = currentUsersPlayers.find((PO) => {
+              return `${PO.player.firstName} ${PO.player.lastName}` === player;
+            });
+
+            const matchingStanUserPlayer = filteredCurrentUsersPlayers.find(
+              (UP) => {
+                return matchingStanPlayerObject.player.id === UP.playerId;
+              }
+            );
+
+            const updatedUPO = {
+              id: matchingStanUserPlayer.id,
+              userId: matchingStanUserPlayer.userId,
+              playerId: matchingStanUserPlayer.playerId,
+              mentioned: true,
+            };
+            console.log(updatedUPO);
+
+            const newStanMessage = {
+              userId: currentUserId,
+              messagetext: player,
+              url: URL,
+              timestamp: Date.now(),
+              stan: true,
+              trashtalk: false,
+              chattext: text,
+            };
+
+            console.log(newStanMessage);
+
           }
 
           if (props.type === "trash") {
-            console.log("issatraashhh")
+            console.log("issatraashhh");
           }
-        } else alert("that's old news cap'n")
-      } else alert("check that input yo")
-      
-
-    } // end Stan/Trash as type 
-
-    
-
+        } else alert("that's old news cap'n");
+      } else alert("check that input yo");
+    } // end Stan/Trash as type
   };
-
-  // const matchingStanPlayerObject = currentUsersPlayers.find(PO => {
-  //   return `${PO.player.firstName} ${PO.player.lastName}` === player
-  // })
-
-  // const matchingStanUserPlayer = filteredCurrentUsersPlayers.find(UP => {
-  //   return matchingStanPlayerObject.player.id === UP.playerId
-  // })
-
-  // const updatedUPO = {}
 
   // selections for rendering
   const playerInput = <PlayerSelect type={props.type} ref={playerRef} />;
@@ -114,6 +128,12 @@ export default (props) => {
       .then(getPlayerData)
       .then(getMessages);
   }, []);
+
+  useEffect(() => {
+    getUserById(currentUserId)
+      .then(setCurrentUser)
+      .then(setMentionedCount(filteredCurrentUsersPlayers));
+  }, [usersPlayers]);
 
   return (
     <>

@@ -58,6 +58,7 @@ export const Leaderboard = (props) => {
     return m.trashtalk;
   });
 
+  // is this the only line that would need adjusting to fix first AND last name of player problem?
   const trashtalkStringNameInstances = trashtalkMessages.map((ttMO) => {
     return ttMO.messagetext;
   });
