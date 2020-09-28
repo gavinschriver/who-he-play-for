@@ -78,7 +78,7 @@ export const LineupButton = (props) => {
                           <PlayerSelectButton
                             type={selectButtonType}
                             location={locationClass}
-                            player={`${mPO.player.firstName}`}
+                            player={`${mPO.player.firstName} ${mPO.player.lastName}`}
                           />
                         ) : props.userType === "current" &&
                           mentionedPlayerIds.includes(mPO.player.id) ? (
