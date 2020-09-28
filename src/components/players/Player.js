@@ -58,11 +58,13 @@ export const Player = ({ PO, TO }) => {
         {matchingUsersPlayer.mentioned ? (
           <div>#STAN'D</div>
         ) : (
-          <PlayerSelectButton
-            type="stan"
-            location="lineup"
-            player={currentPlayer.player.firstName}
-          />
+          <div>
+            <PlayerSelectButton
+              type="stan"
+              location="lineup"
+              player={currentPlayer.player.firstName}
+            />
+          </div>
         )}
         <Card.Title className="playerCard__name">
           Player: {currentPlayer.player.firstName}{" "}

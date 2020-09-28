@@ -7,15 +7,14 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 
 export const LineupButton = (props) => {
-  const { usersPlayers } = useContext(UserPlayerContext)
-  const { playerObjArray } = useContext(PlayerContext)
+  const { usersPlayers } = useContext(UserPlayerContext);
+  const { playerObjArray } = useContext(PlayerContext);
 
-  
   const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const locationClass = props.location;
-  const userId = props.userId
-  const selectButtonType = props.userType === "current" ? "stan" : "trash"
-  const actionHeader = props.userType === "current" ? "STAN" : "TRASH 'EM?"
+  const userId = props.userId;
+  const selectButtonType = props.userType === "current" ? "stan" : "trash";
+  const actionHeader = props.userType === "current" ? "STAN" : "TRASH 'EM?";
 
   const matchingUsersPlayers = usersPlayers.filter((uPO) => {
     return uPO.userId === userId;
@@ -27,6 +26,13 @@ export const LineupButton = (props) => {
     });
   });
 
+  const mentionedUsersPlayers = usersPlayers.filter((up) => {
+    return up.mentioned === true;
+  });
+
+  const mentionedPlayerIds = mentionedUsersPlayers.map((mUP) => {
+    return mUP.playerId;
+  });
 
   const matchingPlayersToggle = () => {
     setShowHideMatchingPlayers(!showHideMatchingPlayers);
@@ -52,21 +58,41 @@ export const LineupButton = (props) => {
               </tr>
             </thead>
             <tbody>
-              {
-                matchingPlayers.map(mPO => {
-                  const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
-                  return (
-                    <tr>
-                      <td>
-                        <a href={redditSearch} target="_blank" className={locationClass}>{mPO.player.firstName} {mPO.player.lastName}</a>
-                      </td>
-                      <td>
-                        <PlayerSelectButton type={selectButtonType} location={locationClass} player={mPO.player.firstName}/>
-                      </td>
-                    </tr>
-                  )
-                })
-              }
+              {matchingPlayers.map((mPO) => {
+                const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
+                return (
+                  <tr>
+                    <td>
+                      <a
+                        href={redditSearch}
+                        target="_blank"
+                        className={locationClass}
+                      >
+                        {mPO.player.firstName} {mPO.player.lastName}
+                      </a>
+                    </td>
+                    <td>
+                      {props.userType === "current" &&
+                      !mentionedPlayerIds.includes(mPO.player.id) ? (
+                        <PlayerSelectButton
+                          type={selectButtonType}
+                          location={locationClass}
+                          player={`${mPO.player.firstName} ${mPO.player.lastName}`}
+                        />
+                      ) : props.userType === "current" &&
+                        mentionedPlayerIds.includes(mPO.player.id) ? (
+                        <div></div>
+                      ) : (
+                        <PlayerSelectButton
+                          type={selectButtonType}
+                          location={locationClass}
+                          player={`${mPO.player.firstName} ${mPO.player.lastName}`}
+                        />
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
         </Collapse>
