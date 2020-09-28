@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, forwardRef } from "react";
 import { FormControl } from "react-bootstrap";
 
-export default (props) => {
+export const MessageURLInput = forwardRef((props, ref) => {
   const urlRef = useRef("");
   const heading =
     props.type === "stan" ? (
@@ -20,8 +20,8 @@ export default (props) => {
         name="url"
         id="url"
         placeholder="URL must contain player's name"
-        ref={urlRef}
+        ref={ref}
       />
     </>
   );
-};
+});

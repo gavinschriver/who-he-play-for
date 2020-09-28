@@ -3,10 +3,8 @@ import FormControl from "react-bootstrap/FormControl";
 import { UserContext } from "../users/UserProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
-import { Button } from "react-bootstrap";
-import { MessageContext } from "../messages/MessageProvider";
 
-export default (props) => {
+export const PlayerSelect = React.forwardRef((props, ref) => {
   const { getUserById, currentUserId } = useContext(UserContext);
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -17,7 +15,6 @@ export default (props) => {
   });
   const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
   const [otherUsersPlayers, setOtherUsersPlayers] = useState([]);
-  const playerSelectRef = useRef("");
 
   const filteredCurrentUsersPlayers = currentUser.usersPlayers.filter(
     (up) => !up.mentioned
@@ -62,7 +59,7 @@ export default (props) => {
   if (props.type === "stan") {
     return (
       <>
-        <FormControl as="select" >
+        <FormControl as="select" ref={ref}>
           {currentUsersPlayers.map((p) => (
             <option value={p.player.firstName}>
               {p.player.firstName} {p.player.lastName}
@@ -75,7 +72,7 @@ export default (props) => {
 
   if (props.type === "trash") {
     return (
-      <FormControl as="select" ref={playerSelectRef}>
+      <FormControl as="select" ref={ref}>
         {otherUsersPlayers.map((p) => (
           <option value={p.player.firstName}>
             {p.player.firstName} {p.player.lastName}
@@ -84,4 +81,4 @@ export default (props) => {
       </FormControl>
     );
   }
-};
+});

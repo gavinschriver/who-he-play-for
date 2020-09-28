@@ -50,51 +50,53 @@ export const LineupButton = (props) => {
       </Button>
       <div>
         <Collapse in={showHideMatchingPlayers}>
-          <Table>
-            <thead>
-              <tr>
-                <th>Player</th>
-                <th>{actionHeader}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {matchingPlayers.map((mPO) => {
-                const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
-                return (
-                  <tr>
-                    <td>
-                      <a
-                        href={redditSearch}
-                        target="_blank"
-                        className={locationClass}
-                      >
-                        {mPO.player.firstName} {mPO.player.lastName}
-                      </a>
-                    </td>
-                    <td>
-                      {props.userType === "current" &&
-                      !mentionedPlayerIds.includes(mPO.player.id) ? (
-                        <PlayerSelectButton
-                          type={selectButtonType}
-                          location={locationClass}
-                          player={`${mPO.player.firstName}`}
-                        />
-                      ) : props.userType === "current" &&
-                        mentionedPlayerIds.includes(mPO.player.id) ? (
-                        <div></div>
-                      ) : (
-                        <PlayerSelectButton
-                          type={selectButtonType}
-                          location={locationClass}
-                          player={`${mPO.player.firstName} ${mPO.player.lastName}`}
-                        />
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
+          <div>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>{actionHeader}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {matchingPlayers.map((mPO) => {
+                  const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
+                  return (
+                    <tr>
+                      <td>
+                        <a
+                          href={redditSearch}
+                          target="_blank"
+                          className={locationClass}
+                        >
+                          {mPO.player.firstName} {mPO.player.lastName}
+                        </a>
+                      </td>
+                      <td>
+                        {props.userType === "current" &&
+                        !mentionedPlayerIds.includes(mPO.player.id) ? (
+                          <PlayerSelectButton
+                            type={selectButtonType}
+                            location={locationClass}
+                            player={`${mPO.player.firstName}`}
+                          />
+                        ) : props.userType === "current" &&
+                          mentionedPlayerIds.includes(mPO.player.id) ? (
+                          <div></div>
+                        ) : (
+                          <PlayerSelectButton
+                            type={selectButtonType}
+                            location={locationClass}
+                            player={`${mPO.player.firstName} ${mPO.player.lastName}`}
+                          />
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </div>
         </Collapse>
       </div>
     </>

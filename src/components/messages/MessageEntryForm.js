@@ -1,16 +1,18 @@
 import React, { useRef, useContext, useEffect } from "react";
 import Form from "react-bootstrap/Form";
-import PlayerSelect from "../selectors/PlayerSelect";
-import MessageURLInput from "./MessageURLInput";
+import { PlayerSelect } from "../selectors/PlayerSelect";
+import { MessageURLInput } from "./MessageURLInput";
 import MessageEntryText from "./MessageEntryText";
 import { MessageEntryButton } from "../buttons/MessageEntryButton";
 import { Button } from "react-bootstrap";
-import { MessageContext } from "./MessageProvider";
 
 export default (props) => {
 
-  const playerInput = <PlayerSelect type={props.type} />;
-  const url = <MessageURLInput type={props.type} />;
+  const playerRef = React.createRef()
+  const URLref = React.createRef()
+
+  const playerInput = <PlayerSelect type={props.type} ref={playerRef} />;
+  const url = <MessageURLInput type={props.type} ref={URLref} />;
   const text = <MessageEntryText type={props.type} />;
   const submit = <MessageEntryButton type={props.type}/>;
   const title =
@@ -28,6 +30,12 @@ export default (props) => {
         <Form.Group>{url}</Form.Group>
         <Form.Group>{text}</Form.Group>
         {submit}
+        <Button onClick={(e) => {
+          e.preventDefault()
+          alert(URLref.current.value)
+        }}>
+          Testyman
+        </Button>
       </Form>
     </>
   );
