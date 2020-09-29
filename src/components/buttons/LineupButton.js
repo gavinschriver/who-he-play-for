@@ -30,6 +30,9 @@ export const LineupButton = (props) => {
     return up.mentioned === true;
   });
 
+  // BUG: if same playerId appears in 2 different userPlayers, as in, for the same lineup, 
+  // the conditional that decides whether the button should show up to stan that  player will be "false" for both even
+  // if only 1 is marked because that player Id # is going to be in this array
   const mentionedPlayerIds = mentionedUsersPlayers.map((mUP) => {
     return mUP.playerId;
   });

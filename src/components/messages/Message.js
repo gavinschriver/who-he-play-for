@@ -49,12 +49,12 @@ export const Message = ({ MO }) => {
       return playerObjArray.find((pO) => {
         return pO.player.id === cUPID;
       });
-    }) || {};
+    });
 
-  const currenUsersLineupAsStrings =
+  const currentUsersLineupAsStrings =
     currentUsersPlayerObjects.map((cUPO) => {
       return `${cUPO.player.firstName} ${cUPO.player.lastName}`;
-    }) || {};
+    });
 
   //edit
   const toggleEditField = () => {
@@ -145,7 +145,7 @@ export const Message = ({ MO }) => {
             <span className="messageType trashtalkTrue">
               <Badge variant="danger">talked trash on</Badge>
             </span>
-            {currenUsersLineupAsStrings.includes(MO.messagetext) ? (
+            {currentUsersLineupAsStrings.includes(MO.messagetext) ? (
               <span> your guy</span>
             ) : (
               <span></span>
@@ -161,7 +161,7 @@ export const Message = ({ MO }) => {
         userType={MO.user.id === currentUserId ? "current" : "other"}
         messageType={MO.stan ? "stan" : MO.trashtalk ? "trash" : "chat"}
         playerName={MO.messagetext}
-        isYourGuy={matchingPlayersFirstNames.includes(MO.messagetext)}
+        isYourGuy={currentUsersLineupAsStrings.includes(MO.messagetext)}
       />
       {user.avatar ? <Avatar user={user} location="message" /> : <div></div>}
 
