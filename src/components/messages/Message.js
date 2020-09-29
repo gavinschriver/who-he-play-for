@@ -17,7 +17,7 @@ import { EditMessageButton } from "../buttons/EditMessageButton";
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
-  const { messages, removeMessage, getMessages, updateMessage } = useContext(
+  const { messages, getMessages, updateMessage } = useContext(
     MessageContext
   );
   const { users, getUsers } = useContext(UserContext);
@@ -50,6 +50,10 @@ export const Message = ({ MO }) => {
   });
 
   //edit
+  const handleEditButtonPress = (e) => {
+    e.preventDefault()
+    alert('ISSA KNIFE')
+  }
 
   const toggleEditField = () => {
     setEditFieldShowing(!editFieldShowing);
@@ -89,15 +93,15 @@ export const Message = ({ MO }) => {
     setMatchingUsersPlayers(matchingUPs);
   }, [usersPlayers]);
 
-  useEffect(() => {
-    const matchingPOs =
-      matchingUsersPlayers.map((mUPO) => {
-        return playerObjArray.find((p) => {
-          return mUPO.playerId === p.player.id;
-        });
-      }) || {};
-    setMatchingPlayers(matchingPOs);
-  }, [playerObjArray]);
+  // useEffect(() => {
+  //   const matchingPOs =
+  //     matchingUsersPlayers.map((mUPO) => {
+  //       return playerObjArray.find((p) => {
+  //         return mUPO.playerId === p.player.id;
+  //       });
+  //     }) || {};
+  //   setMatchingPlayers(matchingPOs);
+  // }, [playerObjArray]);
 
   useEffect(() => {
     const currentUserLineup =
@@ -113,7 +117,7 @@ export const Message = ({ MO }) => {
         return u.id === MO.user.id;
       }) || {};
     setUser(matchingUser);
-  });
+  }, [users]);
 
   const messageClassName = MO.stan
     ? "messageCard messageCard--stanned"
@@ -156,7 +160,7 @@ export const Message = ({ MO }) => {
 
         {MO.user.id === currentUserId ? (
           <div className="message__edit">
-            <EditMessageButton id={MO.id}/>
+            <EditMessageButton id={MO.id} action={handleEditButtonPress}/>
             <Button
               className="message__edit button edit--button message--button"
               ref={editRef}
