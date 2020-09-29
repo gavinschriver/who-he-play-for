@@ -13,6 +13,7 @@ import Badge from "react-bootstrap/Badge";
 import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
 import { LineupButton } from "../buttons/LineupButton";
 import { DeleteMessageButton } from "../buttons/DeleteMessageButton";
+import { MessageHeader } from "./MessageHeader";
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -30,7 +31,6 @@ export const Message = ({ MO }) => {
   const [user, setUser] = useState({});
 
   // component-state booleans, set current user and get a ref for message to edit
-  const [showHideMatchingPlayers, setShowHideMatchingPlayers] = useState(false);
   const [editFieldShowing, setEditFieldShowing] = useState(false);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
   const editRef = useRef("");
@@ -156,6 +156,12 @@ export const Message = ({ MO }) => {
         )}
         <span className="message__playerName"> {MO.messagetext}</span>
       </Card.Header>
+      <MessageHeader
+        userName={MO.user.name}
+        userType={MO.user.id === currentUserId ? "current" : "other"}
+        messageType={MO.stan ? "stan" : MO.trashtalk ? "trash" : "chat"}
+        playerName={MO.messagetext}
+      />
       {user.avatar ? <Avatar user={user} location="message" /> : <div></div>}
 
       <Card.Body className="playerCard--body">
@@ -251,7 +257,7 @@ export const Message = ({ MO }) => {
         {/* delete button */}
 
         {MO.user.id === currentUserId ? (
-          <DeleteMessageButton location="message" id={MO.id}/>
+          <DeleteMessageButton location="message" id={MO.id} />
         ) : (
           <div></div>
         )}
