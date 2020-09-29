@@ -13,6 +13,7 @@ import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Highlight from "./highlights/Highlight";
 
 export const ApplicationViews = (props) => {
   return (
@@ -39,6 +40,11 @@ export const ApplicationViews = (props) => {
                         </Col>
                         <Col>
                           <MessagesList {...props} />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <Highlight />
                         </Col>
                       </Row>
                     </Container>

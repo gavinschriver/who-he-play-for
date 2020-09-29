@@ -10,7 +10,9 @@ import { UserContext } from "../users/UserProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 
 export default (props) => {
-  const { stanPlayer, trashtalkPlayer } = useContext(PlayerContext);
+  const { stanPlayer, setStanPlayer, trashtalkPlayer } = useContext(
+    PlayerContext
+  );
   const { messages, getMessages, addMessage } = useContext(MessageContext);
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
   const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
@@ -47,12 +49,16 @@ export default (props) => {
 
     if (props.type === "stan" || props.type === "trash") {
       if (URL !== "" && player !== "0") {
-        if ( URL.includes( player.split(" ")[0].toLowerCase() )  ) {
+        if (URL.includes(player.split(" ")[0].toLowerCase())) {
           if (!messageUrls.includes(URL)) {
             if (props.type === "stan") {
-              const matchingStanPlayerObject = currentUsersPlayers.find((PO) => {
-                return `${PO.player.firstName} ${PO.player.lastName}` === player;
-              });
+              const matchingStanPlayerObject = currentUsersPlayers.find(
+                (PO) => {
+                  return (
+                    `${PO.player.firstName} ${PO.player.lastName}` === player
+                  );
+                }
+              );
 
               const matchingStanUserPlayer = filteredCurrentUsersPlayers.find(
                 (UP) => {
@@ -95,7 +101,7 @@ export default (props) => {
               addMessage(newTrashtalkMessage);
             }
           } else alert("that's old news cap'n");
-        } else alert ("Where the EVIDENCE???")
+        } else alert("Where the EVIDENCE???");
       } else alert("check that input yo");
     } // end Stan/Trash as type
   };

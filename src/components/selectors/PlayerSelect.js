@@ -6,7 +6,7 @@ import { PlayerContext } from "../players/PlayerProvider";
 
 export const PlayerSelect = React.forwardRef((props, ref) => {
   const { getUserById, currentUserId } = useContext(UserContext);
-  const { playerObjArray, getPlayerData } = useContext(PlayerContext);
+  const { playerObjArray, getPlayerData, setStanPlayer, setTrashtalkPlayer } = useContext(PlayerContext);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
 
   const [currentUser, setCurrentUser] = useState({
@@ -59,7 +59,10 @@ export const PlayerSelect = React.forwardRef((props, ref) => {
   if (props.type === "stan") {
     return (
       <>
-        <FormControl as="select" ref={ref}>
+        <FormControl as="select" ref={ref} onChange={(e) => {
+          setStanPlayer(e.target.value)
+        }}>
+          <option value="0">Choose a player to Stan</option>
           {currentUsersPlayers.map((p) => (
             <option value={`${p.player.firstName} ${p.player.lastName}`}>
               {p.player.firstName} {p.player.lastName}
@@ -72,7 +75,10 @@ export const PlayerSelect = React.forwardRef((props, ref) => {
 
   if (props.type === "trash") {
     return (
-      <FormControl as="select" ref={ref}>
+      <FormControl as="select" ref={ref} onChange={(e) => {
+        setTrashtalkPlayer(e.target.value)
+      }}>
+        <option value="0">Choose a player to TRASH</option>
         {otherUsersPlayers.map((p) => (
           <option value={`${p.player.firstName} ${p.player.lastName}`}>
             {p.player.firstName} {p.player.lastName}
