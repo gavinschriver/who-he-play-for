@@ -3,17 +3,14 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { MessageContext } from "./MessageProvider";
 import { Avatar } from "../users/Avatar";
-import "./messages.css";
 import { UserContext } from "../users/UserProvider";
-import Button from "react-bootstrap/Button";
-import { Table, Collapse } from "react-bootstrap";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Badge from "react-bootstrap/Badge";
-import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
 import { LineupButton } from "../buttons/LineupButton";
 import { DeleteMessageButton } from "../buttons/DeleteMessageButton";
 import { MessageHeader } from "./MessageHeader";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import "./messages.css";
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -127,35 +124,6 @@ export const Message = ({ MO }) => {
 
   return (
     <Card className={messageClassName} id={MO.id}>
-      {/* description */}
-      <Card.Header className="message__description">
-        <span className="message__author user--name">
-          {MO.user.id === currentUserId ? (
-            <span>YOU</span>
-          ) : (
-            <span>{MO.user.name || ""} </span>
-          )}
-        </span>
-
-        {matchingPlayersFirstNames.includes(MO.messagetext) ? (
-          <span class="messageType standTrue"> stan'd</span>
-        ) : MO.trashtalk ? (
-          <span>
-            {" "}
-            <span className="messageType trashtalkTrue">
-              <Badge variant="danger">talked trash on</Badge>
-            </span>
-            {currentUsersLineupAsStrings.includes(MO.messagetext) ? (
-              <span> your guy</span>
-            ) : (
-              <span></span>
-            )}
-          </span>
-        ) : (
-          <span> stan'd </span>
-        )}
-        <span className="message__playerName"> {MO.messagetext}</span>
-      </Card.Header>
       <MessageHeader
         userName={MO.user.name}
         userType={MO.user.id === currentUserId ? "current" : "other"}
