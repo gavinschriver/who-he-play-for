@@ -7,11 +7,12 @@ import { UserContext } from "../users/UserProvider";
 import { LineupButton } from "../buttons/LineupButton";
 import { DeleteMessageButton } from "../buttons/DeleteMessageButton";
 import { MessageHeader } from "./MessageHeader";
+import { MessageURLink } from "./MessageURLink";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import "./messages.css";
-import { MessageURLink } from "./MessageURLink";
+import { EditMessageButton } from "../buttons/EditMessageButton";
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -33,10 +34,6 @@ export const Message = ({ MO }) => {
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
   const editRef = useRef("");
 
-  const matchingPlayersFirstNames = matchingPlayers.map((mPO) => {
-    return mPO.player.firstName;
-  });
-
   //find current user's lineup
   const currentUserPlayerIds = currentUsersPOs.map((cULO) => {
     return cULO.playerId;
@@ -53,6 +50,7 @@ export const Message = ({ MO }) => {
   });
 
   //edit
+
   const toggleEditField = () => {
     setEditFieldShowing(!editFieldShowing);
   };
@@ -152,12 +150,13 @@ export const Message = ({ MO }) => {
           url={MO.url}
           type={MO.stan ? "stan" : MO.trashtalk ? "trash" : ""}
         />
-        <div className="message__chattext">{MO.chattext}</div>
+        <Card.Text className="message__chattext">{MO.chattext}</Card.Text>
 
         {/* edit/submit buttons */}
 
         {MO.user.id === currentUserId ? (
           <div className="message__edit">
+            <EditMessageButton id={MO.id}/>
             <Button
               className="message__edit button edit--button message--button"
               ref={editRef}
@@ -217,7 +216,6 @@ export const Message = ({ MO }) => {
         ) : (
           <div></div>
         )}
-        {MO.stan ? <img /> : <div></div>}
       </Card.Body>
     </Card>
   );

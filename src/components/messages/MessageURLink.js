@@ -1,5 +1,4 @@
 import React from "react";
-import Nav from "react-bootstrap/Nav"
 
 export const MessageURLink = (props) => {
   const linkText =
