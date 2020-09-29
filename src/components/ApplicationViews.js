@@ -45,7 +45,6 @@ export const ApplicationViews = (props) => {
                       </Row>
                       <Row>
                         <Col>
-                          <Stats />
                           {/* <Highlight /> */}
                         </Col>
                       </Row>

@@ -7,13 +7,14 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import "./Players.css";
 import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
+import Stats from "../highlights/Stats";
 
 export const Player = ({ PO, TO }) => {
   const { getPlayerData } = useContext(PlayerContext);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
   const [showHideDetails, setShowHideDetails] = useState(false);
-  const activeUserId = parseInt(localStorage.getItem("whpf_user"))
+  const activeUserId = parseInt(localStorage.getItem("whpf_user"));
 
   const handleDetailButtonClick = () => {
     if (!showHideDetails) {
@@ -50,6 +51,7 @@ export const Player = ({ PO, TO }) => {
     <Card className={cardClass} bg={cardBG}>
       <Card.Header as="h5">Player</Card.Header>
       <Card.Body className="playerCard--body">
+        {NBAid ? <Stats id={NBAid} /> : <div></div>}
         <Card.Link
           href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()}
           target="_blank"
@@ -63,7 +65,7 @@ export const Player = ({ PO, TO }) => {
             <PlayerSelectButton
               type="stan"
               location="lineup"
-                player={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`}
+              player={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`}
             />
           </div>
         )}
