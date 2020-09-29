@@ -11,6 +11,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import "./messages.css";
+import { MessageURLink } from "./MessageURLink";
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -41,17 +42,15 @@ export const Message = ({ MO }) => {
     return cULO.playerId;
   });
 
-  const currentUsersPlayerObjects =
-    currentUserPlayerIds.map((cUPID) => {
-      return playerObjArray.find((pO) => {
-        return pO.player.id === cUPID;
-      });
+  const currentUsersPlayerObjects = currentUserPlayerIds.map((cUPID) => {
+    return playerObjArray.find((pO) => {
+      return pO.player.id === cUPID;
     });
+  });
 
-  const currentUsersLineupAsStrings =
-    currentUsersPlayerObjects.map((cUPO) => {
-      return `${cUPO.player.firstName} ${cUPO.player.lastName}`;
-    });
+  const currentUsersLineupAsStrings = currentUsersPlayerObjects.map((cUPO) => {
+    return `${cUPO.player.firstName} ${cUPO.player.lastName}`;
+  });
 
   //edit
   const toggleEditField = () => {
@@ -149,22 +148,10 @@ export const Message = ({ MO }) => {
 
         {/* URL */}
 
-        {MO.stan ? (
-          <div className="message__url message__url__heatcheck">
-            <a href={MO.url} target="_blank" className="link message--link">
-              HEAT CHECK
-            </a>
-          </div>
-        ) : MO.trashtalk ? (
-          <div className="message__url message__url__trashtalk">
-            <a href={MO.url} target="_blank" className="link message--link">
-              I'll just leave this here...
-            </a>
-          </div>
-        ) : (
-          <div></div>
-        )}
-
+        <MessageURLink
+          url={MO.url}
+          type={MO.stan ? "stan" : MO.trashtalk ? "trash" : ""}
+        />
         <div className="message__chattext">{MO.chattext}</div>
 
         {/* edit/submit buttons */}
