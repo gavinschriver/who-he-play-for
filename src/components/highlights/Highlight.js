@@ -27,7 +27,7 @@ export default () => {
 
   useEffect(() => {
     fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${playerNameForSearch}&key=AIzaSyCuU9zDbWsawNYk2lPU6HeWM6haW1cWScw`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${playerNameForSearch}&key=AIzaSyBEJ0zWP0cHCNEHFDxy2Wul-ERIbMVI6E0`
     )
       .then((res) => res.json())
       .then(
@@ -42,7 +42,7 @@ export default () => {
           setIsLoaded(true);
           setError(error);
         }
-      );
+      ).then(console.log(items));
   }, [playerNameForSearch]);
 
   useEffect(() => {

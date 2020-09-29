@@ -14,6 +14,7 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Highlight from "./highlights/Highlight";
+import Stats from "./highlights/Stats";
 
 export const ApplicationViews = (props) => {
   return (
@@ -44,7 +45,8 @@ export const ApplicationViews = (props) => {
                       </Row>
                       <Row>
                         <Col>
-                          <Highlight />
+                          <Stats />
+                          {/* <Highlight /> */}
                         </Col>
                       </Row>
                     </Container>
