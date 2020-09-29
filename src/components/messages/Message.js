@@ -161,6 +161,7 @@ export const Message = ({ MO }) => {
         userType={MO.user.id === currentUserId ? "current" : "other"}
         messageType={MO.stan ? "stan" : MO.trashtalk ? "trash" : "chat"}
         playerName={MO.messagetext}
+        isYourGuy={matchingPlayersFirstNames.includes(MO.messagetext)}
       />
       {user.avatar ? <Avatar user={user} location="message" /> : <div></div>}
 

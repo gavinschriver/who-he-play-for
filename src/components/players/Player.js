@@ -13,6 +13,7 @@ export const Player = ({ PO, TO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
   const [showHideDetails, setShowHideDetails] = useState(false);
+  const activeUserId = parseInt(localStorage.getItem("whpf_user"))
 
   const handleDetailButtonClick = () => {
     if (!showHideDetails) {
@@ -34,7 +35,7 @@ export const Player = ({ PO, TO }) => {
   useEffect(() => {
     setMatchingUsersPlayer(
       usersPlayers.find((uPO) => {
-        return uPO.playerId === PO.player.id;
+        return uPO.playerId === PO.player.id && uPO.userId === activeUserId;
       }) || {}
     );
   }, [usersPlayers]);
