@@ -160,7 +160,7 @@ export const Message = ({ MO }) => {
 
         {MO.user.id === currentUserId ? (
           <div className="message__edit">
-            <EditMessageButton id={MO.id} action={handleEditButtonPress}/>
+            {/* <EditMessageButton id={MO.id} action={handleEditButtonPress}/> */}
             <Button
               className="message__edit button edit--button message--button"
               ref={editRef}
