@@ -17,14 +17,17 @@ export default () => {
     messages: [],
   });
   const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
+  const [playerNameForSearch, setPlayerNameForSearch] = useState("");
 
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
 
+  const jimmytest = "Jimmy Butler";
+
   useEffect(() => {
     fetch(
-      "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=jimmy+butler&key=AIzaSyCuU9zDbWsawNYk2lPU6HeWM6haW1cWScw"
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${playerNameForSearch}&key=AIzaSyCuU9zDbWsawNYk2lPU6HeWM6haW1cWScw`
     )
       .then((res) => res.json())
       .then(
@@ -40,7 +43,7 @@ export default () => {
           setError(error);
         }
       );
-  }, []);
+  }, [playerNameForSearch]);
 
   useEffect(() => {
     getUserById(currentUserId).then(setCurrentUser).then(getPlayerData);
@@ -55,6 +58,10 @@ export default () => {
       }) || {};
     setCurrentUsersPlayers(matchingPlayers);
   }, [playerObjArray]);
+
+  useEffect(() => {
+    setPlayerNameForSearch(stanPlayer);
+  }, [stanPlayer]);
 
   useEffect(() => {
     console.log(stanPlayer);
