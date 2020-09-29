@@ -19,11 +19,11 @@ export default () => {
   const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
   const [playerNameForSearch, setPlayerNameForSearch] = useState("");
 
+  // YouTube Stuff
+
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-
-  const jimmytest = "Jimmy Butler";
 
   useEffect(() => {
     fetch(
@@ -64,30 +64,34 @@ export default () => {
   }, [stanPlayer]);
 
   useEffect(() => {
-    console.log(stanPlayer);
-  }, [stanPlayer]);
+    setPlayerNameForSearch(trashtalkPlayer);
+  }, [trashtalkPlayer]);
 
   return (
     <article>
-      <ul>
-        {items.map((i) => {
-          const videoId = i.id.videoId;
-          return (
-            <article>
-              <li key={i.etag}> {i.snippet.description}</li>
-              <Iframe
-                url={`http://www.youtube.com/embed/${videoId}`}
-                width="450px"
-                height="450px"
-                id="myId"
-                className="myClassname"
-                display="initial"
-                position="relative"
-              />
-            </article>
-          );
-        })}
-      </ul>
+      {items ? (
+        <ul>
+          {items.map((i) => {
+            const videoId = i.id.videoId;
+            return (
+              <article>
+                <li key={i.etag}> {i.snippet.description}</li>
+                <Iframe
+                  url={`http://www.youtube.com/embed/${videoId}`}
+                  width="450px"
+                  height="450px"
+                  id="myId"
+                  className="myClassname"
+                  display="initial"
+                  position="relative"
+                />
+              </article>
+            );
+          })}
+        </ul>
+      ) : (
+        <div></div>
+      )}
     </article>
   );
 };
