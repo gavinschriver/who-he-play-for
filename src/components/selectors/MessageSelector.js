@@ -21,7 +21,7 @@ export const MessageSelector = React.forwardRef((props, ref) => {
   const currentUsersMessages =
     messages.filter(
       (MO) => MO.userId === parseInt(localStorage.getItem("whpf_user"))
-    ) || {};
+    );
 
   const currentUsersPlayerNames = currentUsersPlayers.map((PO) => {
     return `${PO.player.firstName} ${PO.player.lastName}`;

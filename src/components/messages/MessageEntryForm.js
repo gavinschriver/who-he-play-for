@@ -85,6 +85,9 @@ export default (props) => {
               };
 
               addMessage(newStanMessage);
+              playerRef.current.value = "0";
+              URLref.current.value = "";
+              textRef.current.value = "";
             }
 
             if (props.type === "trash") {
@@ -99,6 +102,9 @@ export default (props) => {
               };
 
               addMessage(newTrashtalkMessage);
+              playerRef.current.value = "0";
+              URLref.current.value = "";
+              textRef.current.value = "";
             }
           } else alert("that's old news cap'n");
         } else alert("Where the EVIDENCE???");
