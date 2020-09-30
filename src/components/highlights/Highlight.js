@@ -21,11 +21,15 @@ export default (props) => {
   const [items, setItems] = useState([]);
 
   const playerName =
-    props.location === "player" ? props.playerName : playerNameForSearch;
+    props.location === "player"
+      ? props.playerName
+      : props.location === "header"
+      ? playerNameForSearch
+      : playerNameForSearch;
 
   useEffect(() => {
     fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${playerName}&key=AIzaSyBEJ0zWP0cHCNEHFDxy2Wul-ERIbMVI6E0`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${playerName}&key=AIzaSyBIG5bGgV23VizsRmzOGUuXi9DJwR6SIZc`
     )
       .then((res) => res.json())
       .then(
@@ -40,15 +44,13 @@ export default (props) => {
           setIsLoaded(true);
           setError(error);
         }
-      )
-      .then(console.log(items));
+      );
   }, [playerNameForSearch]);
 
   useEffect(() => {
-    getPlayerData()
-      .then(() => {
-      setPlayerNameForSearch('Charles Barkley')
-    })
+    getPlayerData().then(() => {
+      setPlayerNameForSearch("Charles Barkley");
+    });
   }, []);
 
   useEffect(() => {
@@ -59,11 +61,9 @@ export default (props) => {
     setPlayerNameForSearch(trashtalkPlayer);
   }, [trashtalkPlayer]);
 
-  return (
-    <>
-      <Button onClick={handleShow}>Hi-lites</Button>
-
-      <Modal show={show} onHide={handleClose}>
+  if (props.location === "header") {
+    return (
+      <>
         {items ? (
           <ul>
             {items.map((i) => {
@@ -87,7 +87,41 @@ export default (props) => {
         ) : (
           <div></div>
         )}
-      </Modal>
-    </>
-  );
+      </>
+    );
+  }
+
+  if (props.location === "player") {
+    return (
+      <>
+        <Button onClick={handleShow}>Hi-lites</Button>
+
+        <Modal show={show} onHide={handleClose}>
+          {items ? (
+            <ul>
+              {items.map((i) => {
+                const videoId = i.id.videoId;
+                return (
+                  <article>
+                    <li key={i.etag}> {i.snippet.description}</li>
+                    <Iframe
+                      url={`http://www.youtube.com/embed/${videoId}`}
+                      width="450px"
+                      height="450px"
+                      id="myId"
+                      className="myClassname"
+                      display="initial"
+                      position="relative"
+                    />
+                  </article>
+                );
+              })}
+            </ul>
+          ) : (
+            <div></div>
+          )}
+        </Modal>
+      </>
+    );
+  }
 };
