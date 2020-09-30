@@ -30,6 +30,7 @@ export const ApplicationViews = (props) => {
                   <>
                     <Jumbotron>
                       <AppHeader {...props} />
+                      <Highlight location="header"/>
                     </Jumbotron>
                     <Container className="maincontent" fluid="md">
                       <Row>
@@ -44,9 +45,7 @@ export const ApplicationViews = (props) => {
                         </Col>
                       </Row>
                       <Row>
-                        <Col>
-                          {/* <Highlight /> */}
-                        </Col>
+                        <Col></Col>
                       </Row>
                     </Container>
                   </>

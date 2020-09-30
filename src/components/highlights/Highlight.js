@@ -2,32 +2,30 @@ import React, { useEffect, useState, useContext } from "react";
 import Iframe from "react-iframe";
 import { UserContext } from "../users/UserProvider";
 import { PlayerContext } from "../players/PlayerProvider";
+import { Modal, Button } from "react-bootstrap";
 
-export default () => {
-  const { getUserById, currentUserId } = useContext(UserContext);
-  const {
-    playerObjArray,
-    getPlayerData,
-    trashtalkPlayer,
-    stanPlayer,
-  } = useContext(PlayerContext);
+export default (props) => {
+  const { getPlayerData, trashtalkPlayer, stanPlayer } = useContext(
+    PlayerContext
+  );
 
-  const [currentUser, setCurrentUser] = useState({
-    usersPlayers: [],
-    messages: [],
-  });
-  const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
   const [playerNameForSearch, setPlayerNameForSearch] = useState("");
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   // YouTube Stuff
 
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
 
+  const playerName =
+    props.location === "player" ? props.playerName : playerNameForSearch;
+
   useEffect(() => {
     fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${playerNameForSearch}&key=AIzaSyBEJ0zWP0cHCNEHFDxy2Wul-ERIbMVI6E0`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${playerName}&key=AIzaSyBEJ0zWP0cHCNEHFDxy2Wul-ERIbMVI6E0`
     )
       .then((res) => res.json())
       .then(
@@ -42,22 +40,16 @@ export default () => {
           setIsLoaded(true);
           setError(error);
         }
-      ).then(console.log(items));
+      )
+      .then(console.log(items));
   }, [playerNameForSearch]);
 
   useEffect(() => {
-    getUserById(currentUserId).then(setCurrentUser).then(getPlayerData);
+    getPlayerData()
+      .then(() => {
+      setPlayerNameForSearch('Charles Barkley')
+    })
   }, []);
-
-  useEffect(() => {
-    const matchingPlayers =
-      currentUser.usersPlayers.map((up) => {
-        return playerObjArray.find((p) => {
-          return p.player.id === up.playerId;
-        });
-      }) || {};
-    setCurrentUsersPlayers(matchingPlayers);
-  }, [playerObjArray]);
 
   useEffect(() => {
     setPlayerNameForSearch(stanPlayer);
@@ -68,30 +60,34 @@ export default () => {
   }, [trashtalkPlayer]);
 
   return (
-    <article>
-      {items ? (
-        <ul>
-          {items.map((i) => {
-            const videoId = i.id.videoId;
-            return (
-              <article>
-                <li key={i.etag}> {i.snippet.description}</li>
-                <Iframe
-                  url={`http://www.youtube.com/embed/${videoId}`}
-                  width="450px"
-                  height="450px"
-                  id="myId"
-                  className="myClassname"
-                  display="initial"
-                  position="relative"
-                />
-              </article>
-            );
-          })}
-        </ul>
-      ) : (
-        <div></div>
-      )}
-    </article>
+    <>
+      <Button onClick={handleShow}>Hi-lites</Button>
+
+      <Modal show={show} onHide={handleClose}>
+        {items ? (
+          <ul>
+            {items.map((i) => {
+              const videoId = i.id.videoId;
+              return (
+                <article>
+                  <li key={i.etag}> {i.snippet.description}</li>
+                  <Iframe
+                    url={`http://www.youtube.com/embed/${videoId}`}
+                    width="450px"
+                    height="450px"
+                    id="myId"
+                    className="myClassname"
+                    display="initial"
+                    position="relative"
+                  />
+                </article>
+              );
+            })}
+          </ul>
+        ) : (
+          <div></div>
+        )}
+      </Modal>
+    </>
   );
 };

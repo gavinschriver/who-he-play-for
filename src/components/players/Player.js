@@ -52,15 +52,6 @@ export const Player = ({ PO, TO }) => {
       <Card.Header as="h5">Player</Card.Header>
       <Card.Body className="playerCard--body">
         {NBAid ? <Stats id={NBAid} /> : <div></div>}
-        <Card.Link
-          href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()}
-          target="_blank"
-        >
-          NBA Stats
-        </Card.Link>
-        {matchingUsersPlayer.mentioned ? (
-          <div>#STAN'D</div>
-        ) : (
           <div>
             <PlayerSelectButton
               type="stan"
@@ -68,7 +59,6 @@ export const Player = ({ PO, TO }) => {
               player={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`}
             />
           </div>
-        )}
         <Card.Title className="playerCard__name">
           Player: {currentPlayer.player.firstName}{" "}
           {currentPlayer.player.lastName}
