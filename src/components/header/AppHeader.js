@@ -5,6 +5,7 @@ import { Leaderboard } from "../leaderboard/Leaderboard";
 import { Container, Row, Col } from "react-bootstrap";
 import SiteTitle from "./SiteTitle";
 import "./AppHeader.css";
+import Highlight from "../highlights/Highlight";
 
 export const AppHeader = (props) => {
   const { users, getUsers } = useContext(UserContext);
@@ -32,6 +33,9 @@ export const AppHeader = (props) => {
           </Col>
           <Col>
             <Leaderboard location="header" />
+          </Col>
+          <Col>
+            {/* <Highlight location="header"/> */}
           </Col>
         </Row>
       </Container>

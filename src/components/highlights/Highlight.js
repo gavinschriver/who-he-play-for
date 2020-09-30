@@ -29,7 +29,7 @@ export default (props) => {
 
   useEffect(() => {
     fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${playerName}&key=AIzaSyBIG5bGgV23VizsRmzOGUuXi9DJwR6SIZc`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&type=video&q=${playerName}&key=AIzaSyBIG5bGgV23VizsRmzOGUuXi9DJwR6SIZc`
     )
       .then((res) => res.json())
       .then(

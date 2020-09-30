@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import { PlayerSelectButton } from "./PlayerSelectButton";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
+import Stats from "../highlights/Stats";
+import StatsButton from "./StatsButton";
 
 export const LineupButton = (props) => {
   const { usersPlayers } = useContext(UserPlayerContext);
@@ -58,11 +60,13 @@ export const LineupButton = (props) => {
               <thead>
                 <tr>
                   <th>Player</th>
+                  <th>Stats</th>
                   <th>{actionHeader}</th>
                 </tr>
               </thead>
               <tbody>
                 {matchingPlayers.map((mPO) => {
+                  const NBAid = mPO.player.externalMappings[0].id || {};
                   const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
                   return (
                     <tr>
@@ -74,6 +78,9 @@ export const LineupButton = (props) => {
                         >
                           {mPO.player.firstName} {mPO.player.lastName}
                         </a>
+                      </td>
+                      <td>
+                        <StatsButton id={NBAid}/>
                       </td>
                       <td>
                         {props.userType === "current" &&
