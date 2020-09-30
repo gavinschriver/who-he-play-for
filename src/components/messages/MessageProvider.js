@@ -4,7 +4,8 @@ export const MessageContext = React.createContext();
 
 export const MessageProvider = (props) => {
   const [messages, setMessages] = useState([]);
-
+  const [collection, setCollection] = useState([])
+ 
   const getMessages = () => {
     return fetch(`http://localhost:8888/messages?_expand=user`)
       .then((res) => res.json())
@@ -45,6 +46,7 @@ export const MessageProvider = (props) => {
         addMessage,
         removeMessage,
         updateMessage,
+        collection, setCollection
       }}
     >
       {props.children}
