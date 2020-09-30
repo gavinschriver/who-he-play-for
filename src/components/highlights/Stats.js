@@ -4,6 +4,7 @@ import { Table } from "react-bootstrap";
 export default (props) => {
   const [data, setData] = useState({});
   const [careerStats, setCareerStats] = useState({});
+  const [latestStats, setLatestStats] = useState({});
 
   useEffect(() => {
     fetch(`http://data.nba.net/prod/v1/2019/players/${props.id}_profile.json`)
@@ -16,24 +17,40 @@ export default (props) => {
   useEffect(() => {
     setCareerStats(data.careerSummary || {});
   }, [data]);
-    
-    console.log(careerStats)
+
+  useEffect(() => {
+    setLatestStats(data.latest || {});
+  }, [data]);
 
   return (
     <Table>
       <thead>
         <tr>
-          <th>Stat sample</th>
-          <th>Points per Game</th>
-          <th>Assists per Game</th>
+          <th>Per Game Stats</th>
+          <th>Points</th>
+          <th>Assists</th>
+          <th>Steals</th>
+          <th>Blocks</th>
+          <th>Rebounds</th>
         </tr>
       </thead>
 
       <tbody>
         <tr>
-          <td>All-time</td>
+          <td>All-time:</td>
           <td>{careerStats.ppg}</td>
-          <td>EVEN MORE</td>
+          <td>{careerStats.apg}</td>
+          <td>{careerStats.spg}</td>
+          <td>{careerStats.bpg}</td>
+          <td>{careerStats.rpg}</td>
+        </tr>
+        <tr>
+          <td>Latest season:</td>
+          <td>{latestStats.ppg}</td>
+          <td>{latestStats.apg}</td>
+          <td>{latestStats.spg}</td>
+          <td>{latestStats.bpg}</td>
+          <td>{latestStats.rpg}</td>
         </tr>
       </tbody>
     </Table>
