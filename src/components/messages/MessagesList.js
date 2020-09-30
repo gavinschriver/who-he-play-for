@@ -22,37 +22,11 @@ export const MessagesList = (props) => {
     setFilteredMessages(collection)
   }, [collection])
 
-  const handleMessageSelect = (collectionName) => {
-   setFilteredMessages(collectionName)
-  }
-
-  const currentUsersMessages = messages.filter(MO => MO.userId === parseInt(localStorage.getItem("whpf_user")))
-
   return (
     <>
       <article>
         <section className="messagesList">
           <h2>Spin Zone</h2>
-          {/* <DropdownButton title="Filter Messages">
-          <Dropdown.Item onClick={(e) => {
-              e.preventDefault()
-              handleMessageSelect(messages)
-            }}>
-              Show all 
-            </Dropdown.Item>
-            <Dropdown.Item onClick={(e) => {
-              e.preventDefault()
-              handleMessageSelect(currentUsersMessages)
-            }}>
-              Your messages
-            </Dropdown.Item>
-            <Dropdown.Item onClick={(e) => {
-              e.preventDefault()
-              handleMessageSelect(currentUsersMessages)
-            }}>
-              About your players
-            </Dropdown.Item>
-          </DropdownButton> */}
           <MessageSelector />
           {filteredMessages.map((m) => {
             return <Message key={m.id} MO={m} props={props} />;
