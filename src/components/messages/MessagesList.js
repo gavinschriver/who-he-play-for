@@ -5,14 +5,15 @@ import { MessageSelector } from "../selectors/MessageSelector";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import "./messages.css";
 export const MessagesList = (props) => {
-  const { messages, getMessages, collection, setCollection } = useContext(MessageContext);
+  const { getMessages, collection} = useContext(
+    MessageContext
+  );
   const [filteredMessages, setFilteredMessages] = useState([]);
-  const collectionTypeRef = React.createRef([]);
+  const showHide = React.createRef();
 
   useEffect(() => {
     getMessages();
   }, []);
-
 
   useEffect(() => {
     setFilteredMessages(collection);
@@ -23,10 +24,10 @@ export const MessagesList = (props) => {
       <article>
         <section className="messagesList">
           <h2>Spin Zone</h2>
-          <MessageSelector ref={collectionTypeRef}/>
-          {filteredMessages.map((m) => {
-            return <Message key={m.id} MO={m} props={props} />;
-          })}
+          <MessageSelector ref={showHide} />
+            {filteredMessages.map((m) => {
+              return <Message key={m.id} MO={m} props={props} />;
+            })}
         </section>
       </article>
     </>

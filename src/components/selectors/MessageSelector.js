@@ -3,6 +3,7 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
 import { MessageContext } from "../messages/MessageProvider";
 import { UserContext } from "../users/UserProvider";
 import { PlayerContext } from "../players/PlayerProvider";
+import "./selectors.css"
 
 export const MessageSelector = React.forwardRef((props, ref) => {
   const { messages, getMessages, setCollection } = useContext(MessageContext);
@@ -18,10 +19,9 @@ export const MessageSelector = React.forwardRef((props, ref) => {
     setCollection(collectionName);
   };
 
-  const currentUsersMessages =
-    messages.filter(
-      (MO) => MO.userId === parseInt(localStorage.getItem("whpf_user"))
-    );
+  const currentUsersMessages = messages.filter(
+    (MO) => MO.userId === parseInt(localStorage.getItem("whpf_user"))
+  );
 
   const currentUsersPlayerNames = currentUsersPlayers.map((PO) => {
     return `${PO.player.firstName} ${PO.player.lastName}`;
@@ -49,7 +49,7 @@ export const MessageSelector = React.forwardRef((props, ref) => {
   }, [playerObjArray]);
 
   return (
-    <DropdownButton title="Filter Messages">
+      <DropdownButton title="Show Messages" ref={ref} value={false}>
       <Dropdown.Item
         onClick={(e) => {
           e.preventDefault();
@@ -73,6 +73,14 @@ export const MessageSelector = React.forwardRef((props, ref) => {
         }}
       >
         About your players
+      </Dropdown.Item>
+      <Dropdown.Item className="closeMessages"
+        onClick={(e) => {
+          e.preventDefault();
+          handleMessageSelect([]);
+        }}
+      >
+        Close Messages
       </Dropdown.Item>
     </DropdownButton>
   );

@@ -5,6 +5,7 @@ import { Player } from "../players/Player";
 import teamData from "../teams.json";
 import CardGroup from "react-bootstrap/CardGroup";
 import "./Lineup.css";
+import { Button, DropdownButton, Collapse } from "react-bootstrap";
 
 export const GenerateLineup = () => {
   //for looking up info about teams from NBA reference
@@ -21,6 +22,7 @@ export const GenerateLineup = () => {
 
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [generateButtonShowing, setGenerateButtonShowing] = useState(false);
+  const [showHideLineup, setShowHideLineup] = useState(false);
 
   // find valid players
   const filteredPlayers = playerObjArray.filter(
@@ -60,6 +62,10 @@ export const GenerateLineup = () => {
     }
   };
 
+  const toggleLineup = () => {
+    setShowHideLineup(!showHideLineup);
+  };
+
   // effects
   useEffect(() => {
     getPlayerData().then(getUsersPlayers);
@@ -81,49 +87,63 @@ export const GenerateLineup = () => {
 
   return (
     <>
-      {(mentionedCount === 0 && !matchingUsersPlayers) ||
-      mentionedCount === matchingUsersPlayers.length ? (
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleGenerateLineup();
-          }}
-        >
-          Generate A Lineup
-        </button>
-      ) : (
-        <div></div>
-      )}
-      <CardGroup className="lineup__container">
-        <section className="lineup">
-          <h2>Your Starting 5:</h2>
-          {matchingUsersPlayers.map((mUPO) => {
-            const matchingPlayerObj = filteredPlayers.find(
-              (p) => p.player.id === mUPO.playerId
-            );
+      <h2>Your Starting 5:</h2>
 
-            let matchingPlayerTeam;
+      <Button
+        title="Show Lineup"
+        onClick={(e) => {
+          e.preventDefault();
+          toggleLineup();
+        }}
+      >
+        Show Lineup
+      </Button>
+      <Collapse in={showHideLineup}>
+        <div>
+          {(mentionedCount === 0 && !matchingUsersPlayers) ||
+          mentionedCount === matchingUsersPlayers.length ? (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleGenerateLineup();
+              }}
+            >
+              Generate A Lineup
+            </button>
+          ) : (
+            <div></div>
+          )}
+          <CardGroup className="lineup__container">
+            <section className="lineup">
+              {matchingUsersPlayers.map((mUPO) => {
+                const matchingPlayerObj = filteredPlayers.find(
+                  (p) => p.player.id === mUPO.playerId
+                );
 
-            if (matchingPlayerObj.player.currentTeam) {
-              matchingPlayerTeam =
-                teams.find((t) => {
-                  return (
-                    t.abbreviation ===
-                    matchingPlayerObj.player.currentTeam.abbreviation
-                  );
-                }) || {};
-            } else matchingPlayerTeam = {};
+                let matchingPlayerTeam;
 
-            return (
-              <Player
-                key={matchingPlayerObj.player.id}
-                PO={matchingPlayerObj}
-                TO={matchingPlayerTeam}
-              />
-            );
-          })}
-        </section>
-      </CardGroup>
+                if (matchingPlayerObj.player.currentTeam) {
+                  matchingPlayerTeam =
+                    teams.find((t) => {
+                      return (
+                        t.abbreviation ===
+                        matchingPlayerObj.player.currentTeam.abbreviation
+                      );
+                    }) || {};
+                } else matchingPlayerTeam = {};
+
+                return (
+                  <Player
+                    key={matchingPlayerObj.player.id}
+                    PO={matchingPlayerObj}
+                    TO={matchingPlayerTeam}
+                  />
+                );
+              })}
+            </section>
+          </CardGroup>
+        </div>
+      </Collapse>
     </>
   );
 };
