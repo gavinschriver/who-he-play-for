@@ -131,6 +131,7 @@ export const Message = ({ MO }) => {
         messageType={MO.stan ? "stan" : MO.trashtalk ? "trash" : "chat"}
         playerName={MO.messagetext}
         isYourGuy={currentUsersLineupAsStrings.includes(MO.messagetext)}
+        time={MO.timestamp}
       />
       {user.avatar ? <Avatar user={user} location="message" /> : <div></div>}
 

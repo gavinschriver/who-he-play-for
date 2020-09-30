@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment"
 import { Badge, Card } from "react-bootstrap";
 
 export const MessageHeader = (props) => {
@@ -15,11 +16,12 @@ export const MessageHeader = (props) => {
       ? "your guy"
       : "";
   const player = props.playerName
+  const time = moment(props.time).format("LLL")
 
   return (
     <Card.Header>
       <Badge>
-        {user} {prefix} {yourGuyPrefix} {player}
+        {user} {prefix} {yourGuyPrefix} {player} {time}
       </Badge>
     </Card.Header>
   );
