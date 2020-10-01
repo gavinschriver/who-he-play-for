@@ -16,14 +16,14 @@ export const GamePlay = () => (
           {/* <Col className="container entryForm--container">
             <StanEntryForm />
           </Col> */}
-          <Col>
-            <Leaderboard location="game" />
-          </Col>
           {/* <Col>
             <TrashTalkEntryForm />
           </Col> */}
           <Col>
             <MessageEntryForm type="stan" />
+          </Col>
+          <Col>
+            <Leaderboard location="game" />
           </Col>
           <Col>
             <MessageEntryForm type="trash" />
