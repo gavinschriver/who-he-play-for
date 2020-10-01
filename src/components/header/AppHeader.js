@@ -34,9 +34,6 @@ export const AppHeader = (props) => {
           <Col>
             <Leaderboard location="header" />
           </Col>
-          <Col>
-            {/* <Highlight location="header"/> */}
-          </Col>
         </Row>
       </Container>
     </article>

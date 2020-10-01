@@ -23,6 +23,7 @@ export const GenerateLineup = () => {
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [generateButtonShowing, setGenerateButtonShowing] = useState(false);
   const [showHideLineup, setShowHideLineup] = useState(true);
+  const [lineupText, setLineupText] = useState("Hide Lineup")
 
   // find valid players
   const filteredPlayers = playerObjArray.filter(
@@ -63,7 +64,13 @@ export const GenerateLineup = () => {
   };
 
   const toggleLineup = () => {
-    setShowHideLineup(!showHideLineup);
+    if (!showHideLineup) {
+      setShowHideLineup(true);
+      setLineupText("Hide Lineup")
+    } else if (showHideLineup) {
+      setShowHideLineup(false)
+      setLineupText("Show Lineup")
+    }
   };
 
   // effects
@@ -96,7 +103,7 @@ export const GenerateLineup = () => {
           toggleLineup();
         }}
       >
-        Show Lineup
+        {lineupText}
       </Button>
       <Collapse in={showHideLineup}>
         <div>
