@@ -9,7 +9,7 @@ import "./Players.css";
 import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
 import Stats from "../highlights/Stats";
 
-export const Player = ({ PO, TO }) => {
+export const Player = ({ PO, TO, status }) => {
   const { getPlayerData } = useContext(PlayerContext);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
@@ -52,6 +52,7 @@ export const Player = ({ PO, TO }) => {
       <Card.Header as="h5">Player</Card.Header>
       <Card.Body className="playerCard--body">
         {NBAid ? <Stats id={NBAid} /> : <div></div>}
+        {!status ? (
           <div>
             <PlayerSelectButton
               type="stan"
@@ -59,6 +60,9 @@ export const Player = ({ PO, TO }) => {
               player={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`}
             />
           </div>
+        ) : (
+          <div></div>
+        )}
         <Card.Title className="playerCard__name">
           Player: {currentPlayer.player.firstName}{" "}
           {currentPlayer.player.lastName}

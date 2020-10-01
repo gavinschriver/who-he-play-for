@@ -9,9 +9,12 @@ export default (props) => {
   useEffect(() => {
     fetch(`http://data.nba.net/prod/v1/2019/players/${props.id}_profile.json`)
       .then((res) => res.json())
-      .then((result) => {
-        setData(result.league.standard.stats);
-      });
+        .then((result) => {
+            if (result.league) {
+                setData(result.league.standard.stats);
+            } 
+      }
+    );
   }, []);
 
   useEffect(() => {

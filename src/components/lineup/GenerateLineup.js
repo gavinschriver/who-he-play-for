@@ -22,7 +22,7 @@ export const GenerateLineup = () => {
 
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [generateButtonShowing, setGenerateButtonShowing] = useState(false);
-  const [showHideLineup, setShowHideLineup] = useState(false);
+  const [showHideLineup, setShowHideLineup] = useState(true);
 
   // find valid players
   const filteredPlayers = playerObjArray.filter(
@@ -102,14 +102,14 @@ export const GenerateLineup = () => {
         <div>
           {(mentionedCount === 0 && !matchingUsersPlayers) ||
           mentionedCount === matchingUsersPlayers.length ? (
-            <button
+            <Button
               onClick={(e) => {
                 e.preventDefault();
                 handleGenerateLineup();
               }}
             >
               Generate A Lineup
-            </button>
+            </Button>
           ) : (
             <div></div>
           )}
@@ -137,6 +137,7 @@ export const GenerateLineup = () => {
                     key={matchingPlayerObj.player.id}
                     PO={matchingPlayerObj}
                     TO={matchingPlayerTeam}
+                    status={mUPO.mentioned ? true : false}
                   />
                 );
               })}
