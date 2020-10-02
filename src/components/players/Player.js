@@ -8,6 +8,7 @@ import Collapse from "react-bootstrap/Collapse";
 import "./Players.css";
 import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
 import Stats from "../highlights/Stats";
+import Highlight from "../highlights/Highlight";
 
 export const Player = ({ PO, TO, status }) => {
   const { getPlayerData } = useContext(PlayerContext);
@@ -93,7 +94,8 @@ export const Player = ({ PO, TO, status }) => {
           </div>
         ) : (
           <div>Poor lil buddy needs a team :(</div>
-        )}
+          )}
+        <Highlight location="player" playerName={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`} />
         <Button
           className="playerCard__showDetailsButton btn btn--details"
           onClick={(e) => {

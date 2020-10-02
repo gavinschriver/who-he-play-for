@@ -35,6 +35,7 @@ export const MessagesList = (props) => {
 
   return (
     <>
+      <h2>Spin Zone</h2>
       <DropdownButton title="Filter messages" onSelect={handleFilterSelect}>
         <Dropdown.Item eventKey="all">All messages</Dropdown.Item>
         <Dropdown.Item eventKey="recent">Recent Activity</Dropdown.Item>
@@ -52,10 +53,10 @@ export const MessagesList = (props) => {
           .filter((m) => {
             if (filter === null || filter === "recent") {
               const sorted = messages.sort((a, b) => {
-                return b.timestamp - b.timestamp
-              })
-              const sliced = sorted.slice(0, 5)
-              return sliced.includes(m)
+                return b.timestamp - a.timestamp;
+              });
+              const sliced = sorted.slice(0, 5);
+              return sliced.includes(m);
             }
             if (filter === "all") {
               return m;
