@@ -3,15 +3,20 @@ import { MessageContext } from "./MessageProvider";
 import { Message } from "./Message";
 import { MessageSelector } from "../selectors/MessageSelector";
 import { Dropdown, DropdownButton, Collapse, Button } from "react-bootstrap";
-import "./messages.css";
 import { UserContext } from "../users/UserProvider";
 import { PlayerContext } from "../players/PlayerProvider";
+import "./messages.css";
 
 export const MessagesList = (props) => {
   const { messages, getMessages } = useContext(MessageContext);
+  const { getUserById, currentUserId } = useContext(UserContext);
+  const { playerObjArray, getPlayerData } = useContext(PlayerContext);
   const [filter, setFilter] = useState(null);
-  const currentUserId = parseInt(localStorage.getItem("whpf_user"))
-
+  const [currentUser, setCurrentUser] = useState({
+    usersPlayers: [],
+    messages: [],
+  });
+  // const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
   const handleFilterSelect = (e) => {
     setFilter(e);
@@ -19,8 +24,15 @@ export const MessagesList = (props) => {
 
   // init hook
   useEffect(() => {
-    getMessages();
+    getUserById(currentUserId)
+      .then(setCurrentUser)
+      .then(getMessages)
+      .then(getPlayerData);
   }, []);
+
+  useEffect(() => {
+    setCurrentUser(currentUser)
+  }, [currentUser])
 
   return (
     <>
@@ -28,7 +40,7 @@ export const MessagesList = (props) => {
         <Dropdown.Item eventKey="all">All messages</Dropdown.Item>
         <Dropdown.Item eventKey="current">Your messages</Dropdown.Item>
         <Dropdown.Item eventKey="stan">Stans</Dropdown.Item>
-        <Dropdown.Item eventKey="currentUsersPlayers">
+        <Dropdown.Item eventKey="aboutPlayers">
           About your players
         </Dropdown.Item>
       </DropdownButton>
@@ -42,39 +54,24 @@ export const MessagesList = (props) => {
               return m.stan;
             }
             if (filter === "current") {
-              return m.userId === currentUserId
+              return m.userId === currentUserId;
+            }
+            if (filter === "aboutPlayers") {
+              const matchingPlayerObjs =
+                currentUser.usersPlayers.map((up) => {
+                  return playerObjArray.find((p) => {
+                    return p.player.id === up.playerId;
+                  });
+                }) || {};
+                const currentUsersPlayerNames = matchingPlayerObjs.map((PO) => {
+                  return `${PO.player.firstName} ${PO.player.lastName}`;
+                });
+              return currentUsersPlayerNames.includes(m.messagetext);
             }
           })
-          .map((m) => (
-            <Message MO={m} key={m.id} />
-          )).reverse()}
+          .map((m) => <Message MO={m} key={m.id} />)
+          .reverse()}
       </article>
     </>
   );
 };
-
-// return (
-//   <>
-//     <h2>Spin Zone</h2>
-//     <DropdownButton title="Filter messages">
-//       <Dropdown.Item eventKey="all">All messages</Dropdown.Item>
-//       <Dropdown.Item eventKey="current">Your messages</Dropdown.Item>
-//       <Dropdown.Item eventKey="currentUsersPlayers">
-//         About your players
-//       </Dropdown.Item>
-//     </DropdownButton>MMM
-//     <article>
-//       <section className="messagesList">
-
-//       </section>
-//     </article>
-//   </>
-// );
-
-// const { currentUserId, getUserById } = useContext(UserContext);
-// const { playerObjArray, getPlayerData } = useContext(PlayerContext);
-// const activeUserId = parseInt(localStorage.getItem("whpf_user"));
-// const [currentUser, setCurrentUser] = useState({
-//   usersPlayers: [],
-//   messages: [],
-// });
