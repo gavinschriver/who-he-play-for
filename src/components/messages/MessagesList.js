@@ -16,7 +16,6 @@ export const MessagesList = (props) => {
     usersPlayers: [],
     messages: [],
   });
-  // const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
   const handleFilterSelect = (e) => {
     setFilter(e);
@@ -31,13 +30,14 @@ export const MessagesList = (props) => {
   }, []);
 
   useEffect(() => {
-    setCurrentUser(currentUser)
-  }, [currentUser])
+    setCurrentUser(currentUser);
+  }, [currentUser]);
 
   return (
     <>
       <DropdownButton title="Filter messages" onSelect={handleFilterSelect}>
         <Dropdown.Item eventKey="all">All messages</Dropdown.Item>
+        <Dropdown.Item eventKey="recent">Recent Activity</Dropdown.Item>
         <Dropdown.Item eventKey="current">Your messages</Dropdown.Item>
         <Dropdown.Item eventKey="stan">Stans</Dropdown.Item>
         <Dropdown.Item eventKey="aboutPlayers">
@@ -46,8 +46,18 @@ export const MessagesList = (props) => {
       </DropdownButton>
       <article>
         {messages
+          .sort((a, b) => {
+            return b.timestamp - a.timestamp;
+          })
           .filter((m) => {
-            if (filter === null) {
+            if (filter === null || filter === "recent") {
+              const sorted = messages.sort((a, b) => {
+                return b.timestamp - b.timestamp
+              })
+              const sliced = sorted.slice(0, 5)
+              return sliced.includes(m)
+            }
+            if (filter === "all") {
               return m;
             }
             if (filter === "stan") {
@@ -63,14 +73,15 @@ export const MessagesList = (props) => {
                     return p.player.id === up.playerId;
                   });
                 }) || {};
-                const currentUsersPlayerNames = matchingPlayerObjs.map((PO) => {
-                  return `${PO.player.firstName} ${PO.player.lastName}`;
-                });
+              const currentUsersPlayerNames = matchingPlayerObjs.map((PO) => {
+                return `${PO.player.firstName} ${PO.player.lastName}`;
+              });
               return currentUsersPlayerNames.includes(m.messagetext);
             }
           })
-          .map((m) => <Message MO={m} key={m.id} />)
-          .reverse()}
+          .map((m) => (
+            <Message MO={m} key={m.id} />
+          ))}
       </article>
     </>
   );
