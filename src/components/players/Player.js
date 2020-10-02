@@ -9,6 +9,7 @@ import "./Players.css";
 import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
 import Stats from "../highlights/Stats";
 import Highlight from "../highlights/Highlight";
+import PlayerDetails from "./PlayerDetails";
 
 export const Player = ({ PO, TO, status }) => {
   const { getPlayerData } = useContext(PlayerContext);
@@ -21,6 +22,7 @@ export const Player = ({ PO, TO, status }) => {
     if (!showHideDetails) {
       setShowHideDetails(true);
     } else setShowHideDetails(false);
+    console.log(currentPlayer);
   };
 
   // Assign component variable names for Player Objects and Team Objects cause why not
@@ -94,74 +96,31 @@ export const Player = ({ PO, TO, status }) => {
           </div>
         ) : (
           <div>Poor lil buddy needs a team :(</div>
-          )}
-        <Highlight location="player" playerName={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`} />
-        <Button
-          className="playerCard__showDetailsButton btn btn--details"
-          onClick={(e) => {
-            e.preventDefault();
-            handleDetailButtonClick();
-          }}
-        >
-          Get the juicy deets:
-        </Button>
-        {showHideDetails ? (
-          <article className="playerCard__details">
-            <div className="playerCard__details__heading heading">DEETS</div>
-            <div className="playerCard__details__DOB">
-              <span className="detailName">Date of Birth: </span>
-              <span className="detail">{currentPlayer.player.birthDate}</span>
-            </div>
-
-            <div className="playerCard__details__city">
-              <span className="detailName">Hailing From: </span>
-              <span className="detail">
-                {currentPlayer.player.birthCity},{" "}
-                {currentPlayer.player.birthCountry}
-              </span>
-            </div>
-
-            <div className="playerCard__details__weight">
-              <span className="detailName">Weight (rude): </span>
-              <span className="detail">{currentPlayer.player.weight}</span>
-            </div>
-
-            <div className="playerCard__details__primaryPosition">
-              <span className="detailName">Primary Position: </span>
-              <span className="detail">
-                {currentPlayer.player.primaryPosition === "SG"
-                  ? "Shooting Guard"
-                  : currentPlayer.player.primaryPosition === "PG"
-                  ? "Point Guard"
-                  : currentPlayer.player.primaryPosition === "SF"
-                  ? "Strong Forward"
-                  : currentPlayer.player.primaryPosition === "C"
-                  ? "Center"
-                  : currentPlayer.player.primaryPosition === "PF"
-                  ? "Power Forward"
-                  : "Unkown (Positionless BBall amirite?)"}
-              </span>
-              <div className="playerCard__details__height">
-                <span className="detailName">Height: </span>
-                <span className="detail">{currentPlayer.player.height}</span>
-                {currentPlayer.player.socialMediaAccounts.length > 0 ? (
-                  <TwitterTimelineEmbed
-                    sourceType="profile"
-                    screenName={
-                      currentPlayer.player.socialMediaAccounts[0].value
-                    }
-                    options={{ height: 400 }}
-                  />
-                ) : (
-                  <div></div>
-                )}
-              </div>
-            </div>
-          </article>
-        ) : (
-          <div></div>
         )}
+        {/* <Highlight location="player" playerName={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`} /> */}
+        <PlayerDetails
+          playerDetails={{
+            name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+            DOB: currentPlayer.player.birthDate,
+            from: `${currentPlayer.player.birthCity} ${currentPlayer.player.birthCountry}`,
+            weight: currentPlayer.player.weight,
+            height: currentPlayer.player.height,
+            position: currentPlayer.player.primaryPosition
+          }}
+        />
       </Card.Body>
     </Card>
   );
 };
+
+{/* {currentPlayer.player.socialMediaAccounts.length > 0 ? (
+  <TwitterTimelineEmbed
+    sourceType="profile"
+    screenName={
+      currentPlayer.player.socialMediaAccounts[0].value
+    }
+    options={{ height: 400 }}
+  />
+) : (
+  <div></div>
+)} */}
