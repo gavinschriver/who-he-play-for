@@ -6,7 +6,7 @@ import PlayerSearch from "./PlayerSearch";
 
 export default ({ options }) => {
   return (
-    <ButtonGroup>
+    <ButtonGroup vertical>
       {!options.status ? (
         <PlayerSelectButton
           type={options.type}

@@ -4,6 +4,10 @@
   margin-bottom: 1em;
 }
 
+.playerCard button a {
+  color: white
+}
+
 /* .playerCard--stanned a {
   color: whitesmoke;
 } */
