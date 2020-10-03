@@ -19,15 +19,18 @@ export const Player = ({ PO, TO, status }) => {
   const { getPlayerData } = useContext(PlayerContext);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
-  const [showHideDetails, setShowHideDetails] = useState(false);
   const activeUserId = parseInt(localStorage.getItem("whpf_user"));
 
   // Assign component variable names for Player Objects and Team Objects cause why not
   const currentPlayer = PO;
   const currentPlayerTeam = TO;
-
   const NBATeamId = currentPlayerTeam.teamId;
   const NBAid = currentPlayer.player.externalMappings[0].id || {};
+  const cardClass = matchingUsersPlayer.mentioned
+    ? "playerCard playerCard--stanned"
+    : "playerCard";
+
+  const cardBG = matchingUsersPlayer.mentioned ? "primary" : "light";
 
   useEffect(() => {
     getPlayerData().then(getUsersPlayers);
@@ -41,11 +44,6 @@ export const Player = ({ PO, TO, status }) => {
     );
   }, [usersPlayers]);
 
-  const cardClass = matchingUsersPlayer.mentioned
-    ? "playerCard playerCard--stanned"
-    : "playerCard";
-
-  const cardBG = matchingUsersPlayer.mentioned ? "primary" : "light";
 
   return (
     <Card className={cardClass} bg={cardBG}>
@@ -61,7 +59,7 @@ export const Player = ({ PO, TO, status }) => {
             <PlayerIcons
               details={{
                 playerImg: currentPlayer.player.officialImageSrc,
-                teamAbb: currentPlayer.player.currentTeam.abbreviation,
+                teamAbb: currentPlayer.player.currentTeam ? currentPlayer.player.currentTeam.abbreviation : "NONE",
                 teamId: currentPlayerTeam.NBATeamId,
               }}
             />
