@@ -1,6 +1,7 @@
 import React from "react";
 import { ButtonGroup, Button } from "react-bootstrap";
 import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
+import Highlight from "../highlights/Highlight";
 
 export default ({ options }) => {
   return (
@@ -14,7 +15,7 @@ export default ({ options }) => {
       ) : (
         <div></div>
       )}
-      <Button>ALSO COOL BUTTON</Button>
+      {/* <Highlight location="player" playerName={options.player} /> */}
     </ButtonGroup>
   );
 };

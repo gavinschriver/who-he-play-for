@@ -62,7 +62,7 @@ export const Player = ({ PO, TO, status }) => {
                 teamAbb: currentPlayer.player.currentTeam
                   ? currentPlayer.player.currentTeam.abbreviation
                   : "NONE",
-                teamId: currentPlayerTeam.NBATeamId,
+                teamId: NBATeamId,
               }}
             />
             <PlayerCardAction
@@ -73,17 +73,6 @@ export const Player = ({ PO, TO, status }) => {
                 status
               }}
             />
-            {!status ? (
-              <div>
-                <PlayerSelectButton
-                  type="stan"
-                  location="lineup"
-                  player={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`}
-                />
-              </div>
-            ) : (
-              <div></div>
-            )}
           </Container>
         </Row>
       </Card.Body>
@@ -97,6 +86,7 @@ export const Player = ({ PO, TO, status }) => {
           height: currentPlayer.player.height,
           position: currentPlayer.player.primaryPosition,
           id: NBAid,
+          twitterName: currentPlayer.player.socialMediaAccounts.length > 0 ? currentPlayer.player.socialMediaAccounts[0].value : "NONE"
         }}
       />
       {/* twitter */}
