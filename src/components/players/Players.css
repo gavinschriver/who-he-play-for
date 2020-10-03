@@ -8,9 +8,9 @@
   color: white
 }
 
-/* .playerCard--stanned a {
-  color: whitesmoke;
-} */
+.playerCard--stanned table {
+  background-color: whitesmoke;
+}
 
 .playerCard--body {
 }

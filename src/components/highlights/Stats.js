@@ -49,7 +49,7 @@ export default (props) => {
     }
 
     return (
-      <Table>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Per Game Stats</th>
@@ -72,7 +72,7 @@ export default (props) => {
             <td>{careerStats.rpg}</td>
           </tr>
           {latestStats.ppg > -1 && (
-            <tr className="test">
+            <tr>
               <td>Latest season:</td>
               <td>{latestStats.ppg}</td>
               <td>{latestStats.apg}</td>

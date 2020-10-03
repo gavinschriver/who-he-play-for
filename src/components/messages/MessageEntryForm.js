@@ -27,6 +27,7 @@ export default (props) => {
   const playerRef = React.createRef();
   const URLref = React.createRef();
   const textRef = React.createRef();
+  const activeUserId = parseInt(localStorage.getItem("whpf_user"))
 
   // filtering and extracting things ya know
   const filteredCurrentUsersPlayers = currentUser.usersPlayers.filter(
@@ -43,6 +44,7 @@ export default (props) => {
 
   // submit function
   const handleSubmitButtonPress = () => {
+    alert(playerRef.current.value)
     const player = playerRef.current.value;
     const URL = URLref.current.value;
     const text = textRef.current.value;
@@ -155,10 +157,20 @@ export default (props) => {
       .then(getMessages);
   }, []);
 
+  //gonna try method 2 below
+  // useEffect(() => {
+  //   console.log(`UP collection changed, length of mentionedUPS is now ${mentionedUsersPlayers.length}`)
+  //   getUserById(currentUserId)
+  //     .then(setCurrentUser)
+  //     .then(setMentionedCount(mentionedUsersPlayers.length));
+  // }, [usersPlayers]);
+
   useEffect(() => {
-    getUserById(currentUserId)
-      .then(setCurrentUser)
-      .then(setMentionedCount(mentionedUsersPlayers.length));
+    console.log(mentionedUsersPlayers, filteredCurrentUsersPlayers, currentUsersPlayers)
+    setMentionedCount(
+      usersPlayers.filter((upo) => upo.userId === activeUserId && upo.mentioned)
+        .length
+    );
   }, [usersPlayers]);
 
   return (
