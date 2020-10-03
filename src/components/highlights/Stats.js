@@ -6,11 +6,15 @@ export default (props) => {
     const [data, setData] = useState({});
     const [careerStats, setCareerStats] = useState({});
     const [latestStats, setLatestStats] = useState({});
+    const [noObject, setNoObject] = useState(false);
 
     useEffect(() => {
       fetch(`http://data.nba.net/prod/v1/2019/players/${props.id}_profile.json`)
         .then((res) => res.json())
         .then((result) => {
+          if (result.Message === "Object not found.") {
+            setNoObject(true);
+          }
           if (result.league) {
             setData(result.league.standard.stats);
           }
@@ -49,11 +53,17 @@ export default (props) => {
         <tbody>
           <tr>
             <td>All-time:</td>
-            <td>{careerStats.ppg}</td>
-            <td>{careerStats.apg}</td>
-            <td>{careerStats.spg}</td>
-            <td>{careerStats.bpg}</td>
-            <td>{careerStats.rpg}</td>
+            {!noObject ? (
+              <>
+                <td>{careerStats.ppg}</td>
+                <td>{careerStats.apg}</td>
+                <td>{careerStats.spg}</td>
+                <td>{careerStats.bpg}</td>
+                <td>{careerStats.rpg}</td>
+              </>
+            ) : (
+              <div>No info available</div>
+            )}
           </tr>
           {latestStats.ppg > -1 && (
             <tr className="test">
