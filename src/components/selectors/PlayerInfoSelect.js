@@ -30,7 +30,7 @@ export default ({ playerDetails }) => {
         <Col sm={8}>
           <Tab.Content>
             <Tab.Pane eventKey="#link1">
-              <Stats id={playerDetails.id} />
+              <Stats id={playerDetails.id} type="player" />
             </Tab.Pane>
             <Tab.Pane eventKey="#link2">
               <PlayerDetails

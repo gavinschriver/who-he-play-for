@@ -15,7 +15,7 @@ export default (props) => {
       <Button onClick={handleShow}>Hit me</Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Body>
-          <Stats id={playerId} />
+          <Stats id={playerId} type="player" />
         </Modal.Body>
       </Modal>
     </>
