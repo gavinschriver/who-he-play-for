@@ -13,7 +13,7 @@ import PlayerHeader from "./PlayerHeader";
 import "./Players.css";
 import PlayerIcons from "./PlayerIcons";
 import PlayerInfoSelect from "../selectors/PlayerInfoSelect";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Container } from "react-bootstrap";
 
 export const Player = ({ PO, TO, status }) => {
   const { getPlayerData } = useContext(PlayerContext);
@@ -56,8 +56,8 @@ export const Player = ({ PO, TO, status }) => {
         }}
       />
       <Card.Body className="playerCard--body">
-        <Col>
-          <Row>
+        <Row>
+          <Container>
             <PlayerIcons
               details={{
                 playerImg: currentPlayer.player.officialImageSrc,
@@ -76,8 +76,8 @@ export const Player = ({ PO, TO, status }) => {
             ) : (
               <div></div>
             )}
-          </Row>
-        </Col>
+          </Container>
+        </Row>
       </Card.Body>
       {/* <Highlight location="player" playerName={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`} /> */}
       <PlayerInfoSelect

@@ -130,6 +130,22 @@ export const GenerateLineup = () => {
                 let matchingPlayerTeam;
 
                 if (matchingPlayerObj.player.currentTeam) {
+
+                  if (matchingPlayerObj.player.currentTeam.abbreviation === "BRO") {
+                    matchingPlayerTeam = teams.find(t => {
+                      return t.abbreviation === "BKN"
+                    })
+
+                  }
+
+                  else if (matchingPlayerObj.player.currentTeam.abbreviation === "OKL") {
+                    matchingPlayerTeam = teams.find(t => {
+                      return t.abbreviation === "OKC"
+                    })
+                  }  
+            
+
+                  else
                   matchingPlayerTeam =
                     teams.find((t) => {
                       return (

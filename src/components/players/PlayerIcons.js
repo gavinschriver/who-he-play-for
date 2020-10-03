@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Row, Container } from "react-bootstrap";
+import { Card, Col, Row, Container, Button } from "react-bootstrap";
 
 export default ({ details }) => {
   const teamImg =
