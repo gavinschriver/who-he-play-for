@@ -5,11 +5,14 @@ import { PlayerContext } from "./PlayerProvider";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
-import "./Players.css";
 import { PlayerSelectButton } from "../buttons/PlayerSelectButton";
 import Stats from "../highlights/Stats";
 import Highlight from "../highlights/Highlight";
 import PlayerDetails from "./PlayerDetails";
+import PlayerHeader from "./PlayerHeader";
+import "./Players.css";
+import PlayerIcons from "./PlayerIcons";
+import PlayerInfoSelect from "../selectors/PlayerInfoSelect";
 
 export const Player = ({ PO, TO, status }) => {
   const { getPlayerData } = useContext(PlayerContext);
@@ -17,13 +20,6 @@ export const Player = ({ PO, TO, status }) => {
   const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
   const [showHideDetails, setShowHideDetails] = useState(false);
   const activeUserId = parseInt(localStorage.getItem("whpf_user"));
-
-  const handleDetailButtonClick = () => {
-    if (!showHideDetails) {
-      setShowHideDetails(true);
-    } else setShowHideDetails(false);
-    console.log(currentPlayer);
-  };
 
   // Assign component variable names for Player Objects and Team Objects cause why not
   const currentPlayer = PO;
@@ -52,75 +48,64 @@ export const Player = ({ PO, TO, status }) => {
 
   return (
     <Card className={cardClass} bg={cardBG}>
-      <Card.Header as="h5">Player</Card.Header>
+      <PlayerHeader
+        headerInfo={{
+          name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+          team: TO.teamName,
+        }}
+      />
       <Card.Body className="playerCard--body">
-        {NBAid ? <Stats id={NBAid} /> : <div></div>}
-        {!status ? (
-          <div>
-            <PlayerSelectButton
-              type="stan"
-              location="lineup"
-              player={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`}
-            />
-          </div>
-        ) : (
-          <div></div>
-        )}
-        <Card.Title className="playerCard__name">
-          Player: {currentPlayer.player.firstName}{" "}
-          {currentPlayer.player.lastName}
-        </Card.Title>
-        <div className="playerCard__headshot img">
-          <a
-            href={`https://www.reddit.com/search?q=${currentPlayer.player.firstName}%20${currentPlayer.player.lastName}`}
-            target="_blank"
-          >
-            <Card.Img src={currentPlayer.player.officialImageSrc} />
-          </a>
-        </div>
-        {currentPlayer.player.currentTeam ? (
-          <div className="playerCard__logo__img">
-            {currentPlayer.player.currentTeam.abbreviation === "BRO" ? (
-              <Card.Img
-                src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png`}
-              />
-            ) : currentPlayer.player.currentTeam.abbreviation === "OKL" ? (
-              <Card.Img
-                src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/okc.png`}
-              />
-            ) : (
-              <Card.Img
-                src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`.toLowerCase()}
-              />
-            )}
-          </div>
-        ) : (
-          <div>Poor lil buddy needs a team :(</div>
-        )}
-        {/* <Highlight location="player" playerName={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`} /> */}
-        <PlayerDetails
-          playerDetails={{
-            name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
-            DOB: currentPlayer.player.birthDate,
-            from: `${currentPlayer.player.birthCity} ${currentPlayer.player.birthCountry}`,
-            weight: currentPlayer.player.weight,
-            height: currentPlayer.player.height,
-            position: currentPlayer.player.primaryPosition
+        <PlayerIcons
+          details={{
+            playerImg: currentPlayer.player.officialImageSrc,
+            teamAbb: currentPlayer.player.currentTeam.abbreviation,
+            teamId: currentPlayerTeam.NBATeamId,
           }}
         />
       </Card.Body>
+      {/* <Highlight location="player" playerName={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`} /> */}
+      {!status ? (
+        <div>
+          <PlayerSelectButton
+            type="stan"
+            location="lineup"
+            player={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`}
+          />
+        </div>
+      ) : (
+        <div></div>
+      )}
+      <PlayerInfoSelect
+        playerDetails={{
+          name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+          DOB: currentPlayer.player.birthDate,
+          from: `${currentPlayer.player.birthCity} ${currentPlayer.player.birthCountry}`,
+          weight: currentPlayer.player.weight,
+          height: currentPlayer.player.height,
+          position: currentPlayer.player.primaryPosition,
+          id: NBAid
+        }}
+      />
+      {/* twitter */}
+      {currentPlayer.player.socialMediaAccounts.length > 0 ? (
+        <TwitterTimelineEmbed
+        sourceType="profile"
+        screenName={currentPlayer.player.socialMediaAccounts[0].value}
+        options={{ height: 400 }}
+        />
+        ) : (
+          <div></div>
+          )}
     </Card>
   );
 };
-
-{/* {currentPlayer.player.socialMediaAccounts.length > 0 ? (
-  <TwitterTimelineEmbed
-    sourceType="profile"
-    screenName={
-      currentPlayer.player.socialMediaAccounts[0].value
-    }
-    options={{ height: 400 }}
-  />
-) : (
-  <div></div>
-)} */}
+{/* <PlayerDetails
+  playerDetails={{
+    name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+    DOB: currentPlayer.player.birthDate,
+    from: `${currentPlayer.player.birthCity} ${currentPlayer.player.birthCountry}`,
+    weight: currentPlayer.player.weight,
+    height: currentPlayer.player.height,
+    position: currentPlayer.player.primaryPosition,
+  }}
+/> */}
