@@ -1,41 +1,35 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import { TwitterTimelineEmbed } from "react-twitter-embed";
+import { Table } from "react-bootstrap";
 
 export default ({ playerDetails }) => {
-  const playerName = playerDetails.name;
-  const [showDetails, setShowDetails] = useState(false);
-  const toggleDetailsShowing = () => {
-    setShowDetails(!showDetails);
-  };
 
   return (
     <>
-        <article className="playerCard__details">
-          <div className="playerCard__details__heading heading">DEETS</div>
-          <div className="playerCard__details__DOB">
-            <span className="detailName">Date of Birth: </span>
-            <span className="detail">{playerDetails.DOB}</span>
-          </div>
+      <Table className="playerCard__details">
+        <tbody>
+          <tr className="playerCard__details__DOB">
+            <td className="detailName">Date of Birth: </td>
+            <td className="detail">{playerDetails.DOB}</td>
+          </tr>
 
-          <div className="playerCard__details__city">
-            <span className="detailName">Hailing From: </span>
-            <span className="detail">{playerDetails.from}</span>
-                  </div>
-                  
-          <div className="playerCard__details__height">
-            <span className="detailName">Height: </span>
-            <span className="detail">{playerDetails.height}</span>
-          </div>
+          <tr className="playerCard__details__city">
+            <td className="detailName">Hailing From: </td>
+            <td className="detail">{playerDetails.from}</td>
+          </tr>
 
-          <div className="playerCard__details__weight">
-            <span className="detailName">Weight (rude): </span>
-            <span className="detail">{playerDetails.weight}</span>
-          </div>
+          <tr className="playerCard__details__height">
+            <td className="detailName">Height: </td>
+            <td className="detail">{playerDetails.height}</td>
+          </tr>
 
-          <div className="playerCard__details__primaryPosition">
-            <span className="detailName">Primary Position: </span>
-            <span className="detail">
+          <tr className="playerCard__details__weight">
+            <td className="detailName">Weight (rude): </td>
+            <td className="detail">{playerDetails.weight} lbs.</td>
+          </tr>
+
+          <tr className="playerCard__details__primaryPosition">
+            <td className="detailName">Primary Position: </td>
+            <td className="detail">
               {playerDetails.position === "SG"
                 ? "Shooting Guard"
                 : playerDetails.position === "PG"
@@ -47,10 +41,10 @@ export default ({ playerDetails }) => {
                 : playerDetails.position === "PF"
                 ? "Power Forward"
                 : "Unkown (Positionless BBall amirite?)"}
-            </span>
-          </div>
-        </article>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
     </>
   );
 };
-
