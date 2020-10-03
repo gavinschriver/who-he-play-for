@@ -14,6 +14,7 @@ import "./Players.css";
 import PlayerIcons from "./PlayerIcons";
 import PlayerInfoSelect from "../selectors/PlayerInfoSelect";
 import { Col, Row, Container } from "react-bootstrap";
+import PlayerCardAction from "./PlayerCardAction";
 
 export const Player = ({ PO, TO, status }) => {
   const { getPlayerData } = useContext(PlayerContext);
@@ -44,7 +45,6 @@ export const Player = ({ PO, TO, status }) => {
     );
   }, [usersPlayers]);
 
-
   return (
     <Card className={cardClass} bg={cardBG}>
       <PlayerHeader
@@ -59,8 +59,18 @@ export const Player = ({ PO, TO, status }) => {
             <PlayerIcons
               details={{
                 playerImg: currentPlayer.player.officialImageSrc,
-                teamAbb: currentPlayer.player.currentTeam ? currentPlayer.player.currentTeam.abbreviation : "NONE",
+                teamAbb: currentPlayer.player.currentTeam
+                  ? currentPlayer.player.currentTeam.abbreviation
+                  : "NONE",
                 teamId: currentPlayerTeam.NBATeamId,
+              }}
+            />
+            <PlayerCardAction
+              options={{
+                type: "stan",
+                location: "lineup",
+                player: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+                status
               }}
             />
             {!status ? (
