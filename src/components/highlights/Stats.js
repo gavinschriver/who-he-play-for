@@ -14,8 +14,7 @@ export default (props) => {
           if (result.league) {
             setData(result.league.standard.stats);
           }
-        }
-        );
+        });
     }, []);
 
     useEffect(() => {
@@ -26,8 +25,12 @@ export default (props) => {
       setLatestStats(data.latest || {});
     }, [data]);
 
+    // if (Object.entries(careerStats).length === 0) {
+    //   console.log(careerStats, props.id);
+    // }
+
     if (props.tooltip) {
-      return <div>{careerStats.ppg}</div>
+      return <div>Career Avg. Points Per Game: {careerStats.ppg}</div>;
     }
 
     return (
@@ -52,14 +55,16 @@ export default (props) => {
             <td>{careerStats.bpg}</td>
             <td>{careerStats.rpg}</td>
           </tr>
-          <tr>
-            <td>Latest season:</td>
-            <td>{latestStats.ppg}</td>
-            <td>{latestStats.apg}</td>
-            <td>{latestStats.spg}</td>
-            <td>{latestStats.bpg}</td>
-            <td>{latestStats.rpg}</td>
-          </tr>
+          {latestStats.ppg > -1 && (
+            <tr className="test">
+              <td>Latest season:</td>
+              <td>{latestStats.ppg}</td>
+              <td>{latestStats.apg}</td>
+              <td>{latestStats.spg}</td>
+              <td>{latestStats.bpg}</td>
+              <td>{latestStats.rpg}</td>
+            </tr>
+          )}
         </tbody>
       </Table>
     );
