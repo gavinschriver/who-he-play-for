@@ -5,7 +5,6 @@ import PlayerDetails from "../players/PlayerDetails";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 
 export default ({ playerDetails }) => {
-  console.log(playerDetails.twitterName);
   return (
     <Tab.Container id="list-group-tabs-example" defaultActiveKey="#link1">
       <Row>
