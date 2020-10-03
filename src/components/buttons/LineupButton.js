@@ -7,6 +7,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import Stats from "../highlights/Stats";
 import StatsButton from "./StatsButton";
+import PlayerName from "../players/PlayerName";
 
 export const LineupButton = (props) => {
   const { usersPlayers } = useContext(UserPlayerContext);
@@ -32,7 +33,7 @@ export const LineupButton = (props) => {
     return up.mentioned === true;
   });
 
-  // BUG: if same playerId appears in 2 different userPlayers, as in, for the same lineup, 
+  // BUG: if same playerId appears in 2 different userPlayers, as in, for the same lineup,
   // the conditional that decides whether the button should show up to stan that  player will be "false" for both even
   // if only 1 is marked because that player Id # is going to be in this array
   const mentionedPlayerIds = mentionedUsersPlayers.map((mUP) => {
@@ -66,21 +67,21 @@ export const LineupButton = (props) => {
               </thead>
               <tbody>
                 {matchingPlayers.map((mPO) => {
+                  const player = `${mPO.player.firstName} ${mPO.player.lastName}`;
                   const NBAid = mPO.player.externalMappings[0].id || {};
                   const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
                   return (
                     <tr>
                       <td>
-                        <a
-                          href={redditSearch}
-                          target="_blank"
-                          className={locationClass}
-                        >
-                          {mPO.player.firstName} {mPO.player.lastName}
-                        </a>
+                        <PlayerName
+                          playerName={player}
+                          searchString={redditSearch}
+                          playerId={NBAid}
+                        />
                       </td>
+
                       <td>
-                        <StatsButton id={NBAid}/>
+                        <StatsButton id={NBAid} />
                       </td>
                       <td>
                         {props.userType === "current" &&

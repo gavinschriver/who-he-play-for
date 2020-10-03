@@ -17,7 +17,7 @@ export default ({ options }) => {
         <div></div>
       )}
       {/* <Highlight location="player" playerName={options.player} /> */}
-      <PlayerSearch playerDetails={{playerName: options.player}} />
+      <PlayerSearch location="playerCard" playerDetails={{playerName: options.player}} />
     </ButtonGroup>
   );
 };

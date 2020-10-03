@@ -26,6 +26,10 @@ export default (props) => {
       setLatestStats(data.latest || {});
     }, [data]);
 
+    if (props.tooltip) {
+      return <div>{careerStats.ppg}</div>
+    }
+
     return (
       <Table>
         <thead>
