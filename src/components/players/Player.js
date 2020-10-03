@@ -13,6 +13,7 @@ import PlayerHeader from "./PlayerHeader";
 import "./Players.css";
 import PlayerIcons from "./PlayerIcons";
 import PlayerInfoSelect from "../selectors/PlayerInfoSelect";
+import { Col, Row } from "react-bootstrap";
 
 export const Player = ({ PO, TO, status }) => {
   const { getPlayerData } = useContext(PlayerContext);
@@ -55,26 +56,30 @@ export const Player = ({ PO, TO, status }) => {
         }}
       />
       <Card.Body className="playerCard--body">
-        <PlayerIcons
-          details={{
-            playerImg: currentPlayer.player.officialImageSrc,
-            teamAbb: currentPlayer.player.currentTeam.abbreviation,
-            teamId: currentPlayerTeam.NBATeamId,
-          }}
-        />
+        <Col>
+          <Row>
+            <PlayerIcons
+              details={{
+                playerImg: currentPlayer.player.officialImageSrc,
+                teamAbb: currentPlayer.player.currentTeam.abbreviation,
+                teamId: currentPlayerTeam.NBATeamId,
+              }}
+            />
+            {!status ? (
+              <div>
+                <PlayerSelectButton
+                  type="stan"
+                  location="lineup"
+                  player={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`}
+                />
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </Row>
+        </Col>
       </Card.Body>
       {/* <Highlight location="player" playerName={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`} /> */}
-      {!status ? (
-        <div>
-          <PlayerSelectButton
-            type="stan"
-            location="lineup"
-            player={`${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`}
-          />
-        </div>
-      ) : (
-        <div></div>
-      )}
       <PlayerInfoSelect
         playerDetails={{
           name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
@@ -83,29 +88,19 @@ export const Player = ({ PO, TO, status }) => {
           weight: currentPlayer.player.weight,
           height: currentPlayer.player.height,
           position: currentPlayer.player.primaryPosition,
-          id: NBAid
+          id: NBAid,
         }}
       />
       {/* twitter */}
-      {currentPlayer.player.socialMediaAccounts.length > 0 ? (
+      {/* {currentPlayer.player.socialMediaAccounts.length > 0 ? (
         <TwitterTimelineEmbed
-        sourceType="profile"
-        screenName={currentPlayer.player.socialMediaAccounts[0].value}
-        options={{ height: 400 }}
+          sourceType="profile"
+          screenName={currentPlayer.player.socialMediaAccounts[0].value}
+          options={{ height: 400 }}
         />
-        ) : (
-          <div></div>
-          )}
+      ) : (
+        <div></div>
+      )} */}
     </Card>
   );
 };
-{/* <PlayerDetails
-  playerDetails={{
-    name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
-    DOB: currentPlayer.player.birthDate,
-    from: `${currentPlayer.player.birthCity} ${currentPlayer.player.birthCountry}`,
-    weight: currentPlayer.player.weight,
-    height: currentPlayer.player.height,
-    position: currentPlayer.player.primaryPosition,
-  }}
-/> */}

@@ -27,11 +27,7 @@ export default ({ playerDetails }) => {
             <Tab.Pane eventKey="#link2">
               <PlayerDetails
                 playerDetails={{
-                  DOB: playerDetails.DOB,
-                  from: playerDetails.from,
-                  weight: playerDetails.weight,
-                  height: playerDetails.height,
-                  position: playerDetails.position,
+                  ...playerDetails
                 }}
               />
             </Tab.Pane>
