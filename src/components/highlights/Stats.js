@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { Table, Alert } from "react-bootstrap";
 
 export default (props) => {
   if (props.type === "player") {
@@ -33,6 +33,17 @@ export default (props) => {
     //   console.log(careerStats, props.id);
     // }
 
+    if (noObject) {
+      if (props.tooltip) {
+        return <div>Info unavailable</div>
+      }
+      return (
+        <Alert variant={`danger`}>
+          Info unavailable
+        </Alert>
+      );
+    }
+
     if (props.tooltip) {
       return <div>Career Avg. Points Per Game: {careerStats.ppg}</div>;
     }
@@ -53,17 +64,12 @@ export default (props) => {
         <tbody>
           <tr>
             <td>All-time:</td>
-            {!noObject ? (
-              <>
-                <td>{careerStats.ppg}</td>
-                <td>{careerStats.apg}</td>
-                <td>{careerStats.spg}</td>
-                <td>{careerStats.bpg}</td>
-                <td>{careerStats.rpg}</td>
-              </>
-            ) : (
-              <div>No info available</div>
-            )}
+
+            <td>{careerStats.ppg}</td>
+            <td>{careerStats.apg}</td>
+            <td>{careerStats.spg}</td>
+            <td>{careerStats.bpg}</td>
+            <td>{careerStats.rpg}</td>
           </tr>
           {latestStats.ppg > -1 && (
             <tr className="test">
