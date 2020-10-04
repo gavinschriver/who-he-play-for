@@ -13,13 +13,12 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import "./messages.css";
 import { EditMessageButton } from "../buttons/EditMessageButton";
+import MessageChatText from "./MessageChatText";
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const { playerObjArray, getPlayerData } = useContext(PlayerContext);
-  const { messages, getMessages, updateMessage } = useContext(
-    MessageContext
-  );
+  const { messages, getMessages, updateMessage } = useContext(MessageContext);
   const { users, getUsers } = useContext(UserContext);
 
   // component-state data collections
@@ -33,6 +32,7 @@ export const Message = ({ MO }) => {
   const [editFieldShowing, setEditFieldShowing] = useState(false);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
   const editRef = useRef("");
+  const editMessageRef = React.createRef("")
 
   //find current user's lineup
   const currentUserPlayerIds = currentUsersPOs.map((cULO) => {
@@ -51,9 +51,14 @@ export const Message = ({ MO }) => {
 
   //edit
   const handleEditButtonPress = (e) => {
-    e.preventDefault()
-    alert('ISSA KNIFE')
-  }
+    e.preventDefault();
+    toggleEditField();
+    const messageId = parseInt(editMessageRef.current.value)
+    const messageToEdit = messages.find((m) => {
+      return m.id === messageId;
+    });
+    setMessage(messageToEdit);
+  };
 
   const toggleEditField = () => {
     setEditFieldShowing(!editFieldShowing);
@@ -93,16 +98,6 @@ export const Message = ({ MO }) => {
     setMatchingUsersPlayers(matchingUPs);
   }, [usersPlayers]);
 
-  // useEffect(() => {
-  //   const matchingPOs =
-  //     matchingUsersPlayers.map((mUPO) => {
-  //       return playerObjArray.find((p) => {
-  //         return mUPO.playerId === p.player.id;
-  //       });
-  //     }) || {};
-  //   setMatchingPlayers(matchingPOs);
-  // }, [playerObjArray]);
-
   useEffect(() => {
     const currentUserLineup =
       usersPlayers.filter((uPO) => {
@@ -133,20 +128,16 @@ export const Message = ({ MO }) => {
         isYourGuy={currentUsersLineupAsStrings.includes(MO.messagetext)}
         time={MO.timestamp}
       />
-      {user.avatar ? <Avatar user={user} location="message" /> : <div></div>}
+      {user.avatar && <Avatar user={user} location="message" />}
 
       <Card.Body className="playerCard--body">
         {/* lineup */}
 
-        {MO.user.id === currentUserId ? (
-          <div></div>
-        ) : (
-          <div>
-            <LineupButton
-              userType={MO.user.id === currentUserId ? "current" : "other"}
-              userId={MO.userId}
-            />
-          </div>
+        {MO.user.id !== currentUserId && (
+          <LineupButton
+            userType={MO.user.id === currentUserId ? "current" : "other"}
+            userId={MO.userId}
+          />
         )}
 
         {/* URL */}
@@ -155,33 +146,16 @@ export const Message = ({ MO }) => {
           url={MO.url}
           type={MO.stan ? "stan" : MO.trashtalk ? "trash" : ""}
         />
-        <Card.Text className="message__chattext">{MO.chattext}</Card.Text>
+
+        <MessageChatText class="message__chattext" text={MO.chattext} />
 
         {/* edit/submit buttons */}
 
-        {MO.user.id === currentUserId ? (
+        {MO.user.id === currentUserId && (
           <div className="message__edit">
-            {/* <EditMessageButton id={MO.id} action={handleEditButtonPress}/> */}
-            <Button
-              className="message__edit button edit--button message--button"
-              ref={editRef}
-              value={`editButton--${MO.id}`}
-              onClick={(e) => {
-                e.preventDefault();
-                toggleEditField();
-                const messageId = parseInt(
-                  editRef.current.value.split("--")[1]
-                );
-                const messageToEdit = messages.find((m) => {
-                  return m.id === messageId;
-                });
-                setMessage(messageToEdit);
-              }}
-            >
-              Edit
-            </Button>
+            <EditMessageButton id={MO.id} action={handleEditButtonPress} ref={editMessageRef}/>
 
-            {editFieldShowing ? (
+            {editFieldShowing && (
               <Button
                 className="message__submit button submit--button message--button"
                 onClick={(e) => {
@@ -192,17 +166,13 @@ export const Message = ({ MO }) => {
               >
                 Submit
               </Button>
-            ) : (
-              <div></div>
             )}
           </div>
-        ) : (
-          <div></div>
         )}
 
         {/* chat text edit field */}
 
-        {editFieldShowing ? (
+        {editFieldShowing && (
           <Form.Control
             as="textarea"
             className="message__textedit input textarea--input"
@@ -210,16 +180,12 @@ export const Message = ({ MO }) => {
             onChange={handleControlledInputChange}
             value={message.chattext}
           ></Form.Control>
-        ) : (
-          <div></div>
         )}
 
         {/* delete button */}
 
-        {MO.user.id === currentUserId ? (
+        {MO.user.id === currentUserId && (
           <DeleteMessageButton location="message" id={MO.id} />
-        ) : (
-          <div></div>
         )}
       </Card.Body>
     </Card>

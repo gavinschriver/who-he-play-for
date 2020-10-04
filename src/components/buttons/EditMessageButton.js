@@ -1,11 +1,10 @@
 import React from "react"
 import { Button } from "react-bootstrap"
 
-export const EditMessageButton = (props) => {
+export const EditMessageButton = React.forwardRef((props, ref) => {
     const action = props.action
     
-
     return (
-        <Button onClick={action}>EDIT DIS MESSAUGE</Button>
+        <Button ref={ref} onClick={action} value={props.id}>EDIT DIS MESSAUGE</Button>
     )
-}
+})
