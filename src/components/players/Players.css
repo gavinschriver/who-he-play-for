@@ -12,10 +12,17 @@
   background-color: whitesmoke;
 }
 
-.playerCard--body {
+.playerCard--stanned button {
+  border: 1px solid white
 }
+/* .playerCard--body--container {
+  display:flex;
+  flex-basis: 1;
+} */
+
 
 .playerIcons {
   display: flex;
   align-items: center;
 }
+

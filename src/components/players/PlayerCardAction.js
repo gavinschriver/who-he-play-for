@@ -6,18 +6,23 @@ import PlayerSearch from "./PlayerSearch";
 
 export default ({ options }) => {
   return (
-    <ButtonGroup vertical>
-      {!options.status ? (
-        <PlayerSelectButton
-          type={options.type}
-          location={options.location}
-          player={options.player}
+    <div>
+      <ButtonGroup>
+        {!options.status ? (
+          <PlayerSelectButton
+            type={options.type}
+            location={options.location}
+            player={options.player}
+          />
+        ) : (
+          <div></div>
+        )}
+        {/* <Highlight location="player" playerName={options.player} /> */}
+        <PlayerSearch
+          location="playerCard"
+          playerDetails={{ playerName: options.player, type: options.type }}
         />
-      ) : (
-        <div></div>
-      )}
-      {/* <Highlight location="player" playerName={options.player} /> */}
-      <PlayerSearch location="playerCard" playerDetails={{playerName: options.player}} />
-    </ButtonGroup>
+      </ButtonGroup>
+    </div>
   );
 };

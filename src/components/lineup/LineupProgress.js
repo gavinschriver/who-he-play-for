@@ -8,7 +8,6 @@ export default () => {
 
   useEffect(() => {
     setProgressPercent(mentionedCount * 20);
-    alert(mentionedCount);
   }, [mentionedCount]);
 
   return (

@@ -47,8 +47,8 @@ export const Player = ({ PO, TO, status }) => {
         }}
       />
       <Card.Body className="playerCard--body">
-        <Row>
-          <Container>
+        <div className="playerCard--body--container">
+          <Col>
             <PlayerIcons
               details={{
                 playerImg: currentPlayer.player.officialImageSrc,
@@ -58,16 +58,18 @@ export const Player = ({ PO, TO, status }) => {
                 teamId: NBATeamId,
               }}
             />
+          </Col>
+          <Col>
             <PlayerCardAction
               options={{
                 type: "stan",
                 location: "lineup",
                 player: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
-                status
+                status,
               }}
             />
-          </Container>
-        </Row>
+          </Col>
+        </div>
       </Card.Body>
       <PlayerInfoSelect
         playerDetails={{
@@ -78,7 +80,10 @@ export const Player = ({ PO, TO, status }) => {
           height: currentPlayer.player.height,
           position: currentPlayer.player.primaryPosition,
           id: NBAid,
-          twitterName: currentPlayer.player.socialMediaAccounts.length > 0 ? currentPlayer.player.socialMediaAccounts[0].value : "NONE"
+          twitterName:
+            currentPlayer.player.socialMediaAccounts.length > 0
+              ? currentPlayer.player.socialMediaAccounts[0].value
+              : "NONE",
         }}
       />
     </Card>

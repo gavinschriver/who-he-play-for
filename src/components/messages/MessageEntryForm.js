@@ -45,7 +45,6 @@ export default (props) => {
 
   // submit function
   const handleSubmitButtonPress = () => {
-    alert(playerRef.current.value)
     const player = playerRef.current.value;
     const URL = URLref.current.value;
     const text = textRef.current.value;
