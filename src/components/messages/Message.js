@@ -15,6 +15,7 @@ import "./messages.css";
 import { EditMessageButton } from "../buttons/EditMessageButton";
 import MessageChatText from "./MessageChatText";
 import SubmitedEditedMessageButton from "../buttons/SubmitedEditedMessageButton";
+import { Container, Row, Col } from "react-bootstrap";
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -135,7 +136,33 @@ export const Message = ({ MO }) => {
         isYourGuy={currentUsersLineupAsStrings.includes(MO.messagetext)}
         time={MO.timestamp}
       />
-      {user.avatar && <Avatar user={user} location="message" />}
+      <Container>
+        <Row>
+          <Col sm={4}>
+            {user.avatar && <Avatar user={user} location="message" />}
+          </Col>
+          {/* chat text */}
+          <Col sm={8}>
+            {editFieldShowing ? (
+              <Form.Control
+                as="textarea"
+                className="message__textedit input textarea--input"
+                name="chattext"
+                onChange={handleControlledInputChange}
+                value={message.chattext}
+              ></Form.Control>
+            ) : (
+              <MessageChatText class="message__chattext" text={MO.chattext} />
+            )}
+            {/* URL */}
+            <MessageURLink
+              url={MO.url}
+              class="messageURLInk"
+              type={MO.stan ? "stan" : MO.trashtalk ? "trash" : ""}
+            />
+          </Col>
+        </Row>
+      </Container>
 
       <Card.Body className="playerCard--body">
         {/* lineup */}
@@ -146,15 +173,6 @@ export const Message = ({ MO }) => {
             userId={MO.userId}
           />
         )}
-
-        {/* URL */}
-
-        <MessageURLink
-          url={MO.url}
-          type={MO.stan ? "stan" : MO.trashtalk ? "trash" : ""}
-        />
-
-        <MessageChatText class="message__chattext" text={MO.chattext} />
 
         {/* edit/submit buttons */}
 
@@ -167,37 +185,12 @@ export const Message = ({ MO }) => {
             />
 
             {editFieldShowing && (
-              <>
-                <Button
-                  className="message__submit button submit--button message--button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    toggleEditField();
-                    constructNewMessage();
-                  }}
-                >
-                  Submit
-                </Button>
-                <SubmitedEditedMessageButton action={handleSubmitEditedMessage} />
-              </>
+              <SubmitedEditedMessageButton action={handleSubmitEditedMessage} />
             )}
           </div>
         )}
 
-        {/* chat text edit field */}
-
-        {editFieldShowing && (
-          <Form.Control
-            as="textarea"
-            className="message__textedit input textarea--input"
-            name="chattext"
-            onChange={handleControlledInputChange}
-            value={message.chattext}
-          ></Form.Control>
-        )}
-
         {/* delete button */}
-
         {MO.user.id === currentUserId && (
           <DeleteMessageButton location="message" id={MO.id} />
         )}

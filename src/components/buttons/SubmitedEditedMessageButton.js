@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap"
 export default (props) => {
     return (
         <Button onClick={props.action}>
-            Submit Edited MEssauge
+            Submit Edits
     </Button>
 )
 
