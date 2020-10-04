@@ -14,6 +14,7 @@ import Form from "react-bootstrap/Form";
 import "./messages.css";
 import { EditMessageButton } from "../buttons/EditMessageButton";
 import MessageChatText from "./MessageChatText";
+import SubmitedEditedMessageButton from "../buttons/SubmitedEditedMessageButton";
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -32,7 +33,7 @@ export const Message = ({ MO }) => {
   const [editFieldShowing, setEditFieldShowing] = useState(false);
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
   const editRef = useRef("");
-  const editMessageRef = React.createRef("")
+  const editMessageRef = React.createRef("");
 
   //find current user's lineup
   const currentUserPlayerIds = currentUsersPOs.map((cULO) => {
@@ -53,7 +54,7 @@ export const Message = ({ MO }) => {
   const handleEditButtonPress = (e) => {
     e.preventDefault();
     toggleEditField();
-    const messageId = parseInt(editMessageRef.current.value)
+    const messageId = parseInt(editMessageRef.current.value);
     const messageToEdit = messages.find((m) => {
       return m.id === messageId;
     });
@@ -68,6 +69,12 @@ export const Message = ({ MO }) => {
     const newMessage = Object.assign({}, message);
     newMessage[event.target.name] = event.target.value;
     setMessage(newMessage);
+  };
+
+  const handleSubmitEditedMessage = (e) => {
+    e.preventDefault();
+    toggleEditField();
+    constructNewMessage();
   };
 
   const constructNewMessage = () => {
@@ -153,19 +160,26 @@ export const Message = ({ MO }) => {
 
         {MO.user.id === currentUserId && (
           <div className="message__edit">
-            <EditMessageButton id={MO.id} action={handleEditButtonPress} ref={editMessageRef}/>
+            <EditMessageButton
+              id={MO.id}
+              action={handleEditButtonPress}
+              ref={editMessageRef}
+            />
 
             {editFieldShowing && (
-              <Button
-                className="message__submit button submit--button message--button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  toggleEditField();
-                  constructNewMessage();
-                }}
-              >
-                Submit
-              </Button>
+              <>
+                <Button
+                  className="message__submit button submit--button message--button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toggleEditField();
+                    constructNewMessage();
+                  }}
+                >
+                  Submit
+                </Button>
+                <SubmitedEditedMessageButton action={handleSubmitEditedMessage} />
+              </>
             )}
           </div>
         )}
