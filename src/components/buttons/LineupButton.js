@@ -5,9 +5,8 @@ import Button from "react-bootstrap/Button";
 import { PlayerSelectButton } from "./PlayerSelectButton";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
-import Stats from "../highlights/Stats";
-import StatsButton from "./StatsButton";
 import PlayerName from "../players/PlayerName";
+import PlayerSearch from "../players/PlayerSearch";
 
 export const LineupButton = (props) => {
   const { usersPlayers } = useContext(UserPlayerContext);
@@ -61,7 +60,7 @@ export const LineupButton = (props) => {
               <thead>
                 <tr>
                   <th>Player</th>
-                  <th>Stats</th>
+                  <th>Hot takes</th>
                   <th>{actionHeader}</th>
                 </tr>
               </thead>
@@ -81,7 +80,7 @@ export const LineupButton = (props) => {
                       </td>
 
                       <td>
-                        <StatsButton id={NBAid} />
+                        <PlayerSearch location="lineup" playerDetails={{ playerName: player, type: selectButtonType }}/>
                       </td>
                       <td>
                         {props.userType === "current" &&

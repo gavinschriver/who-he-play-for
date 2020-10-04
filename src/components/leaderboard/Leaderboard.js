@@ -7,6 +7,7 @@ import { Score } from "./Score";
 import "./leaderboard.css"
 import Table from "react-bootstrap/Table"
 import Collapse from "react-bootstrap/Collapse"
+import LineupProgress from "../lineup/LineupProgress";
 
 //this comp is a bit inaccurately named now. Should be Scores or something
 //to indicate it generates all scores and returns them conditionally rendered
@@ -203,7 +204,8 @@ export const Leaderboard = (props) => {
                 {currentUserScore.trashtalks}
               </span>
             </div>
-          </section>
+            <LineupProgress />
+            </section>
         </>
       ) : (
         <div></div>

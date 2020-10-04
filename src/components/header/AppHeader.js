@@ -34,7 +34,6 @@ export const AppHeader = (props) => {
           </Col>
           <Col>
             <Leaderboard location="header" />
-            <LineupProgress />
           </Col>
         </Row>
       </Container>

@@ -34,6 +34,7 @@ export default (props) => {
     (up) => !up.mentioned
   );
 
+  //not currently being used
   const mentionedUsersPlayers = currentUser.usersPlayers.filter(
     (up) => up.mentioned
   );
@@ -166,7 +167,6 @@ export default (props) => {
   // }, [usersPlayers]);
 
   useEffect(() => {
-    console.log(mentionedUsersPlayers, filteredCurrentUsersPlayers, currentUsersPlayers)
     setMentionedCount(
       usersPlayers.filter((upo) => upo.userId === activeUserId && upo.mentioned)
         .length
