@@ -1,4 +1,5 @@
 import React from "react";
+import { GoLinkExternal } from "react-icons/go/";
 
 export const MessageURLink = (props) => {
   const linkText =
@@ -9,5 +10,12 @@ export const MessageURLink = (props) => {
       : "";
   const url = props.url;
 
-  return <a href={url} target="_blank">{linkText}</a>;
+  return (
+    <>
+      <a href={url} target="_blank">
+        {linkText} <GoLinkExternal />
+      </a>
+      
+    </>
+  );
 };

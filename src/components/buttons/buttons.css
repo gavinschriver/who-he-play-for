@@ -2,6 +2,18 @@
     color: whitesmoke
 } */
 
-.playerSearch--button a {
+.playerSearch-button a {
     color: whitesmoke;
+}
+
+.lineup-button a{
+    color: #007bff
+}
+
+.lineup-button a:hover{
+    color:#fd7e14
+}
+
+.scoreboard-button a:hover{
+    color: white
 }

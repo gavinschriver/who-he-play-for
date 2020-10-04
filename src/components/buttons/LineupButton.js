@@ -80,7 +80,7 @@ export const LineupButton = (props) => {
                       </td>
 
                       <td>
-                        <PlayerSearch location="lineup" playerDetails={{ playerName: player, type: selectButtonType }}/>
+                        <PlayerSearch location="lineup" parent={props.parent} playerDetails={{ playerName: player, type: selectButtonType }}/>
                       </td>
                       <td>
                         {props.userType === "current" &&

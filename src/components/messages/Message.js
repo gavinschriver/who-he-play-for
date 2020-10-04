@@ -15,7 +15,7 @@ import "./messages.css";
 import { EditMessageButton } from "../buttons/EditMessageButton";
 import MessageChatText from "./MessageChatText";
 import SubmitedEditedMessageButton from "../buttons/SubmitedEditedMessageButton";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, ButtonGroup } from "react-bootstrap";
 
 export const Message = ({ MO }) => {
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
@@ -136,65 +136,72 @@ export const Message = ({ MO }) => {
         isYourGuy={currentUsersLineupAsStrings.includes(MO.messagetext)}
         time={MO.timestamp}
       />
-      <Container>
-        <Row>
-          <Col sm={4}>
-            {user.avatar && <Avatar user={user} location="message" />}
-          </Col>
-          {/* chat text */}
-          <Col sm={8}>
-            {editFieldShowing ? (
-              <Form.Control
-                as="textarea"
-                className="message__textedit input textarea--input"
-                name="chattext"
-                onChange={handleControlledInputChange}
-                value={message.chattext}
-              ></Form.Control>
-            ) : (
-              <MessageChatText class="message__chattext" text={MO.chattext} />
+      <div className={"playerCard-body"}>
+        <Card.Body>
+          <Container>
+            <Row>
+              <Col sm={4}>
+                {user.avatar && <Avatar user={user} location="message" />}
+              </Col>
+              {/* chat text */}
+              <Col sm={8}>
+                {/* URL */}
+                <MessageURLink
+                  url={MO.url}
+                  class="messageURLInk"
+                  type={MO.stan ? "stan" : MO.trashtalk ? "trash" : ""}
+                />
+                {editFieldShowing ? (
+                  <Form.Control
+                    as="textarea"
+                    className="message__textedit input textarea--input"
+                    name="chattext"
+                    onChange={handleControlledInputChange}
+                    value={message.chattext}
+                  ></Form.Control>
+                ) : (
+                  <MessageChatText
+                    class="message__chattext"
+                    text={MO.chattext}
+                  />
+                )}
+                {/* edit/submit buttons */}
+                <ButtonGroup>
+                  {MO.user.id === currentUserId && (
+                    <>
+                      <EditMessageButton
+                        id={MO.id}
+                        action={handleEditButtonPress}
+                        ref={editMessageRef}
+                      />
+
+                      {editFieldShowing && (
+                        <SubmitedEditedMessageButton
+                          action={handleSubmitEditedMessage}
+                        />
+                      )}
+                    </>
+                  )}
+
+                  {/* delete button */}
+                  {MO.user.id === currentUserId && (
+                    <DeleteMessageButton location="message" id={MO.id} />
+                  )}
+                  {/* lineup */}
+                </ButtonGroup>
+              </Col>
+            </Row>
+          </Container>
+          <Container>
+            {MO.user.id !== currentUserId && (
+              <LineupButton
+                userType={MO.user.id === currentUserId ? "current" : "other"}
+                userId={MO.userId}
+              />
             )}
-            {/* URL */}
-            <MessageURLink
-              url={MO.url}
-              class="messageURLInk"
-              type={MO.stan ? "stan" : MO.trashtalk ? "trash" : ""}
-            />
-          </Col>
-        </Row>
-      </Container>
-
-      <Card.Body className="playerCard--body">
-        {/* lineup */}
-
-        {MO.user.id !== currentUserId && (
-          <LineupButton
-            userType={MO.user.id === currentUserId ? "current" : "other"}
-            userId={MO.userId}
-          />
-        )}
-
-        {/* edit/submit buttons */}
-
-        {MO.user.id === currentUserId && (
-          <div className="message__edit">
-            <EditMessageButton
-              id={MO.id}
-              action={handleEditButtonPress}
-              ref={editMessageRef}
-            />
-
-            {editFieldShowing && (
-              <SubmitedEditedMessageButton action={handleSubmitEditedMessage} />
-            )}
-          </div>
-        )}
-
-        {/* delete button */}
-        {MO.user.id === currentUserId && (
-          <DeleteMessageButton location="message" id={MO.id} />
-        )}
-      </Card.Body>
+          </Container>
+        </Card.Body>
+      </div>
     </Card>
   );
 };

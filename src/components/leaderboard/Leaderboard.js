@@ -178,7 +178,7 @@ export const Leaderboard = (props) => {
                     return u.id === uSO.userId;
                   }) || {};
 
-                return <Score key={uSO.id} SO={uSO} UO={matchingUser} />;
+                return <Score key={uSO.id} SO={uSO} UO={matchingUser} parent="scoreboard" />;
               })}
             </tbody>
           </Table>
