@@ -130,6 +130,7 @@ export const Message = ({ MO }) => {
     <Card className={messageClassName} id={MO.id}>
       <MessageHeader
         userName={MO.user.name}
+        userId={MO.user.id}
         userType={MO.user.id === currentUserId ? "current" : "other"}
         messageType={MO.stan ? "stan" : MO.trashtalk ? "trash" : "chat"}
         playerName={MO.messagetext}

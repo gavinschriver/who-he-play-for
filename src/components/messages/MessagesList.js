@@ -41,6 +41,7 @@ export const MessagesList = (props) => {
         <Dropdown.Item eventKey="recent">Recent Activity</Dropdown.Item>
         <Dropdown.Item eventKey="current">Your messages</Dropdown.Item>
         <Dropdown.Item eventKey="stan">Stans</Dropdown.Item>
+        <Dropdown.Item eventKey="trash">Trashtalk</Dropdown.Item>
         <Dropdown.Item eventKey="aboutPlayers">
           About your players
         </Dropdown.Item>
@@ -55,7 +56,7 @@ export const MessagesList = (props) => {
               const sorted = messages.sort((a, b) => {
                 return b.timestamp - a.timestamp;
               });
-              const sliced = sorted.slice(0, 5);
+              const sliced = sorted.slice(0, 10);
               return sliced.includes(m);
             }
             if (filter === "all") {
@@ -63,6 +64,9 @@ export const MessagesList = (props) => {
             }
             if (filter === "stan") {
               return m.stan;
+            }
+            if (filter === "trash") {
+              return m.trashtalk;
             }
             if (filter === "current") {
               return m.userId === currentUserId;

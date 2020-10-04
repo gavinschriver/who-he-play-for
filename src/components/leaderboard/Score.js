@@ -5,6 +5,10 @@ export const Score = ({ SO, parent }) => {
 
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
+  if (parent === "UserPopOver") {
+    return (<div>{SO.score}</div>)
+  }
+
   return (
     <tr className="score">
       <td>{SO.username}</td>

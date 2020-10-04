@@ -4,15 +4,16 @@ import { MessageContext } from "../messages/MessageProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Score } from "./Score";
-import "./leaderboard.css"
-import Table from "react-bootstrap/Table"
-import Collapse from "react-bootstrap/Collapse"
+import "./leaderboard.css";
+import Table from "react-bootstrap/Table";
+import Collapse from "react-bootstrap/Collapse";
 import LineupProgress from "../lineup/LineupProgress";
 
 //this comp is a bit inaccurately named now. Should be Scores or something
 //to indicate it generates all scores and returns them conditionally rendered
 
 export const Leaderboard = (props) => {
+  const matchingUserId = props.matchingUserId;
   const { getUsers, users } = useContext(UserContext);
   const { messages } = useContext(MessageContext);
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
@@ -105,6 +106,9 @@ export const Leaderboard = (props) => {
   const currentUserScore =
     trashedUserScores.find((tSO) => tSO.userId === currentUserId) || {};
 
+  const matchingUserScore =
+    trashedUserScores.find((tSO) => tSO.userId === matchingUserId) || {};
+
   const sortedByStans =
     userScores.sort((a, b) => {
       return b.stans - a.stans;
@@ -148,8 +152,12 @@ export const Leaderboard = (props) => {
         <section className="scoreboard">
           <div className="scoreboard__allTime">
             <div className="scoreboard__allTime__type stanimal">
-              <h3 className="stanimal__heading heading scoreboard--heading">All time stanimal:</h3>
-              <span className="stanimal__stanner name user--name">{stanimal.username} </span>
+              <h3 className="stanimal__heading heading scoreboard--heading">
+                All time stanimal:
+              </h3>
+              <span className="stanimal__stanner name user--name">
+                {stanimal.username}{" "}
+              </span>
               <span className="stanimal__stanCount">
                 with {stanimal.stans} stans
               </span>
@@ -158,7 +166,9 @@ export const Leaderboard = (props) => {
               <h3 className="trashtalkchamp__heading heading scoreboard--heading">
                 Trash talk champion:
               </h3>
-              <span className="trashtalkchamp__champ name user--name">{trashtalkchamp.username} </span>
+              <span className="trashtalkchamp__champ name user--name">
+                {trashtalkchamp.username}{" "}
+              </span>
               <span className="trashtalkchamp__trashtalkCount">
                 with {trashtalkchamp.trashtalks} trashes
               </span>
@@ -178,7 +188,14 @@ export const Leaderboard = (props) => {
                     return u.id === uSO.userId;
                   }) || {};
 
-                return <Score key={uSO.id} SO={uSO} UO={matchingUser} parent="scoreboard" />;
+                return (
+                  <Score
+                    key={uSO.id}
+                    SO={uSO}
+                    UO={matchingUser}
+                    parent="scoreboard"
+                  />
+                );
               })}
             </tbody>
           </Table>
@@ -205,10 +222,10 @@ export const Leaderboard = (props) => {
               </span>
             </div>
             <LineupProgress />
-            </section>
+          </section>
         </>
       ) : (
-        <div></div>
+            <div>HEY MAYOO its {matchingUserId}</div>
       )}
     </article>
   );
