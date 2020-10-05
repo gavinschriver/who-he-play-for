@@ -29,7 +29,6 @@ export const AppHeader = (props) => {
       <Container>
         <Row>
           <Col>
-            <SiteTitle />
             <UserGreeting user={user} />
           </Col>
           <Col>

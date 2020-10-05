@@ -18,13 +18,13 @@
 
 .scoreboard {
     border: 2px solid black;
-    border-radius: 20px;
+    border-radius: .25rem;
     background: #fd7e14
 }
 
 .userScores {
     background: white;
     border: 2px solid;
-    border-radius: 20px;
+    border-radius: .25rem;
     padding: 2rem
 }

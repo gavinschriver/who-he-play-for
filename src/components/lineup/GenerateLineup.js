@@ -94,7 +94,7 @@ export const GenerateLineup = () => {
 
   return (
     <>
-      <h2>Your Starting 5:</h2>
+      <h2 className="sectionTitle">Your Starting 5:</h2>
 
       <Button
         title="Show Lineup"

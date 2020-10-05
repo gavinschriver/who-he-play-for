@@ -15,6 +15,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Highlight from "./highlights/Highlight";
 import Stats from "./highlights/Stats";
+import SiteTitle from "./header/SiteTitle";
 
 export const ApplicationViews = (props) => {
   return (
@@ -28,21 +29,23 @@ export const ApplicationViews = (props) => {
                 path="/"
                 render={(props) => (
                   <>
-                    <Jumbotron>
-                      <AppHeader {...props} />
-                      {/* <Highlight location="header"/> */}
-                    </Jumbotron>
-                      <Row>
-                        <Col>
-                          <GenerateLineup {...props} />
-                        </Col>
-                        <Col>
-                          <GamePlay id="gamecontainer" {...props} />
-                        </Col>
-                        <Col>
-                          <MessagesList {...props} />
-                        </Col>
-                      </Row>
+                    <Row>
+                      <Col>
+                        <AppHeader {...props} />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <GenerateLineup {...props} />
+                      </Col>
+                      <Col>
+                        <SiteTitle />
+                        <GamePlay id="gamecontainer" {...props} />
+                      </Col>
+                      <Col>
+                        <MessagesList {...props} />
+                      </Col>
+                    </Row>
                   </>
                 )}
               ></Route>

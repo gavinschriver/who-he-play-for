@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { MessageContext } from "./MessageProvider";
 import { Message } from "./Message";
-import { MessageSelector } from "../selectors/MessageSelector";
-import { Dropdown, DropdownButton, Collapse, Button } from "react-bootstrap";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 import { UserContext } from "../users/UserProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import "./messages.css";
@@ -16,7 +15,21 @@ export const MessagesList = (props) => {
     usersPlayers: [],
     messages: [],
   });
-
+  const collectionTitle =
+    filter === null || filter === "recent" ? (
+      "Recent"
+    ) : filter === "all" ? (
+      "All"
+    ) : filter === "stan" ? (
+      "Stans"
+    ) : filter === "trash" ? (
+      "Trashtalk"
+    ) : filter === "aboutPlayers" ? (
+      "About your current lineup"
+    ) : (
+      <div></div>
+    );
+  //all stan trash aboutPlayers current
   const handleFilterSelect = (e) => {
     setFilter(e);
   };
@@ -35,7 +48,7 @@ export const MessagesList = (props) => {
 
   return (
     <>
-      <h2>Spin Zone</h2>
+      <h2 className="sectionTitle">Spin Zone</h2>
       <DropdownButton title="Filter messages" onSelect={handleFilterSelect}>
         <Dropdown.Item eventKey="all">All messages</Dropdown.Item>
         <Dropdown.Item eventKey="recent">Recent Activity</Dropdown.Item>
@@ -46,6 +59,7 @@ export const MessagesList = (props) => {
           About your players
         </Dropdown.Item>
       </DropdownButton>
+      <h6>Currently displaying: {collectionTitle}</h6>
       <article>
         {messages
           .sort((a, b) => {
