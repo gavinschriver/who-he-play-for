@@ -6,8 +6,9 @@ export default (props) => {
   const userPop = (
     <Popover>
       <Popover.Title>User details</Popover.Title>
-          <Popover.Content>Pop me daddy</Popover.Content>
-          <Leaderboard matchingUserId={props.userId} />
+      <Popover.Content>
+        <Leaderboard matchingUserId={props.userId} />
+      </Popover.Content>
     </Popover>
   );
 

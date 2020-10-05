@@ -15,7 +15,7 @@ import LineupProgress from "../lineup/LineupProgress";
 export const Leaderboard = (props) => {
   const matchingUserId = props.matchingUserId;
   const { getUsers, users } = useContext(UserContext);
-  const { messages } = useContext(MessageContext);
+  const { messages, getMessages } = useContext(MessageContext);
   const { getPlayerData, playerObjArray } = useContext(PlayerContext);
   const { getUsersPlayers, usersPlayers } = useContext(UserPlayerContext);
 
@@ -108,7 +108,7 @@ export const Leaderboard = (props) => {
 
   const matchingUserScore =
     trashedUserScores.find((tSO) => tSO.userId === matchingUserId) || {};
-
+  
   const sortedByStans =
     userScores.sort((a, b) => {
       return b.stans - a.stans;
@@ -126,7 +126,7 @@ export const Leaderboard = (props) => {
   //effects
 
   useEffect(() => {
-    getPlayerData().then(getUsers).then(getUsersPlayers);
+    getPlayerData().then(getMessages).then(getUsers).then(getUsersPlayers);
   }, []);
 
   useEffect(() => {
@@ -225,7 +225,10 @@ export const Leaderboard = (props) => {
           </section>
         </>
       ) : (
-            <div>HEY MAYOO its {matchingUserId}</div>
+        <>
+          <div>Score: {matchingUserScore.score}</div>
+              <div>Total posts: {messages.filter(m => m.userId === matchingUserId).length}</div>
+        </>
       )}
     </article>
   );
