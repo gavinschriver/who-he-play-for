@@ -25,6 +25,8 @@ export const GenerateLineup = () => {
   const [showHideLineup, setShowHideLineup] = useState(true);
   const [lineupText, setLineupText] = useState("Hide Lineup")
 
+  let orderNumber = 0;
+
   // find valid players
   const filteredPlayers = playerObjArray.filter(
     (p) =>
@@ -91,6 +93,19 @@ export const GenerateLineup = () => {
       setGenerateButtonShowing(true);
     }
   }, [mentionedCount]);
+
+  const orderedMatchingUPs = matchingUsersPlayers.map(mUP => {
+    orderNumber++;
+    const orderedUPObject = {
+      id: mUP.id,
+      playerId: mUP.playerId,
+      userId: mUP.userId,
+      orderNum: orderNumber
+    }
+    return orderedUPObject
+  })
+
+  console.log(orderedMatchingUPs)
 
   return (
     <>
