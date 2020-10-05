@@ -63,7 +63,7 @@ export const Player = ({ PO, TO, status }) => {
               }}
             />
           </Col>
-          <Col>
+          {/* <Col>
             <PlayerCardAction
               options={{
                 type: "stan",
@@ -72,7 +72,7 @@ export const Player = ({ PO, TO, status }) => {
                 status,
               }}
             />
-          </Col>
+          </Col> */}
           <PlayerInfoSelect
             playerDetails={{
               name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,

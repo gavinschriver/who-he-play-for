@@ -108,7 +108,7 @@ export const Leaderboard = (props) => {
 
   const matchingUserScore =
     trashedUserScores.find((tSO) => tSO.userId === matchingUserId) || {};
-  
+
   const sortedByStans =
     userScores.sort((a, b) => {
       return b.stans - a.stans;
@@ -145,6 +145,8 @@ export const Leaderboard = (props) => {
     getUsers();
   }, [messages]);
 
+  let rank = 0;
+
   return (
     <article className="scores">
       {/* if we're rendering in the game form... */}
@@ -177,6 +179,7 @@ export const Leaderboard = (props) => {
           <Table>
             <tbody>
               <tr>
+                <tr>Rank</tr>
                 <th>User</th>
                 <th>Score</th>
                 <th>Lineup</th>
@@ -188,11 +191,14 @@ export const Leaderboard = (props) => {
                     return u.id === uSO.userId;
                   }) || {};
 
+                rank++ 
+                
                 return (
                   <Score
                     key={uSO.id}
                     SO={uSO}
                     UO={matchingUser}
+                    rank={rank}
                     parent="scoreboard"
                   />
                 );
@@ -227,7 +233,10 @@ export const Leaderboard = (props) => {
       ) : (
         <>
           <div>Score: {matchingUserScore.score}</div>
-              <div>Total posts: {users.find(u => u.id === matchingUserId).messages.length}</div>
+          <div>
+            Total posts:{" "}
+            {users.find((u) => u.id === matchingUserId).messages.length}
+          </div>
         </>
       )}
     </article>

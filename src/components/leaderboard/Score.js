@@ -1,7 +1,8 @@
 import React from "react";
 import { LineupButton } from "../buttons/LineupButton";
 
-export const Score = ({ SO, parent }) => {
+export const Score = ({ SO, parent, rank }) => {
+  const leaderRank = rank
 
   const currentUserId = parseInt(localStorage.getItem("whpf_user"));
 
@@ -11,6 +12,7 @@ export const Score = ({ SO, parent }) => {
 
   return (
     <tr className="score">
+      <td>{leaderRank}</td>
       <td>{SO.username}</td>
       <td class="score__value">{SO.score}</td>
       <td>
