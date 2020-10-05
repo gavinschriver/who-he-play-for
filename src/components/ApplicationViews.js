@@ -32,22 +32,17 @@ export const ApplicationViews = (props) => {
                       <AppHeader {...props} />
                       {/* <Highlight location="header"/> */}
                     </Jumbotron>
-                    <Container className="maincontent" fluid="md">
-                      <Row>
-                        <GamePlay id="gamecontainer" {...props} />
-                      </Row>
                       <Row>
                         <Col>
                           <GenerateLineup {...props} />
                         </Col>
                         <Col>
+                          <GamePlay id="gamecontainer" {...props} />
+                        </Col>
+                        <Col>
                           <MessagesList {...props} />
                         </Col>
                       </Row>
-                      <Row>
-                        <Col></Col>
-                      </Row>
-                    </Container>
                   </>
                 )}
               ></Route>

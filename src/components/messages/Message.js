@@ -137,7 +137,7 @@ export const Message = ({ MO }) => {
         isYourGuy={currentUsersLineupAsStrings.includes(MO.messagetext)}
         time={MO.timestamp}
       />
-      <div className={"playerCard-body"}>
+      <div className="playerCard-body">
         <Card.Body>
           <Container>
             <Row>

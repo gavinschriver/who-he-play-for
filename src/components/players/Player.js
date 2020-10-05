@@ -46,7 +46,7 @@ export const Player = ({ PO, TO, status }) => {
           team: TO.teamName,
         }}
       />
-      <Card.Body className="playerCard--body">
+      {cardClass !== "playerCard playerCard--stanned" &&
         <div className="playerCard--body--container">
           <Col>
             <PlayerIcons
@@ -69,23 +69,23 @@ export const Player = ({ PO, TO, status }) => {
               }}
             />
           </Col>
+          <PlayerInfoSelect
+            playerDetails={{
+              name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+              DOB: currentPlayer.player.birthDate,
+              from: `${currentPlayer.player.birthCity} ${currentPlayer.player.birthCountry}`,
+              weight: currentPlayer.player.weight,
+              height: currentPlayer.player.height,
+              position: currentPlayer.player.primaryPosition,
+              id: NBAid,
+              twitterName:
+                currentPlayer.player.socialMediaAccounts.length > 0
+                  ? currentPlayer.player.socialMediaAccounts[0].value
+                  : "NONE",
+            }}
+          />
         </div>
-      </Card.Body>
-      <PlayerInfoSelect
-        playerDetails={{
-          name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
-          DOB: currentPlayer.player.birthDate,
-          from: `${currentPlayer.player.birthCity} ${currentPlayer.player.birthCountry}`,
-          weight: currentPlayer.player.weight,
-          height: currentPlayer.player.height,
-          position: currentPlayer.player.primaryPosition,
-          id: NBAid,
-          twitterName:
-            currentPlayer.player.socialMediaAccounts.length > 0
-              ? currentPlayer.player.socialMediaAccounts[0].value
-              : "NONE",
-        }}
-      />
+      }
     </Card>
   );
 };

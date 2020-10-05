@@ -126,7 +126,7 @@ export const Leaderboard = (props) => {
   //effects
 
   useEffect(() => {
-    getPlayerData().then(getMessages).then(getUsers).then(getUsersPlayers);
+    getPlayerData().then(getUsers).then(getUsersPlayers);
   }, []);
 
   useEffect(() => {
@@ -227,7 +227,7 @@ export const Leaderboard = (props) => {
       ) : (
         <>
           <div>Score: {matchingUserScore.score}</div>
-              <div>Total posts: {messages.filter(m => m.userId === matchingUserId).length}</div>
+              <div>Total posts: {users.find(u => u.id === matchingUserId).messages.length}</div>
         </>
       )}
     </article>
