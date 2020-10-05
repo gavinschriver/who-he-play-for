@@ -16,6 +16,7 @@ import Col from "react-bootstrap/Col";
 import Highlight from "./highlights/Highlight";
 import Stats from "./highlights/Stats";
 import SiteTitle from "./header/SiteTitle";
+import MessageEntryModal from "./messages/MessageEntryModal";
 
 export const ApplicationViews = (props) => {
   return (

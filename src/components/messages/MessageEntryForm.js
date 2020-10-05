@@ -8,6 +8,8 @@ import { PlayerContext } from "../players/PlayerProvider";
 import { MessageContext } from "./MessageProvider";
 import { UserContext } from "../users/UserProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
+import { Modal } from "react-bootstrap";
+import MessageEntryModal from "./MessageEntryModal";
 
 export default (props) => {
   const { stanPlayer, setStanPlayer, trashtalkPlayer } = useContext(
@@ -27,7 +29,11 @@ export default (props) => {
   const playerRef = React.createRef();
   const URLref = React.createRef();
   const textRef = React.createRef();
-  const activeUserId = parseInt(localStorage.getItem("whpf_user"))
+  const activeUserId = parseInt(localStorage.getItem("whpf_user"));
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   // filtering and extracting things ya know
   const filteredCurrentUsersPlayers = currentUser.usersPlayers.filter(
@@ -45,7 +51,8 @@ export default (props) => {
 
   // submit function
   const handleSubmitButtonPress = () => {
-    const player = playerRef.current.value;
+    const player =
+      props.location === "modal" ? props.player : playerRef.current.value;
     const URL = URLref.current.value;
     const text = textRef.current.value;
 
@@ -87,7 +94,9 @@ export default (props) => {
               };
 
               addMessage(newStanMessage);
-              playerRef.current.value = "0";
+              if (props.location !== "modal") {
+                playerRef.current.value = "0";
+              }
               URLref.current.value = "";
               textRef.current.value = "";
             }
@@ -104,7 +113,7 @@ export default (props) => {
               };
 
               addMessage(newTrashtalkMessage);
-              playerRef.current.value = "0";
+              // playerRef.current.value = "0";
               URLref.current.value = "";
               textRef.current.value = "";
             }
@@ -128,13 +137,13 @@ export default (props) => {
       ? "Talk that trash"
       : "Speak on it";
 
-  if (props.type === "stan") {
+  if (props.type === "stan" && props.location !== "modal") {
     useEffect(() => {
       playerRef.current.value = stanPlayer;
     }, [stanPlayer]);
   }
 
-  if (props.type === "trash") {
+  if (props.type === "trash" && props.location !== "modal") {
     useEffect(() => {
       playerRef.current.value = trashtalkPlayer;
     }, [trashtalkPlayer]);
@@ -176,10 +185,16 @@ export default (props) => {
     <>
       <h2>{title}</h2>
       <Form>
-        <Form.Group>{playerInput}</Form.Group>
-        <Form.Group>{url}</Form.Group>
-        <Form.Group>{text}</Form.Group>
-        <Form.Group>{submit}</Form.Group>
+        <Form.Group>
+          {props.location === "modal" ? props.player : playerInput}
+        </Form.Group>
+        {props.location === "modal" && (
+          <>
+            <Form.Group>{url}</Form.Group>
+            <Form.Group>{text}</Form.Group>
+            <Form.Group>{submit}</Form.Group>
+          </>
+        )}
       </Form>
     </>
   );
