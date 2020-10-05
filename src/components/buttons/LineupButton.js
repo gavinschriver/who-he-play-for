@@ -7,6 +7,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { PlayerContext } from "../players/PlayerProvider";
 import PlayerName from "../players/PlayerName";
 import PlayerSearch from "../players/PlayerSearch";
+import MessageEntryModal from "../messages/MessageEntryModal";
 
 export const LineupButton = (props) => {
   const { usersPlayers } = useContext(UserPlayerContext);
@@ -80,25 +81,46 @@ export const LineupButton = (props) => {
                       </td>
 
                       <td>
-                        <PlayerSearch location="lineup" parent={props.parent} playerDetails={{ playerName: player, type: selectButtonType }}/>
+                        <PlayerSearch
+                          location="lineup"
+                          parent={props.parent}
+                          playerDetails={{
+                            playerName: player,
+                            type: selectButtonType,
+                          }}
+                        />
                       </td>
                       <td>
                         {props.userType === "current" &&
                         !mentionedPlayerIds.includes(mPO.player.id) ? (
-                          <PlayerSelectButton
-                            type={selectButtonType}
-                            location={locationClass}
-                            player={`${mPO.player.firstName} ${mPO.player.lastName}`}
-                          />
+                          <>
+                            {/* <PlayerSelectButton
+                              type={selectButtonType}
+                              location={locationClass}
+                              player={`${mPO.player.firstName} ${mPO.player.lastName}`}
+                            /> */}
+                            <MessageEntryModal
+                              location="lineup"
+                              player={`${mPO.player.firstName} ${mPO.player.lastName}`}
+                              type={selectButtonType}
+                            />
+                          </>
                         ) : props.userType === "current" &&
                           mentionedPlayerIds.includes(mPO.player.id) ? (
                           <div></div>
                         ) : (
-                          <PlayerSelectButton
-                            type={selectButtonType}
-                            location={locationClass}
-                            player={`${mPO.player.firstName} ${mPO.player.lastName}`}
-                          />
+                          <>
+                            {/* <PlayerSelectButton
+                              type={selectButtonType}
+                              location={locationClass}
+                              player={`${mPO.player.firstName} ${mPO.player.lastName}`}
+                            /> */}
+                            <MessageEntryModal
+                              location="lineup"
+                              player={`${mPO.player.firstName} ${mPO.player.lastName}`}
+                              type={selectButtonType}
+                            />
+                          </>
                         )}
                       </td>
                     </tr>

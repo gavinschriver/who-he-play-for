@@ -12,7 +12,7 @@ export default ({ playerDetails, location, parent }) => {
       {location === "playerCard" && (
         <Button className={`playerSearch-button ${type}-button  ${location}-button`}>
           <a href={redditSearchURL} target="_blank">
-            GOSSIP ROCKET
+            GOSSIP ROCKET <GoLinkExternal />
           </a>
         </Button>
       )}

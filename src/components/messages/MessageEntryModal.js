@@ -8,7 +8,12 @@ import "./messages.css";
 export default (props) => {
   const { stanPlayer, trashtalkPlayer } = useContext(PlayerContext);
   const { mentionedCount } = useContext(UserPlayerContext);
-  const player = props.type === "stan" ? stanPlayer : trashtalkPlayer;
+  const player =
+    props.location === "lineup" || props.location === "playercard"
+      ? props.player
+      : props.type === "stan"
+      ? stanPlayer
+      : trashtalkPlayer;
   const title =
     props.type === "stan"
       ? "Stan By Your Man"
@@ -27,7 +32,9 @@ export default (props) => {
   return (
     <>
       <div className="modalEntryContainer">
-        <h2 className={`${props.type}-modal-header`}>{title}</h2>
+        {props.location !== "lineup" && props.location !== "playercard" && (
+          <h2 className={`${props.type}-modal-header`}>{title}</h2>
+        )}
         <Button onClick={handleShow}>{props.type.toUpperCase()}</Button>
       </div>
 
