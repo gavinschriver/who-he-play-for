@@ -10,6 +10,7 @@ import { UserContext } from "../users/UserProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import { Modal } from "react-bootstrap";
 import MessageEntryModal from "./MessageEntryModal";
+import PlayerSearch from "../players/PlayerSearch";
 
 export default (props) => {
   const { stanPlayer, setStanPlayer, trashtalkPlayer } = useContext(
@@ -185,7 +186,14 @@ export default (props) => {
     <>
       <Form>
         <Form.Group>
-          {props.location === "modal" ? props.player : playerInput}
+          {props.location === "modal" ? (
+            <div className="modalPlayer">
+              {props.player}
+              <PlayerSearch location="modal" playerDetails={{playerName: props.player, type: props.type}} />
+            </div>
+          ) : (
+            playerInput
+          )}
         </Form.Group>
         {props.location === "modal" && (
           <>

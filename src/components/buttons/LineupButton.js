@@ -61,7 +61,7 @@ export const LineupButton = (props) => {
               <thead>
                 <tr>
                   <th>Player</th>
-                  <th>Hot takes</th>
+                  {/* <th>Hot takes</th> */}
                   <th>{actionHeader}</th>
                 </tr>
               </thead>
@@ -80,7 +80,7 @@ export const LineupButton = (props) => {
                         />
                       </td>
 
-                      <td>
+                      {/* <td>
                         <PlayerSearch
                           location="lineup"
                           parent={props.parent}
@@ -89,7 +89,7 @@ export const LineupButton = (props) => {
                             type: selectButtonType,
                           }}
                         />
-                      </td>
+                      </td> */}
                       <td>
                         {props.userType === "current" &&
                         !mentionedPlayerIds.includes(mPO.player.id) ? (

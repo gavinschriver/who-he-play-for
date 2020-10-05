@@ -20,6 +20,8 @@ export const MessagesList = (props) => {
       "Recent"
     ) : filter === "all" ? (
       "All"
+    ) : filter === "current" ? (
+      "Your messages"
     ) : filter === "stan" ? (
       "Stans"
     ) : filter === "trash" ? (
@@ -52,7 +54,11 @@ export const MessagesList = (props) => {
     <>
       <h2 className="sectionTitle">Spin Zone</h2>
       <div className="filterControls">
-        <DropdownButton variant="secondary" title="Filter messages" onSelect={handleFilterSelect}>
+        <DropdownButton
+          variant="secondary"
+          title="Filter messages"
+          onSelect={handleFilterSelect}
+        >
           <Dropdown.Item eventKey="all">All messages</Dropdown.Item>
           <Dropdown.Item eventKey="recent">Recent Activity</Dropdown.Item>
           <Dropdown.Item eventKey="current">Your messages</Dropdown.Item>
