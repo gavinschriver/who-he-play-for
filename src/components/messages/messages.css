@@ -18,3 +18,12 @@
     background-color:#d4edda;
     border-color: #c3e6cb
 }
+
+.modalEntryContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.messageEntryModal {
+    padding: 1rem;
+}

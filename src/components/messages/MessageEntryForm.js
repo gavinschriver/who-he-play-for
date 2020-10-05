@@ -183,7 +183,6 @@ export default (props) => {
 
   return (
     <>
-      <h2>{title}</h2>
       <Form>
         <Form.Group>
           {props.location === "modal" ? props.player : playerInput}
