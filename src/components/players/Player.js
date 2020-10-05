@@ -21,7 +21,7 @@ export const Player = ({ PO, TO, status }) => {
   const NBATeamId = currentPlayerTeam.teamId;
   const NBAid = currentPlayer.player.externalMappings[0].id || {};
   const cardClass = matchingUsersPlayer.mentioned
-    ? "playerCard playerCard--stanned"
+    ? "playerCard playerCard-stanned"
     : "playerCard";
 
   // const cardBG = matchingUsersPlayer.mentioned ? "primary" : "light";
@@ -45,10 +45,11 @@ export const Player = ({ PO, TO, status }) => {
           headerInfo={{
             name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
             team: TO.teamName,
+            class: cardClass
           }}
         />
         {/* {cardClass !== "playerCard playerCard--stanned" && */}
-        <div className="playerCard--body--container">
+        <div className={cardClass}>
           <Col>
             <PlayerIcons
               details={{

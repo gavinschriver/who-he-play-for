@@ -8,14 +8,23 @@
   color: white
 }
 
-.playerCard--stanned table {
+.playerCard-stanned {
+  background-color: #cce5ff;
+}
+
+.playerCard-stanned-header {
+  background-color: #007bff;
+  color: whitesmoke
+}
+
+.playerCard-stanned table {
   background-color: whitesmoke;
 }
 
-.playerCard--stanned button {
+.playerCard-stanned button {
   border: 1px solid white
 }
-/* .playerCard--body--container {
+/* .playerCard-body-container-stanned {
   display:flex;
   flex-basis: 1;
 } */

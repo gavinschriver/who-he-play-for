@@ -17,7 +17,7 @@ export default ({ options }) => {
         ) : (
           <div></div>
         )}
-        <Highlight location="player" playerName={options.player} />
+        {/* <Highlight location="player" playerName={options.player} /> */}
         <PlayerSearch
           location="playerCard"
           playerDetails={{ playerName: options.player, type: options.type }}
