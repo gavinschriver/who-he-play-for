@@ -25,9 +25,11 @@ export const MessagesList = (props) => {
     ) : filter === "trash" ? (
       "Trashtalk"
     ) : filter === "aboutPlayers" ? (
-      "About your current lineup"
-    ) : (
+      "About your lineup"
+    ) : filter === "hide" ? (
       <div></div>
+    ) : (
+      ""
     );
   //all stan trash aboutPlayers current
   const handleFilterSelect = (e) => {
@@ -49,17 +51,24 @@ export const MessagesList = (props) => {
   return (
     <>
       <h2 className="sectionTitle">Spin Zone</h2>
-      <DropdownButton title="Filter messages" onSelect={handleFilterSelect}>
-        <Dropdown.Item eventKey="all">All messages</Dropdown.Item>
-        <Dropdown.Item eventKey="recent">Recent Activity</Dropdown.Item>
-        <Dropdown.Item eventKey="current">Your messages</Dropdown.Item>
-        <Dropdown.Item eventKey="stan">Stans</Dropdown.Item>
-        <Dropdown.Item eventKey="trash">Trashtalk</Dropdown.Item>
-        <Dropdown.Item eventKey="aboutPlayers">
-          About your players
-        </Dropdown.Item>
-      </DropdownButton>
-      <h6>Currently displaying: {collectionTitle}</h6>
+      <div className="filterControls">
+        <DropdownButton variant="secondary" title="Filter messages" onSelect={handleFilterSelect}>
+          <Dropdown.Item eventKey="all">All messages</Dropdown.Item>
+          <Dropdown.Item eventKey="recent">Recent Activity</Dropdown.Item>
+          <Dropdown.Item eventKey="current">Your messages</Dropdown.Item>
+          <Dropdown.Item eventKey="stan">Stans</Dropdown.Item>
+          <Dropdown.Item eventKey="trash">Trashtalk</Dropdown.Item>
+          <Dropdown.Item eventKey="aboutPlayers">
+            About your players
+          </Dropdown.Item>
+          <Dropdown.Item eventKey="hide">Hide All Messages</Dropdown.Item>
+        </DropdownButton>
+        {filter !== "hide" && (
+          <h6 className="filterText">
+            Currently displaying: {collectionTitle}
+          </h6>
+        )}
+      </div>
       <article>
         {messages
           .sort((a, b) => {
@@ -96,6 +105,9 @@ export const MessagesList = (props) => {
                 return `${PO.player.firstName} ${PO.player.lastName}`;
               });
               return currentUsersPlayerNames.includes(m.messagetext);
+            }
+            if (filter === "hide") {
+              return null;
             }
           })
           .map((m) => (

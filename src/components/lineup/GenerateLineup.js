@@ -5,7 +5,13 @@ import { Player } from "../players/Player";
 import teamData from "../teams.json";
 import CardGroup from "react-bootstrap/CardGroup";
 import "./Lineup.css";
-import { Button, DropdownButton, Dropdown, Collapse } from "react-bootstrap";
+import {
+  Button,
+  DropdownButton,
+  Dropdown,
+  Collapse,
+  ButtonGroup,
+} from "react-bootstrap";
 
 export const GenerateLineup = () => {
   //for looking up info about teams from NBA reference
@@ -65,21 +71,21 @@ export const GenerateLineup = () => {
     }
   };
 
-  const toggleLineup = () => {
-    if (!showHideLineup) {
-      setShowHideLineup(true);
-      setLineupText("Hide Lineup");
-    } else if (showHideLineup) {
-      setShowHideLineup(false);
-      setLineupText("Show Lineup");
-    }
-  };
+  // const toggleLineup = () => {
+  //   if (!showHideLineup) {
+  //     setShowHideLineup(true);
+  //     setLineupText("Hide Lineup");
+  //   } else if (showHideLineup) {
+  //     setShowHideLineup(false);
+  //     setLineupText("Show Lineup");
+  //   }
+  // };
 
   const [filter, setFilter] = useState(null);
 
   const handleFilterSelect = (e) => {
     setFilter(e);
-  }
+  };
 
   const collectionTitle =
     filter === null || filter === "all" ? (
@@ -130,50 +136,62 @@ export const GenerateLineup = () => {
 
   return (
     <>
-      <h2 className="sectionTitle">Your Starting 5:</h2>
-      <DropdownButton title="Filter players" onSelect={handleFilterSelect}>
-        <Dropdown.Item eventKey="all">All players</Dropdown.Item>
-        <Dropdown.Item eventKey="stanned">Stanned</Dropdown.Item>
-        <Dropdown.Item eventKey="notStanned">Not Stanned</Dropdown.Item>
-      </DropdownButton>
-
-      <Button
-        title="Show Lineup"
-        onClick={(e) => {
-          e.preventDefault();
-          toggleLineup();
-        }}
-      >
-        {lineupText}
-      </Button>
-      <Collapse in={showHideLineup}>
-        <div>
-          {(mentionedCount === 0 && !matchingUsersPlayers) ||
-          mentionedCount === matchingUsersPlayers.length ? (
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                handleGenerateLineup();
-              }}
-            >
-              Generate A Lineup
-            </Button>
-          ) : (
-            <div></div>
-          )}
-          <CardGroup className="lineup__container">
-            <section className="lineup">
-              {matchingUsersPlayers.filter((mUP => {
+      <h2 className="sectionTitle">Your Starting 5</h2>
+      <div className="filterControls">
+          {/* <Button
+            title="Show Lineup"
+            onClick={(e) => {
+              e.preventDefault();
+              toggleLineup();
+            }}
+          >
+            {lineupText}
+          </Button> */}
+         <div className="filterButton"><DropdownButton variant="secondary" title="Filter players" onSelect={handleFilterSelect}>
+            <Dropdown.Item eventKey="all">All players</Dropdown.Item>
+            <Dropdown.Item eventKey="stanned">Stanned</Dropdown.Item>
+            <Dropdown.Item eventKey="notStanned">Not Stanned</Dropdown.Item>
+            <Dropdown.Item eventKey="hide">Hide Lineup</Dropdown.Item>
+          </DropdownButton>
+          </div>
+        {filter !== "hide" && (
+          <h6 className="filterText">
+            Currently displaying: {collectionTitle}
+          </h6>
+        )}
+      </div>
+      <div>
+        {(mentionedCount === 0 && !matchingUsersPlayers) ||
+        mentionedCount === matchingUsersPlayers.length ? (
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              handleGenerateLineup();
+            }}
+          >
+            Generate A Lineup
+          </Button>
+        ) : (
+          <div></div>
+        )}
+        <CardGroup className="lineup__container">
+          <section className="lineup">
+            {matchingUsersPlayers
+              .filter((mUP) => {
                 if (filter === null || filter === "all") {
-                  return mUP
+                  return mUP;
                 }
                 if (filter === "stanned") {
-                  return mUP.mentioned
+                  return mUP.mentioned;
                 }
                 if (filter === "notStanned") {
-                  return !mUP.mentioned
+                  return !mUP.mentioned;
                 }
-              })).map((mUPO) => {
+                if (filter === "hide") {
+                  return null;
+                }
+              })
+              .map((mUPO) => {
                 const matchingPlayerObj = filteredPlayers.find(
                   (p) => p.player.id === mUPO.playerId
                 );
@@ -212,10 +230,9 @@ export const GenerateLineup = () => {
                   />
                 );
               })}
-            </section>
-          </CardGroup>
-        </div>
-      </Collapse>
+          </section>
+        </CardGroup>
+      </div>
     </>
   );
 };

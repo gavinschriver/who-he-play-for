@@ -17,10 +17,6 @@
     padding: 5px;
 }
 
-.user--player {
-    color: red
-}
-
 textarea {
     resize: none;
 }
@@ -28,4 +24,14 @@ textarea {
 
 .sectionTitle {
     text-align: center;
+}
+
+.filterControls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filterText {
+    font-style: italic;
+    color: rgb(74, 74, 74)
 }
