@@ -17,6 +17,14 @@
   color: whitesmoke
 }
 
+.playerCard-header {
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+}
+
 .playerCard-stanned table {
   background-color: whitesmoke;
 }
@@ -34,4 +42,3 @@
   display: flex;
   align-items: center;
 }
-

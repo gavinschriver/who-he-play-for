@@ -188,8 +188,12 @@ export default (props) => {
         <Form.Group>
           {props.location === "modal" ? (
             <div className="modalPlayer">
-              {props.player}
-              <PlayerSearch location="modal" playerDetails={{playerName: props.player, type: props.type}} />
+              <span className="playerName">{props.player}</span>
+              <PlayerSearch
+                location="modal"
+                playerDetails={{ playerName: props.player, type: props.type }}
+                parent="messageEntry"
+              />
             </div>
           ) : (
             playerInput

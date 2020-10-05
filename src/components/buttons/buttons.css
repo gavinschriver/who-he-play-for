@@ -7,12 +7,17 @@
 }
 
 .lineup-button a{
-    color: #007bff
+    color: #8b8c8d
 }
 
 .lineup-button a:hover{
     color:#fd7e14
 }
+
+.modal-button a{
+    color: #007bff
+}
+
 
 .scoreboard-button a:hover{
     color: white

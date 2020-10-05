@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card";
 import PlayerHeader from "./PlayerHeader";
 import PlayerIcons from "./PlayerIcons";
 import PlayerInfoSelect from "../selectors/PlayerInfoSelect";
-import { Col, Row, Container } from "react-bootstrap";
+import { Col, Row, Container, Modal } from "react-bootstrap";
 import PlayerCardAction from "./PlayerCardAction";
 import "./Players.css";
 
@@ -45,7 +45,9 @@ export const Player = ({ PO, TO, status }) => {
           headerInfo={{
             name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
             team: TO.teamName,
-            class: cardClass
+            class: cardClass,
+            type: "stan",
+            status
           }}
         />
         {/* {cardClass !== "playerCard playerCard--stanned" && */}

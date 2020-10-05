@@ -40,7 +40,7 @@ export default (props) => {
 
       <Modal show={show} onHide={handleClose}>
         <div className="messageEntryModal">
-          <Modal.Header closeButton></Modal.Header>
+         <h2 className="messageEntryModal_header"><Modal.Header closeButton>{title}</Modal.Header></h2> 
           <MessageEntryForm
             location="modal"
             type={props.type}
