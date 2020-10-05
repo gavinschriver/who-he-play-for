@@ -179,7 +179,7 @@ export const Leaderboard = (props) => {
           <Table>
             <tbody>
               <tr>
-                <tr>Rank</tr>
+                <th>Rank</th>
                 <th>User</th>
                 <th>Score</th>
                 <th>Lineup</th>
@@ -192,7 +192,7 @@ export const Leaderboard = (props) => {
                   }) || {};
 
                 rank++ 
-                
+
                 return (
                   <Score
                     key={uSO.id}
