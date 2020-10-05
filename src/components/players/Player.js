@@ -24,7 +24,7 @@ export const Player = ({ PO, TO, status }) => {
     ? "playerCard playerCard--stanned"
     : "playerCard";
 
-  const cardBG = matchingUsersPlayer.mentioned ? "primary" : "light";
+  // const cardBG = matchingUsersPlayer.mentioned ? "primary" : "light";
 
   useEffect(() => {
     getPlayerData().then(getUsersPlayers);
@@ -39,14 +39,15 @@ export const Player = ({ PO, TO, status }) => {
   }, [usersPlayers]);
 
   return (
-    <Card className={cardClass} bg={cardBG}>
-      <PlayerHeader
-        headerInfo={{
-          name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
-          team: TO.teamName,
-        }}
-      />
-      {cardClass !== "playerCard playerCard--stanned" &&
+    <div className={cardClass}>
+      <Card>
+        <PlayerHeader
+          headerInfo={{
+            name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+            team: TO.teamName,
+          }}
+        />
+        {/* {cardClass !== "playerCard playerCard--stanned" && */}
         <div className="playerCard--body--container">
           <Col>
             <PlayerIcons
@@ -85,7 +86,8 @@ export const Player = ({ PO, TO, status }) => {
             }}
           />
         </div>
-      }
-    </Card>
+        {/* // } */}
+      </Card>
+    </div>
   );
 };

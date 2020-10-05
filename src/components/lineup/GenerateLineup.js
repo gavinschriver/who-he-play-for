@@ -75,6 +75,7 @@ export const GenerateLineup = () => {
     }
   };
 
+
   // effects
   useEffect(() => {
     getPlayerData().then(getUsersPlayers);
@@ -94,23 +95,27 @@ export const GenerateLineup = () => {
     }
   }, [mentionedCount]);
 
-  const orderedMatchingUPs = matchingUsersPlayers.map(mUP => {
-    orderNumber++;
-    const orderedUPObject = {
-      id: mUP.id,
-      playerId: mUP.playerId,
-      userId: mUP.userId,
-      orderNum: orderNumber
-    }
-    return orderedUPObject
-  })
+  // const orderedMatchingUPs = matchingUsersPlayers.map(mUP => {
+  //   orderNumber++;
+  //   const orderedUPObject = {
+  //     id: mUP.id,
+  //     playerId: mUP.playerId,
+  //     userId: mUP.userId,
+  //     orderNum: orderNumber
+  //   }
+  //   return orderedUPObject
+  // })
 
-  console.log(orderedMatchingUPs)
+  // const handleSortButtonClick = () => {
+  //   orderedMatchingUPs.forEach(oMUP => {
+  //     oMUP.orderNum++
+  //   })
+  // }
 
   return (
     <>
       <h2 className="sectionTitle">Your Starting 5:</h2>
-
+      {/* <Button onClick={handleSortButtonClick}>Scroll players</Button> */}
       <Button
         title="Show Lineup"
         onClick={(e) => {

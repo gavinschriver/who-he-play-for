@@ -31,7 +31,9 @@ export const ApplicationViews = (props) => {
                   <>
                     <Row>
                       <Col>
-                        <AppHeader {...props} />
+                        <Jumbotron>
+                          <AppHeader {...props} />
+                        </Jumbotron>
                       </Col>
                     </Row>
                     <Row>
