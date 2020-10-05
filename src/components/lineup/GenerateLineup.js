@@ -5,7 +5,7 @@ import { Player } from "../players/Player";
 import teamData from "../teams.json";
 import CardGroup from "react-bootstrap/CardGroup";
 import "./Lineup.css";
-import { Button, DropdownButton, Collapse } from "react-bootstrap";
+import { Button, DropdownButton, Dropdown, Collapse } from "react-bootstrap";
 
 export const GenerateLineup = () => {
   //for looking up info about teams from NBA reference
@@ -23,7 +23,7 @@ export const GenerateLineup = () => {
   const [matchingUsersPlayers, setMatchingUsersPlayers] = useState([]);
   const [generateButtonShowing, setGenerateButtonShowing] = useState(false);
   const [showHideLineup, setShowHideLineup] = useState(true);
-  const [lineupText, setLineupText] = useState("Hide Lineup")
+  const [lineupText, setLineupText] = useState("Hide Lineup");
 
   let orderNumber = 0;
 
@@ -68,13 +68,29 @@ export const GenerateLineup = () => {
   const toggleLineup = () => {
     if (!showHideLineup) {
       setShowHideLineup(true);
-      setLineupText("Hide Lineup")
+      setLineupText("Hide Lineup");
     } else if (showHideLineup) {
-      setShowHideLineup(false)
-      setLineupText("Show Lineup")
+      setShowHideLineup(false);
+      setLineupText("Show Lineup");
     }
   };
 
+  const [filter, setFilter] = useState(null);
+
+  const handleFilterSelect = (e) => {
+    setFilter(e);
+  }
+
+  const collectionTitle =
+    filter === null || filter === "all" ? (
+      "All"
+    ) : filter === "stanned" ? (
+      "Stanned"
+    ) : filter === "notStanned" ? (
+      "Not Stanned"
+    ) : (
+      <div></div>
+    );
 
   // effects
   useEffect(() => {
@@ -115,7 +131,12 @@ export const GenerateLineup = () => {
   return (
     <>
       <h2 className="sectionTitle">Your Starting 5:</h2>
-      {/* <Button onClick={handleSortButtonClick}>Scroll players</Button> */}
+      <DropdownButton title="Filter players" onSelect={handleFilterSelect}>
+        <Dropdown.Item eventKey="all">All players</Dropdown.Item>
+        <Dropdown.Item eventKey="stanned">Stanned</Dropdown.Item>
+        <Dropdown.Item eventKey="notStanned">Not Stanned</Dropdown.Item>
+      </DropdownButton>
+
       <Button
         title="Show Lineup"
         onClick={(e) => {
@@ -142,7 +163,17 @@ export const GenerateLineup = () => {
           )}
           <CardGroup className="lineup__container">
             <section className="lineup">
-              {matchingUsersPlayers.map((mUPO) => {
+              {matchingUsersPlayers.filter((mUP => {
+                if (filter === null || filter === "all") {
+                  return mUP
+                }
+                if (filter === "stanned") {
+                  return mUP.mentioned
+                }
+                if (filter === "notStanned") {
+                  return !mUP.mentioned
+                }
+              })).map((mUPO) => {
                 const matchingPlayerObj = filteredPlayers.find(
                   (p) => p.player.id === mUPO.playerId
                 );
@@ -150,29 +181,26 @@ export const GenerateLineup = () => {
                 let matchingPlayerTeam;
 
                 if (matchingPlayerObj.player.currentTeam) {
-
-                  if (matchingPlayerObj.player.currentTeam.abbreviation === "BRO") {
-                    matchingPlayerTeam = teams.find(t => {
-                      return t.abbreviation === "BKN"
-                    })
-
-                  }
-
-                  else if (matchingPlayerObj.player.currentTeam.abbreviation === "OKL") {
-                    matchingPlayerTeam = teams.find(t => {
-                      return t.abbreviation === "OKC"
-                    })
-                  }  
-            
-
-                  else
-                  matchingPlayerTeam =
-                    teams.find((t) => {
-                      return (
-                        t.abbreviation ===
-                        matchingPlayerObj.player.currentTeam.abbreviation
-                      );
-                    }) || {};
+                  if (
+                    matchingPlayerObj.player.currentTeam.abbreviation === "BRO"
+                  ) {
+                    matchingPlayerTeam = teams.find((t) => {
+                      return t.abbreviation === "BKN";
+                    });
+                  } else if (
+                    matchingPlayerObj.player.currentTeam.abbreviation === "OKL"
+                  ) {
+                    matchingPlayerTeam = teams.find((t) => {
+                      return t.abbreviation === "OKC";
+                    });
+                  } else
+                    matchingPlayerTeam =
+                      teams.find((t) => {
+                        return (
+                          t.abbreviation ===
+                          matchingPlayerObj.player.currentTeam.abbreviation
+                        );
+                      }) || {};
                 } else matchingPlayerTeam = {};
 
                 return (

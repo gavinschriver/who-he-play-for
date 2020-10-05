@@ -11,11 +11,11 @@ export default ({ options }) => {
       <ButtonGroup>
         {!options.status ? (
           <>
-            <PlayerSelectButton
+            {/* <PlayerSelectButton
               type={options.type}
               location={options.location}
               player={options.player}
-            />
+            /> */}
             <MessageEntryModal
               location="playercard"
               player={options.player}
