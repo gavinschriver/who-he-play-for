@@ -10,7 +10,8 @@
 }
 
 .playerName {
-    background: white;
+    background: #fd7e14;
+    color: whitesmoke;
     border: 2px solid;
     text-align: center;
     border-radius: .25rem;
@@ -28,9 +29,14 @@ textarea {
     resize: none;
 }
 
+.sitetitle {
+    text-align: center;
+    display: none;
+}
 
 .sectionTitle {
     text-align: center;
+    display:none;
 }
 
 .filterControls {
@@ -41,4 +47,9 @@ textarea {
 .filterText {
     font-style: italic;
     color: rgb(74, 74, 74)
+}
+
+.appHeader {
+    display: flex;
+    justify-content: space-between;
 }

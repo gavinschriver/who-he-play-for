@@ -9,13 +9,15 @@ export default (props) => {
       key={props.playerId}
       placement={`left`}
       overlay={
-          <Tooltip id={`tooltip-${props.playerName}`}>
-              <Stats id={props.playerId} type="player" tooltip={true}/>
-              {/* <PlayerSearch location="lineup" playerDetails={{playerName: props.playerName}}/> */}
+        <Tooltip id={`tooltip-${props.playerName}`}>
+          <Stats id={props.playerId} type="player" tooltip={true} />
+          {/* <PlayerSearch location="lineup" playerDetails={{playerName: props.playerName}}/> */}
         </Tooltip>
       }
     >
-      <div className={`playerName`}>{props.playerName}</div>
+      <div>
+        <span className={`playerName`}>{props.playerName}</span>
+      </div>
     </OverlayTrigger>
   );
 };

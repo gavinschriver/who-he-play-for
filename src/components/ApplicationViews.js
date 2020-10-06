@@ -32,22 +32,24 @@ export const ApplicationViews = (props) => {
                   <>
                     <Row>
                       <Col>
-                        <Jumbotron>
-                          <AppHeader {...props} />
-                        </Jumbotron>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <GenerateLineup {...props} />
-                      </Col>
-                      <Col>
+                        <Row>
+                          <Jumbotron>
+                            <AppHeader {...props} />
+                          </Jumbotron>
+                        </Row>
                         <SiteTitle />
                         <GamePlay id="gamecontainer" {...props} />
                       </Col>
+
+                      <Col>
+                        <GenerateLineup {...props} />
+                      </Col>
+                      
+
                       <Col>
                         <MessagesList {...props} />
                       </Col>
+
                     </Row>
                   </>
                 )}

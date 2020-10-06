@@ -10,18 +10,20 @@ import {
   Nav,
   NavItem,
 } from "reactstrap";
+import { AppHeader } from "../header/AppHeader";
 
 export const NavBar = () => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleNavbar = () => setCollapsed(!collapsed);
 
   return (
-    <div>
+    <>
       <Navbar color="faded" light>
         <NavbarBrand href="/" className="mr-auto">
           WHO HE PLAY FOR
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
+
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
             <NavItem>
@@ -41,6 +43,6 @@ export const NavBar = () => {
           </Nav>
         </Collapse>
       </Navbar>
-    </div>
+    </>
   );
 };

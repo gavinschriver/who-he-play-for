@@ -13,7 +13,7 @@ export default () => {
   return (
     <>
       <h3>Current lineup progress</h3>
-      <ProgressBar striped variant="danger" label={`${mentionedCount}/5`} now={progressPercent} />
+      <ProgressBar variant="danger" label={`${mentionedCount}/5`} now={progressPercent} />
     </>
   );
 };

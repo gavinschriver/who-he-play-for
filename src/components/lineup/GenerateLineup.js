@@ -174,8 +174,8 @@ export const GenerateLineup = () => {
         ) : (
           <div></div>
         )}
-        <CardGroup className="lineup__container">
-          <section className="lineup">
+        {/* <CardGroup className="lineup__container"> */}
+          {/* <section className="lineup"> */}
             {matchingUsersPlayers
               .filter((mUP) => {
                 if (filter === null || filter === "all") {
@@ -230,8 +230,8 @@ export const GenerateLineup = () => {
                   />
                 );
               })}
-          </section>
-        </CardGroup>
+          {/* </section> */}
+        {/* </CardGroup> */}
       </div>
     </>
   );

@@ -26,16 +26,14 @@ export const AppHeader = (props) => {
 
   return (
     <article className="appHeader">
-      <Container>
-        <Row>
-          <Col>
-            <UserGreeting user={user} />
+      <Row>
+        <Col>
+          <UserGreeting user={user} />
+        </Col>
+        <Col>
+          <Leaderboard location="header" />
           </Col>
-          <Col>
-            <Leaderboard location="header" />
-          </Col>
-        </Row>
-      </Container>
+      </Row>
     </article>
   );
 };
