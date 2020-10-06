@@ -241,7 +241,7 @@ export const Leaderboard = (props) => {
             Total posts:{" "}
             {users.find((u) => u.id === matchingUserId).messages.length}
           </div>
-          <div>{mentionedMatchingUPS.length}</div>
+          <div>Stan'd in current linup: {mentionedMatchingUPS.length}/5</div>
         </>
       )}
     </article>
