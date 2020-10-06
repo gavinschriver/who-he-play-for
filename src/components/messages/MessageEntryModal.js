@@ -5,6 +5,7 @@ import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import "./messages.css";
 import { GiBasketballBasket } from "react-icons/gi/";
+import {FaRegTrashAlt} from "react-icons/fa/"
 
 export default (props) => {
   const { stanPlayer, trashtalkPlayer } = useContext(PlayerContext);
@@ -25,7 +26,7 @@ export default (props) => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const icon = props.type === "stan" ? <GiBasketballBasket /> : ""
+  const icon = props.type === "stan" ? <GiBasketballBasket /> : props.type === "trash" ? <FaRegTrashAlt /> : ""
 
   useEffect(() => {
     handleClose();
