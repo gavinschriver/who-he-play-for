@@ -27,9 +27,16 @@ export const MessageHeader = (props) => {
       )}
     >
       <Card.Header>
-        <Badge>
-          <UserPopOver user={user} userId={props.userId} /> {prefix} {yourGuyPrefix} {player} {time}
-        </Badge>
+        <div className="cardHeader">
+          <div className="cardHeader-content">
+            <Badge>
+              {" "}
+              <UserPopOver user={user} userId={props.userId} />{" "}{prefix}{" "}
+              {yourGuyPrefix} {player}{" "}
+            </Badge>
+          </div>{" "}
+          <div className="cardHeader-time">{time}</div>
+        </div>
       </Card.Header>
     </div>
   );

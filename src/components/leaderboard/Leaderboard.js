@@ -157,79 +157,89 @@ export const Leaderboard = (props) => {
       {props.location === "game" ? (
         <section className="scoreboard">
           <div className="scoreboard__allTime">
-            <div className="scoreboard__allTime__type stanimal">
-              <h3 className="stanimal__heading heading scoreboard--heading">
-                All time stanimal:
-              </h3>
-              <span className="stanimal__stanner name user--name">
-                {stanimal.username}{" "}
-              </span>
-              <span className="stanimal__stanCount">
-                with {stanimal.stans} stans
-              </span>
-            </div>
-            <div className="scoreboard__allTime__type trashtalkchamp">
-              <h3 className="trashtalkchamp__heading heading scoreboard--heading">
-                Trash talk champion:
-              </h3>
-              <span className="trashtalkchamp__champ name user--name">
-                {trashtalkchamp.username}{" "}
-              </span>
-              <span className="trashtalkchamp__trashtalkCount">
-                with {trashtalkchamp.trashtalks} trashes
-              </span>
-            </div>
+            <article className="allTime">
+              <div className="scoreboard__allTime__type stanimal">
+                <h3 className="stanimal__heading heading scoreboard--heading">
+                  All time stanimal:
+                </h3>
+                <span className="stanimal__stanner name user--name">
+                  {stanimal.username}{" "}
+                </span>
+                <span className="stanimal__stanCount">
+                  with {stanimal.stans} stans
+                </span>
+              </div>
+            </article>
+            <article className="allTime">
+              <div className="scoreboard__allTime__type trashtalkchamp">
+                <h3 className="trashtalkchamp__heading heading scoreboard--heading">
+                  Trash talk champion:
+                </h3>
+                <span className="trashtalkchamp__champ name user--name">
+                  {trashtalkchamp.username}{" "}
+                </span>
+                <span className="trashtalkchamp__trashtalkCount">
+                  with {trashtalkchamp.trashtalks} trashes
+                </span>
+              </div>
+            </article>
           </div>
-          <Table>
-            <tbody>
-              <tr>
-                <th>Rank</th>
-                <th>User</th>
-                <th>Score</th>
-                <th>Lineup</th>
-              </tr>
-              {/* begin map (sending uSO to Score.js*/}
-              {sortedScores.map((uSO) => {
-                const matchingUser =
-                  users.find((u) => {
-                    return u.id === uSO.userId;
-                  }) || {};
+          <div className="leaderboard-table">
+            <Table>
+              <tbody>
+                <tr>
+                  <th>Rank</th>
+                  <th>User</th>
+                  <th>Score</th>
+                  <th>Lineup</th>
+                </tr>
+                {/* begin map (sending uSO to Score.js*/}
+                {sortedScores.map((uSO) => {
+                  const matchingUser =
+                    users.find((u) => {
+                      return u.id === uSO.userId;
+                    }) || {};
 
-                rank++;
+                  rank++;
 
-                return (
-                  <Score
-                    key={uSO.id}
-                    SO={uSO}
-                    UO={matchingUser}
-                    rank={rank}
-                    parent="scoreboard"
-                  />
-                );
-              })}
-            </tbody>
-          </Table>
+                  return (
+                    <Score
+                      key={uSO.id}
+                      SO={uSO}
+                      UO={matchingUser}
+                      rank={rank}
+                      parent="scoreboard"
+                    />
+                  );
+                })}
+              </tbody>
+            </Table>
+          </div>
         </section>
       ) : props.location === "header" ? (
         <>
           <section className="userScores">
             <div className="userScores__score">
-              <div className="userScores__trashtalks__heading">Your score:</div>
-              <span>{currentUserScore.score}</span>
+              <div className="userScores__trashtalks__heading">
+                Your score:{" "}
+                <span className="score-item">{currentUserScore.score}</span>
+              </div>
             </div>
             <div className="userScores__stans">
-              <div className="userScores__stans__heading">Your stan count:</div>
-              <span className="userScores__stans__">
-                {currentUserScore.stans}
-              </span>
+              <div className="userScores__stans__heading">
+                Your stan count:{" "}
+                <span className="userScores__stans__ score-item">
+                  {currentUserScore.stans}
+                </span>
+              </div>
             </div>
             <div className="userScores__trashtalks">
               <div className="userScores__trashtalks__heading">
-                Your trashtalk count:
+                Your trashtalk count:{" "}
+                <span className="userScores__trashtalks__ score-item">
+                  {currentUserScore.trashtalks}
+                </span>
               </div>
-              <span className="userScores__trashtalks__">
-                {currentUserScore.trashtalks}
-              </span>
             </div>
             <LineupProgress />
           </section>

@@ -1,3 +1,8 @@
+.allTime .name {
+    background: whitesmoke;
+    color: black
+}
+
 .scoreboard {
     display: flex;
     flex-direction: column;
@@ -10,12 +15,14 @@
 .scoreboard__allTime {
     display: flex;
     margin: 0 0 2rem;
+    color: white;
 }
 
 .scoreboard__allTime__type {
     padding: 0 2rem;
     display: flex;
-    flex-direction: column
+    flex-direction: column;
+    text-align: center
 }
 
 .score__value {
@@ -24,5 +31,17 @@
   line-height: 40px;
   font-weight: 600;
   display: inline-block;
-  background: rgba(255,255,255,0.1);
+  background: whitesmoke;
+  border-radius: .25rem;
+  padding: 0.25rem;
+}
+
+.leaderboard-table {
+    background-color: #FD8F35
+}
+
+.score_rank {
+    background: whitesmoke;
+    text-align: center;
+    border-radius: .25rem;
 }

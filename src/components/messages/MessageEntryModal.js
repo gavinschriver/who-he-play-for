@@ -4,6 +4,7 @@ import MessageEntryForm from "./MessageEntryForm";
 import { PlayerContext } from "../players/PlayerProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import "./messages.css";
+import { GiBasketballBasket } from "react-icons/gi/";
 
 export default (props) => {
   const { stanPlayer, trashtalkPlayer } = useContext(PlayerContext);
@@ -24,10 +25,13 @@ export default (props) => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+  const icon = props.type === "stan" ? <GiBasketballBasket /> : ""
 
   useEffect(() => {
     handleClose();
   }, [mentionedCount]);
+
+
 
   return (
     <>
@@ -35,12 +39,12 @@ export default (props) => {
         {props.location !== "lineup" && props.location !== "playercard" && (
           <h2 className={`${props.type}-modal-header`}>{title}</h2>
         )}
-        <Button onClick={handleShow}>{props.type.toUpperCase()}</Button>
+        <Button onClick={handleShow}>{props.type.toUpperCase()}{' '}{icon}</Button>
       </div>
 
       <Modal show={show} onHide={handleClose}>
         <div className="messageEntryModal">
-         <h2 className="messageEntryModal_header"><Modal.Header closeButton>{title}</Modal.Header></h2> 
+          <h2 className="messageEntryModal_header"><Modal.Header closeButton>{title}</Modal.Header></h2> 
           <MessageEntryForm
             location="modal"
             type={props.type}

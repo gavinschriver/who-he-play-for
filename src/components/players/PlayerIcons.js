@@ -13,8 +13,8 @@ export default ({ details }) => {
 
   return (
     <Container className="playerIcons">
-      <Card.Img className="playerHeadshot" src={details.playerImg} />
-      <Card.Img bsPrefix="icon" className="teamIcon" src={teamImg} />
+      <Card.Img alt="Dang should be a nice shot of a player's head here :(" className="playerHeadshot" src={details.playerImg} />
+      <Card.Img bsPrefix="icon" className="teamIcon" alt="Dang should be a nice pic of a team logo here :(" src={teamImg} />
     </Container>
   );
 };

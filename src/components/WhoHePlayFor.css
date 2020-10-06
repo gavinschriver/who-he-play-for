@@ -4,9 +4,15 @@
 
 .user--name {
     font-weight: bold;
-    border: 2px solid black;
-    border-radius: 10px;
+    border: 2px solid whitesmoke;
+    border-radius: .25rem;
     padding: 4px;
+}
+
+.userName {
+    color: black;
+    font-weight: 500;
+    font-size: 1.5rem
 }
 
 .playerName {
@@ -39,8 +45,9 @@ textarea {
 }
 
 .sectionTitle {
-    text-align: center;
-    display:none;
+    /* text-align: center; */
+    font-weight: 400;
+    text-transform: uppercase;
 }
 
 .filterControls {
@@ -54,6 +61,20 @@ textarea {
 }
 
 .appHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.userScores {
+    font-weight: 00;
+    font-size: 1.25rem;
+}
+
+.img.rounded-circle:hover {
+    transform: scaleX(-1);
+}
+
+.cardHeader {
     display: flex;
     justify-content: space-between;
 }
