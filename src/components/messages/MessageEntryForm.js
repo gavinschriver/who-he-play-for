@@ -8,7 +8,7 @@ import { PlayerContext } from "../players/PlayerProvider";
 import { MessageContext } from "./MessageProvider";
 import { UserContext } from "../users/UserProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
-import { Modal } from "react-bootstrap";
+import { Modal, Alert } from "react-bootstrap";
 import MessageEntryModal from "./MessageEntryModal";
 import PlayerSearch from "../players/PlayerSearch";
 
@@ -35,6 +35,12 @@ export default (props) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [alertText, setAlertText] = useState("NOICE")
+  const [showAlert, setShowAlert] = useState(false)
+  const handleAlert = () => {
+    setShowAlert(true)
+  }
 
   // filtering and extracting things ya know
   const filteredCurrentUsersPlayers = currentUser.usersPlayers.filter(
@@ -118,10 +124,10 @@ export default (props) => {
               URLref.current.value = "";
               textRef.current.value = "";
             }
-          } else alert("that's old news cap'n");
-        } else alert("Where the EVIDENCE???");
-      } else alert("check that input yo");
-    } // end Stan/Trash as type
+          } else setAlertText("that's old news cap'n"); handleAlert();
+        } else setAlertText("Where the PROOF??"); handleAlert();
+      } else setAlertText("Better check that input"); handleAlert();
+    } // end Stan/Trash as type alert("check that input yo") ; alert("that's old news cap'n") ; alert("Where the EVIDENCE???");
   };
 
   // selections for rendering
@@ -204,6 +210,7 @@ export default (props) => {
             <Form.Group>{url}</Form.Group>
             <Form.Group>{text}</Form.Group>
             <Form.Group>{submit}</Form.Group>
+            {showAlert && <Alert variant="warning" onClose={() => setShowAlert(false)} dismissible>{alertText}</Alert>}
           </>
         )}
       </Form>

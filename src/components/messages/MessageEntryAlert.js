@@ -3,6 +3,6 @@ import { Alert } from "react-bootstrap"
 
 export default (props) => {
     return (
-        <Alert >No NO bad boyy</Alert>
+        <Alert dismissible>No NO bad boyy</Alert>
     )   
 }
