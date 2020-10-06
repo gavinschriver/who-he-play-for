@@ -37,7 +37,7 @@ export default (props) => {
   return (
     <>
       <div className="modalEntryContainer">
-        {props.location !== "lineup" && props.location !== "playercard" && (
+        {props.location !== "lineup" && props.location !== "playercard" && props.location !== "gameplay" && (
           <h2 className={`${props.type}-modal-header`}>{title}</h2>
         )}
         <Button onClick={handleShow}>{props.type.toUpperCase()}{' '}{icon}</Button>
