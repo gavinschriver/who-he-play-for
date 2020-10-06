@@ -18,6 +18,10 @@
     padding: 5px;
 }
 
+.playerName-container {
+    display: flex;
+}
+
 .modalPlayer .playerName{
     color: whitesmoke;
     background-color: #fd7e14;

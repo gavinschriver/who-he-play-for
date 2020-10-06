@@ -59,7 +59,7 @@ export const Player = ({ PO, TO, status }) => {
                 teamAbb: currentPlayer.player.currentTeam
                   ? currentPlayer.player.currentTeam.abbreviation
                   : "NONE",
-                teamId: NBATeamId,
+                teamId: NBATeamId
               }}
             />
           </Col>

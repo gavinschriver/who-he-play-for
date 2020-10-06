@@ -15,7 +15,7 @@ export default (props) => {
         </Tooltip>
       }
     >
-      <div>
+      <div className="playerName-container">
         <span className={`playerName`}>{props.playerName}</span>
       </div>
     </OverlayTrigger>

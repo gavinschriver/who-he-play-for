@@ -26,10 +26,10 @@ export default ({ options }) => {
           <div></div>
         )}
         {/* <Highlight location="player" playerName={options.player} /> */}
-        <PlayerSearch
+        {/* <PlayerSearch
           location="playerCard"
           playerDetails={{ playerName: options.player, type: options.type }}
-        />
+        /> */}
       </ButtonGroup>
     </div>
   );
