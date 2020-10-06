@@ -2,3 +2,28 @@
     display: flex;
     flex-direction: row;
 }
+
+.messageCard-header {
+    font-size: 1.2rem;
+}
+
+.trash-header {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.stan-header {
+    color: #155724;
+    background-color:#d4edda;
+    border-color: #c3e6cb
+}
+
+.modalEntryContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.messageEntryModal {
+    padding: 1rem;
+}

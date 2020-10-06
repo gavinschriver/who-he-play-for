@@ -1,29 +1,35 @@
 import React from "react";
-import { StanEntryForm } from "./StanEntryForm";
-import { TrashTalkEntryForm } from "./TrashTalkEntryForm";
 import { Leaderboard } from "../leaderboard/Leaderboard";
 import Container from "react-bootstrap/esm/Container";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/Col";
-import "./gameplay.css"
-import { Route } from "react-router-dom";
+import MessageEntryForm from "../messages/MessageEntryForm";
+import "./gameplay.css";
+import MessageEntryModal from "../messages/MessageEntryModal";
+import { Row, Col } from "react-bootstrap";
 
 export const GamePlay = () => (
   <>
-    <section id="gamecontainer" className="gameplay--container">
-      <Container className="container gameplay--container" fluid>
+    <div className="gameEntryForm">
+      <Container>
         <Row>
-          <Col className="container entryForm--container">
-            <StanEntryForm />
+          <Col>
+            <MessageEntryForm type="stan" />
           </Col>
           <Col>
-            <Leaderboard location="game" />
+            <MessageEntryModal type="stan" location="gameplay" />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <MessageEntryForm type="trash" />
           </Col>
           <Col>
-            <TrashTalkEntryForm />
+            <MessageEntryModal type="trash" location="gameplay" />
           </Col>
         </Row>
       </Container>
-    </section>
+    </div>
+    <Container>
+      <Leaderboard location="game" />
+    </Container>
   </>
 );

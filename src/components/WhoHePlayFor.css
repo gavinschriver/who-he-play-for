@@ -1,22 +1,84 @@
 .name {
+    text-align: center;
 }
 
 .user--name {
     font-weight: bold;
-    border: 2px solid black;
-    border-radius: 10px;
+    border: 2px solid whitesmoke;
+    border-radius: .25rem;
     padding: 4px;
 }
 
-.player--name {
-
+.userName {
+    color: black;
+    font-weight: 500;
+    font-size: 1.5rem
 }
 
-.user--player {
-    color: red
+.playerName {
+    background: #fd7e14;
+    color: whitesmoke;
+    border: 2px solid;
+    text-align: center;
+    border-radius: .25rem;
+    padding: 5px;
 }
+
+.playerName-container {
+    display: flex;
+}
+
+.modalPlayer .playerName{
+    color: whitesmoke;
+    background-color: #fd7e14;
+    font-size: 25px;
+}
+
 
 textarea {
     resize: none;
 }
 
+.sitetitle {
+    text-align: center;
+    display: none;
+}
+
+.sectionTitle {
+    /* text-align: center; */
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.filterControls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filterText {
+    font-style: italic;
+    color: rgb(74, 74, 74)
+}
+
+.appHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.userScores {
+    font-weight: 00;
+    font-size: 1.25rem;
+}
+
+.img.rounded-circle:hover {
+    transform: scaleX(-1);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+}
+.gameEntryForm {
+    padding: 2rem 0;
+    margin: 0.5rem 0;
+}

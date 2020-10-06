@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, createContext } from "react";
 
 export const UserContext = React.createContext();
 
@@ -6,7 +6,7 @@ export const UserProvider = (props) => {
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
-    return fetch(`http://localhost:8888/users?_embed=messages`)
+    return fetch(`http://localhost:8888/users?_embed=messages&_embed=usersPlayers`)
       .then((res) => res.json())
       .then(setUsers);
   };
@@ -37,6 +37,14 @@ export const UserProvider = (props) => {
     }).then(getUsers);
   };
 
+  const currentUserId = parseInt(localStorage.getItem("whpf_user"));
+
+  const getUserById = (id) => {
+    return fetch(
+      `http://localhost:8888/users/${id}?_embed=messages&_embed=usersPlayers`
+    )
+      .then((res) => res.json())
+  };
 
   return (
     <UserContext.Provider
@@ -46,6 +54,8 @@ export const UserProvider = (props) => {
         addUser,
         removeUser,
         updateUser,
+        currentUserId,
+        getUserById
       }}
     >
       {props.children}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, createContext } from "react";
 
 export const UserPlayerContext = React.createContext();
 
@@ -39,6 +39,7 @@ export const UserPlayerProvider = (props) => {
     }).then(getUsersPlayers);
   };
 
+
   return (
     <UserPlayerContext.Provider
       value={{
@@ -48,7 +49,7 @@ export const UserPlayerProvider = (props) => {
         removeUserPlayer,
         updateUserPlayer,
         mentionedCount,
-        setMentionedCount
+        setMentionedCount,
       }}
     >
       {props.children}

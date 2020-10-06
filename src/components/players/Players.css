@@ -1,14 +1,44 @@
 .playerCard img {
-    max-width: 200px;
-    background: whitesmoke;
-    border-radius: 20px;
-    margin-bottom: 1em
+  max-width: 210px;
+  border-radius: 20px;
+  margin-bottom: 1em;
 }
 
-.playerCard--stanned a {
-    color: whitesmoke
+.playerCard button a {
+  color: white
 }
 
-.playerCard--body {
+.playerCard-stanned {
+  background-color: #cce5ff;
 }
 
+.playerCard-stanned-header {
+  background-color: #007bff;
+  color: whitesmoke
+}
+
+.playerCard-header {
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+}
+
+.playerCard-stanned table {
+  background-color: whitesmoke;
+}
+
+.playerCard-stanned button {
+  border: 1px solid white
+}
+/* .playerCard-body-container-stanned {
+  display:flex;
+  flex-basis: 1;
+} */
+
+
+.playerIcons {
+  display: flex;
+  align-items: center;
+}

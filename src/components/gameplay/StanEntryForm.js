@@ -5,6 +5,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import validator from "validator";
 import Form from "react-bootstrap/Form";
 import "../messages/messages.css";
+import { MessageEntryButton } from "../buttons/MessageEntryButton";
 
 export const StanEntryForm = () => {
   const { addMessage, messages, getMessages } = useContext(MessageContext);
@@ -23,24 +24,28 @@ export const StanEntryForm = () => {
   const urlRef = useRef("");
   const chatRef = useRef("");
   const currentUser = parseInt(localStorage.getItem("whpf_user"));
-  let stanPlayerFirstAndLastName = "";
+  // let stanPlayerFirstAndLastName = "";
 
   // stan button pressed
   const handleStanButtonPress = () => {
+
     const urlValue = urlRef.current.value.toLowerCase();
     const stanBarPlayer = stanBarRef.current.value;
     const chatValue = chatRef.current.value;
 
     // code to reattach a player's first name to their last name for search validaiton cause im an idiot
-    const stanBarPlayerObject = filteredPlayersObjects.find((fPO) => {
-      return fPO.player.firstName === stanBarPlayer;
-    });
-    const stanBarPlayerLastName = stanBarPlayerObject.player.lastName;
-    stanPlayerFirstAndLastName = `${stanBarPlayer} ${stanBarPlayerLastName}`;
+    
+    // const stanBarPlayerObject = filteredPlayersObjects.find((fPO) => {
+    //   return fPO.player.firstName === stanBarPlayer;
+    // });
+
+    // const stanBarPlayerLastName = stanBarPlayerObject.player.lastName;
+    // stanPlayerFirstAndLastName = `${stanBarPlayer} ${stanBarPlayerLastName}`;
 
     if (
       validator.isURL(urlValue) &&
       urlValue.includes(stanBarPlayer.toLowerCase())
+      && stanBarPlayer !== "0"
     ) {
       if (!messageUrls.includes(urlValue)) {
         if (filteredPlayersStrings.includes(stanBarPlayer)) {
@@ -146,7 +151,7 @@ export const StanEntryForm = () => {
                 Choose a player from your starting 5 to stan
               </h4>
               <Form.Control as="select" ref={stanBarRef}>
-                <option value="empty" defaultValue="">
+                <option value="0" defaultValue="0">
                   Choose a player
                 </option>
                 {filteredPlayersObjects.map((fpo) => {
@@ -189,17 +194,7 @@ export const StanEntryForm = () => {
               />
             </Form.Group>
 
-            <button
-              className="messageEntry__stan button addMessage--button"
-              onClick={(e) => {
-                e.preventDefault();
-                if (stanBarRef.current.value !== "empty") {
-                  handleStanButtonPress();
-                }
-              }}
-            >
-              BANG!
-            </button>
+            <MessageEntryButton type="stan" action={handleStanButtonPress} />
           </div>
         </Form>
       </article>

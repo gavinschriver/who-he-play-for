@@ -1,30 +1,30 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
-import { TwitterTimelineEmbed } from "react-twitter-embed";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
-import { PlayerContext } from "./PlayerProvider"
-import Card from "react-bootstrap/Card"
-import Button from "react-bootstrap/Button"
-import Collapse from "react-bootstrap/Collapse"
+import { PlayerContext } from "./PlayerProvider";
+import Card from "react-bootstrap/Card";
+import PlayerHeader from "./PlayerHeader";
+import PlayerIcons from "./PlayerIcons";
+import PlayerInfoSelect from "../selectors/PlayerInfoSelect";
+import { Col, Row, Container, Modal } from "react-bootstrap";
+import PlayerCardAction from "./PlayerCardAction";
 import "./Players.css";
 
-export const Player = ({ PO, TO }) => {
-  const { getPlayerData } = useContext(PlayerContext)
+export const Player = ({ PO, TO, status }) => {
+  const { getPlayerData } = useContext(PlayerContext);
   const { usersPlayers, getUsersPlayers } = useContext(UserPlayerContext);
   const [matchingUsersPlayer, setMatchingUsersPlayer] = useState({});
-  const [showHideDetails, setShowHideDetails] = useState(false);
-
-  const handleDetailButtonClick = () => {
-    if (!showHideDetails) {
-      setShowHideDetails(true);
-    } else setShowHideDetails(false);
-  };
+  const activeUserId = parseInt(localStorage.getItem("whpf_user"));
 
   // Assign component variable names for Player Objects and Team Objects cause why not
   const currentPlayer = PO;
   const currentPlayerTeam = TO;
-
   const NBATeamId = currentPlayerTeam.teamId;
   const NBAid = currentPlayer.player.externalMappings[0].id || {};
+  const cardClass = matchingUsersPlayer.mentioned
+    ? "playerCard playerCard-stanned"
+    : "playerCard";
+
+  // const cardBG = matchingUsersPlayer.mentioned ? "primary" : "light";
 
   useEffect(() => {
     getPlayerData().then(getUsersPlayers);
@@ -33,119 +33,64 @@ export const Player = ({ PO, TO }) => {
   useEffect(() => {
     setMatchingUsersPlayer(
       usersPlayers.find((uPO) => {
-        return uPO.playerId === PO.player.id;
+        return uPO.playerId === PO.player.id && uPO.userId === activeUserId;
       }) || {}
     );
   }, [usersPlayers]);
 
-  const cardClass = matchingUsersPlayer.mentioned ? "playerCard playerCard--stanned" : "playerCard"
-
-  const cardBG = matchingUsersPlayer.mentioned ? 'primary' : 'light'
-
   return (
-    <Card className={cardClass} bg={cardBG}>
-      <Card.Header as="h5">Player</Card.Header>
-      <Card.Body className="playerCard--body">
-      <Card.Link
-        href={`https://www.nba.com/players/${currentPlayer.player.firstName}/${currentPlayer.player.lastName}/${NBAid}`.toLowerCase()}
-        target="_blank"
-      >
-        NBA Stats
-      </Card.Link>
-        {matchingUsersPlayer.mentioned ? <div>#STAN'D</div> : <div></div>}
-        <Card.Title className="playerCard__name">Player: {currentPlayer.player.firstName}{" "}{currentPlayer.player.lastName}</Card.Title>
-      <div className="playerCard__headshot img">
-        <a
-          href={`https://www.reddit.com/search?q=${currentPlayer.player.firstName}%20${currentPlayer.player.lastName}`}
-          target="_blank"
-        >
-          <Card.Img src={currentPlayer.player.officialImageSrc} />
-        </a>
-      </div>
-      {currentPlayer.player.currentTeam ? (
-        <div className="playerCard__logo__img">
-          {currentPlayer.player.currentTeam.abbreviation === "BRO" ? (
-            <Card.Img
-              src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/bkn.png`}
+    <div className={cardClass}>
+      <Card>
+        <PlayerHeader
+          headerInfo={{
+            name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+            team: TO.teamName,
+            class: cardClass,
+            type: "stan",
+            status
+          }}
+        />
+        {/* {cardClass !== "playerCard playerCard--stanned" && */}
+        <div className={cardClass}>
+          <Col>
+            <PlayerIcons
+              details={{
+                playerImg: currentPlayer.player.officialImageSrc,
+                teamAbb: currentPlayer.player.currentTeam
+                  ? currentPlayer.player.currentTeam.abbreviation
+                  : "NONE",
+                teamId: NBATeamId
+              }}
             />
-          ) : currentPlayer.player.currentTeam.abbreviation === "OKL" ? (
-            <Card.Img
-              src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/okc.png`}
+          </Col>
+          {/* <Col>
+            <PlayerCardAction
+              options={{
+                type: "stan",
+                location: "lineup",
+                player: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+                status,
+              }}
             />
-          ) : (
-            <Card.Img
-              src={`http://i.cdn.turner.com/nba/nba/.element/img/1.0/teamsites/logos/teamlogos_500x500/${currentPlayer.player.currentTeam.abbreviation}.png`.toLowerCase()}
-            />
-          )}
+          </Col> */}
+          <PlayerInfoSelect
+            playerDetails={{
+              name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+              DOB: currentPlayer.player.birthDate,
+              from: `${currentPlayer.player.birthCity} ${currentPlayer.player.birthCountry}`,
+              weight: currentPlayer.player.weight,
+              height: currentPlayer.player.height,
+              position: currentPlayer.player.primaryPosition,
+              id: NBAid,
+              twitterName:
+                currentPlayer.player.socialMediaAccounts.length > 0
+                  ? currentPlayer.player.socialMediaAccounts[0].value
+                  : "NONE",
+            }}
+          />
         </div>
-      ) : (
-        <div>Poor lil buddy needs a team :(</div>
-      )}
-      <Button
-        className="playerCard__showDetailsButton btn btn--details"
-        onClick={(e) => {
-          e.preventDefault();
-          handleDetailButtonClick();
-        }}
-      >
-        Get the juicy deets:
-      </Button>
-      {showHideDetails ? (
-        <article className="playerCard__details">
-          <div className="playerCard__details__heading heading">DEETS</div>
-          <div className="playerCard__details__DOB">
-            <span className="detailName">Date of Birth: </span>
-            <span className="detail">{currentPlayer.player.birthDate}</span>
-          </div>
-
-          <div className="playerCard__details__city">
-            <span className="detailName">Hailing From: </span>
-            <span className="detail">
-              {currentPlayer.player.birthCity},{" "}
-              {currentPlayer.player.birthCountry}
-            </span>
-          </div>
-
-          <div className="playerCard__details__weight">
-            <span className="detailName">Weight (rude): </span>
-            <span className="detail">{currentPlayer.player.weight}</span>
-          </div>
-
-          <div className="playerCard__details__primaryPosition">
-            <span className="detailName">Primary Position: </span>
-            <span className="detail">
-              {currentPlayer.player.primaryPosition === "SG"
-                ? "Shooting Guard"
-                : currentPlayer.player.primaryPosition === "PG"
-                ? "Point Guard"
-                : currentPlayer.player.primaryPosition === "SF"
-                ? "Strong Forward"
-                : currentPlayer.player.primaryPosition === "C"
-                ? "Center"
-                : currentPlayer.player.primaryPosition === "PF"
-                ? "Power Forward"
-                : "Unkown (Positionless BBall amirite?)"}
-            </span>
-            <div className="playerCard__details__height">
-              <span className="detailName">Height: </span>
-              <span className="detail">{currentPlayer.player.height}</span>
-              {currentPlayer.player.socialMediaAccounts.length > 0 ? (
-                <TwitterTimelineEmbed
-                  sourceType="profile"
-                  screenName={currentPlayer.player.socialMediaAccounts[0].value}
-                  options={{ height: 400 }}
-                />
-              ) : (
-                <div></div>
-              )}
-            </div>
-          </div>
-        </article>
-      ) : (
-        <div></div>
-          )} 
-        </Card.Body>
-    </Card>
+        {/* // } */}
+      </Card>
+    </div>
   );
 };
-

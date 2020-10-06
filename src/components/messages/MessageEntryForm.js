@@ -1,203 +1,239 @@
-import React, { useRef, useEffect, useContext } from "react";
-import { MessageContext } from "./MessageProvider";
+import React, { useContext, useEffect, useState } from "react";
+import Form from "react-bootstrap/Form";
+import { PlayerSelect } from "../selectors/PlayerSelect";
+import { MessageURLInput } from "./MessageURLInput";
+import { MessageEntryText } from "./MessageEntryText";
+import { SubmitMessageButton } from "../buttons/SubmitMessageButton";
 import { PlayerContext } from "../players/PlayerProvider";
+import { MessageContext } from "./MessageProvider";
+import { UserContext } from "../users/UserProvider";
 import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
-import validator from "validator";
-import "./messages.css";
+import { Modal, Alert } from "react-bootstrap";
+import MessageEntryModal from "./MessageEntryModal";
+import PlayerSearch from "../players/PlayerSearch";
 
-//not in use; see gameplay for stan and TT entry forms 
-
-export const MessageEntryForm = () => {
-  const { addMessage, messages } = useContext(MessageContext);
+export default (props) => {
+  const { stanPlayer, setStanPlayer, trashtalkPlayer } = useContext(
+    PlayerContext
+  );
+  const { messages, getMessages, addMessage } = useContext(MessageContext);
+  const { playerObjArray, getPlayerData } = useContext(PlayerContext);
   const { usersPlayers, updateUserPlayer, setMentionedCount } = useContext(
     UserPlayerContext
   );
-  const { playerObjArray } = useContext(PlayerContext);
+  const { getUserById, currentUserId } = useContext(UserContext);
+  const [currentUser, setCurrentUser] = useState({
+    usersPlayers: [],
+    messages: [],
+  });
+  const [currentUsersPlayers, setCurrentUsersPlayers] = useState([]);
+  const playerRef = React.createRef();
+  const URLref = React.createRef();
+  const textRef = React.createRef();
+  const activeUserId = parseInt(localStorage.getItem("whpf_user"));
 
-  const messagetextRef = useRef("");
-  const stanBarRef = useRef("");
-  const urlRef = useRef("");
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-  const currentUser = parseInt(localStorage.getItem("whpf_user"));
-
-  const handleStanButtonPress = () => {
-    const urlValue = urlRef.current.value;
-    const stanBarPlayer = stanBarRef.current.value;
-    if (validator.isURL(urlValue)) {
-      if (!messageUrls.includes(urlValue)) {
-        if (filteredPlayersStrings.includes(stanBarPlayer)) {
-          const matchingPO = filteredPlayersObjects.find((mPO) => {
-            return mPO.player.firstName === stanBarPlayer;
-          });
-
-          const matchingUPO = filteredUsersPlayers.find((uPO) => {
-            return uPO.playerId === matchingPO.player.id;
-          });
-
-          const updatedUPO = {
-            id: matchingUPO.id,
-            userId: matchingUPO.userId,
-            playerId: matchingUPO.playerId,
-            mentioned: true,
-          };
-
-          updateUserPlayer(updatedUPO);
-
-          const newMessage = {
-            userId: currentUser,
-            messagetext: stanBarPlayer,
-            url: urlRef.current.value,
-            timestamp: Date.now(),
-            stan: true,
-          };
-          addMessage(newMessage);
-        } else if (allMatchingPlayersStrings.includes(stanBarPlayer)) {
-          alert(`Woah slow down stanimal, you already repped this player`);
-        }
-      } else alert(`someone already cited that proof`);
-    } else alert(`better check that input stanley`);
+  const [alertText, setAlertText] = useState("NOICE");
+  const [alertType, setAlertType] = useState("success");
+  const [showAlert, setShowAlert] = useState(false);
+  const handleAlert = () => {
+    setShowAlert(true);
   };
 
-  const handleTrashtalkButtonPress = () => {
-    const trashtalkplayer = messagetextRef.current.value;
-    const urlValue = urlRef.current.value;
+  // filtering and extracting things ya know
+  const filteredCurrentUsersPlayers = currentUser.usersPlayers.filter(
+    (up) => !up.mentioned
+  );
 
-    if (othersPlayersStrings.includes(trashtalkplayer) && urlValue !== "") {
-      if (!messageUrls.includes(urlValue)) {
-        const newMessage = {
-          userId: currentUser,
-          messagetext: trashtalkplayer,
-          url: urlRef.current.value,
-          timestamp: Date.now(),
-          trashtalk: true,
-        };
-        addMessage(newMessage);
-      } else alert(`someone already cited that proof`);
-    } else alert(`better check that input stanley`);
-  };
+  //not currently being used
+  const mentionedUsersPlayers = currentUser.usersPlayers.filter(
+    (up) => up.mentioned
+  );
 
-  useEffect(() => {
-    setMentionedCount(
-      usersPlayers.filter((upo) => upo.userId === currentUser && upo.mentioned)
-        .length
-    );
-  }, [usersPlayers]);
-
-  // array of all URL values of all messages for duplicate check
   const messageUrls = messages.map((m) => {
     return m.url;
   });
 
-  // this colleciton is current user's WHOLE lineup as UPOs
-  const allMatchingUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId === currentUser;
-  });
+  // submit function
+  const handleSubmitButtonPress = () => {
+    const player =
+      props.location === "modal" ? props.player : playerRef.current.value;
+    const URL = URLref.current.value;
+    const text = textRef.current.value;
 
-  // this collection is current user's WHOLE linup as player objects
-  const allMatchingPlayersObjects = allMatchingUsersPlayers.map((fUPO) => {
-    return playerObjArray.find((p) => {
-      return p.player.id === fUPO.playerId;
-    });
-  });
+    if (props.type === "stan" || props.type === "trash") {
+      if (URL !== "" && player !== "0") {
+        if (URL.includes(player.split(" ")[0].toLowerCase())) {
+          if (!messageUrls.includes(URL)) {
+            if (props.type === "stan") {
+              const matchingStanPlayerObject = currentUsersPlayers.find(
+                (PO) => {
+                  return (
+                    `${PO.player.firstName} ${PO.player.lastName}` === player
+                  );
+                }
+              );
 
-  // this colleciton is current user's WHOLE lineup as FIRST names
-  const allMatchingPlayersStrings = allMatchingPlayersObjects.map((mPO) => {
-    return mPO.player.firstName;
-  });
+              const matchingStanUserPlayer = filteredCurrentUsersPlayers.find(
+                (UP) => {
+                  return matchingStanPlayerObject.player.id === UP.playerId;
+                }
+              );
 
-  //FILTERED BASED ON BEING MENTIONED....
-  // this colleciton is ONLY UPOS for the current user that HAVE NOT been marked as mentioned
-  const filteredUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId === currentUser && !upo.mentioned;
-  });
+              const updatedUPO = {
+                id: matchingStanUserPlayer.id,
+                userId: matchingStanUserPlayer.userId,
+                playerId: matchingStanUserPlayer.playerId,
+                mentioned: true,
+              };
+              updateUserPlayer(updatedUPO);
 
-  //Player Objects that correspond to the above
-  const filteredPlayersObjects = filteredUsersPlayers.map((fUPO) => {
-    return playerObjArray.find((p) => {
-      return p.player.id === fUPO.playerId;
-    });
-  });
+              const newStanMessage = {
+                userId: currentUserId,
+                messagetext: player,
+                url: URL,
+                timestamp: Date.now(),
+                stan: true,
+                trashtalk: false,
+                chattext: text,
+              };
 
-  //Strings of the Player first names for the above (aka only player first names in the user's lineup they haven't mentioned yet)
-  const filteredPlayersStrings = filteredPlayersObjects.map((mPO) => {
-    return mPO.player.firstName;
-  });
+              addMessage(newStanMessage);
+              if (props.location !== "modal") {
+                playerRef.current.value = "0";
+              }
+              URLref.current.value = "";
+              textRef.current.value = "";
+            }
 
-  // FOR OTHER PLAYERS LINEUPS
-  const othersUsersPlayers = usersPlayers.filter((upo) => {
-    return upo.userId != currentUser;
-  });
+            if (props.type === "trash") {
+              const newTrashtalkMessage = {
+                userId: currentUserId,
+                messagetext: player,
+                url: URL,
+                timestamp: Date.now(),
+                stan: false,
+                trashtalk: true,
+                chattext: text,
+              };
 
-  const othersPlayersObjs = othersUsersPlayers.map((oUPO) => {
-    return playerObjArray.find((p) => {
-      return p.player.id === oUPO.playerId;
-    });
-  });
+              addMessage(newTrashtalkMessage);
+              // playerRef.current.value = "0";
+              URLref.current.value = "";
+              textRef.current.value = "";
+            }
+          } else setAlertText("that's old news cap'n");
+          setAlertType("warning");
+          handleAlert();
+        } else setAlertText("Where the PROOF??");
+        setAlertType("success");
+        handleAlert();
+      } else setAlertText("Better check that input");
+      setAlertType("danger");
+      handleAlert();
+    } // end Stan/Trash as type alert("check that input yo") ; alert("that's old news cap'n") ; alert("Where the EVIDENCE???");
+  };
 
-  const othersPlayersStrings = othersPlayersObjs.map((oPO) => {
-    return oPO.player.firstName;
-  });
+  // selections for rendering
+  const playerInput = <PlayerSelect type={props.type} ref={playerRef} />;
+  const url = <MessageURLInput type={props.type} ref={URLref} />;
+  const text = <MessageEntryText type={props.type} ref={textRef} />;
+  const submit = (
+    <SubmitMessageButton action={handleSubmitButtonPress} type={props.type} />
+  );
+  const title =
+    props.type === "stan"
+      ? "Stan by your Man"
+      : props.type === "trash"
+      ? "Talk that trash"
+      : "Speak on it";
+
+  if (props.type === "stan" && props.location !== "modal") {
+    useEffect(() => {
+      playerRef.current.value = stanPlayer;
+    }, [stanPlayer]);
+  }
+
+  if (props.type === "trash" && props.location !== "modal") {
+    useEffect(() => {
+      playerRef.current.value = trashtalkPlayer;
+    }, [trashtalkPlayer]);
+  }
+
+  useEffect(() => {
+    const matchingPlayers =
+      filteredCurrentUsersPlayers.map((up) => {
+        return playerObjArray.find((p) => {
+          return p.player.id === up.playerId;
+        });
+      }) || {};
+    setCurrentUsersPlayers(matchingPlayers);
+  }, [playerObjArray]);
+
+  useEffect(() => {
+    getUserById(currentUserId)
+      .then(setCurrentUser)
+      .then(getPlayerData)
+      .then(getMessages);
+  }, []);
+
+  //gonna try method 2 below
+  // useEffect(() => {
+  //   console.log(`UP collection changed, length of mentionedUPS is now ${mentionedUsersPlayers.length}`)
+  //   getUserById(currentUserId)
+  //     .then(setCurrentUser)
+  //     .then(setMentionedCount(mentionedUsersPlayers.length));
+  // }, [usersPlayers]);
+
+  useEffect(() => {
+    setMentionedCount(
+      usersPlayers.filter((upo) => upo.userId === activeUserId && upo.mentioned)
+        .length
+    );
+  }, [usersPlayers]);
 
   return (
     <>
-      <section className="messageEntry">
-        <form className="messageEntry--form">
-          <article className="messageEntry--choiceContainer">
-            <div className="messageEntry__stan">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleStanButtonPress();
-                }}
+      <Form>
+        <Form.Group>
+          {props.location === "modal" ? (
+            <div className="modalPlayer">
+              <span className="playerName">{props.player}</span>
+              <PlayerSearch
+                location="modal"
+                playerDetails={{ playerName: props.player, type: props.type }}
+                parent="messageEntry"
+              />
+            </div>
+          ) : (
+            playerInput
+          )}
+        </Form.Group>
+        {props.location === "modal" && (
+          <>
+            <Form.Group>{url}</Form.Group>
+            <Form.Group>{text}</Form.Group>
+            <Form.Group>{submit}</Form.Group>
+            {showAlert && (
+              <Alert
+                variant={
+                  alertText === "that's old news cap'n" ||
+                  alertText === "Better check that input"
+                    ? "danger"
+                    : "success"
+                }
+                onClose={() => setShowAlert(false)}
+                dismissible
               >
-                Stan by your man yo
-              </button>
-              <select ref={stanBarRef}>
-                {filteredPlayersObjects.map((fpo) => {
-                  return (
-                    <option value={fpo.player.firstName}>
-                      {fpo.player.firstName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-
-            <h2>Or</h2>
-
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleTrashtalkButtonPress();
-              }}
-            >
-              Talk that trash on
-            </button>
-            <div className="messageEntry__trashtalk">
-              <input
-                type="text"
-                name="messagetext"
-                id="messagetext"
-                placeholder="`You know who's garbage?`"
-                ref={messagetextRef}
-              />
-            </div>
-
-            <div className="messageEntry__URL">
-              <h2>But you'd</h2>
-              <input
-                type="url"
-                name="url"
-                id="url"
-                placeholder="better back it up"
-                pattern="https://.*"
-                size="30"
-                ref={urlRef}
-              />
-            </div>
-          </article>
-        </form>
-      </section>
+                {alertText}
+              </Alert>
+            )}
+          </>
+        )}
+      </Form>
     </>
   );
 };

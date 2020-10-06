@@ -1,0 +1,24 @@
+/* .stan--button a {
+    color: whitesmoke
+} */
+
+.playerSearch-button a {
+    color: whitesmoke;
+}
+
+.lineup-button a{
+    color: #8b8c8d
+}
+
+.lineup-button a:hover{
+    color:#fd7e14
+}
+
+.modal-button a{
+    color: #007bff
+}
+
+
+.scoreboard-button a:hover{
+    color: white
+}

@@ -5,6 +5,7 @@ import { UserPlayerContext } from "../usersPlayers/UsersPlayersProvider";
 import validator from "validator";
 import "../messages/messages.css";
 import { Form } from "react-bootstrap";
+import { MessageEntryButton } from "../buttons/MessageEntryButton";
 
 export const TrashTalkEntryForm = () => {
   const { addMessage, getMessages, messages } = useContext(MessageContext);
@@ -47,8 +48,6 @@ export const TrashTalkEntryForm = () => {
           } else alert(`that's old news captain`);
         } else alert(`Sorry, who you tryin' to trash exactly?`);
       } else alert(`You trying to trash your own player? Rough look my dude`);
-      alert(trashtalkplayer);
-      console.log(othersPlayersStrings);
     } else alert("better check that input");
   };
 
@@ -156,16 +155,7 @@ export const TrashTalkEntryForm = () => {
                 ref={chatRef}
               />
             </Form.Group>
-
-            <button
-              className="messageEntry__trash button addMessage--button"
-              onClick={(e) => {
-                e.preventDefault();
-                handleTrashtalkButtonPress();
-              }}
-            >
-              Shots fired
-            </button>
+            <MessageEntryButton type="trash" action={handleTrashtalkButtonPress} />
           </div>
         </Form>
       </article>

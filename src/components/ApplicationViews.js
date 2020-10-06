@@ -13,43 +13,50 @@ import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Highlight from "./highlights/Highlight";
+import Stats from "./highlights/Stats";
+import SiteTitle from "./header/SiteTitle";
+import MessageEntryModal from "./messages/MessageEntryModal";
 
 export const ApplicationViews = (props) => {
   return (
     <>
       <Container fluid>
-        <UserProvider>
-          <PlayerProvider>
+        <PlayerProvider>
+          <UserPlayerProvider>
             <MessageProvider>
-              <UserPlayerProvider>
-                <Route
-                  exact
-                  path="/"
-                  render={(props) => (
-                    <>
-                      <Jumbotron>
-                        <AppHeader {...props} />
-                      </Jumbotron>
-                      <Container className="maincontent" fluid="md">
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <>
+                    <Row>
+                      <Col>
                         <Row>
-                          <GamePlay id="gamecontainer" {...props} />
+                          <Jumbotron>
+                            <AppHeader {...props} />
+                          </Jumbotron>
                         </Row>
-                        <Row>
-                          <Col>
-                            <GenerateLineup {...props} />
-                          </Col>
-                          <Col>
-                            <MessagesList {...props} />
-                          </Col>
-                        </Row>
-                      </Container>
-                    </>
-                  )}
-                ></Route>
-              </UserPlayerProvider>
+                        <SiteTitle />
+                        <GamePlay id="gamecontainer" {...props} />
+                      </Col>
+
+                      <Col>
+                        <GenerateLineup {...props} />
+                      </Col>
+                      
+
+                      <Col>
+                        <MessagesList {...props} />
+                      </Col>
+
+                    </Row>
+                  </>
+                )}
+              ></Route>
             </MessageProvider>
-          </PlayerProvider>
-        </UserProvider>
+          </UserPlayerProvider>
+        </PlayerProvider>
       </Container>
 
       <UserProvider>
