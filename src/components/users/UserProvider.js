@@ -6,7 +6,7 @@ export const UserProvider = (props) => {
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
-    return fetch(`http://localhost:8888/users?_embed=messages`)
+    return fetch(`http://localhost:8888/users?_embed=messages&_embed=usersPlayers`)
       .then((res) => res.json())
       .then(setUsers);
   };

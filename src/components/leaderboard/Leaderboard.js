@@ -109,6 +109,10 @@ export const Leaderboard = (props) => {
   const matchingUserScore =
     trashedUserScores.find((tSO) => tSO.userId === matchingUserId) || {};
 
+  const mentionedMatchingUPS = usersPlayersArray.filter((up) => {
+    return up.userId === matchingUserId && up.mentioned;
+  });
+
   const sortedByStans =
     userScores.sort((a, b) => {
       return b.stans - a.stans;
@@ -191,7 +195,7 @@ export const Leaderboard = (props) => {
                     return u.id === uSO.userId;
                   }) || {};
 
-                rank++ 
+                rank++;
 
                 return (
                   <Score
@@ -237,6 +241,7 @@ export const Leaderboard = (props) => {
             Total posts:{" "}
             {users.find((u) => u.id === matchingUserId).messages.length}
           </div>
+          <div>{mentionedMatchingUPS.length}</div>
         </>
       )}
     </article>
