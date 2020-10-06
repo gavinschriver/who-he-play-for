@@ -36,11 +36,12 @@ export default (props) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [alertText, setAlertText] = useState("NOICE")
-  const [showAlert, setShowAlert] = useState(false)
+  const [alertText, setAlertText] = useState("NOICE");
+  const [alertType, setAlertType] = useState("success");
+  const [showAlert, setShowAlert] = useState(false);
   const handleAlert = () => {
-    setShowAlert(true)
-  }
+    setShowAlert(true);
+  };
 
   // filtering and extracting things ya know
   const filteredCurrentUsersPlayers = currentUser.usersPlayers.filter(
@@ -124,9 +125,15 @@ export default (props) => {
               URLref.current.value = "";
               textRef.current.value = "";
             }
-          } else setAlertText("that's old news cap'n"); handleAlert();
-        } else setAlertText("Where the PROOF??"); handleAlert();
-      } else setAlertText("Better check that input"); handleAlert();
+          } else setAlertText("that's old news cap'n");
+          setAlertType("warning");
+          handleAlert();
+        } else setAlertText("Where the PROOF??");
+        setAlertType("success");
+        handleAlert();
+      } else setAlertText("Better check that input");
+      setAlertType("danger");
+      handleAlert();
     } // end Stan/Trash as type alert("check that input yo") ; alert("that's old news cap'n") ; alert("Where the EVIDENCE???");
   };
 
@@ -210,7 +217,20 @@ export default (props) => {
             <Form.Group>{url}</Form.Group>
             <Form.Group>{text}</Form.Group>
             <Form.Group>{submit}</Form.Group>
-            {showAlert && <Alert variant="warning" onClose={() => setShowAlert(false)} dismissible>{alertText}</Alert>}
+            {showAlert && (
+              <Alert
+                variant={
+                  alertText === "that's old news cap'n" ||
+                  alertText === "Better check that input"
+                    ? "danger"
+                    : "success"
+                }
+                onClose={() => setShowAlert(false)}
+                dismissible
+              >
+                {alertText}
+              </Alert>
+            )}
           </>
         )}
       </Form>
