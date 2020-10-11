@@ -9,7 +9,7 @@ export default (props) => {
     const [noObject, setNoObject] = useState(false);
 
     useEffect(() => {
-      fetch(`http://data.nba.net/prod/v1/2019/players/${props.id}_profile.json`)
+      fetch(`https://data.nba.net/prod/v1/2019/players/${props.id}_profile.json`)
         .then((res) => res.json())
         .then((result) => {
           if (result.Message === "Object not found.") {

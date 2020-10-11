@@ -30,7 +30,7 @@ export const UserPlayerProvider = (props) => {
   };
 
   const updateUserPlayer = (userPlayer) => {
-    return fetch(`https://whpf-database.herokuapp.com/${userPlayer.id}`, {
+    return fetch(`https://whpf-database.herokuapp.com/usersPlayers/${userPlayer.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
