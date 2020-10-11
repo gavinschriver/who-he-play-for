@@ -71,38 +71,24 @@ export const LineupButton = (props) => {
                   const NBAid = mPO.player.externalMappings[0].id || {};
                   const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
                   return (
-                    <tr>
+                    <tr key={`key--${mPO.player.id}`}>
                       <td>
                         <PlayerName
                           playerName={player}
                           searchString={redditSearch}
                           playerId={NBAid}
+                          key={mPO.player.id}
                         />
                       </td>
-
-                      {/* <td>
-                        <PlayerSearch
-                          location="lineup"
-                          parent={props.parent}
-                          playerDetails={{
-                            playerName: player,
-                            type: selectButtonType,
-                          }}
-                        />
-                      </td> */}
                       <td>
                         {props.userType === "current" &&
                         !mentionedPlayerIds.includes(mPO.player.id) ? (
                           <>
-                            {/* <PlayerSelectButton
-                              type={selectButtonType}
-                              location={locationClass}
-                              player={`${mPO.player.firstName} ${mPO.player.lastName}`}
-                            /> */}
                             <MessageEntryModal
                               location="lineup"
                               player={`${mPO.player.firstName} ${mPO.player.lastName}`}
                               type={selectButtonType}
+                              key={mPO.player.id}
                             />
                           </>
                         ) : props.userType === "current" &&
@@ -110,15 +96,11 @@ export const LineupButton = (props) => {
                           <div></div>
                         ) : (
                           <>
-                            {/* <PlayerSelectButton
-                              type={selectButtonType}
-                              location={locationClass}
-                              player={`${mPO.player.firstName} ${mPO.player.lastName}`}
-                            /> */}
                             <MessageEntryModal
                               location="lineup"
                               player={`${mPO.player.firstName} ${mPO.player.lastName}`}
                               type={selectButtonType}
+                              key={mPO.player.id}
                             />
                           </>
                         )}
