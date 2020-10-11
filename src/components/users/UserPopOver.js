@@ -14,7 +14,7 @@ export default (props) => {
   );
 
   return (
-    <OverlayTrigger trigger="hover" placement="right" overlay={userPop}>
+    <OverlayTrigger trigger={["hover","hover"]} placement="right" overlay={userPop}>
       <Button variant="light">{props.user}</Button>
     </OverlayTrigger>
   );

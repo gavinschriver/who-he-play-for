@@ -1,7 +1,7 @@
-.messageCard {
+/* .messageCard {
     display: flex;
-    flex-direction: row;
-}
+    flex-direction: row; 
+} */
 
 .messageCard-header {
     font-size: 1.2rem;
