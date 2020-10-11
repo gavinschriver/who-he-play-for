@@ -28,7 +28,6 @@ export const AppHeader = (props) => {
     <article className="appHeader">
       <Row>
         <Col>
-          <SiteTitle />
           <UserGreeting user={user} />
         </Col>
         <Col>

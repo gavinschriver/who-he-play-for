@@ -3,6 +3,10 @@
     color: black
 }
 
+.scores {
+    display: flex;
+}
+
 .scoreboard {
     display: flex;
     flex-direction: column;
