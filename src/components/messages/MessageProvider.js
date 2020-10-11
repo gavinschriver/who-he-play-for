@@ -7,13 +7,13 @@ export const MessageProvider = (props) => {
   const [collection, setCollection] = useState([])
  
   const getMessages = () => {
-    return fetch(`http://localhost:8888/messages?_expand=user`)
+    return fetch(`https://whpf-database.herokuapp.com/messages?_expand=user`)
       .then((res) => res.json())
       .then(setMessages);
   };
 
   const addMessage = (newMessage) => {
-    return fetch("http://localhost:8888/messages", {
+    return fetch("https://whpf-database.herokuapp.com/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,13 +23,13 @@ export const MessageProvider = (props) => {
   };
 
   const removeMessage = (messageId) => {
-    return fetch(`http://localhost:8888/messages/${messageId}`, {
+    return fetch(`https://whpf-database.herokuapp.com/messages/${messageId}`, {
       method: "DELETE",
     }).then(getMessages);
   };
 
   const updateMessage = (message) => {
-    return fetch(`http://localhost:8888/messages/${message.id}`, {
+    return fetch(`https://whpf-database.herokuapp.com/messages/${message.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
