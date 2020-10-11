@@ -6,13 +6,13 @@ export const UserProvider = (props) => {
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
-    return fetch(`http://localhost:8888/users?_embed=messages&_embed=usersPlayers`)
+    return fetch(`https://whpf-database.herokuapp.com/users?_embed=messages&_embed=usersPlayers`)
       .then((res) => res.json())
       .then(setUsers);
   };
 
   const addUser = (newUser) => {
-    return fetch("http://localhost:8888/users", {
+    return fetch("https://whpf-database.herokuapp.com/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,13 +22,13 @@ export const UserProvider = (props) => {
   };
 
   const removeUser = (userId) => {
-    return fetch(`http://localhost:8888/users/${userId}`, {
+    return fetch(`https://whpf-database.herokuapp.com/users/${userId}`, {
       method: "DELETE",
     }).then(getUsers);
   };
 
   const updateUser = (user) => {
-    return fetch(`http://localhost:8888/users/${user.id}`, {
+    return fetch(`https://whpf-database.herokuapp.com/users/${user.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export const UserProvider = (props) => {
 
   const getUserById = (id) => {
     return fetch(
-      `http://localhost:8888/users/${id}?_embed=messages&_embed=usersPlayers`
+      `https://whpf-database.herokuapp.com/users/${id}?_embed=messages&_embed=usersPlayers`
     )
       .then((res) => res.json())
   };
