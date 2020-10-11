@@ -41,7 +41,7 @@ export const UserProvider = (props) => {
 
   const getUserById = (id) => {
     return fetch(
-      `https://whpf-database.herokuapp.com/${id}?_embed=messages&_embed=usersPlayers`
+      `https://whpf-database.herokuapp.com/users/${id}?_embed=messages&_embed=usersPlayers`
     )
       .then((res) => res.json())
   };
