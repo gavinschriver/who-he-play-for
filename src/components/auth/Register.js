@@ -10,7 +10,7 @@ export const Register = (props) => {
     const passwordDialog = useRef()
 
     const existingUserCheck = () => {
-        return fetch(`http://localhost:8888/users?email=${email.current.value}`)
+        return fetch(`https://whpf-database.herokuapp.com/users?email=${email.current.value}`)
             .then(_ => _.json())
             .then(user => !!user.length)
     }
@@ -21,7 +21,7 @@ export const Register = (props) => {
         if (password.current.value === verifyPassword.current.value) {
             existingUserCheck()
                 .then(() => {
-                    fetch("http://localhost:8888/users", {
+                    fetch("https://whpf-database.herokuapp.com/users", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"

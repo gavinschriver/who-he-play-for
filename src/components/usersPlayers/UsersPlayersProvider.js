@@ -8,13 +8,13 @@ export const UserPlayerProvider = (props) => {
   const [mentionedCount, setMentionedCount] = useState(0);
 
   const getUsersPlayers = () => {
-    return fetch(`http://localhost:8888/usersPlayers`)
+    return fetch(`https://whpf-database.herokuapp.com/usersPlayers`)
       .then((res) => res.json())
       .then(setUsersPlayers);
   };
 
   const addUserPlayer = (newUserPlayer) => {
-    return fetch("http://localhost:8888/usersPlayers", {
+    return fetch("https://whpf-database.herokuapp.com/usersPlayers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,13 +24,13 @@ export const UserPlayerProvider = (props) => {
   };
 
   const removeUserPlayer = (userPlayerId) => {
-    return fetch(`http://localhost:8888/usersPlayers/${userPlayerId}`, {
+    return fetch(`https://whpf-database.herokuapp.com/usersPlayers/${userPlayerId}`, {
       method: "DELETE",
     }).then(getUsersPlayers);
   };
 
   const updateUserPlayer = (userPlayer) => {
-    return fetch(`http://localhost:8888/usersPlayers/${userPlayer.id}`, {
+    return fetch(`https://whpf-database.herokuapp.com/${userPlayer.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

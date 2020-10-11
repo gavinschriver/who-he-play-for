@@ -72,7 +72,7 @@ export default (props) => {
                 <article>
                   <li key={i.etag}> {i.snippet.description}</li>
                   <Iframe
-                    url={`http://www.youtube.com/embed/${videoId}`}
+                    url={`https://www.youtube.com/embed/${videoId}`}
                     width="450px"
                     height="450px"
                     id="myId"
