@@ -7,6 +7,8 @@ import Form from "react-bootstrap/Form";
 import "../messages/messages.css";
 import { MessageEntryButton } from "../buttons/MessageEntryButton";
 
+// this module NOT IN USE
+
 export const StanEntryForm = () => {
   const { addMessage, messages, getMessages } = useContext(MessageContext);
   const {

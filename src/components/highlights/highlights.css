@@ -1,0 +1,4 @@
+.statsTable {
+    display: flex;
+    flex-wrap: wrap
+}

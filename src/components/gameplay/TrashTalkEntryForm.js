@@ -7,6 +7,8 @@ import "../messages/messages.css";
 import { Form } from "react-bootstrap";
 import { MessageEntryButton } from "../buttons/MessageEntryButton";
 
+// this module NOT IN USE
+
 export const TrashTalkEntryForm = () => {
   const { addMessage, getMessages, messages } = useContext(MessageContext);
   const { usersPlayers, getUsersPlayers, setMentionedCount } = useContext(
