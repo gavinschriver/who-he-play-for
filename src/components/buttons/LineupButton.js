@@ -27,7 +27,7 @@ export const LineupButton = (props) => {
     return playerObjArray.find((p) => {
       return mUPO.playerId === p.player.id;
     });
-  });
+  }) || {};
 
   const mentionedUsersPlayers = usersPlayers.filter((up) => {
     return up.mentioned === true;
