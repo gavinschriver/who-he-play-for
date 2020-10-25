@@ -1,68 +1,26 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Hey Chuck, Who He Play For
+"Because Real Heads Know"
 
-In the project directory, you can run:
+## The Concept
+I'm an NBA dork. You're an NBA dork. Let's talk trash on each other for no reason.
 
-### `npm start`
+"Who He Play For?", titled after the illustrious TNT "Inside the NBA" segment of the same name, is an interactive way to learn about all 400-some-odd active players in the league. Each user has a lineup of 5 randomly picked players, whom they must stan (support) by posting links that contain the player's name to the "Spin Zone" (message area) to earn points. Right now you get 50 points per stan, but that might change on a whim, who knows. Remember Who's Line is It Anyway? Everything's made up and the points don't matter. Classic. 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ANYWAY, you can either earn bigtime points by stanning all of your players and then generating a new lineup, OR, take points away from other users by Talking Trash on players from their current lineups. Both of these actions are facilitated by quick links to reddit searches about that player, although any link with the player's exact first and last name will work.  **current bug - players with characters in their names that get stripped from URLs (like J.J. Reddick or Karl-Anthony Towns) can't be stanned or trash talk'd - working on it!**
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Try it out?
+https://hey-chuck-who-he-play-for.herokuapp.com/ Choose a username / email / password from the list provided to login and play as that user. I personally recommend Gerald Green. That guy's a gem. 
 
-### `npm test`
+**Currently still dealing with some classic React async issues**, so if you get a white screen of death when you first log in, just hit refresh and she should load right up for ya. If Heroku is sleeping you also might have to wait a sec for ol' sleepy server mcgee to wake up.  
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
+This app makes use of a static copy of data from the MySportsFeed API, as well as endpoints from the official NBA website for stats. 
 
-### `npm run build`
+## Technologies Used
+This application was built using the React JavaScript library, and was bootstrapped with create-react-app. Additional dependencies are React Bootstrap and Moment JS. 
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The API server is powered by json-server. Deployment for the app and API is through Heroku. 
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Author
+Gavin Schriver
