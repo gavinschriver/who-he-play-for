@@ -12,7 +12,7 @@ export const PlayerProvider = (propsObj) => {
   const [stanPlayer, setStanPlayer] = useState("")
 
   const getPlayerData = () => {
-    return fetch(`http://localhost:8889/db`)
+    return fetch(`https://whpf-player-db.herokuapp.com/db`)
       .then((res) => res.json())
       .then((playerData) => {
         setPlayerObjArray(playerData.players);
