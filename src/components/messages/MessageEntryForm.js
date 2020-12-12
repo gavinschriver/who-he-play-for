@@ -40,6 +40,7 @@ export default (props) => {
   const [alertType, setAlertType] = useState("success");
   const [showAlert, setShowAlert] = useState(false);
   const handleAlert = () => {
+    setAlertType("success")
     setShowAlert(true);
   };
 
@@ -129,7 +130,7 @@ export default (props) => {
           setAlertType("warning");
           handleAlert();
         } else setAlertText("Where the PROOF??");
-        setAlertType("success");
+        setAlertType("warning");
         handleAlert();
       } else setAlertText("Better check that input");
       setAlertType("danger");
@@ -225,7 +226,11 @@ export default (props) => {
                     ? "danger"
                     : "success"
                 }
-                onClose={() => setShowAlert(false)}
+                onClose={() => {
+                  setShowAlert(false);
+                  setAlertText("NOICE")
+                  setAlertType("success")
+                }}
                 dismissible
               >
                 {alertText}

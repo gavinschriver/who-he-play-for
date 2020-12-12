@@ -80,13 +80,15 @@ export const Leaderboard = (props) => {
         return playersArray.find((pO) => {
           return pO.player.id === mUPO.playerId;
         });
-      }) || {};
+      });
 
     // HERES the line that would have to change to match; this is the collection of player name string references from a user's current lineup
     const matchingPlayerStrings =
       matchingPlayerObjects.map((mPO) => {
-        return `${mPO.player.firstName} ${mPO.player.lastName}`;
-      }) || {};
+        if (typeof mPO !== "undefined") {
+          return `${mPO.player.firstName} ${mPO.player.lastName}`;
+        }
+      });
 
     trashtalkStringNameInstances.forEach((ttSNI) => {
       if (matchingPlayerStrings.includes(ttSNI)) {
@@ -151,109 +153,118 @@ export const Leaderboard = (props) => {
 
   let rank = 0;
 
-  return (
-    <article className="scores">
-      {/* if we're rendering in the game form... */}
-      {props.location === "game" ? (
-        <section className="scoreboard">
-          <div className="scoreboard__allTime">
-            <article className="allTime">
-              <div className="scoreboard__allTime__type stanimal">
-                <h3 className="stanimal__heading heading scoreboard--heading">
-                  All time stanimal:
-                </h3>
-                <span className="stanimal__stanner name user--name">
-                  {stanimal.username}{" "}
-                </span>
-                <span className="stanimal__stanCount">
-                  with {stanimal.stans} stans
-                </span>
-              </div>
-            </article>
-            <article className="allTime">
-              <div className="scoreboard__allTime__type trashtalkchamp">
-                <h3 className="trashtalkchamp__heading heading scoreboard--heading">
-                  Trash talk champion:
-                </h3>
-                <span className="trashtalkchamp__champ name user--name">
-                  {trashtalkchamp.username}{" "}
-                </span>
-                <span className="trashtalkchamp__trashtalkCount">
-                  with {trashtalkchamp.trashtalks} trashes
-                </span>
-              </div>
-            </article>
-          </div>
-          <div className="leaderboard-table">
-            <Table>
-              <tbody>
-                <tr>
-                  <th>Rank</th>
-                  <th>User</th>
-                  <th>Score</th>
-                  <th>Lineup</th>
-                </tr>
-                {/* begin map (sending uSO to Score.js*/}
-                {sortedScores.map((uSO) => {
-                  const matchingUser =
-                    users.find((u) => {
-                      return u.id === uSO.userId;
-                    }) || {};
+  if (playerObjArray.length === 0) {
+    return (
+      <h1>NO DATA</h1>
+    )
+  }
 
-                  rank++;
+  if (playerObjArray.length > 0) {
 
-                  return (
-                    <Score
-                      key={uSO.id}
-                      SO={uSO}
-                      UO={matchingUser}
-                      rank={rank}
-                      parent="scoreboard"
-                    />
-                  );
-                })}
-              </tbody>
-            </Table>
-          </div>
-        </section>
-      ) : props.location === "header" ? (
-        <>
-          <section className="userScores">
-            <div className="userScores__score">
-              <div className="userScores__trashtalks__heading">
-                Your score:{" "}
-                <span className="score-item">{currentUserScore.score}</span>
-              </div>
-            </div>
-            <div className="userScores__stans">
-              <div className="userScores__stans__heading">
-                Your stan count:{" "}
-                <span className="userScores__stans__ score-item">
-                  {currentUserScore.stans}
+    return (
+      <article className="scores">
+        {/* if we're rendering in the game form... */}
+        {props.location === "game" ? (
+          <section className="scoreboard">
+            <div className="scoreboard__allTime">
+              <article className="allTime">
+                <div className="scoreboard__allTime__type stanimal">
+                  <h3 className="stanimal__heading heading scoreboard--heading">
+                    All time stanimal:
+                </h3>
+                  <span className="stanimal__stanner name user--name">
+                    {stanimal.username}{" "}
+                  </span>
+                  <span className="stanimal__stanCount">
+                    with {stanimal.stans} stans
                 </span>
-              </div>
-            </div>
-            <div className="userScores__trashtalks">
-              <div className="userScores__trashtalks__heading">
-                Your trashtalk count:{" "}
-                <span className="userScores__trashtalks__ score-item">
-                  {currentUserScore.trashtalks}
+                </div>
+              </article>
+              <article className="allTime">
+                <div className="scoreboard__allTime__type trashtalkchamp">
+                  <h3 className="trashtalkchamp__heading heading scoreboard--heading">
+                    Trash talk champion:
+                </h3>
+                  <span className="trashtalkchamp__champ name user--name">
+                    {trashtalkchamp.username}{" "}
+                  </span>
+                  <span className="trashtalkchamp__trashtalkCount">
+                    with {trashtalkchamp.trashtalks} trashes
                 </span>
-              </div>
+                </div>
+              </article>
             </div>
-            <LineupProgress />
+            <div className="leaderboard-table">
+              <Table>
+                <tbody>
+                  <tr>
+                    <th>Rank</th>
+                    <th>User</th>
+                    <th>Score</th>
+                    <th>Lineup</th>
+                  </tr>
+                  {/* begin map (sending uSO to Score.js*/}
+                  {sortedScores.map((uSO) => {
+                    const matchingUser =
+                      users.find((u) => {
+                        return u.id === uSO.userId;
+                      }) || {};
+
+                    rank++;
+
+                    return (
+                      <Score
+                        key={uSO.id}
+                        SO={uSO}
+                        UO={matchingUser}
+                        rank={rank}
+                        parent="scoreboard"
+                      />
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </div>
           </section>
-        </>
-      ) : (
-        <>
-          <div>Score: {matchingUserScore.score}</div>
-          <div>
-            Total posts:{" "}
-            {users.find((u) => u.id === matchingUserId).messages.length}
-          </div>
-          <div>Stan'd in current linup: {mentionedMatchingUPS.length}/5</div>
-        </>
-      )}
-    </article>
-  );
+        ) : props.location === "header" ? (
+          <>
+            <section className="userScores">
+              <div className="userScores__score">
+                <div className="userScores__trashtalks__heading">
+                  Your score:{" "}
+                  <span className="score-item">{currentUserScore.score}</span>
+                </div>
+              </div>
+              <div className="userScores__stans">
+                <div className="userScores__stans__heading">
+                  Your stan count:{" "}
+                  <span className="userScores__stans__ score-item">
+                    {currentUserScore.stans}
+                  </span>
+                </div>
+              </div>
+              <div className="userScores__trashtalks">
+                <div className="userScores__trashtalks__heading">
+                  Your trashtalk count:{" "}
+                  <span className="userScores__trashtalks__ score-item">
+                    {currentUserScore.trashtalks}
+                  </span>
+                </div>
+              </div>
+              <LineupProgress />
+            </section>
+          </>
+        ) : (
+              <>
+                <div>Score: {matchingUserScore.score}</div>
+                <div>
+                  Total posts:{" "}
+                  {users.find((u) => u.id === matchingUserId).messages.length}
+                </div>
+                <div>Stan'd in current linup: {mentionedMatchingUPS.length}/5</div>
+              </>
+            )}
+      </article>
+    );
+  }
 };

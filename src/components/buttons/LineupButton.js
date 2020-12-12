@@ -26,7 +26,7 @@ export const LineupButton = (props) => {
   const matchingPlayers = matchingUsersPlayers.map((mUPO) => {
     return playerObjArray.find((p) => {
       return mUPO.playerId === p.player.id;
-    });
+    }) || {};
   }) || {};
 
   const mentionedUsersPlayers = usersPlayers.filter((up) => {
@@ -66,7 +66,7 @@ export const LineupButton = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {matchingPlayers.map((mPO) => {
+                {playerObjArray.length > 0 && matchingPlayers.map((mPO) => {
                   const player = `${mPO.player.firstName} ${mPO.player.lastName}`;
                   const NBAid = mPO.player.externalMappings[0].id || {};
                   const redditSearch = `https://www.reddit.com/search?q=${mPO.player.firstName}%20${mPO.player.lastName}`;
@@ -109,6 +109,7 @@ export const LineupButton = (props) => {
                   );
                 })}
               </tbody>
+
             </Table>
           </div>
         </Collapse>

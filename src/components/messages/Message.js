@@ -45,10 +45,13 @@ export const Message = ({ MO }) => {
     return playerObjArray.find((pO) => {
       return pO.player.id === cUPID;
     });
-  });
+  }) || {};
 
   const currentUsersLineupAsStrings = currentUsersPlayerObjects.map((cUPO) => {
-    return `${cUPO.player.firstName} ${cUPO.player.lastName}`;
+    if (typeof cUPO !== "undefined") {
+      return `${cUPO.player.firstName} ${cUPO.player.lastName}`;
+    }
+    else return "No data"
   });
 
   //edit
@@ -125,84 +128,93 @@ export const Message = ({ MO }) => {
   const messageClassName = MO.stan
     ? "messageCard messageCard--stanned"
     : "messageCard";
+  
+  if (playerObjArray.length === 0) {
+    return (
+      <h3>SORRY MSGS NOT AVAILABLE BRUH</h3>
+    )
+  }
 
-  return (
-    <Card className={messageClassName} id={MO.id}>
-      <MessageHeader
-        userName={MO.user.name}
-        userId={MO.user.id}
-        userType={MO.user.id === currentUserId ? "current" : "other"}
-        messageType={MO.stan ? "stan" : MO.trashtalk ? "trash" : "chat"}
-        playerName={MO.messagetext}
-        isYourGuy={currentUsersLineupAsStrings.includes(MO.messagetext)}
-        time={MO.timestamp}
-      />
-      <div className="playerCard-body">
-        <Card.Body>
-          <Container>
-            <Row>
-              <Col sm={4}>
-                {user.avatar && <Avatar user={user} location="message" />}
-              </Col>
-              {/* chat text */}
-              <Col sm={8}>
-                {/* URL */}
-                <MessageURLink
-                  url={MO.url}
-                  class="messageURLInk"
-                  type={MO.stan ? "stan" : MO.trashtalk ? "trash" : ""}
-                />
-                {editFieldShowing ? (
-                  <Form.Control
-                    as="textarea"
-                    className="message__textedit input textarea--input"
-                    name="chattext"
-                    onChange={handleControlledInputChange}
-                    value={message.chattext}
-                  ></Form.Control>
-                ) : (
-                  <MessageChatText
-                    class="message__chattext"
-                    text={MO.chattext}
+  if (playerObjArray.length > 0) {
+
+    return (
+      <Card className={messageClassName} id={MO.id}>
+        <MessageHeader
+          userName={MO.user.name}
+          userId={MO.user.id}
+          userType={MO.user.id === currentUserId ? "current" : "other"}
+          messageType={MO.stan ? "stan" : MO.trashtalk ? "trash" : "chat"}
+          playerName={MO.messagetext}
+          isYourGuy={currentUsersLineupAsStrings.includes(MO.messagetext)}
+          time={MO.timestamp}
+        />
+        <div className="playerCard-body">
+          <Card.Body>
+            <Container>
+              <Row>
+                <Col sm={4}>
+                  {user.avatar && <Avatar user={user} location="message" />}
+                </Col>
+                {/* chat text */}
+                <Col sm={8}>
+                  {/* URL */}
+                  <MessageURLink
+                    url={MO.url}
+                    class="messageURLInk"
+                    type={MO.stan ? "stan" : MO.trashtalk ? "trash" : ""}
                   />
-                )}
-                {/* edit/submit buttons */}
-                <ButtonGroup>
-                  {MO.user.id === currentUserId && (
-                    <>
-                      <EditMessageButton
-                        id={MO.id}
-                        action={handleEditButtonPress}
-                        ref={editMessageRef}
+                  {editFieldShowing ? (
+                    <Form.Control
+                      as="textarea"
+                      className="message__textedit input textarea--input"
+                      name="chattext"
+                      onChange={handleControlledInputChange}
+                      value={message.chattext}
+                    ></Form.Control>
+                  ) : (
+                      <MessageChatText
+                        class="message__chattext"
+                        text={MO.chattext}
                       />
-
-                      {editFieldShowing && (
-                        <SubmitedEditedMessageButton
-                          action={handleSubmitEditedMessage}
+                    )}
+                  {/* edit/submit buttons */}
+                  <ButtonGroup>
+                    {MO.user.id === currentUserId && (
+                      <>
+                        <EditMessageButton
+                          id={MO.id}
+                          action={handleEditButtonPress}
+                          ref={editMessageRef}
                         />
-                      )}
-                    </>
-                  )}
 
-                  {/* delete button */}
-                  {MO.user.id === currentUserId && (
-                    <DeleteMessageButton location="message" id={MO.id} />
-                  )}
-                  {/* lineup */}
-                </ButtonGroup>
-              </Col>
-            </Row>
-          </Container>
-          <Container>
-            {MO.user.id !== currentUserId && (
-              <LineupButton
-                userType={MO.user.id === currentUserId ? "current" : "other"}
-                userId={MO.userId}
-              />
-            )}
-          </Container>
-        </Card.Body>
-      </div>
-    </Card>
-  );
+                        {editFieldShowing && (
+                          <SubmitedEditedMessageButton
+                            action={handleSubmitEditedMessage}
+                          />
+                        )}
+                      </>
+                    )}
+
+                    {/* delete button */}
+                    {MO.user.id === currentUserId && (
+                      <DeleteMessageButton location="message" id={MO.id} />
+                    )}
+                    {/* lineup */}
+                  </ButtonGroup>
+                </Col>
+              </Row>
+            </Container>
+            <Container>
+              {MO.user.id !== currentUserId && (
+                <LineupButton
+                  userType={MO.user.id === currentUserId ? "current" : "other"}
+                  userId={MO.userId}
+                />
+              )}
+            </Container>
+          </Card.Body>
+        </div>
+      </Card>
+    );
+  }
 };

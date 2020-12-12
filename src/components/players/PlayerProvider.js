@@ -5,6 +5,7 @@ export const PlayerContext = React.createContext();
 
 export const PlayerProvider = (propsObj) => {
   const [playerObjArray, setPlayerObjArray] = useState([]);
+  const [loaded, setLoaded] = useState(false)
 
   // set an app-state variable for a player string name selected off dom
   const [trashtalkPlayer, setTrashtalkPlayer] = useState("")
@@ -21,6 +22,7 @@ export const PlayerProvider = (propsObj) => {
 
   return (
     <PlayerContext.Provider
+      isLoaded={loaded}
       value={{
         getPlayerData,
         playerObjArray,
@@ -28,8 +30,7 @@ export const PlayerProvider = (propsObj) => {
         setTrashtalkPlayer,
         stanPlayer,
         setStanPlayer
-      }}
-    >
+      }}>
       {propsObj.children}
     </PlayerContext.Provider>
   );

@@ -118,7 +118,7 @@ export default (props) => {
               })}
             </ul>
           ) : (
-            <div></div>
+            <div>Highlights unavaiable</div>
           )}
         </Modal>
       </>

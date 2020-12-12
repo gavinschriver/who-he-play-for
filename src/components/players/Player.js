@@ -38,32 +38,39 @@ export const Player = ({ PO, TO, status }) => {
     );
   }, [usersPlayers]);
 
-  return (
-    <div className={cardClass}>
-      <Card>
-        <PlayerHeader
-          headerInfo={{
-            name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
-            team: TO.teamName,
-            class: cardClass,
-            type: "stan",
-            status
-          }}
-        />
-        {/* {cardClass !== "playerCard playerCard--stanned" && */}
-        <div className={cardClass}>
-          <Col>
-            <PlayerIcons
-              details={{
-                playerImg: currentPlayer.player.officialImageSrc,
-                teamAbb: currentPlayer.player.currentTeam
-                  ? currentPlayer.player.currentTeam.abbreviation
-                  : "NONE",
-                teamId: NBATeamId
-              }}
-            />
-          </Col>
-          {/* <Col>
+  if (!PO) {
+    return (
+      <h3>NOTHIN YET</h3>
+    )
+  }
+
+  if (PO) {
+    return (
+      <div className={cardClass}>
+        <Card>
+          <PlayerHeader
+            headerInfo={{
+              name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+              team: TO.teamName,
+              class: cardClass,
+              type: "stan",
+              status
+            }}
+          />
+          {/* {cardClass !== "playerCard playerCard--stanned" && */}
+          <div className={cardClass}>
+            <Col>
+              <PlayerIcons
+                details={{
+                  playerImg: currentPlayer.player.officialImageSrc,
+                  teamAbb: currentPlayer.player.currentTeam
+                    ? currentPlayer.player.currentTeam.abbreviation
+                    : "NONE",
+                  teamId: NBATeamId
+                }}
+              />
+            </Col>
+            {/* <Col>
             <PlayerCardAction
               options={{
                 type: "stan",
@@ -73,24 +80,26 @@ export const Player = ({ PO, TO, status }) => {
               }}
             />
           </Col> */}
-          <PlayerInfoSelect
-            playerDetails={{
-              name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
-              DOB: currentPlayer.player.birthDate,
-              from: `${currentPlayer.player.birthCity} ${currentPlayer.player.birthCountry}`,
-              weight: currentPlayer.player.weight,
-              height: currentPlayer.player.height,
-              position: currentPlayer.player.primaryPosition,
-              id: NBAid,
-              twitterName:
-                currentPlayer.player.socialMediaAccounts.length > 0
-                  ? currentPlayer.player.socialMediaAccounts[0].value
-                  : "NONE",
-            }}
-          />
-        </div>
-        {/* // } */}
-      </Card>
-    </div>
-  );
+            <PlayerInfoSelect
+              playerDetails={{
+                name: `${currentPlayer.player.firstName} ${currentPlayer.player.lastName}`,
+                DOB: currentPlayer.player.birthDate,
+                from: `${currentPlayer.player.birthCity} ${currentPlayer.player.birthCountry}`,
+                weight: currentPlayer.player.weight,
+                height: currentPlayer.player.height,
+                position: currentPlayer.player.primaryPosition,
+                id: NBAid,
+                twitterName:
+                  currentPlayer.player.socialMediaAccounts.length > 0
+                    ? currentPlayer.player.socialMediaAccounts[0].value
+                    : "NONE",
+              }}
+            />
+          </div>
+          {/* // } */}
+        </Card>
+      </div>
+    );
+  }
+    
 };
