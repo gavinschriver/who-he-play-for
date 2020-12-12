@@ -28,8 +28,8 @@ export const GamePlay = () => (
         </Row>
       </Container>
     </div>
-    <Container>
+    {/* <Container> */}
       <Leaderboard location="game" />
-    </Container>
+    {/* </Container> */}
   </>
 );

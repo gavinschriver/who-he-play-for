@@ -21,7 +21,11 @@ export const Register = (props) => {
         if (password.current.value === verifyPassword.current.value) {
             existingUserCheck()
                 .then(() => {
+<<<<<<< HEAD
                     fetch("https://whpf-database.herokuapp.com/", {
+=======
+                    fetch("https://whpf-database.herokuapp.com/users", {
+>>>>>>> master
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"

@@ -11,7 +11,7 @@ export const Score = ({ SO, parent, rank }) => {
   }
 
   return (
-    <tr className="score">
+    <tr className="score" key={`scoreKey-${SO.userId}`}>
       <td>
         <div className="score_rank score-item">{leaderRank}</div>
       </td>
@@ -27,6 +27,7 @@ export const Score = ({ SO, parent, rank }) => {
             userType={SO.userId === currentUserId ? "current" : "other"}
             userId={SO.userId}
             parent={parent}
+            key={`key-${SO.userId}`}
           />
         </div>
       </td>

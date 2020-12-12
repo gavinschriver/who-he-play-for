@@ -29,7 +29,7 @@ export default (props) => {
 
   useEffect(() => {
     fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${playerName}&key=AIzaSyBIG5bGgV23VizsRmzOGUuXi9DJwR6SIZc`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${playerName}&key=AIzaSyCuU9zDbWsawNYk2lPU6HeWM6haW1cWScw`
     )
       .then((res) => res.json())
       .then(
@@ -72,7 +72,7 @@ export default (props) => {
                 <article>
                   <li key={i.etag}> {i.snippet.description}</li>
                   <Iframe
-                    url={`http://www.youtube.com/embed/${videoId}`}
+                    url={`https://www.youtube.com/embed/${videoId}`}
                     width="450px"
                     height="450px"
                     id="myId"
