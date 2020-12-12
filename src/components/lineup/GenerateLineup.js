@@ -134,10 +134,18 @@ export const GenerateLineup = () => {
   //   })
   // }
 
-  return (
-    <>
-      <h2 className="sectionTitle">Your Starting 5</h2>
-      <div className="filterControls">
+  if (playerObjArray.length === 0) {
+    return (
+      <h3>Sorry cant do it rn</h3>
+    )
+  }
+
+  if (playerObjArray.length > 0) {
+
+    return (
+      <>
+        <h2 className="sectionTitle">Your Starting 5</h2>
+        <div className="filterControls">
           {/* <Button
             title="Show Lineup"
             onClick={(e) => {
@@ -147,92 +155,93 @@ export const GenerateLineup = () => {
           >
             {lineupText}
           </Button> */}
-         <div className="filterButton"><DropdownButton variant="secondary" title="Filter players" onSelect={handleFilterSelect}>
+          <div className="filterButton"><DropdownButton variant="secondary" title="Filter players" onSelect={handleFilterSelect}>
             <Dropdown.Item eventKey="all">All players</Dropdown.Item>
             <Dropdown.Item eventKey="stanned">Stanned</Dropdown.Item>
             <Dropdown.Item eventKey="notStanned">Not Stanned</Dropdown.Item>
             <Dropdown.Item eventKey="hide">Hide Lineup</Dropdown.Item>
           </DropdownButton>
           </div>
-        {filter !== "hide" && (
-          <h6 className="filterText">
-            Currently displaying: {collectionTitle}
-          </h6>
-        )}
-      </div>
-      <div>
-        {(mentionedCount === 0 && !matchingUsersPlayers) ||
-        mentionedCount === matchingUsersPlayers.length ? (
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              handleGenerateLineup();
-            }}
-          >
-            Generate A Lineup
-          </Button>
-        ) : (
-          <div></div>
-        )}
-        {/* <CardGroup className="lineup__container"> */}
+          {filter !== "hide" && (
+            <h6 className="filterText">
+              Currently displaying: {collectionTitle}
+            </h6>
+          )}
+        </div>
+        <div>
+          {(mentionedCount === 0 && !matchingUsersPlayers) ||
+            mentionedCount === matchingUsersPlayers.length ? (
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleGenerateLineup();
+                }}
+              >
+                Generate A Lineup
+              </Button>
+            ) : (
+              <div></div>
+            )}
+          {/* <CardGroup className="lineup__container"> */}
           {/* <section className="lineup"> */}
-            {matchingUsersPlayers
-              .filter((mUP) => {
-                if (filter === null || filter === "all") {
-                  return mUP;
-                }
-                if (filter === "stanned") {
-                  return mUP.mentioned;
-                }
-                if (filter === "notStanned") {
-                  return !mUP.mentioned;
-                }
-                if (filter === "hide") {
-                  return null;
-                }
-              })
-              .map((mUPO) => {
-                const matchingPlayerObj = filteredPlayers.find(
-                  (p) => p.player.id === mUPO.playerId
-                );
+          {matchingUsersPlayers
+            .filter((mUP) => {
+              if (filter === null || filter === "all") {
+                return mUP;
+              }
+              if (filter === "stanned") {
+                return mUP.mentioned;
+              }
+              if (filter === "notStanned") {
+                return !mUP.mentioned;
+              }
+              if (filter === "hide") {
+                return null;
+              }
+            })
+            .map((mUPO) => {
+              const matchingPlayerObj = filteredPlayers.find(
+                (p) => p.player.id === mUPO.playerId
+              );
 
-                let matchingPlayerTeam;
+              let matchingPlayerTeam;
 
-                if (matchingPlayerObj.player.currentTeam) {
-                  if (
-                    matchingPlayerObj.player.currentTeam.abbreviation === "BRO"
-                  ) {
-                    matchingPlayerTeam = teams.find((t) => {
-                      return t.abbreviation === "BKN";
-                    });
-                  } else if (
-                    matchingPlayerObj.player.currentTeam.abbreviation === "OKL"
-                  ) {
-                    matchingPlayerTeam = teams.find((t) => {
-                      return t.abbreviation === "OKC";
-                    });
-                  } else
-                    matchingPlayerTeam =
-                      teams.find((t) => {
-                        return (
-                          t.abbreviation ===
-                          matchingPlayerObj.player.currentTeam.abbreviation
-                        );
-                      }) || {};
-                } else matchingPlayerTeam = {};
+              if (matchingPlayerObj.player.currentTeam) {
+                if (
+                  matchingPlayerObj.player.currentTeam.abbreviation === "BRO"
+                ) {
+                  matchingPlayerTeam = teams.find((t) => {
+                    return t.abbreviation === "BKN";
+                  });
+                } else if (
+                  matchingPlayerObj.player.currentTeam.abbreviation === "OKL"
+                ) {
+                  matchingPlayerTeam = teams.find((t) => {
+                    return t.abbreviation === "OKC";
+                  });
+                } else
+                  matchingPlayerTeam =
+                    teams.find((t) => {
+                      return (
+                        t.abbreviation ===
+                        matchingPlayerObj.player.currentTeam.abbreviation
+                      );
+                    }) || {};
+              } else matchingPlayerTeam = {};
 
-                return (
-                  <Player
-                    key={matchingPlayerObj.player.id}
-                    PO={matchingPlayerObj}
-                    TO={matchingPlayerTeam}
-                    status={mUPO.mentioned ? true : false}
-                  />
-                );
-              })}
+              return (
+                <Player
+                  key={matchingPlayerObj.player.id}
+                  PO={matchingPlayerObj}
+                  TO={matchingPlayerTeam}
+                  status={mUPO.mentioned ? true : false}
+                />
+              );
+            })}
           {/* </section> */}
-        {/* </CardGroup> */}
-      </div>
-    </>
-  );
+          {/* </CardGroup> */}
+        </div>
+      </>
+    );
+  }
 };
